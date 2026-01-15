@@ -34,8 +34,8 @@ export function usePublicProjects() {
   });
 }
 
-// Fetch all projects (admin)
-export function useAdminProjects() {
+// Fetch all projects (admin) - with enabled option
+export function useAdminProjects(enabled: boolean = true) {
   return useQuery({
     queryKey: ["projects", "admin"],
     queryFn: async () => {
@@ -47,6 +47,7 @@ export function useAdminProjects() {
       if (error) throw error;
       return data as Project[];
     },
+    enabled,
   });
 }
 

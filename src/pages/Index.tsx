@@ -5,10 +5,10 @@ import { DoodleBackground } from "@/components/DoodleBackground";
 import { usePublicProjects } from "@/hooks/useProjects";
 import { Loader2 } from "lucide-react";
 
-// Fallback static projects when database is empty
-const fallbackProjects = [
+// Placeholder projects to fill up to 9 cards
+const placeholderProjects = [
   {
-    id: "1",
+    id: "placeholder-1",
     title: "Coming Soon",
     description: "Something exciting is brewing...",
     href: "#",
@@ -16,7 +16,7 @@ const fallbackProjects = [
     image_url: null,
   },
   {
-    id: "2",
+    id: "placeholder-2",
     title: "Coming Soon",
     description: "Another cool thing...",
     href: "#",
@@ -24,7 +24,7 @@ const fallbackProjects = [
     image_url: null,
   },
   {
-    id: "3",
+    id: "placeholder-3",
     title: "Coming Soon",
     description: "Work in progress...",
     href: "#",
@@ -32,7 +32,7 @@ const fallbackProjects = [
     image_url: null,
   },
   {
-    id: "4",
+    id: "placeholder-4",
     title: "Coming Soon",
     description: "Stay tuned...",
     href: "#",
@@ -40,7 +40,7 @@ const fallbackProjects = [
     image_url: null,
   },
   {
-    id: "5",
+    id: "placeholder-5",
     title: "Coming Soon",
     description: "Getting ready...",
     href: "#",
@@ -48,7 +48,7 @@ const fallbackProjects = [
     image_url: null,
   },
   {
-    id: "6",
+    id: "placeholder-6",
     title: "Coming Soon",
     description: "Almost there...",
     href: "#",
@@ -56,7 +56,7 @@ const fallbackProjects = [
     image_url: null,
   },
   {
-    id: "7",
+    id: "placeholder-7",
     title: "Coming Soon",
     description: "Something fun ahead...",
     href: "#",
@@ -64,7 +64,7 @@ const fallbackProjects = [
     image_url: null,
   },
   {
-    id: "8",
+    id: "placeholder-8",
     title: "Coming Soon",
     description: "Big things coming...",
     href: "#",
@@ -72,7 +72,7 @@ const fallbackProjects = [
     image_url: null,
   },
   {
-    id: "9",
+    id: "placeholder-9",
     title: "Coming Soon",
     description: "Watch this space...",
     href: "#",
@@ -81,10 +81,18 @@ const fallbackProjects = [
   },
 ];
 
+const MIN_CARDS = 9;
+
 const Index = () => {
   const { data: projects, isLoading } = usePublicProjects();
 
-  const displayProjects = projects?.length ? projects : fallbackProjects;
+  // Always show at least 9 cards: real projects first, then placeholders
+  const realProjects = projects || [];
+  const placeholdersNeeded = Math.max(0, MIN_CARDS - realProjects.length);
+  const displayProjects = [
+    ...realProjects.map(p => ({ ...p, isPlaceholder: false })),
+    ...placeholderProjects.slice(0, placeholdersNeeded).map(p => ({ ...p, isPlaceholder: true })),
+  ];
 
   return (
     <div className="min-h-screen bg-background relative">
@@ -108,6 +116,7 @@ const Index = () => {
                 imageUrl={project.image_url || undefined}
                 href={project.href}
                 color={project.color}
+                isPlaceholder={project.isPlaceholder}
               />
             ))}
           </div>
