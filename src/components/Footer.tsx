@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Github, Twitter, Mail, Coffee } from "lucide-react";
+import { Github, Twitter, Mail, Coffee, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const socialLinks = [
@@ -104,8 +104,8 @@ export function Footer() {
               <span className="hidden sm:inline">{quote.split(" ").slice(-1)}</span>
             </button>
             {isOvercaffeinated && (
-              <span className="text-primary font-bold animate-pulse ml-1">
-                ⚡ OVERCAFFEINATED MODE ⚡
+              <span className="text-primary font-bold animate-pulse ml-1 inline-flex items-center gap-1">
+                <Zap className="h-3 w-3" /> OVERCAFFEINATED MODE <Zap className="h-3 w-3" />
               </span>
             )}
           </p>

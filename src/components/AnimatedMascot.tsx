@@ -15,12 +15,18 @@ const sizeMap = {
 };
 
 const thoughts = [
-  "click me!",
-  "hi there!",
-  "🎮",
-  "✨",
-  "hmm...",
-  "hey!",
+  // English greetings
+  "hi there!", "hey!", "hello!", "sup!", "howdy!", "hiya!", "yo!", "greetings!",
+  // Multilingual greetings
+  "hola!", "que tal!", "bonjour!", "salut!", "hallo!", "guten tag!", "ciao!", "salve!",
+  "ola!", "oi!", "konnichiwa!", "ohayo!", "annyeong!", "ni hao!", "hoi!", "hej!",
+  "aloha!", "namaste!", "shalom!", "sawubona!", "merhaba!", "ahoj!", "sveiki!",
+  // Playful
+  "wheee!", "boop!", "woohoo!", "hehe!", "yay!", "ta-da!", "peek-a-boo!", "woop woop!",
+  // Curious
+  "hmm...", "ooh?", "interesting...", "what's this?", "I wonder...", "curious...",
+  // Friendly
+  "nice to see you!", "welcome!", "glad you're here!", "having fun?", "good vibes!",
 ];
 
 export function AnimatedMascot({ className, size = "medium" }: AnimatedMascotProps) {
@@ -29,6 +35,7 @@ export function AnimatedMascot({ className, size = "medium" }: AnimatedMascotPro
   const [eyeOffset, setEyeOffset] = useState({ x: 0, y: 0 });
   const [showThought, setShowThought] = useState(false);
   const [thoughtText, setThoughtText] = useState(thoughts[0]);
+  const [lastThoughtIndex, setLastThoughtIndex] = useState(-1);
   const [confetti, setConfetti] = useState<{ x: number; y: number } | null>(null);
   const mascotRef = useRef<HTMLDivElement>(null);
 
@@ -72,7 +79,13 @@ export function AnimatedMascot({ className, size = "medium" }: AnimatedMascotPro
   };
 
   const handleMouseEnter = () => {
-    setThoughtText(thoughts[Math.floor(Math.random() * thoughts.length)]);
+    let newIndex;
+    do {
+      newIndex = Math.floor(Math.random() * thoughts.length);
+    } while (newIndex === lastThoughtIndex && thoughts.length > 1);
+    
+    setLastThoughtIndex(newIndex);
+    setThoughtText(thoughts[newIndex]);
     setShowThought(true);
   };
 
