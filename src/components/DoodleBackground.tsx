@@ -1,212 +1,239 @@
-import React from "react";
-
 export function DoodleBackground() {
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-      {/* Top left - waving stick figure */}
+    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+      {/* Waving stick figure - top left */}
       <svg
-        className="absolute top-20 left-8 w-16 h-20 opacity-[0.08] dark:opacity-[0.06]"
-        viewBox="0 0 60 80"
+        className="absolute top-20 left-8 w-24 h-32 opacity-[0.08] text-foreground hidden md:block"
+        viewBox="0 0 100 140"
         fill="none"
         stroke="currentColor"
-        strokeWidth="2"
+        strokeWidth="2.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       >
         {/* Head */}
-        <circle cx="30" cy="12" r="10" />
+        <circle cx="50" cy="20" r="15" />
         {/* Body */}
-        <path d="M30 22 L30 50" />
+        <path d="M50 35 L50 80" />
+        {/* Arms - waving */}
+        <path d="M50 50 L25 35" />
+        <path d="M25 35 L15 20" />
+        <path d="M50 50 L75 55" />
         {/* Legs */}
-        <path d="M30 50 L20 70" />
-        <path d="M30 50 L40 70" />
-        {/* Arms - one waving */}
-        <path d="M30 30 L15 40" />
-        <path d="M30 30 L50 15" />
-        {/* Wave lines */}
-        <path d="M52 10 Q55 8, 58 12" />
-        <path d="M54 6 Q57 4, 60 8" />
+        <path d="M50 80 L30 120" />
+        <path d="M50 80 L70 120" />
+        {/* Smile */}
+        <path d="M42 23 Q50 30 58 23" />
       </svg>
 
-      {/* Top right - thinking stick figure with lightbulb */}
+      {/* Thinking stick figure with lightbulb - right side */}
       <svg
-        className="absolute top-32 right-12 w-20 h-24 opacity-[0.08] dark:opacity-[0.06]"
-        viewBox="0 0 80 90"
+        className="absolute top-40 right-12 w-28 h-36 opacity-[0.08] text-foreground hidden lg:block"
+        viewBox="0 0 120 150"
         fill="none"
         stroke="currentColor"
-        strokeWidth="2"
+        strokeWidth="2.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       >
         {/* Head */}
-        <circle cx="30" cy="20" r="10" />
+        <circle cx="50" cy="25" r="15" />
         {/* Body */}
-        <path d="M30 30 L30 55" />
-        {/* Legs */}
-        <path d="M30 55 L20 75" />
-        <path d="M30 55 L40 75" />
+        <path d="M50 40 L50 85" />
         {/* Arms - thinking pose */}
-        <path d="M30 38 L18 45" />
-        <path d="M30 38 L42 32 L38 22" />
-        {/* Lightbulb */}
-        <path d="M55 8 Q60 5, 65 8 Q70 12, 65 18 Q62 22, 62 26 L58 26 Q58 22, 55 18 Q50 12, 55 8" />
-        <path d="M58 28 L62 28" />
-        <path d="M58 30 L62 30" />
-        {/* Rays */}
-        <path d="M50 12 L46 10" />
-        <path d="M70 12 L74 10" />
-        <path d="M60 3 L60 0" />
-      </svg>
-
-      {/* Middle left - arrow pointing right */}
-      <svg
-        className="absolute top-1/3 -left-2 w-24 h-12 opacity-[0.06] dark:opacity-[0.04]"
-        viewBox="0 0 100 50"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="3"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M5 25 Q20 22, 35 28 Q50 32, 65 24 Q75 18, 85 25" />
-        <path d="M75 18 L88 25 L78 32" />
-      </svg>
-
-      {/* Center right - excited stick figure */}
-      <svg
-        className="absolute top-1/2 right-6 w-14 h-20 opacity-[0.07] dark:opacity-[0.05] hidden md:block"
-        viewBox="0 0 55 80"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        {/* Head */}
-        <circle cx="28" cy="15" r="10" />
-        {/* Happy face */}
-        <path d="M24 13 L24 14" />
-        <path d="M32 13 L32 14" />
-        <path d="M24 19 Q28 23, 32 19" />
-        {/* Body */}
-        <path d="M28 25 L28 48" />
-        {/* Legs - jumping */}
-        <path d="M28 48 L18 65" />
-        <path d="M28 48 L38 65" />
-        {/* Arms up - celebrating */}
-        <path d="M28 32 L15 18" />
-        <path d="M28 32 L41 18" />
-        {/* Celebration lines */}
-        <path d="M10 12 L8 8" />
-        <path d="M46 12 L48 8" />
-        <path d="M12 20 L6 20" />
-        <path d="M44 20 L50 20" />
-      </svg>
-
-      {/* Bottom left - pointing stick figure */}
-      <svg
-        className="absolute bottom-40 left-10 w-16 h-20 opacity-[0.07] dark:opacity-[0.05] hidden lg:block"
-        viewBox="0 0 70 80"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        {/* Head */}
-        <circle cx="25" cy="12" r="10" />
-        {/* Body */}
-        <path d="M25 22 L25 50" />
+        <path d="M50 55 L30 70" />
+        <path d="M30 70 L35 50" />
+        <path d="M50 55 L70 65" />
         {/* Legs */}
-        <path d="M25 50 L15 70" />
-        <path d="M25 50 L35 70" />
-        {/* Arms - pointing */}
-        <path d="M25 32 L10 40" />
-        <path d="M25 32 L55 20" />
-        {/* Arrow at pointing hand */}
-        <path d="M55 20 L65 18" />
-        <path d="M60 14 L65 18 L60 22" />
+        <path d="M50 85 L35 125" />
+        <path d="M50 85 L65 125" />
+        {/* Thought bubble dots */}
+        <circle cx="75" cy="15" r="2" fill="currentColor" />
+        <circle cx="85" cy="8" r="3" fill="currentColor" />
+        {/* Lightbulb */}
+        <ellipse cx="100" cy="5" rx="10" ry="12" />
+        <path d="M95 17 L105 17" />
+        <path d="M96 20 L104 20" />
+        {/* Rays */}
+        <path d="M100 -10 L100 -15" />
+        <path d="M115 5 L120 5" />
+        <path d="M85 5 L80 5" />
+        <path d="M110 -5 L115 -10" />
+        <path d="M90 -5 L85 -10" />
       </svg>
 
-      {/* Bottom right - speech bubble */}
+      {/* Wobbly arrow pointing right */}
       <svg
-        className="absolute bottom-32 right-16 w-16 h-14 opacity-[0.06] dark:opacity-[0.04]"
-        viewBox="0 0 65 55"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M5 10 Q5 5, 15 5 L50 5 Q60 5, 60 15 L60 30 Q60 40, 50 40 L25 40 L15 50 L18 40 L15 40 Q5 40, 5 30 Z" />
-        <path d="M20 18 L45 18" />
-        <path d="M20 26 L40 26" />
-        <path d="M20 34 L35 34" />
-      </svg>
-
-      {/* Stars scattered */}
-      <svg
-        className="absolute top-48 left-1/4 w-8 h-8 opacity-[0.08] dark:opacity-[0.05]"
-        viewBox="0 0 30 30"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      >
-        <path d="M15 5 L15 25" />
-        <path d="M5 15 L25 15" />
-        <path d="M8 8 L22 22" />
-        <path d="M22 8 L8 22" />
-      </svg>
-
-      <svg
-        className="absolute bottom-1/3 right-1/4 w-6 h-6 opacity-[0.06] dark:opacity-[0.04] hidden md:block"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      >
-        <path d="M12 2 L12 22" />
-        <path d="M2 12 L22 12" />
-      </svg>
-
-      {/* Squiggly underline */}
-      <svg
-        className="absolute bottom-20 left-1/3 w-32 h-6 opacity-[0.05] dark:opacity-[0.03]"
-        viewBox="0 0 120 24"
+        className="absolute top-1/3 left-1/4 w-20 h-10 opacity-[0.06] text-foreground hidden md:block"
+        viewBox="0 0 100 40"
         fill="none"
         stroke="currentColor"
         strokeWidth="3"
         strokeLinecap="round"
+        strokeLinejoin="round"
       >
-        <path d="M5 12 Q15 5, 25 12 Q35 19, 45 12 Q55 5, 65 12 Q75 19, 85 12 Q95 5, 105 12 Q115 19, 120 12" />
+        <path d="M5 20 Q25 15 45 22 Q65 28 80 18" />
+        <path d="M70 10 L82 18 L72 28" />
       </svg>
 
-      {/* Circle highlight */}
+      {/* Speech bubble with exclamation */}
       <svg
-        className="absolute top-2/3 left-16 w-12 h-12 opacity-[0.05] dark:opacity-[0.03] hidden lg:block"
+        className="absolute bottom-1/3 left-16 w-16 h-16 opacity-[0.07] text-foreground hidden md:block"
+        viewBox="0 0 70 70"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M10 10 Q5 10 5 20 L5 40 Q5 50 15 50 L25 50 L20 60 L35 50 L55 50 Q65 50 65 40 L65 20 Q65 10 55 10 Z" />
+        <path d="M35 20 L35 32" />
+        <circle cx="35" cy="40" r="2" fill="currentColor" />
+      </svg>
+
+      {/* Star burst */}
+      <svg
+        className="absolute top-1/2 right-1/4 w-12 h-12 opacity-[0.06] text-foreground"
         viewBox="0 0 50 50"
         fill="none"
         stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      >
+        <path d="M25 5 L25 15 M25 35 L25 45 M5 25 L15 25 M35 25 L45 25 M10 10 L18 18 M32 32 L40 40 M40 10 L32 18 M18 32 L10 40" />
+      </svg>
+
+      {/* Small celebrating figure - bottom right */}
+      <svg
+        className="absolute bottom-32 right-20 w-20 h-28 opacity-[0.08] text-foreground hidden md:block"
+        viewBox="0 0 80 110"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        {/* Head */}
+        <circle cx="40" cy="18" r="12" />
+        {/* Happy face */}
+        <path d="M34 16 Q40 22 46 16" />
+        {/* Body */}
+        <path d="M40 30 L40 65" />
+        {/* Arms up! */}
+        <path d="M40 42 L20 25" />
+        <path d="M40 42 L60 25" />
+        {/* Legs jumping */}
+        <path d="M40 65 L25 95" />
+        <path d="M40 65 L55 95" />
+        {/* Confetti */}
+        <circle cx="15" cy="15" r="2" fill="currentColor" />
+        <circle cx="65" cy="18" r="2" fill="currentColor" />
+        <path d="M70 8 L75 12" />
+        <path d="M10 22 L5 26" />
+      </svg>
+
+      {/* Squiggly underline decoration */}
+      <svg
+        className="absolute bottom-48 left-1/3 w-32 h-8 opacity-[0.05] text-foreground hidden lg:block"
+        viewBox="0 0 150 30"
+        fill="none"
+        stroke="currentColor"
         strokeWidth="3"
         strokeLinecap="round"
       >
-        <path d="M25 5 Q45 8, 45 25 Q42 45, 25 45 Q5 42, 5 25 Q8 5, 25 5" />
+        <path d="M5 15 Q20 5 35 15 Q50 25 65 15 Q80 5 95 15 Q110 25 125 15 Q140 5 145 15" />
       </svg>
 
-      {/* Small arrow */}
+      {/* Pointing hand - mid left */}
       <svg
-        className="absolute top-1/4 right-1/3 w-10 h-8 opacity-[0.06] dark:opacity-[0.04] hidden md:block"
-        viewBox="0 0 40 30"
+        className="absolute top-2/3 left-8 w-16 h-20 opacity-[0.07] text-foreground hidden lg:block"
+        viewBox="0 0 60 80"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        {/* Pointing finger */}
+        <path d="M30 5 L30 30" />
+        <path d="M25 30 L35 30" />
+        <path d="M20 35 L40 35 L40 55 L20 55 Z" />
+        <path d="M25 55 L25 70" />
+        <path d="M35 55 L35 70" />
+      </svg>
+
+      {/* Question marks floating */}
+      <svg
+        className="absolute top-24 right-1/3 w-10 h-14 opacity-[0.06] text-foreground"
+        viewBox="0 0 40 60"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeLinecap="round"
+      >
+        <path d="M10 15 Q10 5 20 5 Q30 5 30 15 Q30 22 20 25 L20 35" />
+        <circle cx="20" cy="45" r="3" fill="currentColor" />
+      </svg>
+
+      {/* Check mark */}
+      <svg
+        className="absolute bottom-1/4 right-1/3 w-10 h-10 opacity-[0.06] text-foreground hidden md:block"
+        viewBox="0 0 50 50"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M10 25 L20 35 L40 15" />
+      </svg>
+
+      {/* Heart */}
+      <svg
+        className="absolute top-3/4 left-1/4 w-8 h-8 opacity-[0.05] text-foreground"
+        viewBox="0 0 40 40"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M20 35 L8 22 Q2 15 8 8 Q15 2 20 10 Q25 2 32 8 Q38 15 32 22 Z" />
+      </svg>
+
+      {/* Sparkles cluster */}
+      <svg
+        className="absolute top-16 left-1/2 w-14 h-14 opacity-[0.05] text-foreground hidden lg:block"
+        viewBox="0 0 60 60"
         fill="none"
         stroke="currentColor"
         strokeWidth="2"
         strokeLinecap="round"
+      >
+        <path d="M30 10 L30 20 M30 40 L30 50 M10 30 L20 30 M40 30 L50 30" />
+        <path d="M18 18 L23 23 M37 37 L42 42 M42 18 L37 23 M23 37 L18 42" />
+      </svg>
+
+      {/* Rocket doodle */}
+      <svg
+        className="absolute bottom-20 left-1/2 w-12 h-20 opacity-[0.06] text-foreground hidden md:block"
+        viewBox="0 0 50 80"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <path d="M5 15 Q15 12, 25 18 L35 15" />
-        <path d="M30 10 L36 15 L30 20" />
+        {/* Rocket body */}
+        <path d="M25 5 Q15 20 15 40 L35 40 Q35 20 25 5" />
+        {/* Window */}
+        <circle cx="25" cy="25" r="6" />
+        {/* Fins */}
+        <path d="M15 35 L5 50 L15 45" />
+        <path d="M35 35 L45 50 L35 45" />
+        {/* Flame */}
+        <path d="M20 40 L25 55 L30 40" />
+        <path d="M22 40 L25 50 L28 40" />
       </svg>
     </div>
   );

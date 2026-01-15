@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { User, Session } from "@supabase/supabase-js";
 
@@ -7,10 +7,14 @@ export function useAuth() {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [initialized, setInitialized] = useState(false);
+  const initialized = useRef(false);
 
-  const checkAdminRole = useCallback(async (userId: string) => {
+  const checkAdminRole = useCallback(async (userId: string): Promise<boolean> => {
     try {
+      // Add timeout to prevent stalling
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3000);
+
       const { data, error } = await supabase
         .from("user_roles")
         .select("role")
@@ -18,6 +22,8 @@ export function useAuth() {
         .eq("role", "admin")
         .maybeSingle();
       
+      clearTimeout(timeoutId);
+
       if (error) {
         console.error("Error checking admin role:", error);
         return false;
@@ -29,44 +35,63 @@ export function useAuth() {
     }
   }, []);
 
-  // Timeout safety net to prevent infinite loading
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (loading && !initialized) {
-        console.warn('Auth loading timed out after 5 seconds');
-        setLoading(false);
-        setInitialized(true);
-      }
-    }, 5000);
+    // Prevent multiple initializations
+    if (initialized.current) return;
+    initialized.current = true;
 
-    return () => clearTimeout(timeout);
-  }, [loading, initialized]);
-
-  useEffect(() => {
     let mounted = true;
 
+    // CRITICAL: Set up auth listener FIRST (per Supabase best practices)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, currentSession) => {
+        if (!mounted) return;
+
+        setSession(currentSession);
+        setUser(currentSession?.user ?? null);
+
+        if (currentSession?.user) {
+          // Use setTimeout to avoid blocking the auth state change
+          setTimeout(async () => {
+            if (!mounted) return;
+            const adminStatus = await checkAdminRole(currentSession.user.id);
+            if (mounted) {
+              setIsAdmin(adminStatus);
+              setLoading(false);
+            }
+          }, 0);
+        } else {
+          setIsAdmin(false);
+          setLoading(false);
+        }
+      }
+    );
+
+    // THEN get initial session
     const initializeAuth = async () => {
       try {
-        const { data: { session }, error } = await supabase.auth.getSession();
+        const { data: { session: initialSession }, error } = await supabase.auth.getSession();
         
         if (error) {
           console.error("Error getting session:", error);
           if (mounted) {
             setLoading(false);
-            setInitialized(true);
           }
           return;
         }
 
         if (!mounted) return;
 
-        setSession(session);
-        setUser(session?.user ?? null);
+        // Only set these if the auth listener hasn't already set them
+        if (!session) {
+          setSession(initialSession);
+          setUser(initialSession?.user ?? null);
 
-        if (session?.user) {
-          const adminStatus = await checkAdminRole(session.user.id);
-          if (mounted) {
-            setIsAdmin(adminStatus);
+          if (initialSession?.user) {
+            const adminStatus = await checkAdminRole(initialSession.user.id);
+            if (mounted) {
+              setIsAdmin(adminStatus);
+            }
           }
         }
       } catch (error) {
@@ -74,42 +99,17 @@ export function useAuth() {
       } finally {
         if (mounted) {
           setLoading(false);
-          setInitialized(true);
         }
       }
     };
 
     initializeAuth();
 
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (!mounted) return;
-
-      setSession(session);
-      setUser(session?.user ?? null);
-
-      if (session?.user) {
-        const adminStatus = await checkAdminRole(session.user.id);
-        if (mounted) {
-          setIsAdmin(adminStatus);
-        }
-      } else {
-        setIsAdmin(false);
-      }
-      
-      // Ensure loading is false after auth state changes
-      if (loading) {
-        setLoading(false);
-        setInitialized(true);
-      }
-    });
-
     return () => {
       mounted = false;
       subscription.unsubscribe();
     };
-  }, [checkAdminRole, loading]);
+  }, [checkAdminRole]);
 
   const signIn = async (email: string, password: string) => {
     const { error } = await supabase.auth.signInWithPassword({

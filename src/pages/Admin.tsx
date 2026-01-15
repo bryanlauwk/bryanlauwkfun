@@ -39,6 +39,7 @@ import {
   Upload,
   Copy,
   GripVertical,
+  AlertCircle,
 } from "lucide-react";
 import {
   DndContext,
@@ -211,7 +212,11 @@ function SortableProjectCard({
 export default function Admin() {
   const navigate = useNavigate();
   const { user, isAdmin, loading: authLoading, signOut } = useAuth();
-  const { data: projects, isLoading: projectsLoading } = useAdminProjects();
+  
+  // Only fetch projects when user is confirmed admin
+  const shouldFetchProjects = !authLoading && !!user && isAdmin;
+  const { data: projects, isLoading: projectsLoading, error: projectsError } = useAdminProjects(shouldFetchProjects);
+  
   const createProject = useCreateProject();
   const updateProject = useUpdateProject();
   const deleteProject = useDeleteProject();
@@ -395,16 +400,59 @@ export default function Admin() {
     }
   };
 
-  if (authLoading || projectsLoading) {
+  // Loading state with specific messages
+  if (authLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-background">
+      <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-background">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <p className="text-sm text-muted-foreground">Signing you in...</p>
       </div>
     );
   }
 
-  if (!isAdmin) {
+  // Checking admin access
+  if (user && !isAdmin && !authLoading) {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-background">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <p className="text-sm text-muted-foreground">Checking admin access...</p>
+      </div>
+    );
+  }
+
+  if (!user || !isAdmin) {
     return null;
+  }
+
+  // Projects loading
+  if (projectsLoading) {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-background">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <p className="text-sm text-muted-foreground">Loading projects...</p>
+      </div>
+    );
+  }
+
+  // Projects error
+  if (projectsError) {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-background">
+        <AlertCircle className="h-12 w-12 text-destructive" />
+        <div className="text-center">
+          <h2 className="text-lg font-semibold text-foreground">Failed to load projects</h2>
+          <p className="text-sm text-muted-foreground">{(projectsError as Error).message}</p>
+        </div>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={() => window.location.reload()}>
+            Retry
+          </Button>
+          <Button variant="ghost" onClick={() => signOut()}>
+            Sign Out
+          </Button>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -506,77 +554,74 @@ export default function Admin() {
 
                 <div className="space-y-2">
                   <Label>Feature Image</Label>
-                  <div className="flex flex-col gap-2">
-                    {formData.image_url && (
-                      <img
-                        src={formData.image_url}
-                        alt="Preview"
-                        className="h-24 w-full rounded-lg object-cover"
-                      />
+                  <div className="flex items-center gap-4">
+                    {formData.image_url ? (
+                      <div className="relative h-20 w-32 overflow-hidden rounded-lg">
+                        <img
+                          src={formData.image_url}
+                          alt="Preview"
+                          className="h-full w-full object-cover"
+                        />
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setFormData((prev) => ({ ...prev, image_url: "" }))
+                          }
+                          className="absolute right-1 top-1 rounded-full bg-destructive p-1 text-destructive-foreground"
+                        >
+                          <Trash2 className="h-3 w-3" />
+                        </button>
+                      </div>
+                    ) : (
+                      <label className="flex h-20 w-32 cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-muted-foreground/25 hover:border-muted-foreground/50">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleImageUpload}
+                          className="hidden"
+                          disabled={uploading}
+                        />
+                        {uploading ? (
+                          <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+                        ) : (
+                          <Upload className="h-6 w-6 text-muted-foreground" />
+                        )}
+                      </label>
                     )}
-                    <label className="flex cursor-pointer items-center justify-center gap-2 rounded-lg border-2 border-dashed border-border p-4 transition-colors hover:border-primary">
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageUpload}
-                        className="hidden"
-                        disabled={uploading}
-                      />
-                      {uploading ? (
-                        <Loader2 className="h-5 w-5 animate-spin" />
-                      ) : (
-                        <Upload className="h-5 w-5 text-muted-foreground" />
-                      )}
-                      <span className="text-sm text-muted-foreground">
-                        {uploading ? "Uploading..." : "Upload image"}
-                      </span>
-                    </label>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="visibility">Visible on homepage</Label>
                   <Switch
-                    id="visible"
+                    id="visibility"
                     checked={formData.is_visible}
                     onCheckedChange={(checked) =>
                       setFormData((prev) => ({ ...prev, is_visible: checked }))
                     }
                   />
-                  <Label htmlFor="visible">Visible on homepage</Label>
                 </div>
 
-                <div className="flex justify-end gap-2 pt-4">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => setDialogOpen(false)}
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    type="submit"
-                    disabled={createProject.isPending || updateProject.isPending}
-                  >
-                    {createProject.isPending || updateProject.isPending ? (
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    ) : null}
-                    {editingProject ? "Update" : "Create"}
-                  </Button>
-                </div>
+                <Button
+                  type="submit"
+                  className="w-full"
+                  disabled={createProject.isPending || updateProject.isPending}
+                >
+                  {createProject.isPending || updateProject.isPending ? (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  ) : null}
+                  {editingProject ? "Update Project" : "Create Project"}
+                </Button>
               </form>
             </DialogContent>
           </Dialog>
         </div>
 
         {localProjects.length === 0 ? (
-          <Card>
+          <Card className="border-dashed">
             <CardContent className="flex flex-col items-center justify-center py-12">
-              <p className="text-muted-foreground">No projects yet.</p>
-              <Button
-                className="mt-4"
-                variant="outline"
-                onClick={() => handleOpenDialog()}
-              >
+              <p className="mb-4 text-muted-foreground">No projects yet</p>
+              <Button onClick={() => handleOpenDialog()}>
                 <Plus className="mr-2 h-4 w-4" />
                 Add your first project
               </Button>
@@ -592,7 +637,7 @@ export default function Admin() {
               items={localProjects.map((p) => p.id)}
               strategy={verticalListSortingStrategy}
             >
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {localProjects.map((project) => (
                   <SortableProjectCard
                     key={project.id}
