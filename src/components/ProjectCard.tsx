@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { useState, useRef, useEffect } from "react";
+import { Gamepad2 } from "lucide-react";
 
 interface ProjectCardProps {
   title: string;
@@ -20,7 +21,7 @@ const placeholderMessages = [
   "Ask again later",
   "Probably shipping soon (probably)",
   "Loading... forever",
-  "Under construction 🚧",
+  "Under construction",
   "Coffee required to unlock",
   "Top secret experiments",
 ];
@@ -125,7 +126,7 @@ export function ProjectCard({
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center">
-            <span className="text-4xl opacity-20">🎮</span>
+            <Gamepad2 className="h-10 w-10 opacity-20 text-primary-foreground" />
           </div>
         )}
       </div>

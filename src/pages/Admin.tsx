@@ -40,6 +40,7 @@ import {
   Copy,
   GripVertical,
   AlertCircle,
+  Gamepad2,
 } from "lucide-react";
 import {
   DndContext,
@@ -144,7 +145,7 @@ function SortableProjectCard({
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center">
-              <span className="text-2xl opacity-30">🎮</span>
+              <Gamepad2 className="h-6 w-6 opacity-30 text-primary-foreground" />
             </div>
           )}
         </div>

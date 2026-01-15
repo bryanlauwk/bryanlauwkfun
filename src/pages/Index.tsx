@@ -17,7 +17,7 @@ const placeholderProjects = [
   { id: "placeholder-4", title: "Coming Soon™", description: "Ask again later", href: "#", color: "bg-gradient-to-br from-emerald-400 to-teal-500", image_url: null },
   { id: "placeholder-5", title: "Untitled Project", description: "Probably shipping soon (probably)", href: "#", color: "bg-gradient-to-br from-amber-400 to-orange-500", image_url: null },
   { id: "placeholder-6", title: "Top Secret", description: "Loading... forever", href: "#", color: "bg-gradient-to-br from-red-400 to-pink-500", image_url: null },
-  { id: "placeholder-7", title: "Hidden Gem", description: "Under construction 🚧", href: "#", color: "bg-gradient-to-br from-indigo-400 to-blue-500", image_url: null },
+  { id: "placeholder-7", title: "Hidden Gem", description: "Under construction", href: "#", color: "bg-gradient-to-br from-indigo-400 to-blue-500", image_url: null },
   { id: "placeholder-8", title: "The Next Thing", description: "Coffee required to unlock", href: "#", color: "bg-gradient-to-br from-fuchsia-400 to-pink-500", image_url: null },
   { id: "placeholder-9", title: "???", description: "Top secret experiments", href: "#", color: "bg-gradient-to-br from-lime-400 to-green-500", image_url: null },
 ];
@@ -63,7 +63,7 @@ const Index = () => {
         <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
           <div className="bg-card/95 backdrop-blur-sm border border-border rounded-2xl p-8 shadow-2xl animate-bounce">
             <p className="text-2xl font-display font-bold text-center">
-              🎮 You found the secret! 🎮
+              You found the secret!
             </p>
             <p className="text-muted-foreground text-center mt-2">
               You're clearly a person of culture.
