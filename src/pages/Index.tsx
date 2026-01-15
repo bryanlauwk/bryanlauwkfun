@@ -1,6 +1,7 @@
 import { Header } from "@/components/Header";
 import { ProjectCard } from "@/components/ProjectCard";
 import { Footer } from "@/components/Footer";
+import { DoodleBackground } from "@/components/DoodleBackground";
 import { usePublicProjects } from "@/hooks/useProjects";
 import { Loader2 } from "lucide-react";
 
@@ -30,6 +31,54 @@ const fallbackProjects = [
     color: "bg-gradient-to-br from-blue-400 to-cyan-500",
     image_url: null,
   },
+  {
+    id: "4",
+    title: "Coming Soon",
+    description: "Stay tuned...",
+    href: "#",
+    color: "bg-gradient-to-br from-emerald-400 to-teal-500",
+    image_url: null,
+  },
+  {
+    id: "5",
+    title: "Coming Soon",
+    description: "Getting ready...",
+    href: "#",
+    color: "bg-gradient-to-br from-amber-400 to-orange-500",
+    image_url: null,
+  },
+  {
+    id: "6",
+    title: "Coming Soon",
+    description: "Almost there...",
+    href: "#",
+    color: "bg-gradient-to-br from-red-400 to-pink-500",
+    image_url: null,
+  },
+  {
+    id: "7",
+    title: "Coming Soon",
+    description: "Something fun ahead...",
+    href: "#",
+    color: "bg-gradient-to-br from-indigo-400 to-blue-500",
+    image_url: null,
+  },
+  {
+    id: "8",
+    title: "Coming Soon",
+    description: "Big things coming...",
+    href: "#",
+    color: "bg-gradient-to-br from-fuchsia-400 to-pink-500",
+    image_url: null,
+  },
+  {
+    id: "9",
+    title: "Coming Soon",
+    description: "Watch this space...",
+    href: "#",
+    color: "bg-gradient-to-br from-lime-400 to-green-500",
+    image_url: null,
+  },
 ];
 
 const Index = () => {
@@ -38,7 +87,8 @@ const Index = () => {
   const displayProjects = projects?.length ? projects : fallbackProjects;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      <DoodleBackground />
       <Header />
 
       {/* Main content */}
