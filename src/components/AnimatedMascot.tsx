@@ -4,13 +4,14 @@ import { ConfettiBurst } from "./ConfettiBurst";
 
 interface AnimatedMascotProps {
   className?: string;
-  size?: "small" | "medium" | "large";
+  size?: "small" | "medium" | "large" | "hero";
 }
 
 const sizeMap = {
   small: { width: 48, height: 48 },
   medium: { width: 80, height: 80 },
   large: { width: 120, height: 120 },
+  hero: { width: 160, height: 160 },
 };
 
 const thoughts = [
@@ -105,7 +106,7 @@ export function AnimatedMascot({ className, size = "medium" }: AnimatedMascotPro
           viewBox="0 0 120 120"
           className={cn(
             "transition-transform hover:scale-110",
-            isWaving && "animate-wiggle"
+            isWaving ? "animate-wiggle" : "animate-float-mascot"
           )}
         >
           {/* Face base */}
@@ -161,6 +162,13 @@ export function AnimatedMascot({ className, size = "medium" }: AnimatedMascotPro
           }
           .animate-wiggle {
             animation: wiggle 0.15s ease-in-out 4;
+          }
+          @keyframes float-mascot {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-6px) rotate(2deg); }
+          }
+          .animate-float-mascot {
+            animation: float-mascot 3s ease-in-out infinite;
           }
         `}</style>
       </div>
