@@ -7,108 +7,260 @@ interface HeroDoodleProps {
 export const HeroDoodle = ({ className }: HeroDoodleProps) => {
   return (
     <div className={cn("relative", className)}>
-      {/* Main character: Friendly game controller with face */}
+      {/* Penrose Stairs with climbing stick figure */}
       <svg
-        viewBox="0 0 200 160"
+        viewBox="0 0 200 180"
         className="w-full h-full animate-float"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        {/* Controller body - rounded rectangle with gradient */}
         <defs>
-          <linearGradient id="controllerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.9" />
-            <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.7" />
+          {/* Gradients for 3D stair faces */}
+          <linearGradient id="stairTop" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.3" />
+            <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.15" />
           </linearGradient>
-          <linearGradient id="highlightGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="white" stopOpacity="0.3" />
-            <stop offset="100%" stopColor="white" stopOpacity="0" />
+          <linearGradient id="stairLeft" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.4" />
+            <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.2" />
+          </linearGradient>
+          <linearGradient id="stairRight" x1="100%" y1="0%" x2="0%" y2="0%">
+            <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.2" />
+            <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.1" />
           </linearGradient>
         </defs>
-        
+
         {/* Shadow */}
-        <ellipse cx="100" cy="150" rx="60" ry="8" fill="hsl(var(--foreground))" opacity="0.1" />
+        <ellipse cx="100" cy="170" rx="70" ry="8" fill="hsl(var(--foreground))" opacity="0.1" />
+
+        {/* === PENROSE STAIRS === */}
+        {/* The impossible staircase - 4 connected stair sections forming a loop */}
         
-        {/* Controller body */}
-        <path
-          d="M30 60 Q30 30, 60 30 L140 30 Q170 30, 170 60 L170 100 Q170 130, 140 130 L60 130 Q30 130, 30 100 Z"
-          fill="url(#controllerGradient)"
-          stroke="hsl(var(--foreground))"
-          strokeWidth="3"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        
-        {/* Highlight shine */}
-        <path
-          d="M40 55 Q40 40, 55 40 L145 40 Q160 40, 160 55 L160 65 Q100 75, 40 65 Z"
-          fill="url(#highlightGradient)"
-        />
-        
-        {/* Left grip */}
-        <path
-          d="M30 80 Q10 80, 10 100 L10 115 Q10 130, 30 130"
-          fill="url(#controllerGradient)"
-          stroke="hsl(var(--foreground))"
-          strokeWidth="3"
-          strokeLinecap="round"
-        />
-        
-        {/* Right grip */}
-        <path
-          d="M170 80 Q190 80, 190 100 L190 115 Q190 130, 170 130"
-          fill="url(#controllerGradient)"
-          stroke="hsl(var(--foreground))"
-          strokeWidth="3"
-          strokeLinecap="round"
-        />
-        
-        {/* D-pad */}
-        <g transform="translate(55, 65)">
-          <rect x="8" y="0" width="9" height="25" rx="2" fill="hsl(var(--foreground))" opacity="0.8" />
-          <rect x="0" y="8" width="25" height="9" rx="2" fill="hsl(var(--foreground))" opacity="0.8" />
+        {/* Section 1: Top-left stairs going UP (visually) */}
+        <g>
+          {/* Top face */}
+          <path
+            d="M30 70 L30 50 L70 30 L70 50 Z"
+            fill="url(#stairTop)"
+            stroke="hsl(var(--foreground))"
+            strokeWidth="2"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M30 90 L30 70 L70 50 L70 70 Z"
+            fill="url(#stairTop)"
+            stroke="hsl(var(--foreground))"
+            strokeWidth="2"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M30 110 L30 90 L70 70 L70 90 Z"
+            fill="url(#stairTop)"
+            stroke="hsl(var(--foreground))"
+            strokeWidth="2"
+            strokeLinejoin="round"
+          />
         </g>
-        
-        {/* Action buttons */}
-        <g transform="translate(125, 55)">
-          <circle cx="20" cy="10" r="8" fill="#FF6B6B" stroke="hsl(var(--foreground))" strokeWidth="2" />
-          <circle cx="35" cy="25" r="8" fill="#4ECDC4" stroke="hsl(var(--foreground))" strokeWidth="2" />
-          <circle cx="5" cy="25" r="8" fill="#FFE66D" stroke="hsl(var(--foreground))" strokeWidth="2" />
-          <circle cx="20" cy="40" r="8" fill="#95E1D3" stroke="hsl(var(--foreground))" strokeWidth="2" />
+
+        {/* Section 2: Top-right stairs going UP */}
+        <g>
+          <path
+            d="M70 30 L70 50 L110 30 L110 10 Z"
+            fill="url(#stairRight)"
+            stroke="hsl(var(--foreground))"
+            strokeWidth="2"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M110 10 L110 30 L150 10 L150 -10 Z"
+            fill="url(#stairRight)"
+            stroke="hsl(var(--foreground))"
+            strokeWidth="2"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M150 -10 L150 10 L170 0 L170 -20 Z"
+            fill="url(#stairRight)"
+            stroke="hsl(var(--foreground))"
+            strokeWidth="2"
+            strokeLinejoin="round"
+          />
         </g>
-        
-        {/* FACE - The kawaii part! */}
-        {/* Left eye */}
-        <g transform="translate(75, 85)">
-          <ellipse cx="0" cy="0" rx="8" ry="10" fill="hsl(var(--foreground))" />
-          <ellipse cx="2" cy="-2" rx="3" ry="4" fill="white" />
+
+        {/* Section 3: Right side stairs going DOWN (but connecting impossibly) */}
+        <g>
+          <path
+            d="M170 0 L170 40 L150 50 L150 10 Z"
+            fill="url(#stairLeft)"
+            stroke="hsl(var(--foreground))"
+            strokeWidth="2"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M170 40 L170 80 L150 90 L150 50 Z"
+            fill="url(#stairLeft)"
+            stroke="hsl(var(--foreground))"
+            strokeWidth="2"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M170 80 L170 120 L150 130 L150 90 Z"
+            fill="url(#stairLeft)"
+            stroke="hsl(var(--foreground))"
+            strokeWidth="2"
+            strokeLinejoin="round"
+          />
         </g>
-        
-        {/* Right eye */}
-        <g transform="translate(115, 85)">
-          <ellipse cx="0" cy="0" rx="8" ry="10" fill="hsl(var(--foreground))" />
-          <ellipse cx="2" cy="-2" rx="3" ry="4" fill="white" />
+
+        {/* Section 4: Bottom stairs connecting back (the impossible connection) */}
+        <g>
+          <path
+            d="M150 130 L150 150 L110 140 L110 120 Z"
+            fill="url(#stairTop)"
+            stroke="hsl(var(--foreground))"
+            strokeWidth="2"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M110 120 L110 140 L70 130 L70 110 Z"
+            fill="url(#stairTop)"
+            stroke="hsl(var(--foreground))"
+            strokeWidth="2"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M70 110 L70 130 L30 120 L30 100 Z"
+            fill="url(#stairTop)"
+            stroke="hsl(var(--foreground))"
+            strokeWidth="2"
+            strokeLinejoin="round"
+          />
         </g>
-        
-        {/* Happy smile */}
+
+        {/* Inner void (the center of the impossible staircase) */}
         <path
-          d="M85 105 Q100 120, 115 105"
-          fill="none"
+          d="M50 70 L90 50 L130 60 L130 100 L90 110 L50 90 Z"
+          fill="hsl(var(--background))"
           stroke="hsl(var(--foreground))"
-          strokeWidth="3"
-          strokeLinecap="round"
+          strokeWidth="1.5"
+          strokeOpacity="0.3"
         />
-        
-        {/* Blush marks */}
-        <ellipse cx="65" cy="100" rx="6" ry="4" fill="#FFB6C1" opacity="0.6" />
-        <ellipse cx="135" cy="100" rx="6" ry="4" fill="#FFB6C1" opacity="0.6" />
-        
-        {/* Sparkles around */}
+
+        {/* === STICK FIGURE CLIMBING === */}
+        <g transform="translate(38, 58)">
+          {/* Head */}
+          <circle
+            cx="12"
+            cy="0"
+            r="8"
+            fill="hsl(var(--background))"
+            stroke="hsl(var(--foreground))"
+            strokeWidth="2.5"
+          />
+          
+          {/* Happy face */}
+          <circle cx="9" cy="-2" r="1.5" fill="hsl(var(--foreground))" />
+          <circle cx="15" cy="-2" r="1.5" fill="hsl(var(--foreground))" />
+          <path
+            d="M8 3 Q12 7, 16 3"
+            fill="none"
+            stroke="hsl(var(--foreground))"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          />
+          
+          {/* Body */}
+          <line
+            x1="12"
+            y1="8"
+            x2="12"
+            y2="28"
+            stroke="hsl(var(--foreground))"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+          />
+          
+          {/* Arms - reaching up like climbing */}
+          <line
+            x1="12"
+            y1="14"
+            x2="0"
+            y2="8"
+            stroke="hsl(var(--foreground))"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+          />
+          <line
+            x1="12"
+            y1="14"
+            x2="24"
+            y2="20"
+            stroke="hsl(var(--foreground))"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+          />
+          
+          {/* Legs - one stepping up */}
+          <line
+            x1="12"
+            y1="28"
+            x2="4"
+            y2="40"
+            stroke="hsl(var(--foreground))"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+          />
+          <line
+            x1="12"
+            y1="28"
+            x2="22"
+            y2="35"
+            stroke="hsl(var(--foreground))"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+          />
+        </g>
+
+        {/* Motion lines near the figure */}
+        <g opacity="0.5">
+          <line
+            x1="25"
+            y1="75"
+            x2="20"
+            y2="80"
+            stroke="hsl(var(--foreground))"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          />
+          <line
+            x1="28"
+            y1="80"
+            x2="22"
+            y2="86"
+            stroke="hsl(var(--foreground))"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          />
+        </g>
+
+        {/* Sparkles showing the infinite nature */}
         <g className="animate-pulse">
-          <path d="M25 20 L28 25 L25 30 L22 25 Z" fill="#FFE66D" />
-          <path d="M175 25 L178 30 L175 35 L172 30 Z" fill="#4ECDC4" />
-          <path d="M15 50 L17 53 L15 56 L13 53 Z" fill="#FF6B6B" />
-          <path d="M185 55 L187 58 L185 61 L183 58 Z" fill="#95E1D3" />
+          <circle cx="90" cy="25" r="2" fill="hsl(var(--primary))" />
+          <circle cx="160" cy="55" r="2" fill="hsl(var(--primary))" />
+          <circle cx="60" cy="125" r="2" fill="hsl(var(--primary))" />
+          <path d="M175 100 L178 105 L175 110 L172 105 Z" fill="hsl(var(--primary))" opacity="0.7" />
+          <path d="M25 45 L28 50 L25 55 L22 50 Z" fill="hsl(var(--primary))" opacity="0.7" />
+        </g>
+
+        {/* Small footprints showing the loop (subtle) */}
+        <g opacity="0.2">
+          <ellipse cx="55" cy="118" rx="3" ry="1.5" fill="hsl(var(--foreground))" />
+          <ellipse cx="95" cy="128" rx="3" ry="1.5" fill="hsl(var(--foreground))" />
+          <ellipse cx="135" cy="118" rx="3" ry="1.5" fill="hsl(var(--foreground))" />
+          <ellipse cx="158" cy="70" rx="3" ry="1.5" fill="hsl(var(--foreground))" />
+          <ellipse cx="158" cy="30" rx="3" ry="1.5" fill="hsl(var(--foreground))" />
+          <ellipse cx="130" cy="18" rx="3" ry="1.5" fill="hsl(var(--foreground))" />
+          <ellipse cx="90" cy="38" rx="3" ry="1.5" fill="hsl(var(--foreground))" />
         </g>
       </svg>
     </div>
