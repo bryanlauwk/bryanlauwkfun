@@ -1,109 +1,189 @@
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 interface HeroDoodleProps {
   className?: string;
 }
 
 export const HeroDoodle = ({ className }: HeroDoodleProps) => {
+  const [isWaving, setIsWaving] = useState(false);
+  const [jumpCount, setJumpCount] = useState(0);
+
+  const handleClick = () => {
+    setJumpCount(prev => prev + 1);
+    setTimeout(() => setJumpCount(prev => prev - 1), 500);
+  };
+
   return (
-    <svg
-      className={cn("w-full h-full", className)}
-      viewBox="0 0 200 180"
-      fill="none"
+    <div 
+      className={cn("w-full h-full flex items-center justify-center cursor-pointer select-none", className)}
+      onClick={handleClick}
+      onMouseEnter={() => setIsWaving(true)}
+      onMouseLeave={() => setIsWaving(false)}
     >
-      {/* Floating geometric shapes - playful abstract doodle */}
-      
-      {/* Large circle with gradient */}
-      <defs>
-        <linearGradient id="circleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="hsl(340 82% 52%)" />
-          <stop offset="100%" stopColor="hsl(270 67% 58%)" />
-        </linearGradient>
-        <linearGradient id="triangleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="hsl(48 100% 67%)" />
-          <stop offset="100%" stopColor="hsl(16 100% 66%)" />
-        </linearGradient>
-        <linearGradient id="squareGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="hsl(190 80% 50%)" />
-          <stop offset="100%" stopColor="hsl(160 60% 60%)" />
-        </linearGradient>
-      </defs>
-
-      {/* Floating shapes with animation classes */}
-      <g className="animate-float" style={{ transformOrigin: "center" }}>
-        {/* Main circle */}
-        <circle
-          cx="100"
-          cy="70"
-          r="45"
-          fill="url(#circleGrad)"
-          opacity="0.9"
-        />
-        
-        {/* Eye-like detail on circle */}
-        <circle cx="85" cy="60" r="12" fill="white" opacity="0.9" />
-        <circle cx="115" cy="60" r="12" fill="white" opacity="0.9" />
-        <circle cx="88" cy="62" r="6" fill="hsl(240 10% 15%)" />
-        <circle cx="118" cy="62" r="6" fill="hsl(240 10% 15%)" />
-        <circle cx="90" cy="60" r="2" fill="white" />
-        <circle cx="120" cy="60" r="2" fill="white" />
-        
-        {/* Smile */}
+      <svg
+        viewBox="0 0 200 200"
+        fill="none"
+        className={cn(
+          "w-full h-full transition-transform duration-300",
+          jumpCount > 0 && "animate-bounce"
+        )}
+      >
+        {/* Ground line */}
         <path
-          d="M 80 82 Q 100 100 120 82"
-          stroke="hsl(240 10% 15%)"
-          strokeWidth="3"
+          d="M 20 180 Q 100 175 180 180"
+          stroke="currentColor"
+          strokeWidth="2"
           strokeLinecap="round"
-          fill="none"
+          className="text-muted-foreground/30"
+          strokeDasharray="4 4"
         />
-      </g>
 
-      {/* Triangle shape */}
-      <g 
-        className="animate-float" 
-        style={{ transformOrigin: "center", animationDelay: "0.5s" }}
-      >
-        <path
-          d="M 40 140 L 70 100 L 100 140 Z"
-          fill="url(#triangleGrad)"
-          opacity="0.85"
-        />
-      </g>
+        {/* Stick Figure Group */}
+        <g className="origin-bottom" style={{ transformOrigin: '100px 170px' }}>
+          
+          {/* Left Leg - Walking animation */}
+          <line
+            x1="100"
+            y1="130"
+            x2="80"
+            y2="170"
+            stroke="currentColor"
+            strokeWidth="4"
+            strokeLinecap="round"
+            className="text-foreground animate-walk-left-leg"
+            style={{ transformOrigin: '100px 130px' }}
+          />
+          
+          {/* Right Leg - Walking animation */}
+          <line
+            x1="100"
+            y1="130"
+            x2="120"
+            y2="170"
+            stroke="currentColor"
+            strokeWidth="4"
+            strokeLinecap="round"
+            className="text-foreground animate-walk-right-leg"
+            style={{ transformOrigin: '100px 130px' }}
+          />
 
-      {/* Square/diamond shape */}
-      <g 
-        className="animate-float"
-        style={{ transformOrigin: "center", animationDelay: "1s" }}
-      >
-        <rect
-          x="130"
-          y="110"
-          width="40"
-          height="40"
-          rx="8"
-          fill="url(#squareGrad)"
-          opacity="0.85"
-          transform="rotate(15 150 130)"
-        />
-      </g>
+          {/* Body */}
+          <line
+            x1="100"
+            y1="80"
+            x2="100"
+            y2="130"
+            stroke="currentColor"
+            strokeWidth="4"
+            strokeLinecap="round"
+            className="text-foreground"
+          />
 
-      {/* Small decorative elements */}
-      <circle cx="30" cy="50" r="8" fill="hsl(48 100% 67%)" opacity="0.6" />
-      <circle cx="170" cy="40" r="6" fill="hsl(160 60% 60%)" opacity="0.5" />
-      <circle cx="160" cy="160" r="5" fill="hsl(340 82% 52%)" opacity="0.4" />
-      <circle cx="25" cy="120" r="4" fill="hsl(190 80% 50%)" opacity="0.5" />
+          {/* Left Arm */}
+          <line
+            x1="100"
+            y1="95"
+            x2="70"
+            y2="115"
+            stroke="currentColor"
+            strokeWidth="4"
+            strokeLinecap="round"
+            className="text-foreground animate-walk-left-arm"
+            style={{ transformOrigin: '100px 95px' }}
+          />
 
-      {/* Stars */}
-      <path
-        d="M 180 80 L 182 86 L 188 86 L 183 90 L 185 96 L 180 92 L 175 96 L 177 90 L 172 86 L 178 86 Z"
-        fill="hsl(48 100% 67%)"
-        opacity="0.7"
-      />
-      <path
-        d="M 20 90 L 21.5 94 L 26 94 L 22.5 97 L 24 101 L 20 98 L 16 101 L 17.5 97 L 14 94 L 18.5 94 Z"
-        fill="hsl(340 82% 52%)"
-        opacity="0.6"
-      />
-    </svg>
+          {/* Right Arm - Waves on hover */}
+          <line
+            x1="100"
+            y1="95"
+            x2={isWaving ? "135" : "130"}
+            y2={isWaving ? "70" : "115"}
+            stroke="currentColor"
+            strokeWidth="4"
+            strokeLinecap="round"
+            className={cn(
+              "text-foreground transition-all duration-200",
+              isWaving ? "animate-wave" : "animate-walk-right-arm"
+            )}
+            style={{ transformOrigin: '100px 95px' }}
+          />
+
+          {/* Hand wave indicator */}
+          {isWaving && (
+            <g className="animate-pulse">
+              <text x="145" y="65" fontSize="16" className="fill-primary">👋</text>
+            </g>
+          )}
+
+          {/* Head */}
+          <circle
+            cx="100"
+            cy="55"
+            r="25"
+            stroke="currentColor"
+            strokeWidth="4"
+            fill="hsl(var(--background))"
+            className="text-foreground"
+          />
+
+          {/* Face - Eyes */}
+          <g className="animate-blink">
+            <circle cx="90" cy="50" r="4" fill="currentColor" className="text-foreground" />
+            <circle cx="110" cy="50" r="4" fill="currentColor" className="text-foreground" />
+          </g>
+
+          {/* Smile */}
+          <path
+            d="M 88 62 Q 100 72 112 62"
+            stroke="currentColor"
+            strokeWidth="3"
+            strokeLinecap="round"
+            fill="none"
+            className="text-foreground"
+          />
+
+          {/* Blush marks */}
+          <ellipse cx="78" cy="58" rx="5" ry="3" fill="hsl(var(--primary))" opacity="0.3" />
+          <ellipse cx="122" cy="58" rx="5" ry="3" fill="hsl(var(--primary))" opacity="0.3" />
+
+        </g>
+
+        {/* Action lines when jumping */}
+        {jumpCount > 0 && (
+          <g className="animate-fade-in">
+            <line x1="60" y1="160" x2="50" y2="170" stroke="currentColor" strokeWidth="2" className="text-primary" />
+            <line x1="65" y1="155" x2="55" y2="160" stroke="currentColor" strokeWidth="2" className="text-primary" />
+            <line x1="140" y1="160" x2="150" y2="170" stroke="currentColor" strokeWidth="2" className="text-primary" />
+            <line x1="135" y1="155" x2="145" y2="160" stroke="currentColor" strokeWidth="2" className="text-primary" />
+          </g>
+        )}
+
+        {/* Floating elements around the character */}
+        <g className="animate-float" style={{ animationDelay: '0s' }}>
+          <text x="35" y="45" fontSize="20">✨</text>
+        </g>
+        <g className="animate-float" style={{ animationDelay: '0.5s' }}>
+          <text x="155" y="35" fontSize="16">⭐</text>
+        </g>
+        <g className="animate-float" style={{ animationDelay: '1s' }}>
+          <text x="25" y="120" fontSize="14">💫</text>
+        </g>
+        <g className="animate-float" style={{ animationDelay: '1.5s' }}>
+          <text x="165" y="100" fontSize="18">✨</text>
+        </g>
+
+        {/* Click me hint */}
+        <text 
+          x="100" 
+          y="195" 
+          textAnchor="middle" 
+          fontSize="10" 
+          className="fill-muted-foreground/50 animate-pulse"
+        >
+          click me!
+        </text>
+      </svg>
+    </div>
   );
 };
