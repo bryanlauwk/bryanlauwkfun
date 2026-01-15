@@ -148,77 +148,92 @@ export const HeroDoodle = ({ className }: HeroDoodleProps) => {
 
         {/* === STICK FIGURE CLIMBING === */}
         <g transform="translate(38, 58)">
-          {/* Head */}
-          <circle
-            cx="12"
-            cy="0"
-            r="8"
-            fill="hsl(var(--background))"
-            stroke="hsl(var(--foreground))"
-            strokeWidth="2.5"
-          />
+          {/* Body group with subtle bob animation */}
+          <g className="animate-bob-body" style={{ transformOrigin: '12px 18px' }}>
+            {/* Head */}
+            <circle
+              cx="12"
+              cy="0"
+              r="8"
+              fill="hsl(var(--background))"
+              stroke="hsl(var(--foreground))"
+              strokeWidth="2.5"
+            />
+            
+            {/* Happy face */}
+            <circle cx="9" cy="-2" r="1.5" fill="hsl(var(--foreground))" />
+            <circle cx="15" cy="-2" r="1.5" fill="hsl(var(--foreground))" />
+            <path
+              d="M8 3 Q12 7, 16 3"
+              fill="none"
+              stroke="hsl(var(--foreground))"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+            
+            {/* Body */}
+            <line
+              x1="12"
+              y1="8"
+              x2="12"
+              y2="28"
+              stroke="hsl(var(--foreground))"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+            />
+          </g>
           
-          {/* Happy face */}
-          <circle cx="9" cy="-2" r="1.5" fill="hsl(var(--foreground))" />
-          <circle cx="15" cy="-2" r="1.5" fill="hsl(var(--foreground))" />
-          <path
-            d="M8 3 Q12 7, 16 3"
-            fill="none"
-            stroke="hsl(var(--foreground))"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-          />
+          {/* Left arm - swinging opposite to left leg */}
+          <g className="animate-walk-left-arm" style={{ transformOrigin: '12px 14px' }}>
+            <line
+              x1="12"
+              y1="14"
+              x2="0"
+              y2="8"
+              stroke="hsl(var(--foreground))"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+            />
+          </g>
           
-          {/* Body */}
-          <line
-            x1="12"
-            y1="8"
-            x2="12"
-            y2="28"
-            stroke="hsl(var(--foreground))"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-          />
+          {/* Right arm - swinging opposite to right leg */}
+          <g className="animate-walk-right-arm" style={{ transformOrigin: '12px 14px' }}>
+            <line
+              x1="12"
+              y1="14"
+              x2="24"
+              y2="20"
+              stroke="hsl(var(--foreground))"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+            />
+          </g>
           
-          {/* Arms - reaching up like climbing */}
-          <line
-            x1="12"
-            y1="14"
-            x2="0"
-            y2="8"
-            stroke="hsl(var(--foreground))"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-          />
-          <line
-            x1="12"
-            y1="14"
-            x2="24"
-            y2="20"
-            stroke="hsl(var(--foreground))"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-          />
+          {/* Left leg - stepping motion */}
+          <g className="animate-walk-left-leg" style={{ transformOrigin: '12px 28px' }}>
+            <line
+              x1="12"
+              y1="28"
+              x2="4"
+              y2="40"
+              stroke="hsl(var(--foreground))"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+            />
+          </g>
           
-          {/* Legs - one stepping up */}
-          <line
-            x1="12"
-            y1="28"
-            x2="4"
-            y2="40"
-            stroke="hsl(var(--foreground))"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-          />
-          <line
-            x1="12"
-            y1="28"
-            x2="22"
-            y2="35"
-            stroke="hsl(var(--foreground))"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-          />
+          {/* Right leg - opposite stepping motion */}
+          <g className="animate-walk-right-leg" style={{ transformOrigin: '12px 28px' }}>
+            <line
+              x1="12"
+              y1="28"
+              x2="22"
+              y2="35"
+              stroke="hsl(var(--foreground))"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+            />
+          </g>
         </g>
 
         {/* Motion lines near the figure */}
