@@ -111,14 +111,6 @@ export const HeroDoodle = ({ className }: HeroDoodleProps) => {
           <path d="M185 55 L187 58 L185 61 L183 58 Z" fill="#95E1D3" />
         </g>
       </svg>
-      
-      {/* Floating elements around the controller */}
-      <div className="absolute -top-4 -right-4 text-2xl animate-bounce" style={{ animationDelay: '0.5s' }}>
-        ✨
-      </div>
-      <div className="absolute -bottom-2 -left-4 text-xl animate-bounce" style={{ animationDelay: '0.2s' }}>
-        🎮
-      </div>
     </div>
   );
 };
