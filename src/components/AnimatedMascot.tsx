@@ -3,12 +3,21 @@ import { cn } from "@/lib/utils";
 
 interface AnimatedMascotProps {
   className?: string;
+  size?: "small" | "medium" | "large";
 }
 
-export function AnimatedMascot({ className }: AnimatedMascotProps) {
+const sizeMap = {
+  small: { width: 48, height: 48 },
+  medium: { width: 80, height: 80 },
+  large: { width: 120, height: 120 },
+};
+
+export function AnimatedMascot({ className, size = "medium" }: AnimatedMascotProps) {
   const [isWaving, setIsWaving] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [eyeOffset, setEyeOffset] = useState({ x: 0, y: 0 });
+
+  const dimensions = sizeMap[size];
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -41,12 +50,12 @@ export function AnimatedMascot({ className }: AnimatedMascotProps) {
 
   return (
     <div 
-      className={cn("cursor-pointer select-none", className)}
+      className={cn("cursor-pointer select-none inline-flex", className)}
       onClick={handleClick}
     >
       <svg
-        width="120"
-        height="120"
+        width={dimensions.width}
+        height={dimensions.height}
         viewBox="0 0 120 120"
         className={cn(
           "transition-transform",
