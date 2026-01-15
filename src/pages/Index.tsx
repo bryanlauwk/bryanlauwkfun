@@ -2,6 +2,7 @@ import { Header } from "@/components/Header";
 import { ProjectCard } from "@/components/ProjectCard";
 import { Footer } from "@/components/Footer";
 import { DoodleBackground } from "@/components/DoodleBackground";
+import { HeroDoodle } from "@/components/HeroDoodle";
 import { usePublicProjects } from "@/hooks/useProjects";
 import { Loader2 } from "lucide-react";
 
@@ -99,8 +100,38 @@ const Index = () => {
       <DoodleBackground />
       <Header />
 
+      {/* Hero Section - The Purple Cow! */}
+      <section className="container mx-auto px-4 py-12 md:py-20">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
+          {/* Hero Doodle - Front and Center */}
+          <div className="w-48 h-40 md:w-64 md:h-52 flex-shrink-0">
+            <HeroDoodle className="w-full h-full drop-shadow-lg" />
+          </div>
+          
+          {/* Hero Copy */}
+          <div className="text-center md:text-left max-w-md">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+              Welcome to my playground! 
+              <span className="inline-block ml-2 animate-bounce">👋</span>
+            </h1>
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+              A collection of fun experiments, games, and creative projects. 
+              <span className="text-primary font-medium"> Let's explore together!</span>
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Main content */}
       <main className="container mx-auto px-4 pb-24">
+        {/* Section header */}
+        <div className="text-center mb-10">
+          <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-2">
+            🎯 Projects & Experiments
+          </h2>
+          <p className="text-muted-foreground">Click any card to explore</p>
+        </div>
+
         {isLoading ? (
           <div className="flex items-center justify-center py-12">
             <Loader2 className="h-8 w-8 animate-spin text-primary" />
