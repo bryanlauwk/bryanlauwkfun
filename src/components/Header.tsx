@@ -2,10 +2,8 @@ import { AnimatedMascot } from "./AnimatedMascot";
 import { ThemeToggle } from "./ThemeToggle";
 import { HeroDoodle } from "./HeroDoodle";
 import { DoodleIcon } from "./DoodleIcon";
-
 export function Header() {
-  return (
-    <header className="relative py-6 md:py-10">
+  return <header className="relative py-6 md:py-10">
       {/* Theme toggle - top right */}
       <div className="absolute right-4 top-4 md:right-8 md:top-6 z-10">
         <ThemeToggle />
@@ -45,13 +43,8 @@ export function Header() {
 
           {/* Right: Welcome Copy */}
           <div className="text-center md:text-left max-w-xs">
-            <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground mb-2 flex items-center justify-center md:justify-start gap-2">
-              Welcome!
-              <DoodleIcon type="wave" size="lg" className="text-primary" />
-            </h1>
-            <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-              A collection of fun experiments, games, and creative projects.
-            </p>
+            
+            
           </div>
         </div>
       </div>
@@ -87,6 +80,5 @@ export function Header() {
           transform: scale(1.1);
         }
       `}</style>
-    </header>
-  );
+    </header>;
 }
