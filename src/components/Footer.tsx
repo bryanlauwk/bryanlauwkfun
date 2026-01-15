@@ -1,4 +1,5 @@
 import { Github, Twitter, Mail } from "lucide-react";
+import { DoodleIcon } from "./DoodleIcon";
 
 const socialLinks = [
   {
@@ -24,9 +25,10 @@ export function Footer() {
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center gap-6">
           {/* About */}
-          <p className="max-w-md text-center text-muted-foreground">
+          <p className="max-w-md text-center text-muted-foreground flex items-center justify-center gap-1 flex-wrap">
             A collection of games, experiments, and interactive stuff by Bryan.
-            Made with curiosity and a lot of coffee ☕
+            Made with curiosity and a lot of 
+            <DoodleIcon type="coffee" size="md" className="text-muted-foreground mx-0.5" />
           </p>
 
           {/* Social Links */}
