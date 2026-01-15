@@ -3,85 +3,64 @@ import { ThemeToggle } from "./ThemeToggle";
 
 export function Header() {
   return (
-    <header className="relative py-10 md:py-16">
+    <header className="relative py-8 md:py-12">
       {/* Theme toggle - top right */}
-      <div className="absolute right-4 top-4 md:right-8 md:top-8">
+      <div className="absolute right-4 top-4 md:right-8 md:top-6">
         <ThemeToggle />
       </div>
 
       <div className="container mx-auto flex flex-col items-center px-4">
-        {/* Creative title layout around mascot */}
-        <div className="relative flex items-center justify-center gap-3 md:gap-5">
-          {/* "bryan" - left side */}
-          <span className="title-text title-left font-display text-4xl font-bold tracking-tight text-foreground md:text-6xl lg:text-7xl">
+        {/* Compact single-line logo like neal.fun */}
+        <div className="logo-container flex items-center justify-center">
+          <span className="logo-text font-display text-5xl font-bold uppercase tracking-tight text-foreground md:text-6xl lg:text-7xl">
             bryan
           </span>
 
-          {/* Mascot - center */}
-          <div className="relative z-10 mx-2 md:mx-4">
-            <AnimatedMascot className="animate-bounce-slow h-20 w-20 md:h-28 md:w-28 lg:h-36 lg:w-36" />
+          {/* Mascot - inline as visual separator */}
+          <div className="logo-mascot mx-1 md:mx-2">
+            <AnimatedMascot size="small" />
           </div>
 
-          {/* "lauwk" - right side */}
-          <span className="title-text title-right font-display text-4xl font-bold tracking-tight text-foreground md:text-6xl lg:text-7xl">
-            lauwk
+          <span className="logo-text font-display text-5xl font-bold uppercase tracking-tight text-primary md:text-6xl lg:text-7xl">
+            fun
           </span>
         </div>
 
-        {/* "fun" - centered below mascot with vibrant primary color */}
-        <span className="title-text title-fun font-display -mt-1 text-5xl font-bold tracking-wide text-primary md:-mt-2 md:text-7xl lg:text-8xl">
-          fun
-        </span>
-
         {/* Tagline */}
-        <p className="mt-6 font-display text-center text-lg text-muted-foreground md:text-xl">
+        <p className="mt-4 font-display text-center text-base text-muted-foreground md:text-lg">
           games and stuff by Bryan
         </p>
       </div>
 
       <style>{`
-        @keyframes bounce-slow {
-          0%, 100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-12px);
-          }
-        }
-        
-        .animate-bounce-slow {
-          animation: bounce-slow 2.5s ease-in-out infinite;
+        .logo-container {
+          gap: 0;
         }
 
-        .title-text {
-          transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        .logo-text {
+          line-height: 1;
+          transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
           cursor: default;
-          text-shadow: 0 2px 10px hsl(var(--foreground) / 0.1);
         }
 
-        .title-text:hover {
-          transform: scale(1.08);
+        .logo-text:first-child {
+          letter-spacing: -0.02em;
         }
 
-        .title-left:hover {
-          color: hsl(var(--primary));
-          transform: scale(1.08) rotate(-4deg);
-          text-shadow: 0 4px 20px hsl(var(--primary) / 0.3);
+        .logo-text:last-child {
+          letter-spacing: -0.01em;
         }
 
-        .title-right:hover {
-          color: hsl(var(--primary));
-          transform: scale(1.08) rotate(4deg);
-          text-shadow: 0 4px 20px hsl(var(--primary) / 0.3);
+        .logo-text:hover {
+          transform: scale(1.05);
         }
 
-        .title-fun {
-          text-shadow: 0 4px 20px hsl(var(--primary) / 0.4);
+        .logo-mascot {
+          transition: transform 0.2s ease;
         }
 
-        .title-fun:hover {
-          transform: scale(1.12);
-          text-shadow: 0 6px 30px hsl(var(--primary) / 0.6);
+        .logo-container:hover .logo-mascot {
+          transform: scale(1.1);
         }
       `}</style>
     </header>
