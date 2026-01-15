@@ -30,7 +30,7 @@ export function Header() {
 
         {/* ".fun" - centered below mascot */}
         <span className="title-text title-fun -mt-2 text-3xl font-bold tracking-tight text-primary md:-mt-4 md:text-5xl lg:text-6xl">
-          .fun
+          fun
         </span>
 
         {/* Tagline */}
