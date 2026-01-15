@@ -118,6 +118,68 @@ export function useDeleteProject() {
   });
 }
 
+// Duplicate project
+export function useDuplicateProject() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (project: Project) => {
+      // Get max order
+      const { data: existing } = await supabase
+        .from("projects")
+        .select("display_order")
+        .order("display_order", { ascending: false })
+        .limit(1);
+
+      const maxOrder = existing?.[0]?.display_order ?? -1;
+
+      const { data, error } = await supabase
+        .from("projects")
+        .insert({
+          title: `Copy of ${project.title}`,
+          description: project.description,
+          image_url: project.image_url,
+          href: project.href,
+          color: project.color,
+          display_order: maxOrder + 1,
+          is_visible: false, // Start hidden
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data as Project;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+    },
+  });
+}
+
+// Reorder projects
+export function useReorderProjects() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (projects: { id: string; display_order: number }[]) => {
+      // Update each project's display_order
+      const updates = projects.map((p) =>
+        supabase
+          .from("projects")
+          .update({ display_order: p.display_order })
+          .eq("id", p.id)
+      );
+
+      const results = await Promise.all(updates);
+      const error = results.find((r) => r.error)?.error;
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+    },
+  });
+}
+
 // Upload project image
 export async function uploadProjectImage(file: File): Promise<string> {
   const fileExt = file.name.split(".").pop();

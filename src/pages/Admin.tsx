@@ -6,6 +6,8 @@ import {
   useCreateProject,
   useUpdateProject,
   useDeleteProject,
+  useDuplicateProject,
+  useReorderProjects,
   uploadProjectImage,
   type Project,
 } from "@/hooks/useProjects";
@@ -17,9 +19,6 @@ import { Switch } from "@/components/ui/switch";
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import {
   Dialog,
@@ -30,7 +29,34 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Plus, Pencil, Trash2, ExternalLink, ArrowLeft, Upload } from "lucide-react";
+import {
+  Loader2,
+  Plus,
+  Pencil,
+  Trash2,
+  ExternalLink,
+  ArrowLeft,
+  Upload,
+  Copy,
+  GripVertical,
+} from "lucide-react";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 const GRADIENT_OPTIONS = [
   { label: "Pink/Rose", value: "bg-gradient-to-br from-pink-400 to-rose-500" },
@@ -59,6 +85,129 @@ const emptyForm: ProjectFormData = {
   image_url: "",
 };
 
+interface SortableProjectCardProps {
+  project: Project;
+  onEdit: (project: Project) => void;
+  onDelete: (id: string) => void;
+  onToggleVisibility: (project: Project) => void;
+  onDuplicate: (project: Project) => void;
+}
+
+function SortableProjectCard({
+  project,
+  onEdit,
+  onDelete,
+  onToggleVisibility,
+  onDuplicate,
+}: SortableProjectCardProps) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: project.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+  };
+
+  return (
+    <Card
+      ref={setNodeRef}
+      style={style}
+      className={`${!project.is_visible ? "opacity-60" : ""} ${isDragging ? "shadow-lg" : ""}`}
+    >
+      <CardContent className="flex items-center gap-4 p-4">
+        {/* Drag Handle */}
+        <button
+          {...attributes}
+          {...listeners}
+          className="cursor-grab touch-none text-muted-foreground hover:text-foreground active:cursor-grabbing"
+        >
+          <GripVertical className="h-5 w-5" />
+        </button>
+
+        {/* Preview */}
+        <div
+          className={`h-16 w-24 flex-shrink-0 overflow-hidden rounded-lg ${project.color}`}
+        >
+          {project.image_url ? (
+            <img
+              src={project.image_url}
+              alt={project.title}
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center">
+              <span className="text-2xl opacity-30">🎮</span>
+            </div>
+          )}
+        </div>
+
+        {/* Info */}
+        <div className="flex-1 min-w-0">
+          <h3 className="font-semibold text-foreground truncate">
+            {project.title}
+          </h3>
+          {project.description && (
+            <p className="text-sm text-muted-foreground truncate">
+              {project.description}
+            </p>
+          )}
+          <p className="text-xs text-muted-foreground truncate">
+            {project.href !== "#" ? project.href : "No URL set"}
+          </p>
+        </div>
+
+        {/* Actions */}
+        <div className="flex items-center gap-2">
+          <Switch
+            checked={project.is_visible}
+            onCheckedChange={() => onToggleVisibility(project)}
+          />
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => onDuplicate(project)}
+            title="Duplicate"
+          >
+            <Copy className="h-4 w-4" />
+          </Button>
+          {project.href !== "#" && (
+            <Button variant="ghost" size="icon" asChild>
+              <a
+                href={project.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ExternalLink className="h-4 w-4" />
+              </a>
+            </Button>
+          )}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => onEdit(project)}
+          >
+            <Pencil className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => onDelete(project.id)}
+          >
+            <Trash2 className="h-4 w-4 text-destructive" />
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
 export default function Admin() {
   const navigate = useNavigate();
   const { user, isAdmin, loading: authLoading, signOut } = useAuth();
@@ -66,12 +215,28 @@ export default function Admin() {
   const createProject = useCreateProject();
   const updateProject = useUpdateProject();
   const deleteProject = useDeleteProject();
+  const duplicateProject = useDuplicateProject();
+  const reorderProjects = useReorderProjects();
   const { toast } = useToast();
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [formData, setFormData] = useState<ProjectFormData>(emptyForm);
   const [uploading, setUploading] = useState(false);
+  const [localProjects, setLocalProjects] = useState<Project[]>([]);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  useEffect(() => {
+    if (projects) {
+      setLocalProjects(projects);
+    }
+  }, [projects]);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -187,6 +352,49 @@ export default function Admin() {
     }
   };
 
+  const handleDuplicate = async (project: Project) => {
+    try {
+      await duplicateProject.mutateAsync(project);
+      toast({ title: "Project duplicated!" });
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleDragEnd = async (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      const oldIndex = localProjects.findIndex((p) => p.id === active.id);
+      const newIndex = localProjects.findIndex((p) => p.id === over.id);
+
+      const newOrder = arrayMove(localProjects, oldIndex, newIndex);
+      setLocalProjects(newOrder);
+
+      // Update display_order for affected items
+      const updates = newOrder.map((project, index) => ({
+        id: project.id,
+        display_order: index,
+      }));
+
+      try {
+        await reorderProjects.mutateAsync(updates);
+      } catch (error: any) {
+        // Revert on error
+        setLocalProjects(projects || []);
+        toast({
+          title: "Error reordering",
+          description: error.message,
+          variant: "destructive",
+        });
+      }
+    }
+  };
+
   if (authLoading || projectsLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background">
@@ -207,7 +415,7 @@ export default function Admin() {
             <Button variant="ghost" size="icon" onClick={() => navigate("/")}>
               <ArrowLeft className="h-5 w-5" />
             </Button>
-            <h1 className="text-xl font-bold text-foreground">Admin Dashboard</h1>
+            <h1 className="font-display text-xl font-bold text-foreground">Admin Dashboard</h1>
           </div>
           <Button variant="outline" onClick={() => signOut()}>
             Sign Out
@@ -217,7 +425,7 @@ export default function Admin() {
 
       <main className="container mx-auto px-4 py-8">
         <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-foreground">Projects</h2>
+          <h2 className="font-display text-lg font-semibold text-foreground">Projects</h2>
           <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
             <DialogTrigger asChild>
               <Button onClick={() => handleOpenDialog()}>
@@ -227,7 +435,7 @@ export default function Admin() {
             </DialogTrigger>
             <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-lg">
               <DialogHeader>
-                <DialogTitle>
+                <DialogTitle className="font-display">
                   {editingProject ? "Edit Project" : "Add New Project"}
                 </DialogTitle>
                 <DialogDescription>
@@ -360,7 +568,7 @@ export default function Admin() {
           </Dialog>
         </div>
 
-        {projects?.length === 0 ? (
+        {localProjects.length === 0 ? (
           <Card>
             <CardContent className="flex flex-col items-center justify-center py-12">
               <p className="text-muted-foreground">No projects yet.</p>
@@ -375,78 +583,29 @@ export default function Admin() {
             </CardContent>
           </Card>
         ) : (
-          <div className="space-y-4">
-            {projects?.map((project) => (
-              <Card key={project.id} className={!project.is_visible ? "opacity-60" : ""}>
-                <CardContent className="flex items-center gap-4 p-4">
-                  {/* Preview */}
-                  <div
-                    className={`h-16 w-24 flex-shrink-0 overflow-hidden rounded-lg ${project.color}`}
-                  >
-                    {project.image_url ? (
-                      <img
-                        src={project.image_url}
-                        alt={project.title}
-                        className="h-full w-full object-cover"
-                      />
-                    ) : (
-                      <div className="flex h-full w-full items-center justify-center">
-                        <span className="text-2xl opacity-30">🎮</span>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Info */}
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-foreground truncate">
-                      {project.title}
-                    </h3>
-                    {project.description && (
-                      <p className="text-sm text-muted-foreground truncate">
-                        {project.description}
-                      </p>
-                    )}
-                    <p className="text-xs text-muted-foreground truncate">
-                      {project.href !== "#" ? project.href : "No URL set"}
-                    </p>
-                  </div>
-
-                  {/* Actions */}
-                  <div className="flex items-center gap-2">
-                    <Switch
-                      checked={project.is_visible}
-                      onCheckedChange={() => handleToggleVisibility(project)}
-                    />
-                    {project.href !== "#" && (
-                      <Button variant="ghost" size="icon" asChild>
-                        <a
-                          href={project.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <ExternalLink className="h-4 w-4" />
-                        </a>
-                      </Button>
-                    )}
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => handleOpenDialog(project)}
-                    >
-                      <Pencil className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => handleDelete(project.id)}
-                    >
-                      <Trash2 className="h-4 w-4 text-destructive" />
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+          >
+            <SortableContext
+              items={localProjects.map((p) => p.id)}
+              strategy={verticalListSortingStrategy}
+            >
+              <div className="space-y-4">
+                {localProjects.map((project) => (
+                  <SortableProjectCard
+                    key={project.id}
+                    project={project}
+                    onEdit={handleOpenDialog}
+                    onDelete={handleDelete}
+                    onToggleVisibility={handleToggleVisibility}
+                    onDuplicate={handleDuplicate}
+                  />
+                ))}
+              </div>
+            </SortableContext>
+          </DndContext>
         )}
       </main>
     </div>
