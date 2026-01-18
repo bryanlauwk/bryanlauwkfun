@@ -12,6 +12,7 @@ interface ProjectCardProps {
   className?: string;
   isPlaceholder?: boolean;
   index?: number;
+  showTextOverlay?: boolean;
 }
 
 const placeholderMessages = [
@@ -47,6 +48,7 @@ export function ProjectCard({
   className,
   isPlaceholder = false,
   index = 0,
+  showTextOverlay = true,
 }: ProjectCardProps) {
   const isDisabled = isPlaceholder || href === "#";
   const cardRef = useRef<HTMLDivElement>(null);
@@ -149,7 +151,7 @@ export function ProjectCard({
       )}
 
       {/* Coming Soon Badge */}
-      {isPlaceholder && (
+      {isPlaceholder && showTextOverlay && (
         <div className="absolute top-2 right-2 z-10">
           <Badge variant="secondary" className="bg-background/80 text-foreground text-xs">
             Coming Soon
@@ -158,29 +160,31 @@ export function ProjectCard({
       )}
 
       {/* Content */}
-      <div className="absolute inset-0 flex items-center justify-between p-4">
-        <div className="flex-1">
-          <h3 className="text-base font-bold text-primary-foreground drop-shadow-lg md:text-lg">
-            {title}
-          </h3>
-          <p className="mt-0.5 text-xs text-primary-foreground/80 drop-shadow-md md:text-sm h-5 overflow-hidden">
-            {isHovered ? typedDescription : (actualDescription || "")}
-            {isHovered && typedDescription.length < (actualDescription?.length || 0) && (
-              <span className="inline-block w-0.5 h-3 bg-primary-foreground/80 ml-0.5 animate-pulse" />
-            )}
-          </p>
-        </div>
-        
-        {/* Arrow indicator */}
-        {!isDisabled && (
-          <div className={cn(
-            "flex h-8 w-8 items-center justify-center rounded-full bg-background/20 transition-all duration-300",
-            isHovered ? "opacity-100 translate-x-1" : "opacity-0"
-          )}>
-            <span className="text-primary-foreground">→</span>
+      {showTextOverlay && (
+        <div className="absolute inset-0 flex items-center justify-between p-4">
+          <div className="flex-1">
+            <h3 className="text-base font-bold text-primary-foreground drop-shadow-lg md:text-lg">
+              {title}
+            </h3>
+            <p className="mt-0.5 text-xs text-primary-foreground/80 drop-shadow-md md:text-sm h-5 overflow-hidden">
+              {isHovered ? typedDescription : (actualDescription || "")}
+              {isHovered && typedDescription.length < (actualDescription?.length || 0) && (
+                <span className="inline-block w-0.5 h-3 bg-primary-foreground/80 ml-0.5 animate-pulse" />
+              )}
+            </p>
           </div>
-        )}
-      </div>
+          
+          {/* Arrow indicator */}
+          {!isDisabled && (
+            <div className={cn(
+              "flex h-8 w-8 items-center justify-center rounded-full bg-background/20 transition-all duration-300",
+              isHovered ? "opacity-100 translate-x-1" : "opacity-0"
+            )}>
+              <span className="text-primary-foreground">→</span>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Wobbly hand-drawn border effect */}
       <svg
