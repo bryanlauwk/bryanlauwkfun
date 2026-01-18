@@ -14,7 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+
 import { Switch } from "@/components/ui/switch";
 import {
   Card,
@@ -60,29 +60,16 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
-const GRADIENT_OPTIONS = [
-  { label: "Pink/Rose", value: "bg-gradient-to-br from-pink-400 to-rose-500" },
-  { label: "Violet/Purple", value: "bg-gradient-to-br from-violet-400 to-purple-500" },
-  { label: "Blue/Cyan", value: "bg-gradient-to-br from-blue-400 to-cyan-500" },
-  { label: "Emerald/Teal", value: "bg-gradient-to-br from-emerald-400 to-teal-500" },
-  { label: "Amber/Orange", value: "bg-gradient-to-br from-amber-400 to-orange-500" },
-  { label: "Red/Pink", value: "bg-gradient-to-br from-red-400 to-pink-500" },
-];
+const DEFAULT_GRADIENT = "bg-gradient-to-br from-pink-400 to-rose-500";
 
 interface ProjectFormData {
-  title: string;
-  description: string;
   href: string;
-  color: string;
   is_visible: boolean;
   image_url: string;
 }
 
 const emptyForm: ProjectFormData = {
-  title: "",
-  description: "",
   href: "#",
-  color: GRADIENT_OPTIONS[0].value,
   is_visible: true,
   image_url: "",
 };
@@ -265,10 +252,7 @@ export default function Admin() {
     if (project) {
       setEditingProject(project);
       setFormData({
-        title: project.title,
-        description: project.description || "",
         href: project.href,
-        color: project.color,
         is_visible: project.is_visible,
         image_url: project.image_url || "",
       });
@@ -310,7 +294,12 @@ export default function Admin() {
         });
         toast({ title: "Project updated!" });
       } else {
-        await createProject.mutateAsync(formData);
+        await createProject.mutateAsync({
+          ...formData,
+          title: "Project",
+          description: "",
+          color: DEFAULT_GRADIENT,
+        });
         toast({ title: "Project created!" });
       }
       setDialogOpen(false);
@@ -493,33 +482,6 @@ export default function Admin() {
               </DialogHeader>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="title">Title</Label>
-                  <Input
-                    id="title"
-                    value={formData.title}
-                    onChange={(e) =>
-                      setFormData((prev) => ({ ...prev, title: e.target.value }))
-                    }
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="description">Description</Label>
-                  <Textarea
-                    id="description"
-                    value={formData.description}
-                    onChange={(e) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        description: e.target.value,
-                      }))
-                    }
-                    rows={2}
-                  />
-                </div>
-
-                <div className="space-y-2">
                   <Label htmlFor="href">URL</Label>
                   <Input
                     id="href"
@@ -530,27 +492,6 @@ export default function Admin() {
                       setFormData((prev) => ({ ...prev, href: e.target.value }))
                     }
                   />
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Background Color</Label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {GRADIENT_OPTIONS.map((option) => (
-                      <button
-                        key={option.value}
-                        type="button"
-                        onClick={() =>
-                          setFormData((prev) => ({ ...prev, color: option.value }))
-                        }
-                        className={`h-12 rounded-lg ${option.value} transition-all ${
-                          formData.color === option.value
-                            ? "ring-2 ring-primary ring-offset-2"
-                            : "opacity-70 hover:opacity-100"
-                        }`}
-                        title={option.label}
-                      />
-                    ))}
-                  </div>
                 </div>
 
                 <div className="space-y-2">
