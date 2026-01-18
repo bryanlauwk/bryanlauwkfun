@@ -24,6 +24,7 @@ export type Database = {
           id: string
           image_url: string | null
           is_visible: boolean
+          show_text_overlay: boolean
           title: string
           updated_at: string
         }
@@ -36,6 +37,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           is_visible?: boolean
+          show_text_overlay?: boolean
           title: string
           updated_at?: string
         }
@@ -48,6 +50,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           is_visible?: boolean
+          show_text_overlay?: boolean
           title?: string
           updated_at?: string
         }

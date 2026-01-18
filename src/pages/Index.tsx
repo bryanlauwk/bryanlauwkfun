@@ -48,8 +48,8 @@ const Index = () => {
   const realProjects = projects || [];
   const placeholdersNeeded = Math.max(0, MIN_CARDS - realProjects.length);
   const displayProjects = [
-    ...realProjects.map((p) => ({ ...p, isPlaceholder: false })),
-    ...placeholderProjects.slice(0, placeholdersNeeded).map((p) => ({ ...p, isPlaceholder: true })),
+    ...realProjects.map((p) => ({ ...p, isPlaceholder: false, showTextOverlay: p.show_text_overlay })),
+    ...placeholderProjects.slice(0, placeholdersNeeded).map((p) => ({ ...p, isPlaceholder: true, showTextOverlay: true })),
   ];
 
   return (
@@ -115,6 +115,7 @@ const Index = () => {
                   color={project.color}
                   isPlaceholder={project.isPlaceholder}
                   index={index}
+                  showTextOverlay={project.showTextOverlay}
                 />
               </div>
             ))}

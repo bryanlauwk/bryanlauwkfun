@@ -66,12 +66,14 @@ interface ProjectFormData {
   href: string;
   is_visible: boolean;
   image_url: string;
+  show_text_overlay: boolean;
 }
 
 const emptyForm: ProjectFormData = {
   href: "#",
   is_visible: true,
   image_url: "",
+  show_text_overlay: true,
 };
 
 interface SortableProjectCardProps {
@@ -255,6 +257,7 @@ export default function Admin() {
         href: project.href,
         is_visible: project.is_visible,
         image_url: project.image_url || "",
+        show_text_overlay: project.show_text_overlay,
       });
     } else {
       setEditingProject(null);
@@ -540,6 +543,17 @@ export default function Admin() {
                     checked={formData.is_visible}
                     onCheckedChange={(checked) =>
                       setFormData((prev) => ({ ...prev, is_visible: checked }))
+                    }
+                  />
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="text-overlay">Show text overlay</Label>
+                  <Switch
+                    id="text-overlay"
+                    checked={formData.show_text_overlay}
+                    onCheckedChange={(checked) =>
+                      setFormData((prev) => ({ ...prev, show_text_overlay: checked }))
                     }
                   />
                 </div>
