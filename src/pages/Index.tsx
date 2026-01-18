@@ -22,7 +22,7 @@ const placeholderProjects = [
   { id: "placeholder-9", title: "???", description: "Top secret experiments", href: "#", color: "bg-gradient-to-br from-lime-400 to-green-500", image_url: null },
 ];
 
-const MIN_CARDS = 9;
+const MIN_CARDS = 0;
 
 const Index = () => {
   const { data: projects, isLoading } = usePublicProjects();
