@@ -63,6 +63,8 @@ import { CSS } from "@dnd-kit/utilities";
 const DEFAULT_GRADIENT = "bg-gradient-to-br from-pink-400 to-rose-500";
 
 interface ProjectFormData {
+  title: string;
+  description: string;
   href: string;
   is_visible: boolean;
   image_url: string;
@@ -70,6 +72,8 @@ interface ProjectFormData {
 }
 
 const emptyForm: ProjectFormData = {
+  title: "",
+  description: "",
   href: "#",
   is_visible: true,
   image_url: "",
@@ -254,6 +258,8 @@ export default function Admin() {
     if (project) {
       setEditingProject(project);
       setFormData({
+        title: project.title,
+        description: project.description || "",
         href: project.href,
         is_visible: project.is_visible,
         image_url: project.image_url || "",
@@ -289,6 +295,15 @@ export default function Admin() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (!formData.title.trim()) {
+      toast({
+        title: "Title required",
+        description: "Please enter a project title.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     try {
       if (editingProject) {
         await updateProject.mutateAsync({
@@ -299,8 +314,6 @@ export default function Admin() {
       } else {
         await createProject.mutateAsync({
           ...formData,
-          title: "Project",
-          description: "",
           color: DEFAULT_GRADIENT,
         });
         toast({ title: "Project created!" });
@@ -485,6 +498,31 @@ export default function Admin() {
               </DialogHeader>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
+                  <Label htmlFor="title">Title *</Label>
+                  <Input
+                    id="title"
+                    placeholder="P02, Block Blast, etc."
+                    value={formData.title}
+                    onChange={(e) =>
+                      setFormData((prev) => ({ ...prev, title: e.target.value }))
+                    }
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="description">Description</Label>
+                  <Input
+                    id="description"
+                    placeholder="A fun puzzle game"
+                    value={formData.description}
+                    onChange={(e) =>
+                      setFormData((prev) => ({ ...prev, description: e.target.value }))
+                    }
+                  />
+                </div>
+
+                <div className="space-y-2">
                   <Label htmlFor="href">URL</Label>
                   <Input
                     id="href"
@@ -536,8 +574,13 @@ export default function Admin() {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="visibility">Visible on homepage</Label>
+                <div className="flex items-center justify-between rounded-lg border p-3">
+                  <div className="space-y-0.5">
+                    <Label htmlFor="visibility">Visible on homepage</Label>
+                    <p className="text-xs text-muted-foreground">
+                      Hidden projects won't appear on the public site
+                    </p>
+                  </div>
                   <Switch
                     id="visibility"
                     checked={formData.is_visible}
