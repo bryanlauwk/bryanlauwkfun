@@ -4,6 +4,7 @@ import { useCyclingText } from "@/hooks/useCyclingText";
 import { cn } from "@/lib/utils";
 
 const taglines = [
+  "messing in the playground",
   "games and stuff by Bryan",
   "questionable decisions",
   "things that probably work",
