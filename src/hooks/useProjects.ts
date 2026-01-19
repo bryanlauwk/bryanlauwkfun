@@ -183,9 +183,31 @@ export function useReorderProjects() {
   });
 }
 
-// Upload project image
+// Allowed image MIME types and their extensions
+const ALLOWED_IMAGE_TYPES: Record<string, string> = {
+  'image/jpeg': 'jpg',
+  'image/jpg': 'jpg',
+  'image/png': 'png',
+  'image/gif': 'gif',
+  'image/webp': 'webp',
+};
+
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+
+// Upload project image with validation
 export async function uploadProjectImage(file: File): Promise<string> {
-  const fileExt = file.name.split(".").pop();
+  // Validate file type using MIME type, not extension
+  if (!ALLOWED_IMAGE_TYPES[file.type]) {
+    throw new Error('Invalid file type. Only JPEG, PNG, GIF, and WebP images are allowed.');
+  }
+
+  // Validate file size
+  if (file.size > MAX_FILE_SIZE) {
+    throw new Error('File size exceeds 5MB limit.');
+  }
+
+  // Use extension derived from validated MIME type, not user-supplied filename
+  const fileExt = ALLOWED_IMAGE_TYPES[file.type];
   const fileName = `${crypto.randomUUID()}.${fileExt}`;
 
   const { error: uploadError } = await supabase.storage
