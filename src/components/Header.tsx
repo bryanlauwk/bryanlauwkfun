@@ -2,6 +2,7 @@ import { AnimatedMascot } from "./AnimatedMascot";
 import { ThemeToggle } from "./ThemeToggle";
 import { useCyclingText } from "@/hooks/useCyclingText";
 import { cn } from "@/lib/utils";
+import { Sparkles } from "lucide-react";
 
 const taglines = [
   "messing in the playground",
@@ -29,6 +30,28 @@ export function Header() {
 
   return (
     <header className="relative py-8 md:py-12 overflow-hidden">
+      {/* Decorative floating doodles */}
+      <div className="absolute left-8 top-8 opacity-20 animate-float hidden md:block">
+        <svg width="40" height="40" viewBox="0 0 40 40">
+          <path 
+            d="M20 5 L22 15 L32 17 L24 22 L26 32 L20 26 L14 32 L16 22 L8 17 L18 15 Z" 
+            fill="hsl(var(--primary))" 
+            stroke="hsl(var(--primary))" 
+            strokeWidth="1"
+          />
+        </svg>
+      </div>
+      <div className="absolute right-12 top-16 opacity-15 animate-float hidden md:block" style={{ animationDelay: '1s' }}>
+        <svg width="30" height="30" viewBox="0 0 30 30">
+          <circle cx="15" cy="15" r="12" fill="none" stroke="hsl(var(--accent))" strokeWidth="2" strokeDasharray="4 3" />
+        </svg>
+      </div>
+      <div className="absolute left-16 bottom-4 opacity-20 animate-float hidden md:block" style={{ animationDelay: '0.5s' }}>
+        <svg width="24" height="24" viewBox="0 0 24 24">
+          <path d="M12 21 Q3 12, 8 6 Q12 3, 12 8 Q12 3, 16 6 Q21 12, 12 21" fill="hsl(var(--primary))" opacity="0.6" />
+        </svg>
+      </div>
+
       {/* Background glow effect */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <div className="w-[400px] h-[250px] bg-primary/8 rounded-full blur-[80px]" />
@@ -93,16 +116,31 @@ export function Header() {
               </div>
             </div>
 
-            {/* Cycling Tagline */}
-            <p className="mt-3 font-display text-center text-sm text-muted-foreground md:text-base h-6">
-              <span className="inline-block min-w-[200px]">
-                {displayText}
-                <span className={cn(
-                  "inline-block w-0.5 h-4 bg-primary ml-0.5 align-middle",
-                  isTyping ? "animate-pulse" : "opacity-0"
-                )} />
-              </span>
-            </p>
+            {/* Cycling Tagline with sparkle decoration */}
+            <div className="mt-3 flex items-center gap-2">
+              <Sparkles className="h-3 w-3 text-primary/40 animate-pulse hidden sm:block" />
+              <p className="font-display text-center text-sm text-muted-foreground md:text-base h-6">
+                <span className="inline-block min-w-[200px]">
+                  {displayText}
+                  <span className={cn(
+                    "inline-block w-0.5 h-4 bg-primary ml-0.5 align-middle",
+                    isTyping ? "animate-pulse" : "opacity-0"
+                  )} />
+                </span>
+              </p>
+              <Sparkles className="h-3 w-3 text-primary/40 animate-pulse hidden sm:block" style={{ animationDelay: '0.5s' }} />
+            </div>
+
+            {/* Decorative wavy line */}
+            <svg className="mt-4 w-32 h-3 opacity-30" viewBox="0 0 100 10" preserveAspectRatio="none">
+              <path
+                d="M0 5 Q12.5 0, 25 5 Q37.5 10, 50 5 Q62.5 0, 75 5 Q87.5 10, 100 5"
+                fill="none"
+                stroke="hsl(var(--primary))"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            </svg>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { useState, useRef, useEffect } from "react";
-import { Gamepad2 } from "lucide-react";
+import { Gamepad2, Sparkles, Star } from "lucide-react";
 
 interface ProjectCardProps {
   title: string;
@@ -39,6 +39,9 @@ const cardGradients = [
   "from-fuchsia-500 to-pink-500",
 ];
 
+// Fun doodle icons for cards
+const cardDoodles = ["✨", "🎮", "🚀", "⭐", "🎨", "💫", "🌈", "🎯", "🔮"];
+
 export function ProjectCard({
   title,
   description,
@@ -55,6 +58,7 @@ export function ProjectCard({
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const [typedDescription, setTypedDescription] = useState("");
+  const [sparklePositions, setSparklePositions] = useState<Array<{ x: number; y: number; id: number }>>([]);
 
   const actualDescription = isPlaceholder 
     ? placeholderMessages[index % placeholderMessages.length]
@@ -63,6 +67,8 @@ export function ProjectCard({
   const gradientClass = color?.includes("gradient") 
     ? color 
     : `bg-gradient-to-br ${cardGradients[index % cardGradients.length]}`;
+
+  const cardDoodle = cardDoodles[index % cardDoodles.length];
 
   // Typewriter effect for description
   useEffect(() => {
@@ -83,6 +89,27 @@ export function ProjectCard({
 
     return () => clearInterval(timer);
   }, [isHovered, actualDescription]);
+
+  // Sparkle effect on hover
+  useEffect(() => {
+    if (!isHovered || isDisabled) {
+      setSparklePositions([]);
+      return;
+    }
+
+    const createSparkle = () => {
+      const newSparkle = {
+        id: Date.now(),
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+      };
+      setSparklePositions(prev => [...prev.slice(-5), newSparkle]);
+    };
+
+    createSparkle();
+    const interval = setInterval(createSparkle, 400);
+    return () => clearInterval(interval);
+  }, [isHovered, isDisabled]);
 
   // 3D tilt effect
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -133,11 +160,11 @@ export function ProjectCard({
         )}
       </div>
 
-      {/* Animated pattern overlay */}
+      {/* Animated pattern overlay with dots */}
       <div 
         className={cn(
           "absolute inset-0 opacity-10 transition-opacity duration-300",
-          isHovered && !isDisabled && "opacity-20"
+          isHovered && !isDisabled && "opacity-25"
         )}
         style={{
           backgroundImage: `radial-gradient(circle at 20% 50%, white 1px, transparent 1px)`,
@@ -150,12 +177,34 @@ export function ProjectCard({
         <div className="absolute inset-0 bg-gradient-to-r from-foreground/60 via-transparent to-foreground/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
       )}
 
-      {/* Coming Soon Badge */}
+      {/* Sparkle effects */}
+      {sparklePositions.map((sparkle) => (
+        <div
+          key={sparkle.id}
+          className="absolute pointer-events-none animate-sparkle-fade"
+          style={{
+            left: `${sparkle.x}%`,
+            top: `${sparkle.y}%`,
+          }}
+        >
+          <Sparkles className="h-4 w-4 text-primary-foreground/80" />
+        </div>
+      ))}
+
+      {/* Coming Soon Badge with doodle */}
       {isPlaceholder && showTextOverlay && (
-        <div className="absolute top-2 right-2 z-10">
-          <Badge variant="secondary" className="bg-background/80 text-foreground text-xs">
+        <div className="absolute top-2 right-2 z-10 flex items-center gap-1">
+          <span className="text-lg animate-bounce-slow">{cardDoodle}</span>
+          <Badge variant="secondary" className="bg-background/80 text-foreground text-xs backdrop-blur-sm">
             Coming Soon
           </Badge>
+        </div>
+      )}
+
+      {/* Floating star decoration */}
+      {!isDisabled && isHovered && (
+        <div className="absolute top-2 left-2 z-10">
+          <Star className="h-5 w-5 text-primary-foreground/70 animate-spin-slow fill-current" />
         </div>
       )}
 
@@ -163,8 +212,11 @@ export function ProjectCard({
       {showTextOverlay && (
         <div className="absolute inset-0 flex items-center justify-between p-4">
           <div className="flex-1">
-            <h3 className="text-base font-bold text-primary-foreground drop-shadow-lg md:text-lg">
+            <h3 className="text-base font-bold text-primary-foreground drop-shadow-lg md:text-lg flex items-center gap-2">
               {title}
+              {isHovered && !isDisabled && (
+                <span className="text-xs animate-bounce-slow">✨</span>
+              )}
             </h3>
             <p className="mt-0.5 text-xs text-primary-foreground/80 drop-shadow-md md:text-sm h-5 overflow-hidden">
               {isHovered ? typedDescription : (actualDescription || "")}
@@ -174,11 +226,11 @@ export function ProjectCard({
             </p>
           </div>
           
-          {/* Arrow indicator */}
+          {/* Arrow indicator with bounce */}
           {!isDisabled && (
             <div className={cn(
-              "flex h-8 w-8 items-center justify-center rounded-full bg-background/20 transition-all duration-300",
-              isHovered ? "opacity-100 translate-x-1" : "opacity-0"
+              "flex h-8 w-8 items-center justify-center rounded-full bg-background/20 transition-all duration-300 backdrop-blur-sm",
+              isHovered ? "opacity-100 translate-x-1 animate-bounce-x" : "opacity-0"
             )}>
               <span className="text-primary-foreground">→</span>
             </div>
@@ -204,6 +256,18 @@ export function ProjectCard({
           className="animate-dash"
         />
       </svg>
+
+      {/* Corner doodles on hover */}
+      {!isDisabled && isHovered && (
+        <>
+          <div className="absolute bottom-2 left-2 text-primary-foreground/50 text-sm animate-wiggle-slow">
+            ✎
+          </div>
+          <div className="absolute bottom-2 right-2 text-primary-foreground/50 text-sm animate-wiggle-slow" style={{ animationDelay: '0.2s' }}>
+            ♪
+          </div>
+        </>
+      )}
     </>
   );
 
@@ -236,7 +300,7 @@ export function ProjectCard({
       rel="noopener noreferrer"
       className={cn(
         "group relative block overflow-hidden rounded-2xl transition-all duration-300",
-        "hover:-translate-y-2 hover:shadow-xl",
+        "hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/20",
         "focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
         className
       )}
@@ -255,8 +319,45 @@ export function ProjectCard({
             stroke-dashoffset: -24;
           }
         }
+        @keyframes sparkle-fade {
+          0% { opacity: 0; transform: scale(0) rotate(0deg); }
+          50% { opacity: 1; transform: scale(1) rotate(180deg); }
+          100% { opacity: 0; transform: scale(0) rotate(360deg); }
+        }
+        @keyframes bounce-slow {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-3px); }
+        }
+        @keyframes bounce-x {
+          0%, 100% { transform: translateX(0); }
+          50% { transform: translateX(3px); }
+        }
+        @keyframes spin-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        @keyframes wiggle-slow {
+          0%, 100% { transform: rotate(0deg); }
+          25% { transform: rotate(-5deg); }
+          75% { transform: rotate(5deg); }
+        }
         .animate-dash {
           animation: dash 1s linear infinite;
+        }
+        .animate-sparkle-fade {
+          animation: sparkle-fade 0.8s ease-out forwards;
+        }
+        .animate-bounce-slow {
+          animation: bounce-slow 1s ease-in-out infinite;
+        }
+        .animate-bounce-x {
+          animation: bounce-x 0.6s ease-in-out infinite;
+        }
+        .animate-spin-slow {
+          animation: spin-slow 3s linear infinite;
+        }
+        .animate-wiggle-slow {
+          animation: wiggle-slow 0.5s ease-in-out infinite;
         }
       `}</style>
     </a>
