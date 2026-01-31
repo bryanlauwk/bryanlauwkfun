@@ -1,6 +1,7 @@
 import { usePublicProjects } from "@/hooks/useProjects";
 import { StrangerThingsCard } from "./StrangerThingsCard";
 import { Skeleton } from "./ui/skeleton";
+import { useKeyboardNavigation } from "@/hooks/useKeyboardNavigation";
 
 function PowerSurgeSkeleton() {
   return (
@@ -17,6 +18,16 @@ function PowerSurgeSkeleton() {
 
 export function ProjectGrid() {
   const { data: projects, isLoading } = usePublicProjects();
+
+  const { focusedIndex } = useKeyboardNavigation({
+    itemCount: projects?.length ?? 0,
+    columns: 3,
+    onSelect: (index) => {
+      if (projects?.[index]?.href) {
+        window.open(projects[index].href, "_blank", "noopener,noreferrer");
+      }
+    },
+  });
 
   if (isLoading) {
     return (
@@ -50,6 +61,7 @@ export function ProjectGrid() {
           key={project.id} 
           project={project} 
           index={index}
+          isFocused={focusedIndex === index}
         />
       ))}
     </div>

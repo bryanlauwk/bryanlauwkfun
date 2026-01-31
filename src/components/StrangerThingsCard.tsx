@@ -6,6 +6,7 @@ import { useStrangerSFX } from "@/hooks/useStrangerSFX";
 interface StrangerThingsCardProps {
   project: Tables<"projects">;
   index: number;
+  isFocused?: boolean;
 }
 
 // Christmas light colors
@@ -58,8 +59,9 @@ function ChristmasLights({ isActive }: { isActive: boolean }) {
   );
 }
 
-export function StrangerThingsCard({ project, index }: StrangerThingsCardProps) {
+export function StrangerThingsCard({ project, index, isFocused = false }: StrangerThingsCardProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const isActive = isHovered || isFocused;
   const { playElectricalCrackle, playPowerSurge } = useStrangerSFX();
 
   const handleMouseEnter = () => {
@@ -92,18 +94,18 @@ export function StrangerThingsCard({ project, index }: StrangerThingsCardProps) 
       onClick={handleClick}
       style={{ animationDelay: `${index * 150}ms` }}
     >
-      <div className="relative bg-card/80 backdrop-blur-sm border border-border rounded-sm overflow-hidden transition-all duration-500 animate-fade-in-up hover:border-primary/50">
+      <div className={`relative bg-card/80 backdrop-blur-sm border rounded-sm overflow-hidden transition-all duration-500 animate-fade-in-up ${isActive ? 'border-primary/50 ring-2 ring-primary/30' : 'border-border'}`}>
         
-        <ChristmasLights isActive={isHovered} />
+        <ChristmasLights isActive={isActive} />
         
-        {/* VHS distortion on hover */}
-        <div className={`absolute inset-0 pointer-events-none z-20 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+        {/* VHS distortion on hover/focus */}
+        <div className={`absolute inset-0 pointer-events-none z-20 transition-opacity duration-300 ${isActive ? 'opacity-100' : 'opacity-0'}`}>
           <div className="vhs-scanlines" />
           <div className="vhs-tracking" />
         </div>
 
         {/* Upside Down overlay */}
-        <div className={`absolute inset-0 pointer-events-none z-30 bg-[hsl(220,100%,50%)] mix-blend-overlay transition-opacity duration-500 ${isHovered ? 'opacity-15' : 'opacity-0'}`} />
+        <div className={`absolute inset-0 pointer-events-none z-30 bg-[hsl(220,100%,50%)] mix-blend-overlay transition-opacity duration-500 ${isActive ? 'opacity-15' : 'opacity-0'}`} />
 
         {/* Header with episode number */}
         <div className="px-5 pt-5 pb-3 border-b border-border/50">
@@ -111,7 +113,7 @@ export function StrangerThingsCard({ project, index }: StrangerThingsCardProps) 
             <span className="font-mono text-xs text-muted-foreground uppercase tracking-widest">
               Transmission #{episodeNum}
             </span>
-            <Radio className={`w-4 h-4 transition-colors duration-300 ${isHovered ? 'text-primary animate-electrical-flicker' : 'text-muted-foreground'}`} />
+            <Radio className={`w-4 h-4 transition-colors duration-300 ${isActive ? 'text-primary animate-electrical-flicker' : 'text-muted-foreground'}`} />
           </div>
         </div>
 
@@ -120,19 +122,19 @@ export function StrangerThingsCard({ project, index }: StrangerThingsCardProps) 
           {/* Large decorative monogram */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none">
             <span 
-              className={`font-serif text-[120px] font-bold leading-none transition-all duration-500 ${isHovered ? 'text-primary/10 stranger-glow' : 'text-muted/5'}`}
+              className={`font-serif text-[120px] font-bold leading-none transition-all duration-500 ${isActive ? 'text-primary/10 stranger-glow' : 'text-muted/5'}`}
             >
               {monogram}
             </span>
           </div>
           
           {/* Title */}
-          <h3 className={`relative z-10 font-serif text-2xl md:text-3xl font-bold uppercase tracking-wider mb-3 transition-all duration-300 ${isHovered ? 'stranger-glow' : 'text-foreground'}`}>
+          <h3 className={`relative z-10 font-serif text-2xl md:text-3xl font-bold uppercase tracking-wider mb-3 transition-all duration-300 ${isActive ? 'stranger-glow' : 'text-foreground'}`}>
             {project.title}
           </h3>
           
           {/* Decorative line */}
-          <div className={`w-16 h-0.5 mb-4 transition-all duration-500 ${isHovered ? 'bg-primary w-full' : 'bg-border'}`} />
+          <div className={`w-16 h-0.5 mb-4 transition-all duration-500 ${isActive ? 'bg-primary w-full' : 'bg-border'}`} />
           
           {/* Description */}
           {project.description && (
@@ -149,7 +151,7 @@ export function StrangerThingsCard({ project, index }: StrangerThingsCardProps) 
         </div>
         
         {/* Bottom glow */}
-        <div className={`absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-primary/15 to-transparent pointer-events-none transition-opacity duration-500 ${isHovered ? 'opacity-100' : 'opacity-0'}`} />
+        <div className={`absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-primary/15 to-transparent pointer-events-none transition-opacity duration-500 ${isActive ? 'opacity-100' : 'opacity-0'}`} />
       </div>
     </a>
   );
