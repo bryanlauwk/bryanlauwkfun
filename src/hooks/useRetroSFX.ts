@@ -1,14 +1,23 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
 
 // Simple retro sound effects using Web Audio API
 // These are procedurally generated beeps and boops for authentic 90s vibes
-
-const audioContext = typeof window !== "undefined" ? new (window.AudioContext || (window as any).webkitAudioContext)() : null;
 
 // Storage key for sound preference
 const SOUND_ENABLED_KEY = "retro-sfx-enabled";
 
 export function useRetroSFX() {
+  // Lazily initialize audio context to avoid issues during SSR/initial load
+  const audioContextRef = useRef<AudioContext | null>(null);
+  
+  const getAudioContext = useCallback(() => {
+    if (typeof window === "undefined") return null;
+    if (!audioContextRef.current) {
+      audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+    }
+    return audioContextRef.current;
+  }, []);
+
   const [soundEnabled, setSoundEnabled] = useState(() => {
     if (typeof window === "undefined") return true;
     const stored = localStorage.getItem(SOUND_ENABLED_KEY);
@@ -26,28 +35,36 @@ export function useRetroSFX() {
 
   // Simple beep sound
   const playBeep = useCallback((frequency = 440, duration = 0.1, type: OscillatorType = "square") => {
-    if (!soundEnabled || !audioContext) return;
+    if (!soundEnabled) return;
+    
+    const audioContext = getAudioContext();
+    if (!audioContext) return;
 
     // Resume audio context if suspended (browser autoplay policy)
     if (audioContext.state === "suspended") {
       audioContext.resume();
     }
 
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
+    try {
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
 
-    oscillator.type = type;
-    oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
-    
-    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+      oscillator.type = type;
+      oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+      
+      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
 
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
 
-    oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + duration);
-  }, [soundEnabled]);
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + duration);
+    } catch (e) {
+      // Silently fail if audio can't be played
+      console.warn("Audio playback failed:", e);
+    }
+  }, [soundEnabled, getAudioContext]);
 
   // Hover sound - quick high beep
   const playHover = useCallback(() => {
