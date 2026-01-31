@@ -1,91 +1,64 @@
-import { useState } from "react";
-import { RetroHeader } from "@/components/RetroHeader";
-import { RetroFooter } from "@/components/RetroFooter";
-import { RetroDecorations } from "@/components/RetroDecorations";
-import { ScatteredGallery } from "@/components/ScatteredGallery";
-import { ConfettiBurst } from "@/components/ConfettiBurst";
-import { CursorTrail } from "@/components/CursorTrail";
-import { useKonamiCode } from "@/hooks/useKonamiCode";
-import { Sparkles, Star, Zap } from "lucide-react";
+import { CinematicHeader } from "@/components/CinematicHeader";
+import { CinematicFooter } from "@/components/CinematicFooter";
+import { ProjectGrid } from "@/components/ProjectGrid";
+import heroImage from "@/assets/dark-fantasy-hero.jpg";
 
 const Index = () => {
-  const [konamiActivated, setKonamiActivated] = useState(false);
-  const [confettiPos, setConfettiPos] = useState<{ x: number; y: number } | null>(null);
-
-  // Konami code easter egg
-  useKonamiCode(() => {
-    setKonamiActivated(true);
-    setConfettiPos({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
-    setTimeout(() => setKonamiActivated(false), 5000);
-  });
-
   return (
-    <div className="min-h-screen flex flex-col bg-background pattern-checkerboard">
-      {/* Cursor trail effect */}
-      <CursorTrail />
-      
-      {/* 90s animated decorations */}
-      <RetroDecorations />
-
-      {/* Konami code secret */}
-      {konamiActivated && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
-          <div className="bg-card border-4 border-primary p-8 shadow-[8px_8px_0_hsl(var(--foreground))] animate-fade-in">
-            <p className="font-pixel text-2xl text-center text-foreground animate-rainbow">
-              <Zap className="inline w-6 h-6 mr-2" />
-              OMG U FOUND IT!!!
-              <Zap className="inline w-6 h-6 ml-2" />
-            </p>
-            <p className="font-fun text-center mt-2 text-muted-foreground">
-              You're clearly a person of culture. 🎮
-            </p>
-          </div>
-        </div>
-      )}
-
-      {/* Confetti burst */}
-      {confettiPos && (
-        <ConfettiBurst
-          x={confettiPos.x}
-          y={confettiPos.y}
-          onComplete={() => setConfettiPos(null)}
+    <div className="min-h-screen flex flex-col bg-background relative overflow-hidden">
+      {/* Hero background */}
+      <div className="fixed inset-0 z-0">
+        <img
+          src={heroImage}
+          alt=""
+          className="w-full h-full object-cover opacity-60"
         />
-      )}
+        {/* Film grain overlay */}
+        <div className="absolute inset-0 film-grain" />
+        {/* Vignette */}
+        <div className="absolute inset-0 vignette" />
+        {/* Fog layer at bottom */}
+        <div className="fog-layer" />
+      </div>
+
+      {/* Lightning flash effect */}
+      <div className="fixed inset-0 z-0 bg-accent/5 animate-lightning pointer-events-none" />
 
       {/* Header */}
-      <RetroHeader />
+      <CinematicHeader />
 
-      {/* Main content area */}
-      <main className="flex-1 relative px-4 py-8 overflow-visible">
-        {/* Decorative floating elements */}
-        <div className="absolute top-10 left-10 hidden lg:block">
-          <Star className="w-16 h-16 text-accent opacity-50 animate-spin-slow" />
-        </div>
-        <div className="absolute top-20 right-20 hidden lg:block">
-          <Sparkles className="w-12 h-12 text-secondary opacity-50 animate-bounce-chaotic" />
-        </div>
-        <div className="absolute bottom-20 left-20 hidden lg:block">
-          <Zap className="w-14 h-14 text-primary opacity-50 animate-glitch" />
-        </div>
+      {/* Main content */}
+      <main className="flex-1 relative z-10 px-6 md:px-12 py-12 md:py-20">
+        <div className="max-w-7xl mx-auto">
+          {/* Hero section */}
+          <section className="text-center mb-16 md:mb-24 animate-fade-in-up">
+            <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+              <span className="block text-foreground">Creative</span>
+              <span className="block animate-shimmer">Developer</span>
+            </h1>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Crafting digital experiences at the intersection of design and technology. 
+              Welcome to my collection of projects and experiments.
+            </p>
+          </section>
 
-        {/* Welcome message */}
-        <div className="text-center mb-8 relative z-10">
-          <h2 className="font-pixel text-xl md:text-3xl text-foreground mb-2">
-            <span className="animate-rainbow">✨ Welcome to my Projects! ✨</span>
-          </h2>
-          <p className="font-fun text-lg text-muted-foreground max-w-2xl mx-auto">
-            Grab a card and drag it around! Click to visit the project.
-            <br />
-            <span className="text-sm italic">(yes, they're supposed to be scattered everywhere)</span>
-          </p>
+          {/* Projects section */}
+          <section>
+            <div className="flex items-center gap-4 mb-8 md:mb-12">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
+              <h2 className="font-serif text-2xl md:text-3xl font-semibold text-foreground">
+                Projects
+              </h2>
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
+            </div>
+            
+            <ProjectGrid />
+          </section>
         </div>
-
-        {/* Scattered gallery */}
-        <ScatteredGallery />
       </main>
 
       {/* Footer */}
-      <RetroFooter />
+      <CinematicFooter />
     </div>
   );
 };
