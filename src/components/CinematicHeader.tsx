@@ -1,5 +1,5 @@
 import { useVisitorCounter } from "@/hooks/useVisitorCounter";
-import { Zap } from "lucide-react";
+import { Radio } from "lucide-react";
 
 export function CinematicHeader() {
   const { count, isLoading } = useVisitorCounter();
@@ -10,20 +10,24 @@ export function CinematicHeader() {
         {/* Logo */}
         <div className="flex items-center gap-3">
           <div className="relative">
-            <Zap className="w-8 h-8 text-primary animate-glow-pulse" />
+            <Radio className="w-7 h-7 text-primary animate-electrical-flicker" />
+            <div className="absolute inset-0 bg-primary/30 blur-md animate-glow-pulse" />
           </div>
-          <span className="font-serif text-xl md:text-2xl font-semibold text-foreground tracking-wide">
+          <span className="font-serif text-xl md:text-2xl font-bold text-foreground tracking-wider uppercase stranger-glow">
             Bryan Lau
           </span>
         </div>
 
-        {/* Visitor counter */}
-        <div className="hidden md:flex items-center gap-4">
-          <div className="text-sm text-muted-foreground font-mono">
-            Visitors
+        {/* Visitor counter - Hawkins Lab style */}
+        <div className="hidden md:flex items-center gap-3">
+          <div className="text-xs text-muted-foreground font-mono uppercase tracking-widest">
+            Souls Lost
           </div>
-          <div className="visitor-counter">
-            {isLoading ? "------" : (count ?? 0).toString().padStart(6, "0")}
+          <div className="visitor-counter flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-christmas-light" />
+            <span className="animate-electrical-flicker">
+              {isLoading ? "------" : (count ?? 0).toString().padStart(6, "0")}
+            </span>
           </div>
         </div>
       </div>
