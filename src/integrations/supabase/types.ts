@@ -14,6 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
+      page_views: {
+        Row: {
+          created_at: string
+          id: string
+          page_path: string
+          updated_at: string
+          view_count: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          page_path?: string
+          updated_at?: string
+          view_count?: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          page_path?: string
+          updated_at?: string
+          view_count?: number
+        }
+        Relationships: []
+      }
       projects: {
         Row: {
           color: string
@@ -86,6 +110,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      increment_page_view: { Args: { p_page_path?: string }; Returns: number }
     }
     Enums: {
       app_role: "admin" | "user"

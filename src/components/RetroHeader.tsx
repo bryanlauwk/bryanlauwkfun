@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { ThemeToggle } from "./ThemeToggle";
-import { Star, Zap, Sparkles } from "lucide-react";
+import { Star, Zap, Sparkles, Volume2, VolumeX } from "lucide-react";
+import { useVisitorCounter } from "@/hooks/useVisitorCounter";
+import { useSFX } from "@/contexts/SFXContext";
 
 const marqueeMessages = [
   "~*~ Welcome to my corner of the internet! ~*~",
@@ -16,7 +18,8 @@ const marqueeMessages = [
 ];
 
 export function RetroHeader() {
-  const [visitorCount] = useState(() => Math.floor(Math.random() * 9000) + 1000);
+  const { count, isLoading } = useVisitorCounter();
+  const { soundEnabled, toggleSound, playClick } = useSFX();
   const [currentMessage, setCurrentMessage] = useState(0);
 
   // Cycle through marquee messages
@@ -53,11 +56,27 @@ export function RetroHeader() {
 
           {/* Right side */}
           <div className="flex items-center gap-4">
+            {/* Sound toggle */}
+            <button
+              onClick={() => {
+                playClick();
+                toggleSound();
+              }}
+              className="p-2 bg-muted border-2 border-border button-bevel hover:animate-wobble"
+              title={soundEnabled ? "Mute sounds" : "Enable sounds"}
+            >
+              {soundEnabled ? (
+                <Volume2 className="w-5 h-5 text-foreground" />
+              ) : (
+                <VolumeX className="w-5 h-5 text-muted-foreground" />
+              )}
+            </button>
+
             {/* Visitor counter */}
             <div className="hidden md:flex items-center gap-2">
               <span className="font-fun text-sm text-muted-foreground">Visitors:</span>
               <div className="visitor-counter">
-                {visitorCount.toString().padStart(6, "0")}
+                {isLoading ? "------" : (count ?? 0).toString().padStart(6, "0")}
               </div>
             </div>
 
@@ -65,7 +84,6 @@ export function RetroHeader() {
           </div>
         </div>
       </div>
-
       {/* Marquee */}
       <div className="bg-primary py-2 overflow-hidden border-y-2 border-foreground">
         <div className="animate-marquee whitespace-nowrap flex items-center gap-4">

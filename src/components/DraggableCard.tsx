@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { ExternalLink, Star, Sparkles } from "lucide-react";
+import { useSFX } from "@/contexts/SFXContext";
 
 interface Project {
   id: string;
@@ -46,6 +47,7 @@ export function DraggableCard({
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [localPos, setLocalPos] = useState({ x: position.x, y: position.y });
+  const { playHover, playClick, playDragStart, playDragEnd } = useSFX();
 
   // Sync with external position
   useEffect(() => {
@@ -60,6 +62,7 @@ export function DraggableCard({
     e.preventDefault();
     onFocus();
     setIsDragging(true);
+    playDragStart();
 
     const rect = cardRef.current?.getBoundingClientRect();
     if (rect) {
@@ -89,6 +92,7 @@ export function DraggableCard({
   const handleMouseUp = () => {
     if (isDragging) {
       setIsDragging(false);
+      playDragEnd();
       onDragEnd(localPos.x, localPos.y);
     }
   };
@@ -122,6 +126,7 @@ export function DraggableCard({
         zIndex: position.zIndex,
       }}
       onMouseDown={handleMouseDown}
+      onMouseEnter={playHover}
     >
       {/* Decorative corner stars */}
       <span className="absolute -top-4 -left-4 text-2xl animate-star-spin">
@@ -183,7 +188,10 @@ export function DraggableCard({
             "button-bevel",
             "hover:animate-wobble"
           )}
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e) => {
+            e.stopPropagation();
+            playClick();
+          }}
         >
           Click Here!!
           <ExternalLink className="w-4 h-4" />
