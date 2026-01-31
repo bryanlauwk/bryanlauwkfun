@@ -14,7 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Fredoka", "sans-serif"],
+        display: ["Cinzel", "serif"],
+        serif: ["Playfair Display", "Georgia", "serif"],
+        body: ["Cormorant Garamond", "Georgia", "serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -83,76 +85,66 @@ export default {
             height: "0",
           },
         },
-        float: {
-          "0%, 100%": {
-            transform: "translateY(0)",
-          },
-          "50%": {
-            transform: "translateY(-10px)",
-          },
-        },
-        "float-slow": {
-          "0%, 100%": {
-            transform: "translateY(0) rotate(0deg)",
-          },
-          "50%": {
-            transform: "translateY(-12px) rotate(2deg)",
-          },
-        },
-        "float-medium": {
-          "0%, 100%": {
-            transform: "translateY(0)",
-          },
-          "50%": {
-            transform: "translateY(-8px)",
-          },
-        },
-        "float-fast": {
-          "0%, 100%": {
-            transform: "translateY(0)",
-          },
-          "50%": {
-            transform: "translateY(-5px)",
-          },
-        },
-        "reveal-up": {
-          from: {
-            opacity: "0",
-            transform: "translateY(20px)",
-          },
-          to: {
-            opacity: "1",
-            transform: "translateY(0)",
-          },
-        },
-        "reveal-scale": {
-          from: {
-            opacity: "0",
-            transform: "scale(0.95)",
-          },
-          to: {
-            opacity: "1",
-            transform: "scale(1)",
-          },
-        },
-        "glow-pulse": {
+        "constellation-twinkle": {
           "0%, 100%": {
             opacity: "0.3",
           },
           "50%": {
-            opacity: "0.6",
+            opacity: "0.8",
+          },
+        },
+        "lantern-flicker": {
+          "0%, 100%": {
+            opacity: "0.8",
+            filter: "brightness(1)",
+          },
+          "25%": {
+            opacity: "0.9",
+            filter: "brightness(1.1)",
+          },
+          "50%": {
+            opacity: "0.75",
+            filter: "brightness(0.95)",
+          },
+          "75%": {
+            opacity: "0.85",
+            filter: "brightness(1.05)",
+          },
+        },
+        "parchment-float": {
+          "0%, 100%": {
+            transform: "translateY(0) rotate(0deg)",
+          },
+          "50%": {
+            transform: "translateY(-8px) rotate(0.5deg)",
+          },
+        },
+        "fade-in": {
+          from: {
+            opacity: "0",
+            transform: "translateY(10px)",
+          },
+          to: {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+        },
+        "glow-pulse": {
+          "0%, 100%": {
+            boxShadow: "0 0 20px hsl(45 70% 47% / 0.3)",
+          },
+          "50%": {
+            boxShadow: "0 0 40px hsl(45 70% 47% / 0.5)",
           },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        float: "float 3s ease-in-out infinite",
-        "float-slow": "float-slow 6s ease-in-out infinite",
-        "float-medium": "float-medium 4s ease-in-out infinite",
-        "float-fast": "float-fast 2.5s ease-in-out infinite",
-        "reveal-up": "reveal-up 0.7s ease-out forwards",
-        "reveal-scale": "reveal-scale 0.5s ease-out forwards",
+        "constellation-twinkle": "constellation-twinkle 4s ease-in-out infinite",
+        "lantern-flicker": "lantern-flicker 3s ease-in-out infinite",
+        "parchment-float": "parchment-float 6s ease-in-out infinite",
+        "fade-in": "fade-in 0.8s ease-out forwards",
         "glow-pulse": "glow-pulse 3s ease-in-out infinite",
       },
     },
