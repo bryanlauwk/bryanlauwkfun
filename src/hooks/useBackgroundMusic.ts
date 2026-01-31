@@ -1,23 +1,42 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
-const MUSIC_CACHE_KEY = "stranger-music-blob";
+const CACHED_MUSIC_PATH = "stranger-music.mp3";
+const BUCKET_NAME = "audio-assets";
 
 export function useBackgroundMusic(enabled: boolean) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const blobUrlRef = useRef<string | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const cachedUrlRef = useRef<string | null>(null);
 
   const fetchMusic = useCallback(async () => {
-    // Check if we already have a cached blob URL
-    if (blobUrlRef.current) {
-      return blobUrlRef.current;
+    // Return cached URL if we have it
+    if (cachedUrlRef.current) {
+      return cachedUrlRef.current;
     }
 
     setIsLoading(true);
     setHasError(false);
 
     try {
+      // First, try to get the pre-cached music from storage
+      const { data: urlData } = supabase.storage
+        .from(BUCKET_NAME)
+        .getPublicUrl(CACHED_MUSIC_PATH);
+
+      // Check if the file exists by making a HEAD request
+      const checkResponse = await fetch(urlData.publicUrl, { method: "HEAD" });
+      
+      if (checkResponse.ok) {
+        console.log("Using pre-cached Stranger Things music");
+        cachedUrlRef.current = urlData.publicUrl;
+        return urlData.publicUrl;
+      }
+
+      // If not cached, generate it on-the-fly (fallback)
+      console.log("Music not cached, generating...");
       const response = await fetch(
         `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/generate-stranger-music`,
         {
@@ -36,7 +55,7 @@ export function useBackgroundMusic(enabled: boolean) {
 
       const audioBlob = await response.blob();
       const audioUrl = URL.createObjectURL(audioBlob);
-      blobUrlRef.current = audioUrl;
+      cachedUrlRef.current = audioUrl;
       
       console.log("Stranger Things music loaded successfully");
       return audioUrl;
@@ -52,6 +71,7 @@ export function useBackgroundMusic(enabled: boolean) {
   const startMusic = useCallback(async () => {
     if (audioRef.current) {
       audioRef.current.play().catch(console.warn);
+      setIsPlaying(true);
       return;
     }
 
@@ -60,11 +80,11 @@ export function useBackgroundMusic(enabled: boolean) {
 
     const audio = new Audio(audioUrl);
     audio.loop = true;
-    audio.volume = 0.15; // Keep it subtle as background
 
     // Fade in
     audio.volume = 0;
     audio.play().then(() => {
+      setIsPlaying(true);
       let vol = 0;
       const fadeIn = setInterval(() => {
         vol += 0.01;
@@ -77,6 +97,7 @@ export function useBackgroundMusic(enabled: boolean) {
       }, 50);
     }).catch((e) => {
       console.warn("Audio autoplay blocked:", e);
+      setIsPlaying(false);
     });
 
     audioRef.current = audio;
@@ -94,6 +115,7 @@ export function useBackgroundMusic(enabled: boolean) {
       } else {
         audio.pause();
         audio.volume = 0;
+        setIsPlaying(false);
         clearInterval(fadeOut);
       }
     }, 30);
@@ -109,18 +131,10 @@ export function useBackgroundMusic(enabled: boolean) {
     return () => {
       if (audioRef.current) {
         audioRef.current.pause();
+        setIsPlaying(false);
       }
     };
   }, [enabled, startMusic, stopMusic]);
 
-  // Cleanup blob URL on unmount
-  useEffect(() => {
-    return () => {
-      if (blobUrlRef.current) {
-        URL.revokeObjectURL(blobUrlRef.current);
-      }
-    };
-  }, []);
-
-  return { isLoading, hasError };
+  return { isLoading, hasError, isPlaying };
 }
