@@ -14,9 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        pixel: ["VT323", "monospace"],
-        retro: ["Press Start 2P", "monospace"],
-        fun: ["Comic Neue", "Comic Sans MS", "cursive"],
+        serif: ["Playfair Display", "Georgia", "serif"],
+        sans: ["Inter", "Segoe UI", "sans-serif"],
+        mono: ["JetBrains Mono", "Fira Code", "monospace"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -77,93 +77,48 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        blink: {
-          "0%, 50%": { opacity: "1" },
-          "51%, 100%": { opacity: "0" },
+        flicker: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.85" },
+          "75%": { opacity: "0.95" },
         },
-        rainbow: {
-          "0%": { color: "hsl(0 100% 50%)" },
-          "16%": { color: "hsl(30 100% 50%)" },
-          "33%": { color: "hsl(60 100% 50%)" },
-          "50%": { color: "hsl(120 100% 50%)" },
-          "66%": { color: "hsl(200 100% 50%)" },
-          "83%": { color: "hsl(280 100% 50%)" },
-          "100%": { color: "hsl(0 100% 50%)" },
+        "glow-pulse": {
+          "0%, 100%": { filter: "drop-shadow(0 0 8px hsl(350 85% 55% / 0.5))" },
+          "50%": { filter: "drop-shadow(0 0 20px hsl(350 85% 55% / 0.8))" },
         },
-        marquee: {
-          "0%": { transform: "translateX(100%)" },
-          "100%": { transform: "translateX(-100%)" },
+        "lightning-flash": {
+          "0%, 90%, 100%": { opacity: "0" },
+          "92%, 95%": { opacity: "0.3" },
+          "93%, 97%": { opacity: "0.1" },
         },
-        wobble: {
-          "0%, 100%": { transform: "rotate(-3deg)" },
-          "50%": { transform: "rotate(3deg)" },
+        "fog-drift": {
+          "0%": { transform: "translateX(0) translateY(0)" },
+          "50%": { transform: "translateX(20px) translateY(-10px)" },
+          "100%": { transform: "translateX(0) translateY(0)" },
         },
-        "bounce-chaotic": {
-          "0%, 100%": { transform: "translateY(0) rotate(0deg)" },
-          "25%": { transform: "translateY(-10px) rotate(5deg)" },
-          "50%": { transform: "translateY(-5px) rotate(-3deg)" },
-          "75%": { transform: "translateY(-15px) rotate(-5deg)" },
-        },
-        "spin-slow": {
-          from: { transform: "rotate(0deg)" },
-          to: { transform: "rotate(360deg)" },
-        },
-        glitch: {
-          "0%, 100%": { transform: "translate(0)" },
-          "20%": { transform: "translate(-2px, 2px)" },
-          "40%": { transform: "translate(-2px, -2px)" },
-          "60%": { transform: "translate(2px, 2px)" },
-          "80%": { transform: "translate(2px, -2px)" },
-        },
-        "fade-in": {
-          from: { opacity: "0", transform: "scale(0.8) rotate(-5deg)" },
-          to: { opacity: "1", transform: "scale(1) rotate(0deg)" },
-        },
-        "star-spin": {
-          from: { transform: "rotate(0deg) scale(1)" },
-          "50%": { transform: "rotate(180deg) scale(1.2)" },
-          to: { transform: "rotate(360deg) scale(1)" },
-        },
-        dance: {
-          "0%, 100%": { transform: "translateY(0) scaleX(1)" },
-          "25%": { transform: "translateY(-15px) scaleX(-1)" },
-          "50%": { transform: "translateY(0) scaleX(1)" },
-          "75%": { transform: "translateY(-10px) scaleX(-1)" },
-        },
-        "cd-spin": {
-          from: { transform: "rotate(0deg)" },
-          to: { transform: "rotate(360deg)" },
-        },
-        "reel-spin": {
-          from: { transform: "rotate(0deg)" },
-          to: { transform: "rotate(-360deg)" },
-        },
-        "float-up": {
-          "0%": { transform: "translateY(0) rotate(0deg)", opacity: "1" },
-          "100%": { transform: "translateY(-100px) rotate(20deg)", opacity: "0" },
-        },
-        float: {
+        "float-gentle": {
           "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-10px)" },
+          "50%": { transform: "translateY(-8px)" },
+        },
+        "fade-in-up": {
+          from: { opacity: "0", transform: "translateY(20px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        "scale-in": {
+          from: { opacity: "0", transform: "scale(0.9)" },
+          to: { opacity: "1", transform: "scale(1)" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        blink: "blink 1s step-end infinite",
-        rainbow: "rainbow 3s linear infinite",
-        marquee: "marquee 15s linear infinite",
-        wobble: "wobble 0.5s ease-in-out infinite",
-        "bounce-chaotic": "bounce-chaotic 2s ease-in-out infinite",
-        "spin-slow": "spin-slow 8s linear infinite",
-        glitch: "glitch 0.3s ease-in-out infinite",
-        "fade-in": "fade-in 0.5s ease-out forwards",
-        "star-spin": "star-spin 4s ease-in-out infinite",
-        dance: "dance 1s ease-in-out infinite",
-        "cd-spin": "cd-spin 3s linear infinite",
-        "reel-spin": "reel-spin 2s linear infinite",
-        "float-up": "float-up 3s ease-out infinite",
-        float: "float 2s ease-in-out infinite",
+        flicker: "flicker 4s ease-in-out infinite",
+        "glow-pulse": "glow-pulse 3s ease-in-out infinite",
+        lightning: "lightning-flash 8s ease-in-out infinite",
+        fog: "fog-drift 12s ease-in-out infinite",
+        "float-gentle": "float-gentle 4s ease-in-out infinite",
+        "fade-in-up": "fade-in-up 0.8s ease-out forwards",
+        "scale-in": "scale-in 0.6s ease-out forwards",
       },
     },
   },
