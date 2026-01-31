@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ImmersiveCanvas } from "@/components/ImmersiveCanvas";
+import { AbyssalCanvas } from "@/components/AbyssalCanvas";
 import { ConfettiBurst } from "@/components/ConfettiBurst";
 import { useKonamiCode } from "@/hooks/useKonamiCode";
 import { Sparkles } from "lucide-react";
@@ -20,13 +20,13 @@ const Index = () => {
       {/* Konami code secret message */}
       {konamiActivated && (
         <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
-          <div className="bg-card/95 backdrop-blur-md border border-border rounded-2xl p-8 shadow-2xl animate-fade-in">
-            <p className="text-2xl font-display font-bold text-center flex items-center gap-3">
+          <div className="parchment-bg backdrop-blur-md border border-border rounded-lg p-8 shadow-2xl animate-fade-in">
+            <p className="text-2xl font-display font-semibold text-center flex items-center gap-3 text-card-foreground">
               <Sparkles className="h-6 w-6 text-primary" />
               You found the secret!
               <Sparkles className="h-6 w-6 text-primary" />
             </p>
-            <p className="text-muted-foreground text-center mt-2">
+            <p className="text-card-foreground/70 text-center mt-2 font-body italic">
               You're clearly a person of culture.
             </p>
           </div>
@@ -42,8 +42,8 @@ const Index = () => {
         />
       )}
 
-      {/* Full-screen immersive canvas */}
-      <ImmersiveCanvas />
+      {/* Full-screen abyssal canvas */}
+      <AbyssalCanvas />
     </div>
   );
 };

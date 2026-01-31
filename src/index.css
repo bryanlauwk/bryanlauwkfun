@@ -2,91 +2,92 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/* Abyssal Explorer Design System
+   All colors MUST be HSL.
+   Typography: Cinzel (headings), Playfair Display (titles), Cormorant Garamond (body)
 */
 
 @layer base {
   :root {
-    /* Deep teal/cream theme for light mode */
-    --background: 180 15% 97%;
-    --foreground: 200 25% 15%;
+    /* Light mode - Aged parchment aesthetic */
+    --background: 180 25% 95%;
+    --foreground: 180 30% 15%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 200 25% 15%;
+    --card: 40 30% 85%;
+    --card-foreground: 180 30% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 200 25% 15%;
+    --popover: 40 25% 90%;
+    --popover-foreground: 180 30% 15%;
 
-    --primary: 340 75% 55%;
+    --primary: 45 70% 45%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 180 12% 92%;
-    --secondary-foreground: 200 25% 15%;
+    --secondary: 180 20% 88%;
+    --secondary-foreground: 180 30% 15%;
 
-    --muted: 180 10% 90%;
-    --muted-foreground: 200 10% 45%;
+    --muted: 180 15% 85%;
+    --muted-foreground: 180 15% 40%;
 
-    --accent: 175 70% 45%;
+    --accent: 180 60% 55%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 180 15% 85%;
-    --input: 180 15% 85%;
-    --ring: 340 75% 55%;
+    --border: 40 20% 75%;
+    --input: 40 20% 75%;
+    --ring: 45 70% 45%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 200 10% 30%;
-    --sidebar-primary: 340 75% 55%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 180 12% 92%;
-    --sidebar-accent-foreground: 200 15% 15%;
-    --sidebar-border: 180 15% 85%;
-    --sidebar-ring: 340 75% 55%;
+    --sidebar-background: 40 25% 92%;
+    --sidebar-foreground: 180 30% 15%;
+    --sidebar-primary: 45 70% 45%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 180 20% 88%;
+    --sidebar-accent-foreground: 180 30% 15%;
+    --sidebar-border: 40 20% 75%;
+    --sidebar-ring: 45 70% 45%;
   }
 
   .dark {
-    /* Deep cosmic/abyss theme for dark mode */
-    --background: 195 35% 8%;
-    --foreground: 45 25% 92%;
+    /* Dark mode - Deep Abyssal Teal aesthetic */
+    --background: 180 60% 8%;
+    --foreground: 40 30% 88%;
 
-    --card: 195 30% 12%;
-    --card-foreground: 45 25% 92%;
+    --card: 180 50% 12%;
+    --card-foreground: 40 30% 88%;
 
-    --popover: 195 30% 12%;
-    --popover-foreground: 45 25% 92%;
+    --popover: 180 50% 12%;
+    --popover-foreground: 40 30% 88%;
 
-    --primary: 340 70% 60%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 45 70% 47%;
+    --primary-foreground: 180 60% 8%;
 
-    --secondary: 195 25% 16%;
-    --secondary-foreground: 45 25% 92%;
+    --secondary: 180 40% 18%;
+    --secondary-foreground: 40 30% 88%;
 
-    --muted: 195 20% 18%;
-    --muted-foreground: 180 15% 55%;
+    --muted: 180 35% 22%;
+    --muted-foreground: 180 20% 55%;
 
-    --accent: 168 80% 50%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 180 70% 58%;
+    --accent-foreground: 180 60% 8%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 62% 35%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 195 20% 18%;
-    --input: 195 20% 18%;
-    --ring: 340 70% 60%;
+    --border: 180 35% 20%;
+    --input: 180 35% 20%;
+    --ring: 45 70% 47%;
     
-    --sidebar-background: 195 35% 10%;
-    --sidebar-foreground: 45 25% 92%;
-    --sidebar-primary: 340 70% 60%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 195 25% 16%;
-    --sidebar-accent-foreground: 45 25% 92%;
-    --sidebar-border: 195 20% 18%;
-    --sidebar-ring: 340 70% 60%;
+    --sidebar-background: 180 55% 10%;
+    --sidebar-foreground: 40 30% 88%;
+    --sidebar-primary: 45 70% 47%;
+    --sidebar-primary-foreground: 180 60% 8%;
+    --sidebar-accent: 180 40% 18%;
+    --sidebar-accent-foreground: 40 30% 88%;
+    --sidebar-border: 180 35% 20%;
+    --sidebar-ring: 45 70% 47%;
   }
 }
 
@@ -97,20 +98,22 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: "Cormorant Garamond", Georgia, serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Cinzel", serif;
   }
 }
 
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
+/* Disable scrolling for immersive experience */
+html, body {
+  overflow: hidden;
+  height: 100%;
 }
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  
   *,
   *::before,
   *::after {
@@ -132,34 +135,126 @@ html {
   }
 }
 
-@keyframes glow-pulse {
+@keyframes constellation-twinkle {
   0%, 100% {
     opacity: 0.3;
-    transform: scale(1);
   }
   50% {
-    opacity: 0.6;
-    transform: scale(1.05);
+    opacity: 0.8;
   }
 }
 
-@keyframes float-gentle {
+@keyframes lantern-flicker {
   0%, 100% {
-    transform: translateY(0);
+    opacity: 0.8;
+    filter: brightness(1);
+  }
+  25% {
+    opacity: 0.9;
+    filter: brightness(1.1);
   }
   50% {
-    transform: translateY(-8px);
+    opacity: 0.75;
+    filter: brightness(0.95);
+  }
+  75% {
+    opacity: 0.85;
+    filter: brightness(1.05);
+  }
+}
+
+@keyframes parchment-float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(0.5deg);
+  }
+}
+
+@keyframes ink-reveal {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px hsl(45 70% 47% / 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px hsl(45 70% 47% / 0.5);
   }
 }
 
 .animate-fade-in {
-  animation: fade-in 0.5s ease-out forwards;
+  animation: fade-in 0.8s ease-out forwards;
+}
+
+.animate-constellation-twinkle {
+  animation: constellation-twinkle 4s ease-in-out infinite;
+}
+
+.animate-lantern-flicker {
+  animation: lantern-flicker 3s ease-in-out infinite;
+}
+
+.animate-parchment-float {
+  animation: parchment-float 6s ease-in-out infinite;
+}
+
+.animate-ink-reveal {
+  animation: ink-reveal 1.5s ease-out forwards;
 }
 
 .animate-glow-pulse {
   animation: glow-pulse 3s ease-in-out infinite;
 }
 
-.animate-float-gentle {
-  animation: float-gentle 4s ease-in-out infinite;
+/* Parchment texture effect */
+.parchment-bg {
+  background: linear-gradient(
+    145deg,
+    hsl(40 30% 85%) 0%,
+    hsl(38 25% 78%) 50%,
+    hsl(40 30% 82%) 100%
+  );
+}
+
+.dark .parchment-bg {
+  background: linear-gradient(
+    145deg,
+    hsl(40 25% 75%) 0%,
+    hsl(38 20% 68%) 50%,
+    hsl(40 25% 72%) 100%
+  );
+}
+
+/* Paper noise texture overlay */
+.texture-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* Lantern glow effect */
+.glow-lantern {
+  box-shadow: 0 0 40px hsl(45 80% 50% / 0.4);
+}
+
+/* Gold accent glow */
+.glow-gold {
+  text-shadow: 0 0 20px hsl(45 70% 47% / 0.5);
+}
+
+/* Cyan accent glow */
+.glow-cyan {
+  box-shadow: 0 0 30px hsl(180 70% 58% / 0.4);
 }
