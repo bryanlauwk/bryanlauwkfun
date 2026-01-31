@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-import { Header } from "@/components/Header";
+import { HeroSection } from "@/components/HeroSection";
 import { ProjectCard } from "@/components/ProjectCard";
 import { Footer } from "@/components/Footer";
-import { DoodleBackground } from "@/components/DoodleBackground";
+import { ImmersiveBackground } from "@/components/ImmersiveBackground";
 import { CursorTrail } from "@/components/CursorTrail";
 import { ConfettiBurst } from "@/components/ConfettiBurst";
+import { ScrollSection, StaggeredReveal } from "@/components/ScrollSection";
+import { ScrollProgress } from "@/components/ScrollProgress";
 import { usePublicProjects } from "@/hooks/useProjects";
 import { useKonamiCode } from "@/hooks/useKonamiCode";
 import { Loader2, Sparkles } from "lucide-react";
@@ -14,7 +16,6 @@ const Index = () => {
   const { data: projects, isLoading } = usePublicProjects();
   const [konamiActivated, setKonamiActivated] = useState(false);
   const [confettiPos, setConfettiPos] = useState<{ x: number; y: number } | null>(null);
-  const [cardsVisible, setCardsVisible] = useState(false);
 
   // Konami code easter egg
   useKonamiCode(() => {
@@ -23,22 +24,14 @@ const Index = () => {
     setTimeout(() => setKonamiActivated(false), 5000);
   });
 
-  // Staggered card entrance animation
-  useEffect(() => {
-    if (!isLoading) {
-      const timer = setTimeout(() => setCardsVisible(true), 100);
-      return () => clearTimeout(timer);
-    }
-  }, [isLoading]);
-
   const displayProjects = projects || [];
   const hasNoProjects = !isLoading && displayProjects.length === 0;
 
   return (
     <div className="min-h-screen bg-background relative overflow-x-hidden">
       <CursorTrail />
-      <DoodleBackground />
-      <Header />
+      <ImmersiveBackground />
+      <ScrollProgress />
 
       {/* Konami code secret message */}
       {konamiActivated && (
@@ -65,8 +58,32 @@ const Index = () => {
         />
       )}
 
-      {/* Main content */}
-      <main className="container mx-auto px-4 py-4 pb-24 relative z-10">
+      {/* Hero Section - Full viewport */}
+      <HeroSection />
+
+      {/* Intro Statement */}
+      <ScrollSection 
+        className="py-24 md:py-32 relative z-10"
+        animation="fade-up"
+      >
+        <div className="container mx-auto px-4 text-center">
+          <p className="text-2xl md:text-3xl lg:text-4xl font-display text-foreground/80 max-w-2xl mx-auto leading-relaxed">
+            A creative space for{" "}
+            <span className="text-primary font-semibold">experiments</span>,{" "}
+            <span className="text-accent font-semibold">curiosities</span>, and{" "}
+            <span className="text-foreground font-semibold">playful ideas</span>.
+          </p>
+        </div>
+      </ScrollSection>
+
+      {/* Projects Gallery */}
+      <main className="container mx-auto px-4 py-8 pb-24 relative z-10">
+        <ScrollSection animation="fade-up" className="mb-12">
+          <h2 className="text-lg md:text-xl font-display text-muted-foreground text-center uppercase tracking-widest">
+            Experiments
+          </h2>
+        </ScrollSection>
+
         {isLoading ? (
           <div className="flex flex-col items-center justify-center py-24 gap-4">
             <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -75,8 +92,7 @@ const Index = () => {
             </p>
           </div>
         ) : hasNoProjects ? (
-          /* Clean empty state */
-          <div className="flex flex-col items-center justify-center py-24 gap-4">
+          <ScrollSection animation="fade-scale" className="flex flex-col items-center justify-center py-24 gap-4">
             <div className="w-16 h-16 rounded-2xl bg-muted flex items-center justify-center">
               <div className="w-6 h-6 rounded-lg bg-primary/20" />
             </div>
@@ -88,21 +104,15 @@ const Index = () => {
                 The playground is empty for now. Check back soon for experiments.
               </p>
             </div>
-          </div>
+          </ScrollSection>
         ) : (
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-10">
             {displayProjects.map((project, index) => (
-              <div
+              <ScrollSection
                 key={project.id}
-                className={cn(
-                  "transition-all duration-700 ease-out",
-                  cardsVisible
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-8"
-                )}
-                style={{
-                  transitionDelay: `${index * 100}ms`,
-                }}
+                animation="fade-up"
+                delay={index * 100}
+                threshold={0.05}
               >
                 <ProjectCard
                   title={project.title}
@@ -114,7 +124,7 @@ const Index = () => {
                   index={index}
                   showTextOverlay={project.show_text_overlay}
                 />
-              </div>
+              </ScrollSection>
             ))}
           </div>
         )}
