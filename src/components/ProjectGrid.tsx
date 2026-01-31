@@ -1,14 +1,29 @@
 import { usePublicProjects } from "@/hooks/useProjects";
-import { CinematicProjectCard } from "./CinematicProjectCard";
-import { Loader2 } from "lucide-react";
+import { StrangerThingsCard } from "./StrangerThingsCard";
+import { Skeleton } from "./ui/skeleton";
+
+function PowerSurgeSkeleton() {
+  return (
+    <div className="relative bg-card border border-border rounded-lg overflow-hidden">
+      <Skeleton className="aspect-video w-full animate-power-surge" />
+      <div className="p-5 space-y-3">
+        <Skeleton className="h-6 w-3/4 animate-power-surge" style={{ animationDelay: "0.1s" }} />
+        <Skeleton className="h-4 w-full animate-power-surge" style={{ animationDelay: "0.2s" }} />
+        <Skeleton className="h-4 w-2/3 animate-power-surge" style={{ animationDelay: "0.3s" }} />
+      </div>
+    </div>
+  );
+}
 
 export function ProjectGrid() {
   const { data: projects, isLoading } = usePublicProjects();
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-[300px]">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+        {Array.from({ length: 3 }).map((_, i) => (
+          <PowerSurgeSkeleton key={i} />
+        ))}
       </div>
     );
   }
@@ -17,11 +32,11 @@ export function ProjectGrid() {
     return (
       <div className="flex items-center justify-center min-h-[300px]">
         <div className="text-center card-cinematic p-8 rounded-lg">
-          <p className="font-serif text-2xl text-foreground mb-2">
-            Coming Soon
+          <p className="font-serif text-2xl stranger-glow mb-2">
+            The Upside Down
           </p>
-          <p className="text-muted-foreground">
-            New projects are on the horizon...
+          <p className="text-muted-foreground font-mono text-sm">
+            Projects are emerging from the void...
           </p>
         </div>
       </div>
@@ -29,9 +44,9 @@ export function ProjectGrid() {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
       {projects.map((project, index) => (
-        <CinematicProjectCard 
+        <StrangerThingsCard 
           key={project.id} 
           project={project} 
           index={index}
