@@ -1,12 +1,34 @@
 import { useState } from "react";
 import { ThemeToggle } from "./ThemeToggle";
 import { ConstellationOverlay } from "./ConstellationOverlay";
-import { ParchmentCard } from "./ParchmentCard";
+import { IllustrationHotspot } from "./IllustrationHotspot";
 import { AbyssalLogo } from "./AbyssalLogo";
 import { usePublicProjects } from "@/hooks/useProjects";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Loader2 } from "lucide-react";
 import abyssalBackground from "@/assets/abyssal-background.png";
+
+// Hotspot configuration - positions mapped to illustration objects
+const hotspotConfig = [
+  {
+    position: { x: "72%", y: "42%" },
+    size: { width: "80px", height: "80px" },
+    variant: "tablet" as const,
+    projectIndex: 0,
+  },
+  {
+    position: { x: "28%", y: "48%" },
+    size: { width: "70px", height: "70px" },
+    variant: "watch" as const,
+    projectIndex: 1,
+  },
+  {
+    position: { x: "82%", y: "68%" },
+    size: { width: "75px", height: "75px" },
+    variant: "lantern" as const,
+    projectIndex: 2,
+  },
+];
 
 export function AbyssalCanvas() {
   const { data: projects, isLoading } = usePublicProjects();
@@ -71,31 +93,43 @@ export function AbyssalCanvas() {
         </p>
       </div>
 
-      {/* Project Cards */}
-      <div className="absolute inset-x-0 bottom-[8%] md:bottom-[10%] z-20 px-4 md:px-8">
+      {/* Interactive Hotspots - positioned over illustration objects */}
+      <div 
+        className="absolute inset-0 z-20 pointer-events-none"
+        style={{
+          transform: `translate(${-parallaxX}px, ${-parallaxY}px)`,
+        }}
+      >
         {isLoading ? (
-          <div className="flex items-center justify-center">
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-auto">
             <Loader2 className="w-8 h-8 animate-spin text-primary" />
           </div>
         ) : displayProjects.length === 0 ? (
-          <div className="flex items-center justify-center">
+          <div className="absolute bottom-[15%] inset-x-0 flex items-center justify-center pointer-events-auto">
             <p className="text-foreground/60 font-body text-lg italic">
               Treasures yet to be discovered...
             </p>
           </div>
         ) : (
-          <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 lg:gap-8 max-w-5xl mx-auto">
-            {displayProjects.slice(0, 4).map((project, index) => (
-              <ParchmentCard
-                key={project.id}
-                title={project.title}
-                description={project.description || undefined}
-                imageUrl={project.image_url || undefined}
-                href={project.href}
-                delay={index * 0.15}
-              />
-            ))}
-          </div>
+          <>
+            {hotspotConfig.map((config, index) => {
+              const project = displayProjects[config.projectIndex];
+              if (!project) return null;
+              return (
+                <div key={project.id} className="pointer-events-auto">
+                  <IllustrationHotspot
+                    position={config.position}
+                    size={config.size}
+                    variant={config.variant}
+                    title={project.title}
+                    description={project.description || undefined}
+                    href={project.href}
+                    delay={index * 0.3}
+                  />
+                </div>
+              );
+            })}
+          </>
         )}
       </div>
 
