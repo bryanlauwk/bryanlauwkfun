@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.send-contact-email]
 verify_jwt = false
+
+[functions.generate-stranger-music]
+verify_jwt = false
