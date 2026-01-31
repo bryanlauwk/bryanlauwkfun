@@ -7,7 +7,7 @@ export function CinematicFooter() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           {/* Ominous copyright */}
           <p className="text-sm text-muted-foreground font-mono">
-            © {new Date().getFullYear()} · Broadcast from the Upside Down
+            © {new Date().getFullYear()} bryanlauwk · Broadcast from the Upside Down
           </p>
 
           {/* Motto reminder */}
