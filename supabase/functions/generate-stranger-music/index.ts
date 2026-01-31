@@ -22,11 +22,11 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    // Stranger Things-inspired music prompt
-    const prompt = "Dark ambient synth music, 80s horror movie soundtrack style, deep bass drones, eerie atmospheric pads, minor key, slow tempo, mysterious and suspenseful, Stranger Things inspired, John Carpenter style synthesizer, haunting and ethereal";
+    // Dark ambient synth music prompt
+    const prompt = "Dark ambient electronic music, deep bass drones and pulsing synthesizers, eerie atmospheric pads in minor key, slow tempo around 60bpm, mysterious and suspenseful mood, haunting ethereal textures, retro analog synth sounds, cinematic and immersive";
     const duration = 30; // 30 seconds of ambient music
 
-    console.log("Generating Stranger Things-style music...");
+    console.log("Generating dark ambient synth music...");
 
     const response = await fetch(
       "https://api.elevenlabs.io/v1/music",
@@ -44,9 +44,9 @@ const handler = async (req: Request): Promise<Response> => {
     );
 
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error("ElevenLabs API error:", response.status, errorText);
-      throw new Error(`Music generation failed: ${response.status}`);
+      const errorData = await response.json().catch(() => ({}));
+      console.error("ElevenLabs API error:", response.status, JSON.stringify(errorData));
+      throw new Error(`Music generation failed: ${response.status} - ${JSON.stringify(errorData)}`);
     }
 
     const audioBuffer = await response.arrayBuffer();
