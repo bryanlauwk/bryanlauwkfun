@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { usePublicProjects } from "@/hooks/useProjects";
 import { DraggableCard } from "./DraggableCard";
 import { Loader2 } from "lucide-react";
@@ -32,10 +32,12 @@ export function ScatteredGallery() {
   const { data: projects, isLoading } = usePublicProjects();
   const [cardPositions, setCardPositions] = useState<CardPosition[]>([]);
   const [topZIndex, setTopZIndex] = useState(100);
+  const initializedRef = useRef(false);
 
-  // Initialize positions when projects load
+  // Initialize positions only ONCE when projects first load
   useEffect(() => {
-    if (projects && projects.length > 0) {
+    if (projects && projects.length > 0 && !initializedRef.current) {
+      initializedRef.current = true;
       const basePositions = generateScatteredPositions(projects.length);
       setCardPositions(
         projects.map((project, index) => ({
