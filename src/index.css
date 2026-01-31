@@ -8,83 +8,85 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 45 30% 98%;
-    --foreground: 240 10% 15%;
+    /* Deep teal/cream theme for light mode */
+    --background: 180 15% 97%;
+    --foreground: 200 25% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 15%;
+    --card-foreground: 200 25% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 15%;
+    --popover-foreground: 200 25% 15%;
 
-    --primary: 340 82% 52%;
+    --primary: 340 75% 55%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 45 40% 94%;
-    --secondary-foreground: 240 10% 15%;
+    --secondary: 180 12% 92%;
+    --secondary-foreground: 200 25% 15%;
 
-    --muted: 45 20% 92%;
-    --muted-foreground: 240 5% 45%;
+    --muted: 180 10% 90%;
+    --muted-foreground: 200 10% 45%;
 
-    --accent: 190 80% 50%;
+    --accent: 175 70% 45%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 45 20% 88%;
-    --input: 45 20% 88%;
-    --ring: 340 82% 52%;
+    --border: 180 15% 85%;
+    --input: 180 15% 85%;
+    --ring: 340 75% 55%;
 
     --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 340 82% 52%;
+    --sidebar-foreground: 200 10% 30%;
+    --sidebar-primary: 340 75% 55%;
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 45 40% 94%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 45 20% 88%;
-    --sidebar-ring: 340 82% 52%;
+    --sidebar-accent: 180 12% 92%;
+    --sidebar-accent-foreground: 200 15% 15%;
+    --sidebar-border: 180 15% 85%;
+    --sidebar-ring: 340 75% 55%;
   }
 
   .dark {
-    --background: 240 10% 8%;
-    --foreground: 45 30% 96%;
+    /* Deep cosmic/abyss theme for dark mode */
+    --background: 195 35% 8%;
+    --foreground: 45 25% 92%;
 
-    --card: 240 10% 12%;
-    --card-foreground: 45 30% 96%;
+    --card: 195 30% 12%;
+    --card-foreground: 45 25% 92%;
 
-    --popover: 240 10% 12%;
-    --popover-foreground: 45 30% 96%;
+    --popover: 195 30% 12%;
+    --popover-foreground: 45 25% 92%;
 
-    --primary: 340 82% 60%;
+    --primary: 340 70% 60%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 240 8% 18%;
-    --secondary-foreground: 45 30% 96%;
+    --secondary: 195 25% 16%;
+    --secondary-foreground: 45 25% 92%;
 
-    --muted: 240 8% 18%;
-    --muted-foreground: 45 10% 60%;
+    --muted: 195 20% 18%;
+    --muted-foreground: 180 15% 55%;
 
-    --accent: 190 80% 55%;
+    --accent: 168 80% 50%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 240 8% 20%;
-    --input: 240 8% 20%;
-    --ring: 340 82% 60%;
+    --border: 195 20% 18%;
+    --input: 195 20% 18%;
+    --ring: 340 70% 60%;
     
-    --sidebar-background: 240 10% 10%;
-    --sidebar-foreground: 45 30% 96%;
-    --sidebar-primary: 340 82% 60%;
+    --sidebar-background: 195 35% 10%;
+    --sidebar-foreground: 45 25% 92%;
+    --sidebar-primary: 340 70% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 8% 18%;
-    --sidebar-accent-foreground: 45 30% 96%;
-    --sidebar-border: 240 8% 20%;
-    --sidebar-ring: 340 82% 60%;
+    --sidebar-accent: 195 25% 16%;
+    --sidebar-accent-foreground: 45 25% 92%;
+    --sidebar-border: 195 20% 18%;
+    --sidebar-ring: 340 70% 60%;
   }
 }
 
@@ -96,4 +98,68 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Custom animation keyframes */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes float-gentle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out forwards;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+.animate-float-gentle {
+  animation: float-gentle 4s ease-in-out infinite;
 }

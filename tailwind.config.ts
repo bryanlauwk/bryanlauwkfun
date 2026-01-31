@@ -91,44 +91,56 @@ export default {
             transform: "translateY(-10px)",
           },
         },
-        "walk-left-leg": {
+        "float-slow": {
           "0%, 100%": {
-            transform: "rotate(-12deg)",
+            transform: "translateY(0) rotate(0deg)",
           },
           "50%": {
-            transform: "rotate(18deg)",
+            transform: "translateY(-12px) rotate(2deg)",
           },
         },
-        "walk-right-leg": {
+        "float-medium": {
           "0%, 100%": {
-            transform: "rotate(12deg)",
-          },
-          "50%": {
-            transform: "rotate(-18deg)",
-          },
-        },
-        "walk-left-arm": {
-          "0%, 100%": {
-            transform: "rotate(8deg)",
-          },
-          "50%": {
-            transform: "rotate(-12deg)",
-          },
-        },
-        "walk-right-arm": {
-          "0%, 100%": {
-            transform: "rotate(-8deg)",
-          },
-          "50%": {
-            transform: "rotate(12deg)",
-          },
-        },
-        "bob-body": {
-          "0%, 50%, 100%": {
             transform: "translateY(0)",
           },
-          "25%, 75%": {
-            transform: "translateY(-1px)",
+          "50%": {
+            transform: "translateY(-8px)",
+          },
+        },
+        "float-fast": {
+          "0%, 100%": {
+            transform: "translateY(0)",
+          },
+          "50%": {
+            transform: "translateY(-5px)",
+          },
+        },
+        "reveal-up": {
+          from: {
+            opacity: "0",
+            transform: "translateY(20px)",
+          },
+          to: {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+        },
+        "reveal-scale": {
+          from: {
+            opacity: "0",
+            transform: "scale(0.95)",
+          },
+          to: {
+            opacity: "1",
+            transform: "scale(1)",
+          },
+        },
+        "glow-pulse": {
+          "0%, 100%": {
+            opacity: "0.3",
+          },
+          "50%": {
+            opacity: "0.6",
           },
         },
       },
@@ -136,11 +148,12 @@ export default {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         float: "float 3s ease-in-out infinite",
-        "walk-left-leg": "walk-left-leg 0.6s ease-in-out infinite",
-        "walk-right-leg": "walk-right-leg 0.6s ease-in-out infinite",
-        "walk-left-arm": "walk-left-arm 0.6s ease-in-out infinite",
-        "walk-right-arm": "walk-right-arm 0.6s ease-in-out infinite",
-        "bob-body": "bob-body 0.3s ease-in-out infinite",
+        "float-slow": "float-slow 6s ease-in-out infinite",
+        "float-medium": "float-medium 4s ease-in-out infinite",
+        "float-fast": "float-fast 2.5s ease-in-out infinite",
+        "reveal-up": "reveal-up 0.7s ease-out forwards",
+        "reveal-scale": "reveal-scale 0.5s ease-out forwards",
+        "glow-pulse": "glow-pulse 3s ease-in-out infinite",
       },
     },
   },
