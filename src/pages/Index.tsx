@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { RetroHeader } from "@/components/RetroHeader";
 import { RetroFooter } from "@/components/RetroFooter";
+import { RetroDecorations } from "@/components/RetroDecorations";
 import { ScatteredGallery } from "@/components/ScatteredGallery";
 import { ConfettiBurst } from "@/components/ConfettiBurst";
 import { CursorTrail } from "@/components/CursorTrail";
@@ -22,6 +23,9 @@ const Index = () => {
     <div className="min-h-screen flex flex-col bg-background pattern-checkerboard">
       {/* Cursor trail effect */}
       <CursorTrail />
+      
+      {/* 90s animated decorations */}
+      <RetroDecorations />
 
       {/* Konami code secret */}
       {konamiActivated && (

@@ -35,11 +35,12 @@ export function RetroFooter() {
 
           {/* Badges section */}
           <div className="flex justify-center gap-3 flex-wrap mb-6">
-            <Badge>Made with HTML</Badge>
-            <Badge>CSS 3.0</Badge>
-            <Badge>JavaScript</Badge>
-            <Badge>Best viewed in Chrome</Badge>
-            <Badge>No AI was harmed</Badge>
+            <Badge>📼 VHS Quality</Badge>
+            <Badge>🕹️ Player 1 Ready</Badge>
+            <Badge>💿 CD-ROM Enhanced</Badge>
+            <Badge>🎬 Blockbuster Pick</Badge>
+            <Badge>📻 Boombox Approved</Badge>
+            <Badge>👾 High Score: 999999</Badge>
           </div>
 
           {/* Links */}

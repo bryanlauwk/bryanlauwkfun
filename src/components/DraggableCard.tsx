@@ -81,8 +81,8 @@ export function DraggableCard({
     const newY = ((e.clientY - dragOffset.y - containerRect.top) / containerRect.height) * 100;
 
     setLocalPos({
-      x: Math.max(0, Math.min(85, newX)),
-      y: Math.max(0, Math.min(85, newY)),
+      x: Math.max(-15, Math.min(110, newX)),
+      y: Math.max(-10, Math.min(100, newY)),
     });
   };
 
