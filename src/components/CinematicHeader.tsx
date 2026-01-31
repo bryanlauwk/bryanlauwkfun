@@ -1,6 +1,6 @@
 import { useVisitorCounter } from "@/hooks/useVisitorCounter";
-import { Radio } from "lucide-react";
 import { SoundToggle } from "./SoundToggle";
+import faviconImage from "/favicon.png";
 
 export function CinematicHeader() {
   const { count, isLoading } = useVisitorCounter();
@@ -11,8 +11,12 @@ export function CinematicHeader() {
         {/* Logo */}
         <div className="flex items-center gap-3">
           <div className="relative">
-            <Radio className="w-7 h-7 text-primary animate-electrical-flicker" />
-            <div className="absolute inset-0 bg-primary/30 blur-md animate-glow-pulse" />
+            <img 
+              src={faviconImage} 
+              alt="Bryan Lau" 
+              className="w-8 h-8 md:w-10 md:h-10 rounded-sm object-cover border border-primary/30 shadow-lg shadow-primary/20"
+            />
+            <div className="absolute inset-0 bg-primary/20 blur-md animate-glow-pulse rounded-sm" />
           </div>
           <span className="font-serif text-xl md:text-2xl font-bold text-foreground tracking-wider uppercase stranger-glow">
             Bryan Lau
