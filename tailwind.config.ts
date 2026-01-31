@@ -14,9 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Cinzel", "serif"],
-        serif: ["Playfair Display", "Georgia", "serif"],
-        body: ["Cormorant Garamond", "Georgia", "serif"],
+        pixel: ["VT323", "monospace"],
+        retro: ["Press Start 2P", "monospace"],
+        fun: ["Comic Neue", "Comic Sans MS", "cursive"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -70,82 +70,73 @@ export default {
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
-        "constellation-twinkle": {
-          "0%, 100%": {
-            opacity: "0.3",
-          },
-          "50%": {
-            opacity: "0.8",
-          },
+        blink: {
+          "0%, 50%": { opacity: "1" },
+          "51%, 100%": { opacity: "0" },
         },
-        "lantern-flicker": {
-          "0%, 100%": {
-            opacity: "0.8",
-            filter: "brightness(1)",
-          },
-          "25%": {
-            opacity: "0.9",
-            filter: "brightness(1.1)",
-          },
-          "50%": {
-            opacity: "0.75",
-            filter: "brightness(0.95)",
-          },
-          "75%": {
-            opacity: "0.85",
-            filter: "brightness(1.05)",
-          },
+        rainbow: {
+          "0%": { color: "hsl(0 100% 50%)" },
+          "16%": { color: "hsl(30 100% 50%)" },
+          "33%": { color: "hsl(60 100% 50%)" },
+          "50%": { color: "hsl(120 100% 50%)" },
+          "66%": { color: "hsl(200 100% 50%)" },
+          "83%": { color: "hsl(280 100% 50%)" },
+          "100%": { color: "hsl(0 100% 50%)" },
         },
-        "parchment-float": {
-          "0%, 100%": {
-            transform: "translateY(0) rotate(0deg)",
-          },
-          "50%": {
-            transform: "translateY(-8px) rotate(0.5deg)",
-          },
+        marquee: {
+          "0%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(-100%)" },
+        },
+        wobble: {
+          "0%, 100%": { transform: "rotate(-3deg)" },
+          "50%": { transform: "rotate(3deg)" },
+        },
+        "bounce-chaotic": {
+          "0%, 100%": { transform: "translateY(0) rotate(0deg)" },
+          "25%": { transform: "translateY(-10px) rotate(5deg)" },
+          "50%": { transform: "translateY(-5px) rotate(-3deg)" },
+          "75%": { transform: "translateY(-15px) rotate(-5deg)" },
+        },
+        "spin-slow": {
+          from: { transform: "rotate(0deg)" },
+          to: { transform: "rotate(360deg)" },
+        },
+        glitch: {
+          "0%, 100%": { transform: "translate(0)" },
+          "20%": { transform: "translate(-2px, 2px)" },
+          "40%": { transform: "translate(-2px, -2px)" },
+          "60%": { transform: "translate(2px, 2px)" },
+          "80%": { transform: "translate(2px, -2px)" },
         },
         "fade-in": {
-          from: {
-            opacity: "0",
-            transform: "translateY(10px)",
-          },
-          to: {
-            opacity: "1",
-            transform: "translateY(0)",
-          },
+          from: { opacity: "0", transform: "scale(0.8) rotate(-5deg)" },
+          to: { opacity: "1", transform: "scale(1) rotate(0deg)" },
         },
-        "glow-pulse": {
-          "0%, 100%": {
-            boxShadow: "0 0 20px hsl(45 70% 47% / 0.3)",
-          },
-          "50%": {
-            boxShadow: "0 0 40px hsl(45 70% 47% / 0.5)",
-          },
+        "star-spin": {
+          from: { transform: "rotate(0deg) scale(1)" },
+          "50%": { transform: "rotate(180deg) scale(1.2)" },
+          to: { transform: "rotate(360deg) scale(1)" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "constellation-twinkle": "constellation-twinkle 4s ease-in-out infinite",
-        "lantern-flicker": "lantern-flicker 3s ease-in-out infinite",
-        "parchment-float": "parchment-float 6s ease-in-out infinite",
-        "fade-in": "fade-in 0.8s ease-out forwards",
-        "glow-pulse": "glow-pulse 3s ease-in-out infinite",
+        blink: "blink 1s step-end infinite",
+        rainbow: "rainbow 3s linear infinite",
+        marquee: "marquee 15s linear infinite",
+        wobble: "wobble 0.5s ease-in-out infinite",
+        "bounce-chaotic": "bounce-chaotic 2s ease-in-out infinite",
+        "spin-slow": "spin-slow 8s linear infinite",
+        glitch: "glitch 0.3s ease-in-out infinite",
+        "fade-in": "fade-in 0.5s ease-out forwards",
+        "star-spin": "star-spin 4s ease-in-out infinite",
       },
     },
   },
