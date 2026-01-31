@@ -1,173 +1,103 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-// Stranger Things-inspired synth ambient music generator
+const MUSIC_CACHE_KEY = "stranger-music-blob";
+
 export function useBackgroundMusic(enabled: boolean) {
-  const audioContextRef = useRef<AudioContext | null>(null);
-  const nodesRef = useRef<{
-    masterGain: GainNode;
-    oscillators: OscillatorNode[];
-    gains: GainNode[];
-    lfo: OscillatorNode;
-    lfoGain: GainNode;
-  } | null>(null);
-  const isPlayingRef = useRef(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  const blobUrlRef = useRef<string | null>(null);
 
-  const getAudioContext = useCallback(() => {
-    if (typeof window === "undefined") return null;
-    if (!audioContextRef.current) {
-      audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+  const fetchMusic = useCallback(async () => {
+    // Check if we already have a cached blob URL
+    if (blobUrlRef.current) {
+      return blobUrlRef.current;
     }
-    return audioContextRef.current;
-  }, []);
 
-  const startMusic = useCallback(() => {
-    if (isPlayingRef.current) return;
-    
-    const audioContext = getAudioContext();
-    if (!audioContext) return;
-
-    if (audioContext.state === "suspended") {
-      audioContext.resume();
-    }
+    setIsLoading(true);
+    setHasError(false);
 
     try {
-      // Master gain for overall volume
-      const masterGain = audioContext.createGain();
-      masterGain.gain.setValueAtTime(0, audioContext.currentTime);
-      masterGain.gain.linearRampToValueAtTime(0.08, audioContext.currentTime + 3); // Fade in
-      masterGain.connect(audioContext.destination);
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/generate-stranger-music`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+          },
+        }
+      );
 
-      // LFO for subtle pulsing/breathing effect
-      const lfo = audioContext.createOscillator();
-      const lfoGain = audioContext.createGain();
-      lfo.type = "sine";
-      lfo.frequency.setValueAtTime(0.1, audioContext.currentTime); // Very slow pulse
-      lfoGain.gain.setValueAtTime(0.02, audioContext.currentTime);
-      lfo.connect(lfoGain);
-      lfo.start();
+      if (!response.ok) {
+        throw new Error(`Music generation failed: ${response.status}`);
+      }
 
-      const oscillators: OscillatorNode[] = [];
-      const gains: GainNode[] = [];
-
-      // Deep bass drone (C1 - 32.7 Hz)
-      const bass = audioContext.createOscillator();
-      const bassGain = audioContext.createGain();
-      bass.type = "sine";
-      bass.frequency.setValueAtTime(32.7, audioContext.currentTime);
-      bassGain.gain.setValueAtTime(0.4, audioContext.currentTime);
-      lfoGain.connect(bassGain.gain);
-      bass.connect(bassGain);
-      bassGain.connect(masterGain);
-      bass.start();
-      oscillators.push(bass);
-      gains.push(bassGain);
-
-      // Sub-bass layer (C0 - 16.35 Hz) - felt more than heard
-      const subBass = audioContext.createOscillator();
-      const subBassGain = audioContext.createGain();
-      subBass.type = "sine";
-      subBass.frequency.setValueAtTime(16.35, audioContext.currentTime);
-      subBassGain.gain.setValueAtTime(0.2, audioContext.currentTime);
-      subBass.connect(subBassGain);
-      subBassGain.connect(masterGain);
-      subBass.start();
-      oscillators.push(subBass);
-      gains.push(subBassGain);
-
-      // Eerie pad - minor chord tones with detuning
-      const padFrequencies = [130.81, 155.56, 196.0, 233.08]; // Cm7 chord
-      padFrequencies.forEach((freq, i) => {
-        const osc = audioContext.createOscillator();
-        const oscGain = audioContext.createGain();
-        const filter = audioContext.createBiquadFilter();
-        
-        osc.type = "sawtooth";
-        osc.frequency.setValueAtTime(freq + (Math.random() - 0.5) * 2, audioContext.currentTime); // Slight detune
-        
-        // Slow frequency drift for unsettling effect
-        osc.frequency.linearRampToValueAtTime(
-          freq + (Math.random() - 0.5) * 5,
-          audioContext.currentTime + 20
-        );
-        
-        filter.type = "lowpass";
-        filter.frequency.setValueAtTime(400 + i * 50, audioContext.currentTime);
-        filter.Q.setValueAtTime(2, audioContext.currentTime);
-        
-        oscGain.gain.setValueAtTime(0.06, audioContext.currentTime);
-        
-        osc.connect(filter);
-        filter.connect(oscGain);
-        oscGain.connect(masterGain);
-        osc.start(audioContext.currentTime + i * 0.5); // Staggered start
-        
-        oscillators.push(osc);
-        gains.push(oscGain);
-      });
-
-      // High ethereal tone - like distant transmission
-      const ethereal = audioContext.createOscillator();
-      const etherealGain = audioContext.createGain();
-      const etherealFilter = audioContext.createBiquadFilter();
-      ethereal.type = "sine";
-      ethereal.frequency.setValueAtTime(1046.5, audioContext.currentTime); // High C
-      etherealFilter.type = "bandpass";
-      etherealFilter.frequency.setValueAtTime(1000, audioContext.currentTime);
-      etherealFilter.Q.setValueAtTime(10, audioContext.currentTime);
-      etherealGain.gain.setValueAtTime(0.02, audioContext.currentTime);
+      const audioBlob = await response.blob();
+      const audioUrl = URL.createObjectURL(audioBlob);
+      blobUrlRef.current = audioUrl;
       
-      // Tremolo effect
-      const tremolo = audioContext.createOscillator();
-      const tremoloGain = audioContext.createGain();
-      tremolo.type = "sine";
-      tremolo.frequency.setValueAtTime(4, audioContext.currentTime);
-      tremoloGain.gain.setValueAtTime(0.015, audioContext.currentTime);
-      tremolo.connect(tremoloGain);
-      tremoloGain.connect(etherealGain.gain);
-      tremolo.start();
-      
-      ethereal.connect(etherealFilter);
-      etherealFilter.connect(etherealGain);
-      etherealGain.connect(masterGain);
-      ethereal.start();
-      oscillators.push(ethereal);
-      oscillators.push(tremolo);
-      gains.push(etherealGain);
-
-      nodesRef.current = {
-        masterGain,
-        oscillators,
-        gains,
-        lfo,
-        lfoGain,
-      };
-      isPlayingRef.current = true;
-    } catch (e) {
-      console.warn("Background music failed to start:", e);
+      console.log("Stranger Things music loaded successfully");
+      return audioUrl;
+    } catch (error) {
+      console.error("Failed to fetch music:", error);
+      setHasError(true);
+      return null;
+    } finally {
+      setIsLoading(false);
     }
-  }, [getAudioContext]);
+  }, []);
+
+  const startMusic = useCallback(async () => {
+    if (audioRef.current) {
+      audioRef.current.play().catch(console.warn);
+      return;
+    }
+
+    const audioUrl = await fetchMusic();
+    if (!audioUrl) return;
+
+    const audio = new Audio(audioUrl);
+    audio.loop = true;
+    audio.volume = 0.15; // Keep it subtle as background
+
+    // Fade in
+    audio.volume = 0;
+    audio.play().then(() => {
+      let vol = 0;
+      const fadeIn = setInterval(() => {
+        vol += 0.01;
+        if (vol >= 0.15) {
+          audio.volume = 0.15;
+          clearInterval(fadeIn);
+        } else {
+          audio.volume = vol;
+        }
+      }, 50);
+    }).catch((e) => {
+      console.warn("Audio autoplay blocked:", e);
+    });
+
+    audioRef.current = audio;
+  }, [fetchMusic]);
 
   const stopMusic = useCallback(() => {
-    if (!nodesRef.current || !isPlayingRef.current) return;
-    
-    const audioContext = getAudioContext();
-    if (!audioContext) return;
+    if (!audioRef.current) return;
 
-    const { masterGain, oscillators, lfo } = nodesRef.current;
+    const audio = audioRef.current;
     
     // Fade out
-    masterGain.gain.linearRampToValueAtTime(0, audioContext.currentTime + 1);
-    
-    // Stop all oscillators after fade
-    setTimeout(() => {
-      oscillators.forEach((osc) => {
-        try { osc.stop(); } catch {}
-      });
-      try { lfo.stop(); } catch {}
-      nodesRef.current = null;
-      isPlayingRef.current = false;
-    }, 1100);
-  }, [getAudioContext]);
+    const fadeOut = setInterval(() => {
+      if (audio.volume > 0.01) {
+        audio.volume = Math.max(0, audio.volume - 0.01);
+      } else {
+        audio.pause();
+        audio.volume = 0;
+        clearInterval(fadeOut);
+      }
+    }, 30);
+  }, []);
 
   useEffect(() => {
     if (enabled) {
@@ -177,9 +107,20 @@ export function useBackgroundMusic(enabled: boolean) {
     }
 
     return () => {
-      stopMusic();
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
     };
   }, [enabled, startMusic, stopMusic]);
 
-  return { isPlaying: isPlayingRef.current };
+  // Cleanup blob URL on unmount
+  useEffect(() => {
+    return () => {
+      if (blobUrlRef.current) {
+        URL.revokeObjectURL(blobUrlRef.current);
+      }
+    };
+  }, []);
+
+  return { isLoading, hasError };
 }
