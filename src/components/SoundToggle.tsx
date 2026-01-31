@@ -1,8 +1,12 @@
 import { Volume2, VolumeX } from "lucide-react";
 import { useStrangerSFX } from "@/hooks/useStrangerSFX";
+import { useBackgroundMusic } from "@/hooks/useBackgroundMusic";
 
 export function SoundToggle() {
   const { soundEnabled, toggleSound } = useStrangerSFX();
+  
+  // Background music plays when sound is enabled
+  useBackgroundMusic(soundEnabled);
 
   return (
     <button
