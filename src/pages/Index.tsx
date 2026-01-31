@@ -1,6 +1,7 @@
 import { CinematicHeader } from "@/components/CinematicHeader";
 import { CinematicFooter } from "@/components/CinematicFooter";
 import { ProjectGrid } from "@/components/ProjectGrid";
+import { UpsideDownParticles } from "@/components/UpsideDownParticles";
 import heroImage from "@/assets/dark-fantasy-hero.jpg";
 
 const Index = () => {
@@ -24,6 +25,9 @@ const Index = () => {
       {/* Lightning flash effect */}
       <div className="fixed inset-0 z-0 bg-accent/5 animate-lightning pointer-events-none" />
 
+      {/* Upside Down floating particles */}
+      <UpsideDownParticles />
+
       {/* Header */}
       <CinematicHeader />
 
@@ -33,23 +37,32 @@ const Index = () => {
           {/* Hero section */}
           <section className="text-center mb-16 md:mb-24 animate-fade-in-up">
             <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-              <span className="block text-foreground">Creative</span>
-              <span className="block animate-shimmer">Developer</span>
+              <span className="block text-foreground">Something Strange</span>
+              <span className="block animate-shimmer">Is Happening</span>
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Crafting digital experiences at the intersection of design and technology. 
-              Welcome to my collection of projects and experiments.
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed font-mono mb-8">
+              You've entered the void. These are the experiments, the games, 
+              the things that crawled out of late nights and questionable decisions.
             </p>
+            
+            {/* Motto */}
+            <div className="inline-flex items-center gap-3 px-6 py-3 border border-primary/30 rounded-sm bg-card/50 backdrop-blur-sm">
+              <span className="w-2 h-2 rounded-full bg-primary animate-electrical-flicker" />
+              <span className="font-mono text-sm md:text-base uppercase tracking-widest text-primary stranger-glow">
+                Good luck, have fun, don't die
+              </span>
+              <span className="w-2 h-2 rounded-full bg-primary animate-electrical-flicker" style={{ animationDelay: "0.5s" }} />
+            </div>
           </section>
 
           {/* Projects section */}
           <section>
             <div className="flex items-center gap-4 mb-8 md:mb-12">
-              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
-              <h2 className="font-serif text-2xl md:text-3xl font-semibold text-foreground">
-                Projects
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+              <h2 className="font-serif text-2xl md:text-3xl font-semibold stranger-glow uppercase tracking-wider">
+                Transmissions
               </h2>
-              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
             </div>
             
             <ProjectGrid />
