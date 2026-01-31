@@ -1,16 +1,15 @@
-import { useState, useEffect } from "react";
-import { HeroSection } from "@/components/HeroSection";
+import { useState } from "react";
+import { OctopusHero } from "@/components/OctopusHero";
 import { ProjectCard } from "@/components/ProjectCard";
 import { Footer } from "@/components/Footer";
 import { ImmersiveBackground } from "@/components/ImmersiveBackground";
 import { CursorTrail } from "@/components/CursorTrail";
 import { ConfettiBurst } from "@/components/ConfettiBurst";
-import { ScrollSection, StaggeredReveal } from "@/components/ScrollSection";
+import { ScrollSection } from "@/components/ScrollSection";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { usePublicProjects } from "@/hooks/useProjects";
 import { useKonamiCode } from "@/hooks/useKonamiCode";
 import { Loader2, Sparkles } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 const Index = () => {
   const { data: projects, isLoading } = usePublicProjects();
@@ -58,8 +57,8 @@ const Index = () => {
         />
       )}
 
-      {/* Hero Section - Full viewport */}
-      <HeroSection />
+      {/* Hero Section with Octopus Background */}
+      <OctopusHero />
 
       {/* Intro Statement */}
       <ScrollSection 
