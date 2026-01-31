@@ -198,6 +198,38 @@ html, body {
   to { transform: rotate(360deg) scale(1); }
 }
 
+/* Dancing hamster animation */
+@keyframes dance {
+  0%, 100% { transform: translateY(0) scaleX(1); }
+  25% { transform: translateY(-15px) scaleX(-1); }
+  50% { transform: translateY(0) scaleX(1); }
+  75% { transform: translateY(-10px) scaleX(-1); }
+}
+
+/* CD spinning */
+@keyframes cd-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Film reel spinning (reverse) */
+@keyframes reel-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+/* Floating music notes */
+@keyframes float-up {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(-100px) rotate(20deg); opacity: 0; }
+}
+
+/* Gentle float */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
 /* Animation classes */
 .animate-blink {
   animation: blink 1s step-end infinite;
@@ -234,6 +266,32 @@ html, body {
 .animate-star-spin {
   animation: star-spin 4s ease-in-out infinite;
 }
+
+.animate-dance {
+  animation: dance 1s ease-in-out infinite;
+}
+
+.animate-cd-spin {
+  animation: cd-spin 3s linear infinite;
+}
+
+.animate-reel-spin {
+  animation: reel-spin 2s linear infinite;
+}
+
+.animate-float-up {
+  animation: float-up 3s ease-out infinite;
+}
+
+.animate-float {
+  animation: float 2s ease-in-out infinite;
+}
+
+/* Animation delays */
+.animation-delay-300 { animation-delay: 300ms; }
+.animation-delay-500 { animation-delay: 500ms; }
+.animation-delay-700 { animation-delay: 700ms; }
+.animation-delay-1000 { animation-delay: 1000ms; }
 
 /* ===== RETRO UI ELEMENTS ===== */
 

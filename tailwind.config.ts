@@ -124,6 +124,28 @@ export default {
           "50%": { transform: "rotate(180deg) scale(1.2)" },
           to: { transform: "rotate(360deg) scale(1)" },
         },
+        dance: {
+          "0%, 100%": { transform: "translateY(0) scaleX(1)" },
+          "25%": { transform: "translateY(-15px) scaleX(-1)" },
+          "50%": { transform: "translateY(0) scaleX(1)" },
+          "75%": { transform: "translateY(-10px) scaleX(-1)" },
+        },
+        "cd-spin": {
+          from: { transform: "rotate(0deg)" },
+          to: { transform: "rotate(360deg)" },
+        },
+        "reel-spin": {
+          from: { transform: "rotate(0deg)" },
+          to: { transform: "rotate(-360deg)" },
+        },
+        "float-up": {
+          "0%": { transform: "translateY(0) rotate(0deg)", opacity: "1" },
+          "100%": { transform: "translateY(-100px) rotate(20deg)", opacity: "0" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -137,6 +159,11 @@ export default {
         glitch: "glitch 0.3s ease-in-out infinite",
         "fade-in": "fade-in 0.5s ease-out forwards",
         "star-spin": "star-spin 4s ease-in-out infinite",
+        dance: "dance 1s ease-in-out infinite",
+        "cd-spin": "cd-spin 3s linear infinite",
+        "reel-spin": "reel-spin 2s linear infinite",
+        "float-up": "float-up 3s ease-out infinite",
+        float: "float 2s ease-in-out infinite",
       },
     },
   },

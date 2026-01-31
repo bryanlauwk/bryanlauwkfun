@@ -4,10 +4,15 @@ import { Star, Zap, Sparkles } from "lucide-react";
 
 const marqueeMessages = [
   "~*~ Welcome to my corner of the internet! ~*~",
+  "🎬 BE KIND, PLEASE REWIND 🎬",
   ">>> Projects! Games! Experiments! <<<",
+  "🕹️ INSERT COIN TO CONTINUE 🕹️",
   "** Always under construction **",
+  "🎵 NOW THAT'S WHAT I CALL A WEBSITE 🎵",
   "!!! Click and drag the cards around !!!",
+  "📼 BLOCKBUSTER APPROVED 📼",
   "^^^ Made with love and questionable decisions ^^^",
+  "🎮 GAME OVER? NEVER! 🎮",
 ];
 
 export function RetroHeader() {
