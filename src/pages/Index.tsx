@@ -3,11 +3,16 @@ import { CinematicFooter } from "@/components/CinematicFooter";
 import { ProjectGrid } from "@/components/ProjectGrid";
 import { UpsideDownParticles } from "@/components/UpsideDownParticles";
 import { TypewriterMotto } from "@/components/TypewriterMotto";
+import { StaticLoadingScreen } from "@/components/StaticLoadingScreen";
+import { GuestBook } from "@/components/GuestBook";
 import heroImage from "@/assets/dark-fantasy-hero.jpg";
 
 const Index = () => {
   return (
     <div className="min-h-screen flex flex-col bg-background relative overflow-hidden">
+      {/* TV Static loading screen */}
+      <StaticLoadingScreen />
+
       {/* Hero background */}
       <div className="fixed inset-0 z-0">
         <img
@@ -62,6 +67,9 @@ const Index = () => {
             
             <ProjectGrid />
           </section>
+
+          {/* Guest Book section */}
+          <GuestBook />
         </div>
       </main>
 
