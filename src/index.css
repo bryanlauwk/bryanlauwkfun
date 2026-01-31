@@ -533,3 +533,35 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ===== UPSIDE DOWN MODE ===== */
+
+/* Full-screen Upside Down filter */
+.upside-down-filter {
+  background: linear-gradient(
+    180deg,
+    hsl(200 30% 10% / 0.4) 0%,
+    hsl(280 40% 8% / 0.5) 50%,
+    hsl(200 30% 10% / 0.4) 100%
+  );
+  mix-blend-mode: color;
+}
+
+.upside-down-filter::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: hsl(200 100% 50% / 0.05);
+  mix-blend-mode: overlay;
+}
+
+.upside-down-filter::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 30%,
+    hsl(280 50% 5% / 0.6) 100%
+  );
+}
