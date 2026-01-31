@@ -2,6 +2,7 @@ import { CinematicHeader } from "@/components/CinematicHeader";
 import { CinematicFooter } from "@/components/CinematicFooter";
 import { ProjectGrid } from "@/components/ProjectGrid";
 import { UpsideDownParticles } from "@/components/UpsideDownParticles";
+import { TypewriterMotto } from "@/components/TypewriterMotto";
 import heroImage from "@/assets/dark-fantasy-hero.jpg";
 
 const Index = () => {
@@ -45,14 +46,8 @@ const Index = () => {
               the things that crawled out of late nights and questionable decisions.
             </p>
             
-            {/* Motto */}
-            <div className="inline-flex items-center gap-3 px-6 py-3 border border-primary/30 rounded-sm bg-card/50 backdrop-blur-sm">
-              <span className="w-2 h-2 rounded-full bg-primary animate-electrical-flicker" />
-              <span className="font-mono text-sm md:text-base uppercase tracking-widest text-primary stranger-glow">
-                Good luck, have fun, don't die
-              </span>
-              <span className="w-2 h-2 rounded-full bg-primary animate-electrical-flicker" style={{ animationDelay: "0.5s" }} />
-            </div>
+            {/* Typewriter Motto */}
+            <TypewriterMotto />
           </section>
 
           {/* Projects section */}
