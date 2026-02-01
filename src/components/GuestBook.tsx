@@ -184,7 +184,7 @@ export function GuestBook() {
       <div className="flex items-center gap-4 mb-8 md:mb-12">
         <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
         <h2 className="font-serif text-2xl md:text-3xl font-semibold stranger-glow uppercase tracking-wider flex items-center gap-3">FEEDBACK & IDEAS<MessageSquare className="w-6 h-6 animate-electrical-flicker" />
-          Communications
+          ​
         </h2>
         <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
       </div>
