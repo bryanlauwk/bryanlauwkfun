@@ -42,11 +42,11 @@ const Index = () => {
         <div className="max-w-7xl mx-auto">
           {/* Hero section */}
           <section className="text-center mb-16 md:mb-24 animate-fade-in-up">
-            <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+            <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold mb-8 md:mb-10 leading-tight">
               <span className="block text-foreground">Something Strange</span>
               <span className="block animate-shimmer">Is Happening</span>
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed font-mono mb-8">
+            <p className="text-lg md:text-xl text-foreground/90 max-w-2xl mx-auto leading-relaxed font-mono mb-8 px-4 py-3 bg-background/60 backdrop-blur-sm rounded-sm">
               You've entered the void. These are the experiments, the games, 
               the things that crawled out of late nights and questionable decisions.
             </p>
