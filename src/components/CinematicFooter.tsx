@@ -5,9 +5,9 @@ export function CinematicFooter() {
     <footer className="relative z-20 py-8 px-6 md:px-12 border-t border-border/30">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          {/* Ominous copyright */}
+          {/* Copyright */}
           <p className="text-sm text-muted-foreground font-mono">
-            © {new Date().getFullYear()} bryanlauwk · Broadcast from the Upside Down
+            © {new Date().getFullYear()} bryanlauwk · Made somewhere in the void
           </p>
 
           {/* Motto reminder */}

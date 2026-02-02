@@ -81,12 +81,12 @@ export function GuestBook() {
       setGbMessage("");
       setGbErrors({});
       playPowerSurge();
-      toast.success("Transmission received", {
+      toast.success("Message received", {
         description: "Your message has been logged."
       });
     },
     onError: () => {
-      toast.error("Transmission failed", {
+      toast.error("Failed to send", {
         description: "Try again later."
       });
     }
@@ -109,12 +109,12 @@ export function GuestBook() {
       setContactMessage("");
       setContactErrors({});
       playPowerSurge();
-      toast.success("Direct transmission sent", {
+      toast.success("Message sent", {
         description: "Bryan will receive your message soon."
       });
     },
     onError: () => {
-      toast.error("Transmission failed", {
+      toast.error("Failed to send", {
         description: "Try again later or leave a public message instead."
       });
     }
@@ -183,7 +183,7 @@ export function GuestBook() {
       {/* Section header */}
       <div className="flex items-center gap-4 mb-8 md:mb-12">
         <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-        <h2 className="font-serif text-2xl md:text-3xl font-semibold stranger-glow uppercase tracking-wider flex items-center gap-3">FEEDBACK & IDEAS<MessageSquare className="w-6 h-6 animate-electrical-flicker" />
+        <h2 className="font-serif text-2xl md:text-3xl font-semibold stranger-glow uppercase tracking-wider flex items-center gap-3">Say Something<MessageSquare className="w-6 h-6 animate-electrical-flicker" />
           ​
         </h2>
         <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
@@ -209,7 +209,7 @@ export function GuestBook() {
               
               <div className="flex items-center gap-2 mb-4 text-xs font-mono text-muted-foreground uppercase tracking-widest">
                 <Radio className="w-3 h-3 animate-electrical-flicker text-primary" />
-                Leave a public transmission
+                Drop a message
               </div>
 
               <div className="space-y-4">
@@ -227,9 +227,9 @@ export function GuestBook() {
                 </div>
 
                 <Button type="submit" disabled={guestBookMutation.isPending} className="w-full font-mono uppercase tracking-widest text-xs">
-                  {guestBookMutation.isPending ? <span className="animate-electrical-flicker">Transmitting...</span> : <>
+                  {guestBookMutation.isPending ? <span className="animate-electrical-flicker">Sending...</span> : <>
                       <Send className="w-3 h-3 mr-2" />
-                      Send Transmission
+                      Send
                     </>}
                 </Button>
               </div>
@@ -239,11 +239,11 @@ export function GuestBook() {
             <div className="space-y-4">
               {isLoading ? <div className="text-center py-8">
                   <div className="font-mono text-sm text-muted-foreground animate-electrical-flicker">
-                    Receiving transmissions...
+                    Loading messages...
                   </div>
                 </div> : entries.length === 0 ? <div className="text-center py-8 border border-dashed border-border/50 rounded-sm">
                   <div className="font-mono text-sm text-muted-foreground">
-                    No transmissions yet. Be the first to leave a message.
+                    No messages yet. Be the first to leave one.
                   </div>
                 </div> : entries.map((entry, index) => <div key={entry.id} className="relative bg-card/50 backdrop-blur-sm border border-border/50 rounded-sm p-4 animate-fade-in-up" style={{
               animationDelay: `${index * 50}ms`
@@ -270,7 +270,7 @@ export function GuestBook() {
               
               <div className="flex items-center gap-2 mb-4 text-xs font-mono text-muted-foreground uppercase tracking-widest">
                 <Mail className="w-3 h-3 animate-electrical-flicker text-primary" />
-                Private transmission to Bryan
+                Private message to Bryan
               </div>
 
               <p className="text-sm text-muted-foreground font-mono mb-6">
@@ -297,9 +297,9 @@ export function GuestBook() {
                 </div>
 
                 <Button type="submit" disabled={contactMutation.isPending} className="w-full font-mono uppercase tracking-widest text-xs">
-                  {contactMutation.isPending ? <span className="animate-electrical-flicker">Transmitting...</span> : <>
+                  {contactMutation.isPending ? <span className="animate-electrical-flicker">Sending...</span> : <>
                       <Mail className="w-3 h-3 mr-2" />
-                      Send Direct Message
+                      Send
                     </>}
                 </Button>
               </div>
