@@ -60,7 +60,7 @@ const Index = () => {
             <div className="flex items-center gap-4 mb-8 md:mb-12">
               <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
               <h2 className="font-serif text-2xl md:text-3xl font-semibold stranger-glow uppercase tracking-wider">
-                Transmissions
+                Drops
               </h2>
               <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
             </div>
