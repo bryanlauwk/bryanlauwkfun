@@ -145,7 +145,7 @@ export function StrangerThingsCard({ project, index, isFocused = false }: Strang
           
           {/* CTA */}
           <div className="relative z-10 flex items-center gap-2 mt-4 text-primary font-mono text-xs uppercase tracking-widest group-hover:tracking-[0.15em] transition-all duration-300">
-            <span className="animate-electrical-flicker">Enter the void</span>
+            <span className="animate-electrical-flicker">Check it out</span>
             <ArrowRight className="w-3 h-3 group-hover:translate-x-2 transition-transform duration-300" />
           </div>
         </div>
