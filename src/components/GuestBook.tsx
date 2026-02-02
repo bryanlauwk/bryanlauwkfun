@@ -179,12 +179,13 @@ export function GuestBook() {
       minute: "2-digit"
     });
   };
-  return <section className="mt-16 md:mt-24">
+  return <section className="mt-12 md:mt-24">
       {/* Section header */}
-      <div className="flex items-center gap-4 mb-8 md:mb-12">
+      <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-12">
         <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-        <h2 className="font-serif text-2xl md:text-3xl font-semibold stranger-glow uppercase tracking-wider flex items-center gap-3">Say Something<MessageSquare className="w-6 h-6 animate-electrical-flicker" />
-          ​
+        <h2 className="font-serif text-xl md:text-3xl font-semibold stranger-glow uppercase tracking-wider flex items-center gap-2 md:gap-3">
+          <MessageSquare className="w-5 h-5 md:w-6 md:h-6 animate-electrical-flicker" />
+          Say Something
         </h2>
         <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
       </div>

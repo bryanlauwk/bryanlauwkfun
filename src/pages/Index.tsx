@@ -38,18 +38,21 @@ const Index = () => {
       <CinematicHeader />
 
       {/* Main content */}
-      <main className="flex-1 relative z-10 px-6 md:px-12 py-12 md:py-20">
+      <main id="main-content" className="flex-1 relative z-10 px-4 md:px-12 py-8 md:py-20">
         <div className="max-w-7xl mx-auto">
           {/* Hero section */}
-          <section className="text-center mb-16 md:mb-24 animate-fade-in-up">
-            <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold mb-8 md:mb-10 leading-tight">
+          <section className="text-center mb-12 md:mb-24 animate-fade-in-up">
+            <h1 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-6 md:mb-10 leading-tight">
               <span className="block text-foreground">Something Strange</span>
               <span className="block animate-shimmer">Is Happening</span>
             </h1>
-            <p className="text-lg md:text-xl text-foreground/90 max-w-2xl mx-auto leading-relaxed font-mono mb-8 px-4 py-3 bg-background/60 backdrop-blur-sm rounded-sm">
-              You've entered the void. These are the experiments, the games, 
-              the things that crawled out of late nights and questionable decisions.
-            </p>
+            
+            {/* Improved subtitle with better visual hierarchy */}
+            <div className="max-w-xl mx-auto mb-6 md:mb-8">
+              <p className="text-base md:text-lg text-foreground/90 leading-relaxed font-mono px-4 py-3 bg-background/60 backdrop-blur-sm rounded-sm border border-border/20">
+                Experiments, games, and things that crawled out of late nights.
+              </p>
+            </div>
             
             {/* Typewriter Motto */}
             <TypewriterMotto />
