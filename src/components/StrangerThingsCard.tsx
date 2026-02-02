@@ -111,7 +111,7 @@ export function StrangerThingsCard({ project, index, isFocused = false }: Strang
         <div className="px-5 pt-5 pb-3 border-b border-border/50">
           <div className="flex items-center justify-between">
             <span className="font-mono text-xs text-muted-foreground uppercase tracking-widest">
-              Transmission #{episodeNum}
+              Drop #{episodeNum}
             </span>
             <Radio className={`w-4 h-4 transition-colors duration-300 ${isActive ? 'text-primary animate-electrical-flicker' : 'text-muted-foreground'}`} />
           </div>
