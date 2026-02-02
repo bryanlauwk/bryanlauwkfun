@@ -42,12 +42,12 @@ export function ProjectGrid() {
   if (!projects || projects.length === 0) {
     return (
       <div className="flex items-center justify-center min-h-[300px]">
-        <div className="text-center card-cinematic p-8 rounded-lg">
+        <div className="text-center card-cinematic p-8 rounded-lg border border-border/30">
           <p className="font-serif text-2xl stranger-glow mb-2">
-            The Upside Down
+            Nothing here yet
           </p>
           <p className="text-muted-foreground font-mono text-sm">
-            Projects are emerging from the void...
+            New drops coming soon...
           </p>
         </div>
       </div>
