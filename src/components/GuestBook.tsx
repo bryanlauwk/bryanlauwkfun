@@ -68,10 +68,15 @@ export function GuestBook() {
       name: string;
       message: string;
     }) => {
-      const {
-        error
-      } = await supabase.from("guest_book").insert([entry]);
-      if (error) throw error;
+      const response = await supabase.functions.invoke("submit-guest-book", {
+        body: entry
+      });
+      if (response.error) throw response.error;
+      // Check for application-level errors in the response
+      if (response.data && response.data.error) {
+        throw new Error(response.data.error);
+      }
+      return response.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -85,9 +90,12 @@ export function GuestBook() {
         description: "Your message has been logged."
       });
     },
-    onError: () => {
+    onError: (error) => {
+      const message = error instanceof Error && error.message.includes("Too many")
+        ? "Too many submissions. Please wait before posting again."
+        : "Try again later.";
       toast.error("Failed to send", {
-        description: "Try again later."
+        description: message
       });
     }
   });
