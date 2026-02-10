@@ -27,9 +27,14 @@ export function CinematicHeader() {
               />
               <div className="absolute inset-0 bg-primary/20 blur-md animate-glow-pulse rounded-sm" />
             </div>
-            <span className="font-serif text-lg md:text-2xl font-bold text-foreground tracking-wider uppercase stranger-glow">
-              Bryan Lau
-            </span>
+            <div className="flex flex-col">
+              <span className="font-serif text-lg md:text-2xl font-bold text-foreground tracking-wider uppercase stranger-glow">
+                Bryan Lau
+              </span>
+              <span className="font-mono text-[10px] md:text-xs text-muted-foreground/70 uppercase tracking-[0.2em]">
+                Web collective
+              </span>
+            </div>
           </div>
 
           {/* Right side controls */}
