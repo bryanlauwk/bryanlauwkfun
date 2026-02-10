@@ -1,98 +1,59 @@
 
-# Copy Review & Improvement Suggestions
 
-## Current Copy Inventory
+# Three Changes: Label, Loading Screen, and Headline
 
-| Location | Current Copy | Notes |
-|----------|--------------|-------|
-| **Hero Headline** | "Something Strange Is Happening" | Very Stranger Things |
-| **Hero Subtitle** | "You've entered the void. These are the experiments, the games, the things that crawled out of late nights and questionable decisions." | Slightly edgy, good |
-| **Typewriter Motto** | "Good luck, have fun, don't die" | Brand signature - keep |
-| **Section Header** | "Drops" | Already updated - good |
-| **Card Label** | "Drop #01" | Already updated - good |
-| **Card CTA** | "Enter the void" | Stranger Things-esque |
-| **Header Counter** | "Souls Lost" | Very Stranger Things |
-| **Footer Left** | "Broadcast from the Upside Down" | Direct ST reference |
-| **Footer Right** | "Don't die out there" | Matches motto - keep |
-| **Loading Text** | "Signal Detected" → "Tuning..." | TV metaphor - fits |
-| **Guest Book Header** | "FEEDBACK & IDEAS" | Generic |
-| **Guest Book Form** | "Leave a public transmission" | Transmission language |
-| **Guest Book Button** | "Send Transmission" | Transmission language |
-| **Contact Tab** | "Direct Line" | Good, different |
-| **Toast Messages** | "Transmission received/failed" | Transmission language |
-| **404 Page** | "Oops! Page not found" | Generic, off-brand |
+## 1. Add "Web collective" label
 
----
+Add a subtle descriptor under the "Bryan Lau" name in the header, styled as a small mono-font tag.
 
-## Recommended Changes
+**File**: `src/components/CinematicHeader.tsx`
+- Below the "Bryan Lau" span (line 31), add a small label:
+  ```
+  Web collective
+  ```
+- Styled with `font-mono text-[10px] md:text-xs text-muted-foreground/70 uppercase tracking-[0.2em]`
+- Visible on all screen sizes, sits neatly under the name
 
-### Priority 1: Remove Obvious Stranger Things References
+## 2. Remove the loading screen
 
-| File | Current | Suggested | Reason |
-|------|---------|-----------|--------|
-| `CinematicHeader.tsx` | "Souls Lost" | "Lurkers" | Less ominous, more playful |
-| `CinematicFooter.tsx` | "Broadcast from the Upside Down" | "Made somewhere in the void" | Remove direct ST reference |
-| `StrangerThingsCard.tsx` | "Enter the void" | "Check it out" or "Go" | Simpler, less dramatic |
+Completely remove the `StaticLoadingScreen` from rendering to eliminate the 2-second friction on every page load.
 
-### Priority 2: Update "Transmission" Language to Match "Drop"
+**File**: `src/pages/Index.tsx`
+- Remove the `StaticLoadingScreen` import (line 6)
+- Remove the `<StaticLoadingScreen />` component usage (line 14)
 
-Since you changed "Transmission" → "Drop", the related language should align:
+The `StaticLoadingScreen.tsx` file itself can stay in the codebase (no harm), but it will no longer be rendered.
 
-| File | Current | Suggested |
-|------|---------|-----------|
-| `GuestBook.tsx` | "Leave a public transmission" | "Drop a message" |
-| `GuestBook.tsx` | "Send Transmission" (button) | "Send" |
-| `GuestBook.tsx` | "Transmitting..." | "Sending..." |
-| `GuestBook.tsx` | Toast: "Transmission received" | "Message received" |
-| `GuestBook.tsx` | Toast: "Transmission failed" | "Failed to send" |
-| `GuestBook.tsx` | "Receiving transmissions..." | "Loading messages..." |
-| `GuestBook.tsx` | "No transmissions yet" | "No messages yet" |
-| `GuestBook.tsx` | "Direct transmission to Bryan" | "Private message to Bryan" |
+## 3. Replace the headline
 
-### Priority 3: Refresh Section Headers
+The current "Something Strange / Is Happening" is too close to Stranger Things. Replace with something that fits the brand voice ("Good luck, have fun, don't die") -- slightly irreverent, experimental, inviting.
 
-| File | Current | Suggested |
-|------|---------|-----------|
-| `GuestBook.tsx` | "FEEDBACK & IDEAS" | "Say Something" or "Leave a Note" |
+**File**: `src/pages/Index.tsx`
 
-### Priority 4: Theme the 404 Page
-
-| Current | Suggested |
-|---------|-----------|
-| "Oops! Page not found" | "You've wandered too far" |
-| "Return to Home" | "Head back" |
-| Generic styling | Match dark theme with fog effects |
-
----
-
-## Summary of Files to Modify
-
-| File | Changes |
-|------|---------|
-| `src/components/CinematicHeader.tsx` | "Souls Lost" → "Lurkers" |
-| `src/components/CinematicFooter.tsx` | "Broadcast from the Upside Down" → "Made somewhere in the void" |
-| `src/components/StrangerThingsCard.tsx` | "Enter the void" → "Check it out" |
-| `src/components/GuestBook.tsx` | Update all "transmission" language to simpler terms |
-| `src/pages/NotFound.tsx` | Restyle and update copy to match brand |
-
----
-
-## What to Keep (Already Strong)
-
-- "Good luck, have fun, don't die" - Brand signature
-- "Drops" section header - Already updated
-- "Drop #01" card labels - Already updated
-- "Direct Line" for contact tab - Good differentiation
-- Loading screen "Tuning..." - Fits the TV metaphor
-- Visual effects (film grain, fog, lights) - Keep the aesthetic
-
----
-
-## Copy Tone Shift
-
-```text
-Before: Mysterious, ominous, dramatic (full Stranger Things)
-After:  Slightly irreverent, self-aware, but still dark aesthetic
+Replace lines 46-47:
+```
+<span className="block text-foreground">Something Strange</span>
+<span className="block animate-shimmer">Is Happening</span>
 ```
 
-The visual identity stays moody and cinematic, but the voice becomes more casual and less "role-playing as a Hawkins resident."
+With:
+```
+<span className="block text-foreground">Late Nights,</span>
+<span className="block animate-shimmer">Wild Ideas</span>
+```
+
+This headline:
+- Matches the subtitle ("things that crawled out of late nights")
+- Feels personal and self-aware rather than imitating a TV show
+- Keeps the two-line rhythm and visual weight
+
+---
+
+## Summary
+
+| Change | File | What |
+|--------|------|------|
+| Add "Web collective" | `CinematicHeader.tsx` | Small label under the logo name |
+| Remove loading screen | `Index.tsx` | Delete import and component render |
+| New headline | `Index.tsx` | "Late Nights, Wild Ideas" |
+
