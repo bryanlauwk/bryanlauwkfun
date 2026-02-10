@@ -15,15 +15,13 @@ export function useVisitorCounter() {
 
         if (error) {
           console.error("Error incrementing page view:", error);
-          // Fallback to just reading the current count
-          const { data: fallbackData } = await supabase
-            .from("page_views")
-            .select("view_count")
-            .eq("page_path", "/")
-            .maybeSingle();
-          
-          if (fallbackData) {
-            setCount(fallbackData.view_count);
+          // Fallback to just reading the current count via secure RPC
+          const { data: fallbackData } = await supabase.rpc("get_page_view_count", {
+            p_page_path: "/",
+          });
+
+          if (fallbackData !== null) {
+            setCount(fallbackData as number);
           }
         } else {
           setCount(data as number);
@@ -41,16 +39,14 @@ export function useVisitorCounter() {
       sessionStorage.setItem(sessionKey, "true");
       incrementAndFetch();
     } else {
-      // Just fetch the current count without incrementing
+      // Just fetch the current count without incrementing via secure RPC function
       const fetchCount = async () => {
-        const { data } = await supabase
-          .from("page_views")
-          .select("view_count")
-          .eq("page_path", "/")
-          .maybeSingle();
-        
-        if (data) {
-          setCount(data.view_count);
+        const { data, error } = await supabase.rpc("get_page_view_count", {
+          p_page_path: "/",
+        });
+
+        if (!error && data !== null) {
+          setCount(data as number);
         }
         setIsLoading(false);
       };

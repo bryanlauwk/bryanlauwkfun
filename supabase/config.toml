@@ -11,3 +11,6 @@ verify_jwt = false
 
 [functions.precache-stranger-music]
 verify_jwt = false
+
+[functions.submit-guest-book]
+verify_jwt = false
