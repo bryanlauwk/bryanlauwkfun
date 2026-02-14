@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { safeSupabase as supabase } from "@/integrations/supabase/safe-client";
 
 export function useVisitorCounter() {
   const [count, setCount] = useState<number | null>(null);
