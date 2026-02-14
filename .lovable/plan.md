@@ -1,77 +1,52 @@
 
+# Move Ad Placeholders into the Hero Sky
 
-# Illustrated Floating Ad-Space Placeholders
-
-Replace the generic dashed-border ad placeholders with animated SVG illustrations that naturally blend into the dark fantasy aesthetic. Each placeholder features a different floating vehicle carrying the brand text.
-
----
-
-## Concept
-
-Three distinct illustrated ad slots, each with a unique floating object:
-
-1. **Hot Air Balloon** — A balloon drifting gently upward with the brand/ad text on the balloon envelope
-2. **Flying Broom** — A witch's broom trailing a banner with the ad text (fits the dark fantasy theme)
-3. **Floating Lantern** — A glowing paper lantern rising with text inscribed on it (atmospheric, matches the spore/particle vibe)
-
-Each illustration is a lightweight inline SVG with CSS animations (gentle floating, swaying, glowing). The sponsor name from the database is embedded directly into the SVG as text, so when an admin replaces the placeholder with a real sponsor, the logo image takes over seamlessly.
+Relocate the floating ad placeholders from the "Supported by" strip (between cards and guest book) into the hero background area, so they appear as atmospheric elements drifting in the dark fantasy sky. Remove the "Supported by" section entirely.
 
 ---
 
-## 1. New component: `FloatingAdPlaceholder.tsx`
+## Changes
 
-A component that takes the sponsor name and a variant index (0, 1, 2) and renders one of three SVG illustrations:
+### 1. `src/pages/Index.tsx`
 
-- **Variant 0 — Hot Air Balloon**: Oval balloon shape with subtle striped pattern, basket below, sponsor name curved along the balloon body. Gentle float-up-and-down animation.
-- **Variant 1 — Flying Broom**: Silhouette broom with a trailing ribbon/banner containing the sponsor text. Slow horizontal drift animation.
-- **Variant 2 — Floating Lantern**: Glowing lantern shape with sponsor name as inscription. Soft pulsing glow + float animation.
+- **Remove** the `<SponsorStrip />` component from between ProjectGrid and GuestBook (line 74)
+- **Add** a new `<HeroAdPlaceholders />` layer inside the hero background `div` (the `fixed inset-0 z-0` container), positioned with `absolute` so the floating illustrations appear scattered across the sky portion of the hero image
+- The placeholders render with `pointer-events-none` so they don't interfere with scrolling, but each individual ad has `pointer-events-auto` on hover for potential click interaction
 
-All rendered in muted tones (matching `muted-foreground` and `primary` CSS variables) at low opacity (~30%) with hover brightening to ~60%, consistent with how real logos behave.
+### 2. New component: `src/components/HeroAdPlaceholders.tsx`
 
-A small "Ad Space" label sits below each illustration.
+A lightweight wrapper that fetches sponsors without logos and renders `FloatingAdPlaceholder` instances at scattered positions across the viewport:
 
-## 2. Update `SponsorStrip.tsx`
+- Uses `usePublicSponsors()` to get sponsors without `logo_url`
+- Positions each placeholder using `absolute` with predefined coordinates that place them in the "sky" area of the hero (upper portion of the screen):
+  - Balloon: top-left area (~10% from left, ~15% from top)
+  - Broom: right side (~65% from left, ~25% from top)
+  - Lantern: center-left (~35% from left, ~8% from top)
+- Each has staggered animation delays for natural feel
+- Container is `fixed inset-0 z-[1] pointer-events-none` so it floats above the background image but below all content
 
-When a sponsor has no `logo_url`, render `FloatingAdPlaceholder` instead of the current dashed-border box. Pass the sponsor's index to determine which variant to show.
+### 3. `src/components/SponsorStrip.tsx`
 
-## 3. CSS animations in `index.css`
+- **Keep the file** but update it to only render sponsors that **have** a `logo_url` (real sponsors with uploaded logos). If none exist, it returns null — effectively hiding the entire "Supported by" row when only placeholders exist
+- This way, when real sponsors are added later, the strip reappears between cards and guest book
 
-Add three new keyframe animations:
+### 4. No CSS changes needed
 
-- `balloon-float`: gentle vertical bob + slight horizontal sway
-- `broom-drift`: slow horizontal glide with slight vertical wave
-- `lantern-rise`: slow upward drift with soft glow pulse
-
-These use the same reduced-motion media query already in place.
-
-## 4. Update seeded placeholder names
-
-Update the 3 existing placeholder sponsors to have more fitting names for the illustrations:
-
-| Current Name | New Name | Illustration |
-|---|---|---|
-| Your Brand Here | Your Brand Here | Hot Air Balloon |
-| Ad Space Available | Ad Space Available | Flying Broom |
-| Sponsor This Project | Sponsor This Project | Floating Lantern |
-
-(Names stay the same since they already work well — the visual treatment changes.)
+The balloon-float, broom-drift, and lantern-rise animations already exist in `index.css`.
 
 ---
 
-## Summary of file changes
+## Summary
 
 | File | Change |
 |------|--------|
-| `src/components/FloatingAdPlaceholder.tsx` | New component with 3 SVG illustration variants |
-| `src/components/SponsorStrip.tsx` | Use `FloatingAdPlaceholder` for sponsors without logos |
-| `src/index.css` | Add balloon-float, broom-drift, lantern-rise keyframes |
+| `src/components/HeroAdPlaceholders.tsx` | New — renders ad placeholders scattered in the hero sky |
+| `src/pages/Index.tsx` | Add HeroAdPlaceholders in the hero bg area; remove SponsorStrip from content flow |
+| `src/components/SponsorStrip.tsx` | Filter to only show sponsors with logos (hide when only placeholders exist) |
 
 ## Technical notes
 
-- All illustrations are inline SVGs (no external assets needed), keeping bundle size minimal
-- SVG text elements use `currentColor` and CSS variables for consistent theming
-- Each SVG is roughly 200x160px viewport, scaled responsively
-- The sponsor name from the database is rendered as an SVG `<text>` element, so it updates automatically when the admin edits it
-- Hover behavior: opacity transitions from 30% to 60%, matching the real logo treatment
-- No new dependencies required — pure SVG + CSS animations
-
+- Placeholders use `fixed` positioning to stay in the sky as the user scrolls, creating a parallax-like feel against the scrolling content
+- The `z-[1]` layering places them above the hero image but below the main content (`z-10`), so they peek through naturally
+- On mobile, positions adjust to avoid overlapping the hero headline
+- Real sponsors with logos still appear in the "Supported by" strip if/when added via admin
