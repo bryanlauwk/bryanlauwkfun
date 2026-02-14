@@ -1,71 +1,77 @@
 
 
-# Ad Space Placeholders + Optional Logo Upload
+# Illustrated Floating Ad-Space Placeholders
 
-Show 3 default "ad placeholder" slots in the sponsor strip so visitors see available ad space even before any real sponsors exist. Also make the logo upload optional so placeholder sponsors can use a text-based fallback.
-
----
-
-## 1. Database: Make `logo_url` nullable
-
-The `logo_url` column is currently `NOT NULL`. Change it to nullable so sponsors can be created without a logo image (they'll show a styled text placeholder instead).
-
-```sql
-ALTER TABLE public.sponsors ALTER COLUMN logo_url DROP NOT NULL;
-```
-
-## 2. Seed 3 default ad-space placeholders
-
-Insert 3 placeholder sponsors into the database that act as "ad available" previews:
-
-```sql
-INSERT INTO public.sponsors (name, logo_url, website_url, display_order, is_visible)
-VALUES
-  ('Your Brand Here', NULL, NULL, 0, true),
-  ('Ad Space Available', NULL, NULL, 1, true),
-  ('Sponsor This Project', NULL, NULL, 2, true);
-```
-
-These show up immediately on the homepage as styled placeholder slots.
-
-## 3. Update `SponsorStrip.tsx` -- placeholder rendering
-
-When a sponsor has no `logo_url`, render a stylish placeholder card instead of an image:
-
-- A dashed-border box with the sponsor name displayed as text (e.g., "Your Brand Here")
-- Styled to match the atmospheric aesthetic: muted text, subtle border, same grayscale/blend treatment
-- On hover: border brightens slightly, text becomes more visible
-- Optionally show a small "Inquire" or envelope icon to signal it's available ad space
-- A subtle "Ad Space" label beneath
-
-This makes it clear to visitors: "this is where your brand could be."
-
-## 4. Update `Admin.tsx` -- make logo optional
-
-- Change the "Logo *" label to just "Logo (optional)"
-- Remove the validation that blocks submission when no logo is provided
-- When no logo is uploaded and none exists, pass `null` for `logo_url`
-- The form still works the same for real sponsors who upload logos
-
-## 5. Update `useSponsors.ts` -- type alignment
-
-Update the `Sponsor` interface so `logo_url` is `string | null` to match the new nullable column.
+Replace the generic dashed-border ad placeholders with animated SVG illustrations that naturally blend into the dark fantasy aesthetic. Each placeholder features a different floating vehicle carrying the brand text.
 
 ---
 
-## Summary of changes
+## Concept
+
+Three distinct illustrated ad slots, each with a unique floating object:
+
+1. **Hot Air Balloon** — A balloon drifting gently upward with the brand/ad text on the balloon envelope
+2. **Flying Broom** — A witch's broom trailing a banner with the ad text (fits the dark fantasy theme)
+3. **Floating Lantern** — A glowing paper lantern rising with text inscribed on it (atmospheric, matches the spore/particle vibe)
+
+Each illustration is a lightweight inline SVG with CSS animations (gentle floating, swaying, glowing). The sponsor name from the database is embedded directly into the SVG as text, so when an admin replaces the placeholder with a real sponsor, the logo image takes over seamlessly.
+
+---
+
+## 1. New component: `FloatingAdPlaceholder.tsx`
+
+A component that takes the sponsor name and a variant index (0, 1, 2) and renders one of three SVG illustrations:
+
+- **Variant 0 — Hot Air Balloon**: Oval balloon shape with subtle striped pattern, basket below, sponsor name curved along the balloon body. Gentle float-up-and-down animation.
+- **Variant 1 — Flying Broom**: Silhouette broom with a trailing ribbon/banner containing the sponsor text. Slow horizontal drift animation.
+- **Variant 2 — Floating Lantern**: Glowing lantern shape with sponsor name as inscription. Soft pulsing glow + float animation.
+
+All rendered in muted tones (matching `muted-foreground` and `primary` CSS variables) at low opacity (~30%) with hover brightening to ~60%, consistent with how real logos behave.
+
+A small "Ad Space" label sits below each illustration.
+
+## 2. Update `SponsorStrip.tsx`
+
+When a sponsor has no `logo_url`, render `FloatingAdPlaceholder` instead of the current dashed-border box. Pass the sponsor's index to determine which variant to show.
+
+## 3. CSS animations in `index.css`
+
+Add three new keyframe animations:
+
+- `balloon-float`: gentle vertical bob + slight horizontal sway
+- `broom-drift`: slow horizontal glide with slight vertical wave
+- `lantern-rise`: slow upward drift with soft glow pulse
+
+These use the same reduced-motion media query already in place.
+
+## 4. Update seeded placeholder names
+
+Update the 3 existing placeholder sponsors to have more fitting names for the illustrations:
+
+| Current Name | New Name | Illustration |
+|---|---|---|
+| Your Brand Here | Your Brand Here | Hot Air Balloon |
+| Ad Space Available | Ad Space Available | Flying Broom |
+| Sponsor This Project | Sponsor This Project | Floating Lantern |
+
+(Names stay the same since they already work well — the visual treatment changes.)
+
+---
+
+## Summary of file changes
 
 | File | Change |
 |------|--------|
-| Migration SQL | Make `logo_url` nullable + seed 3 placeholder sponsors |
-| `src/hooks/useSponsors.ts` | Update `logo_url` type to `string \| null` |
-| `src/components/SponsorStrip.tsx` | Render placeholder card when no logo exists |
-| `src/pages/Admin.tsx` | Remove logo-required validation, update label |
+| `src/components/FloatingAdPlaceholder.tsx` | New component with 3 SVG illustration variants |
+| `src/components/SponsorStrip.tsx` | Use `FloatingAdPlaceholder` for sponsors without logos |
+| `src/index.css` | Add balloon-float, broom-drift, lantern-rise keyframes |
 
 ## Technical notes
 
-- Placeholder styling: `border border-dashed border-muted-foreground/20 text-muted-foreground/40` with hover brightening
-- The 3 seeded placeholders can be edited or replaced by the admin at any time via the dashboard
-- Real sponsors with uploaded logos render exactly as before (image with grayscale blend)
-- No new dependencies needed
+- All illustrations are inline SVGs (no external assets needed), keeping bundle size minimal
+- SVG text elements use `currentColor` and CSS variables for consistent theming
+- Each SVG is roughly 200x160px viewport, scaled responsively
+- The sponsor name from the database is rendered as an SVG `<text>` element, so it updates automatically when the admin edits it
+- Hover behavior: opacity transitions from 30% to 60%, matching the real logo treatment
+- No new dependencies required — pure SVG + CSS animations
 
