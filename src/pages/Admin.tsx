@@ -227,6 +227,13 @@ function SortableProjectCard({
   );
 }
 
+const CATEGORY_COLORS: Record<string, string> = {
+  feedback: "bg-muted text-muted-foreground",
+  idea: "bg-accent/20 text-accent",
+  sponsorship: "bg-primary/20 text-primary",
+  private: "bg-secondary/20 text-secondary",
+};
+
 // Guest Book Entry Card for mobile
 function GuestBookEntryCard({ 
   entry, 
@@ -240,12 +247,18 @@ function GuestBookEntryCard({
       <CardContent className="p-4">
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-1">
+            <div className="flex items-center gap-2 mb-1 flex-wrap">
               <span className="font-medium text-foreground truncate">{entry.name}</span>
+              <Badge variant="outline" className={`text-[10px] ${CATEGORY_COLORS[entry.category] || ""}`}>
+                {entry.category}
+              </Badge>
               <span className="text-xs text-muted-foreground">
                 {format(new Date(entry.created_at), "MMM d, yyyy")}
               </span>
             </div>
+            {entry.email && (
+              <p className="text-xs text-muted-foreground/70 mb-1">{entry.email}</p>
+            )}
             <p className="text-sm text-muted-foreground">{entry.message}</p>
           </div>
           <Button
@@ -679,7 +692,7 @@ export default function Admin() {
             </TabsTrigger>
             <TabsTrigger value="guestbook" className="flex items-center gap-2">
               <MessageSquare className="h-4 w-4" />
-              Guest Book
+              Messages
               {guestBookCount > 0 && (
                 <Badge variant="secondary" className="ml-1">
                   {guestBookCount}
@@ -893,9 +906,11 @@ export default function Admin() {
                       <Table>
                         <TableHeader>
                           <TableRow>
-                            <TableHead className="w-[150px]">Name</TableHead>
+                            <TableHead className="w-[130px]">Name</TableHead>
+                            <TableHead className="w-[90px]">Type</TableHead>
                             <TableHead>Message</TableHead>
-                            <TableHead className="w-[120px]">Date</TableHead>
+                            <TableHead className="w-[140px]">Email</TableHead>
+                            <TableHead className="w-[110px]">Date</TableHead>
                             <TableHead className="w-[60px]"></TableHead>
                           </TableRow>
                         </TableHeader>
@@ -903,7 +918,15 @@ export default function Admin() {
                           {guestBookEntries.map((entry) => (
                             <TableRow key={entry.id}>
                               <TableCell className="font-medium">{entry.name}</TableCell>
-                              <TableCell className="text-muted-foreground">{entry.message}</TableCell>
+                              <TableCell>
+                                <Badge variant="outline" className={`text-[10px] ${CATEGORY_COLORS[entry.category] || ""}`}>
+                                  {entry.category}
+                                </Badge>
+                              </TableCell>
+                              <TableCell className="text-muted-foreground max-w-[300px] truncate">{entry.message}</TableCell>
+                              <TableCell className="text-muted-foreground text-xs truncate">
+                                {entry.email || "—"}
+                              </TableCell>
                               <TableCell className="text-muted-foreground text-sm">
                                 {format(new Date(entry.created_at), "MMM d, yyyy")}
                               </TableCell>
