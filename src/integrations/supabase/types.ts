@@ -70,6 +70,7 @@ export type Database = {
           image_url: string | null
           is_visible: boolean
           show_text_overlay: boolean
+          tag: string | null
           title: string
           updated_at: string
         }
@@ -83,6 +84,7 @@ export type Database = {
           image_url?: string | null
           is_visible?: boolean
           show_text_overlay?: boolean
+          tag?: string | null
           title: string
           updated_at?: string
         }
@@ -96,6 +98,7 @@ export type Database = {
           image_url?: string | null
           is_visible?: boolean
           show_text_overlay?: boolean
+          tag?: string | null
           title?: string
           updated_at?: string
         }

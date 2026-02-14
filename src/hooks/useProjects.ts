@@ -11,6 +11,7 @@ export interface Project {
   display_order: number;
   is_visible: boolean;
   show_text_overlay: boolean;
+  tag: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -146,6 +147,7 @@ export function useDuplicateProject() {
           display_order: maxOrder + 1,
           is_visible: false, // Start hidden
           show_text_overlay: project.show_text_overlay,
+          tag: project.tag,
         })
         .select()
         .single();
