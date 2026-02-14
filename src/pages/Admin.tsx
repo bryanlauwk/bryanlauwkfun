@@ -279,8 +279,12 @@ function SortableSponsorCard({ sponsor, onEdit, onDelete, onToggleVisibility }: 
         <button {...attributes} {...listeners} className="cursor-grab touch-none text-muted-foreground hover:text-foreground active:cursor-grabbing">
           <GripVertical className="h-5 w-5" />
         </button>
-        <div className="h-12 w-20 flex-shrink-0 overflow-hidden rounded border border-border bg-background p-1">
-          <img src={sponsor.logo_url} alt={sponsor.name} className="h-full w-full object-contain" />
+        <div className="h-12 w-20 flex-shrink-0 overflow-hidden rounded border border-border bg-background p-1 flex items-center justify-center">
+          {sponsor.logo_url ? (
+            <img src={sponsor.logo_url} alt={sponsor.name} className="h-full w-full object-contain" />
+          ) : (
+            <span className="text-[10px] text-muted-foreground font-mono text-center leading-tight">Ad Space</span>
+          )}
         </div>
         <div className="flex-1 min-w-0">
           <h3 className="font-semibold text-foreground truncate">{sponsor.name}</h3>
@@ -563,15 +567,10 @@ export default function Admin() {
     }
 
     try {
-      let logoUrl = editingSponsor?.logo_url || "";
+      let logoUrl: string | null = editingSponsor?.logo_url || null;
 
       if (sponsorLogoFile) {
         logoUrl = await uploadSponsorLogo(sponsorLogoFile);
-      }
-
-      if (!logoUrl) {
-        toast({ title: "Logo required", description: "Please upload a logo image.", variant: "destructive" });
-        return;
       }
 
       const data = {
@@ -972,7 +971,7 @@ export default function Admin() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label>Logo *</Label>
+                      <Label>Logo (optional)</Label>
                       <div className="flex items-center gap-4">
                         {sponsorLogoPreview && (
                           <img src={sponsorLogoPreview} alt="Preview" className="h-12 w-auto max-w-[100px] object-contain rounded border border-border bg-background p-1" />
