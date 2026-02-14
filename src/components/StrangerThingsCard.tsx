@@ -18,6 +18,14 @@ const LIGHT_COLORS = [
   "hsl(25, 100%, 50%)",
 ];
 
+const CTA_VARIANTS = [
+  "Explore",
+  "Dive in",
+  "Take a look",
+  "See more",
+  "Open it up",
+];
+
 function generateLightPositions(count: number) {
   const positions: { top?: string; bottom?: string; left?: string; right?: string }[] = [];
   const perSide = Math.floor(count / 4);
@@ -83,6 +91,8 @@ export function StrangerThingsCard({ project, index, isFocused = false }: Strang
   // Episode number style
   const episodeNum = String(index + 1).padStart(2, "0");
 
+  const ctaText = CTA_VARIANTS[index % CTA_VARIANTS.length];
+
   return (
     <a
       href={project.href}
@@ -94,8 +104,11 @@ export function StrangerThingsCard({ project, index, isFocused = false }: Strang
       onClick={handleClick}
       style={{ animationDelay: `${index * 150}ms` }}
     >
-      <div className={`relative bg-card/80 backdrop-blur-sm border rounded-sm overflow-hidden transition-all duration-500 animate-fade-in-up ${isActive ? 'border-primary/50 ring-2 ring-primary/30' : 'border-border'}`}>
+      <div className={`relative bg-card/80 backdrop-blur-sm border rounded-sm overflow-hidden transition-all duration-500 animate-fade-in-up ${isActive ? 'border-primary/50 ring-2 ring-primary/30' : 'border-border/60 ring-1 ring-primary/10'}`}>
         
+        {/* Top gradient shimmer */}
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/20 to-transparent z-10" />
+
         <ChristmasLights isActive={isActive} />
         
         {/* VHS distortion on hover/focus */}
@@ -110,9 +123,16 @@ export function StrangerThingsCard({ project, index, isFocused = false }: Strang
         {/* Header with episode number */}
         <div className="px-5 pt-5 pb-3 border-b border-border/50">
           <div className="flex items-center justify-between">
-            <span className="font-mono text-xs text-muted-foreground uppercase tracking-widest">
-              Drop #{episodeNum}
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="font-mono text-xs text-muted-foreground uppercase tracking-widest">
+                Drop #{episodeNum}
+              </span>
+              {project.tag && (
+                <span className="inline-flex items-center border border-amber-500/60 text-amber-400 bg-amber-500/10 rounded-sm px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest">
+                  {project.tag}
+                </span>
+              )}
+            </div>
             <Radio className={`w-4 h-4 transition-colors duration-300 ${isActive ? 'text-primary animate-electrical-flicker' : 'text-muted-foreground'}`} />
           </div>
         </div>
@@ -145,7 +165,7 @@ export function StrangerThingsCard({ project, index, isFocused = false }: Strang
           
           {/* CTA */}
           <div className="relative z-10 flex items-center gap-2 mt-4 text-primary font-mono text-xs uppercase tracking-widest group-hover:tracking-[0.15em] transition-all duration-300">
-            <span className="animate-electrical-flicker">Check it out</span>
+            <span className="animate-electrical-flicker">{ctaText}</span>
             <ArrowRight className="w-3 h-3 group-hover:translate-x-2 transition-transform duration-300" />
           </div>
         </div>

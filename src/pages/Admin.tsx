@@ -79,6 +79,7 @@ interface ProjectFormData {
   title: string;
   description: string;
   href: string;
+  tag: string;
   is_visible: boolean;
   show_text_overlay: boolean;
 }
@@ -87,6 +88,7 @@ const emptyForm: ProjectFormData = {
   title: "",
   description: "",
   href: "#",
+  tag: "",
   is_visible: true,
   show_text_overlay: true,
 };
@@ -309,6 +311,7 @@ export default function Admin() {
         title: project.title,
         description: project.description || "",
         href: project.href,
+        tag: project.tag || "",
         is_visible: project.is_visible,
         show_text_overlay: project.show_text_overlay,
       });
@@ -332,15 +335,20 @@ export default function Admin() {
     }
 
     try {
+      const submitData = {
+        ...formData,
+        tag: formData.tag.trim() || null,
+      };
+
       if (editingProject) {
         await updateProject.mutateAsync({
           id: editingProject.id,
-          ...formData,
+          ...submitData,
         });
         toast({ title: "Project updated!" });
       } else {
         await createProject.mutateAsync({
-          ...formData,
+          ...submitData,
           color: DEFAULT_GRADIENT,
           image_url: null,
         });
@@ -574,6 +582,21 @@ export default function Admin() {
                           setFormData((prev) => ({ ...prev, href: e.target.value }))
                         }
                       />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="tag">Audience Tag</Label>
+                      <Input
+                        id="tag"
+                        placeholder="Gamers, Foodies, Data Nerds..."
+                        value={formData.tag}
+                        onChange={(e) =>
+                          setFormData((prev) => ({ ...prev, tag: e.target.value }))
+                        }
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        Gold label shown on the card (leave empty for none)
+                      </p>
                     </div>
 
                     <div className="flex items-center justify-between rounded-lg border p-3">
