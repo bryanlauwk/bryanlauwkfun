@@ -5,6 +5,8 @@ export interface GuestBookEntry {
   id: string;
   name: string;
   message: string;
+  email: string | null;
+  category: string;
   created_at: string;
 }
 

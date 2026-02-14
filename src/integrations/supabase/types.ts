@@ -16,19 +16,25 @@ export type Database = {
     Tables: {
       guest_book: {
         Row: {
+          category: string
           created_at: string
+          email: string | null
           id: string
           message: string
           name: string
         }
         Insert: {
+          category?: string
           created_at?: string
+          email?: string | null
           id?: string
           message: string
           name: string
         }
         Update: {
+          category?: string
           created_at?: string
+          email?: string | null
           id?: string
           message?: string
           name?: string
