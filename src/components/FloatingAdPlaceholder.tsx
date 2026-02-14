@@ -2,14 +2,19 @@ interface FloatingAdPlaceholderProps {
   name: string;
   scale?: number;
   id: string;
+  price?: string;
+  href?: string;
 }
 
-export function FloatingAdPlaceholder({ name, scale = 1, id }: FloatingAdPlaceholderProps) {
+export function FloatingAdPlaceholder({ name, scale = 1, id, price, href }: FloatingAdPlaceholderProps) {
   const w = Math.round(240 * scale);
   const h = Math.round(280 * scale);
 
+  const Wrapper = href ? 'a' : 'div';
+  const wrapperProps = href ? { href, target: '_blank', rel: 'noopener noreferrer', className: 'animate-balloon-float block cursor-pointer group' } : { className: 'animate-balloon-float' };
+
   return (
-    <div className="animate-balloon-float">
+    <Wrapper {...wrapperProps as any}>
       <svg
         viewBox="0 0 240 280"
         width={w}
@@ -133,11 +138,30 @@ export function FloatingAdPlaceholder({ name, scale = 1, id }: FloatingAdPlaceho
           AD SPACE
         </text>
 
+        {/* Price tag */}
+        {price && (
+          <>
+            <rect x="75" y="142" width="90" height="18" rx="9" fill="hsl(35 90% 55%)" fillOpacity="0.8" />
+            <text
+              x="120"
+              y="155"
+              textAnchor="middle"
+              fontSize="9"
+              fontFamily="monospace"
+              fontWeight="bold"
+              fill="hsl(0 0% 10%)"
+              letterSpacing="0.5"
+            >
+              {price}
+            </text>
+          </>
+        )}
+
         {/* Floating spore particles */}
         <circle cx="55" cy="60" r="1.5" fill="hsl(350 85% 55%)" opacity="0.3" className="animate-spore-float" style={{ '--drift': '8px', '--spore-opacity': '0.3' } as React.CSSProperties} />
         <circle cx="185" cy="85" r="1" fill="hsl(280 70% 50%)" opacity="0.25" className="animate-spore-float" style={{ '--drift': '-6px', '--spore-opacity': '0.25', animationDelay: '1s' } as React.CSSProperties} />
         <circle cx="40" cy="140" r="1.2" fill="hsl(200 100% 60%)" opacity="0.2" className="animate-spore-float" style={{ '--drift': '10px', '--spore-opacity': '0.2', animationDelay: '2.5s' } as React.CSSProperties} />
       </svg>
-    </div>
+    </Wrapper>
   );
 }

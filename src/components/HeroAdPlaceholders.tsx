@@ -38,6 +38,13 @@ export function HeroAdPlaceholders() {
 
   const getText = (i: number) => placeholders[i % placeholders.length].balloon_text;
   const getId = (i: number) => `balloon-${i}`;
+  const getPrice = (scale: number) =>
+    scale >= 1.0 ? "RM500/mo" : scale >= 0.7 ? "RM300/mo" : "RM100/mo";
+  const mailtoHref = (scale: number) => {
+    const size = scale >= 1.0 ? "Large" : scale >= 0.7 ? "Medium" : "Small";
+    const price = scale >= 1.0 ? "RM500" : scale >= 0.7 ? "RM300" : "RM100";
+    return `mailto:bryanlauwk@gmail.com?subject=Balloon Ad Inquiry (${size})&body=Hi, I'm interested in the ${size} balloon ad space (${price}/month).`;
+  };
 
   return (
     <div className="fixed inset-0 z-[1] pointer-events-none">
@@ -54,7 +61,7 @@ export function HeroAdPlaceholders() {
             transform: `translateY(${-scrollY * pos.parallax}px)`,
           }}
         >
-          <FloatingAdPlaceholder name={getText(i)} scale={pos.scale} id={getId(i)} />
+          <FloatingAdPlaceholder name={getText(i)} scale={pos.scale} id={getId(i)} price={getPrice(pos.scale)} href={mailtoHref(pos.scale)} />
         </div>
       ))}
       {mobileLayout.map((pos, i) => (
@@ -70,7 +77,7 @@ export function HeroAdPlaceholders() {
             transform: `translateY(${-scrollY * pos.parallax}px)`,
           }}
         >
-          <FloatingAdPlaceholder name={getText(i)} scale={pos.scale} id={`mobile-${i}`} />
+          <FloatingAdPlaceholder name={getText(i)} scale={pos.scale} id={`mobile-${i}`} price={getPrice(pos.scale)} href={mailtoHref(pos.scale)} />
         </div>
       ))}
     </div>
