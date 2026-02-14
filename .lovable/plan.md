@@ -1,48 +1,65 @@
 
+# Improve Mobile Balloon Layout and Add Dynamic Roaming Animation
 
-# Fix Intermittent Crashes -- Full Diagnosis and Remediation
+## Problem
+On mobile, the single balloon sits at `left: 60%, top: 12%` which overlaps with the hero headline ("Late Nights, Wild Ideas"). The current `balloon-float` animation has very subtle movement (max -18px vertical, 6px horizontal), making it feel static.
 
-## Root Causes Found
+## Solution
 
-After scanning the entire codebase, I identified **three distinct crash vectors**:
+### 1. Reposition the mobile balloon to avoid headline overlap
+Move the mobile balloon to the top-right corner area where it won't interfere with the headline text.
 
-### 1. Unhandled Promise Rejections (Primary Cause)
-Multiple async operations across the app (background music fetch, visitor counter RPC, guest book queries, sponsor queries) can throw errors that propagate as **unhandled promise rejections**. React Error Boundaries do NOT catch these -- they only catch synchronous render errors. An unhandled rejection can crash the entire tab.
+**File: `src/components/HeroAdPlaceholders.tsx`**
+- Change `mobileLayout` from `{ left: "60%", top: "12%" }` to `{ left: "65%", top: "2%" }` -- pushes it to the upper-right sky area, well above the headline
+- Reduce scale from `0.7` to `0.55` so it feels like a distant balloon in the sky
 
-**Affected files:** `useBackgroundMusic.ts`, `useVisitorCounter.ts`, `useAuth.ts`
+### 2. Create a new dynamic roaming animation for mobile
+Replace the subtle `balloon-float` with a more dramatic `balloon-roam` animation that drifts left/right, up/down, and scales slightly (closer/further effect).
 
-### 2. ErrorBoundary Not Wired Into App
-The `ErrorBoundary` component exists but is **not used anywhere**. It was removed from `main.tsx` during the previous refactor. So even synchronous render crashes show a blank page.
+**File: `src/index.css`**
+- Add a new `@keyframes balloon-roam` with wider movement range:
+  - Horizontal drift: -20px to +25px (roaming left and right)
+  - Vertical drift: 0 to -30px (floating up and settling back)
+  - Scale oscillation: 0.95 to 1.08 (closer/further depth effect)
+  - Slight rotation: -1deg to 1deg (natural wind sway)
+- Duration: ~18s for a slow, organic feel
+- Add `.animate-balloon-roam` class
 
-### 3. QueryClient Has No Default Error Handling
-The `QueryClient` in `App.tsx` is created with zero configuration -- no `retry` limits, no `onError` handler. Failed queries retry infinitely by default (3 times), but if all retries fail, the error bubbles up unhandled.
+### 3. Apply the roaming animation on mobile only
+**File: `src/components/HeroAdPlaceholders.tsx`**
+- Add a `className` field to the mobile layout config
+- Use `animate-balloon-roam` for mobile balloons instead of the default `animate-balloon-float`
 
----
-
-## Plan
-
-### Step 1: Add global `unhandledrejection` listener in `App.tsx`
-Add a `useEffect` in the App component that listens for `window.addEventListener("unhandledrejection", ...)` and prevents the crash by logging the error and showing a toast notification instead.
-
-### Step 2: Re-wrap the app in the ErrorBoundary in `main.tsx`
-Restore the `<ErrorBoundary>` wrapper around `<App />` so synchronous render errors display the "Signal Lost" fallback instead of a white screen.
-
-### Step 3: Configure QueryClient with sensible defaults
-Set `retry: 2` and a default `onError` callback on the QueryClient so failed data fetches degrade gracefully (show stale data or empty states) instead of crashing.
-
----
+**File: `src/components/FloatingAdPlaceholder.tsx`**
+- Accept an optional `animationClass` prop to override the default `animate-balloon-float`
 
 ## Technical Details
 
-### `src/main.tsx`
-- Import `ErrorBoundary`
-- Wrap `<App />` with `<ErrorBoundary>`
+### New keyframes (index.css)
+```css
+@keyframes balloon-roam {
+  0%   { transform: translateY(0)    translateX(0)    scale(1)    rotate(0deg);   }
+  15%  { transform: translateY(-12px) translateX(20px)  scale(1.05) rotate(0.8deg); }
+  30%  { transform: translateY(-25px) translateX(8px)   scale(0.97) rotate(-0.5deg);}
+  50%  { transform: translateY(-15px) translateX(-18px) scale(1.06) rotate(0.6deg); }
+  70%  { transform: translateY(-28px) translateX(12px)  scale(0.95) rotate(-0.8deg);}
+  85%  { transform: translateY(-8px)  translateX(-10px) scale(1.03) rotate(0.3deg); }
+  100% { transform: translateY(0)    translateX(0)    scale(1)    rotate(0deg);   }
+}
+```
 
-### `src/App.tsx`
-- Convert `App` from arrow-expression to include a `useEffect` for the global rejection handler
-- Configure `QueryClient` with `defaultOptions.queries.retry = 2`
-- Show a `toast.error()` on unhandled rejections instead of crashing
+### Mobile layout update
+```typescript
+const mobileLayout = [
+  { left: "65%", top: "2%", scale: 0.55, opacity: 0.85, delay: "0s", speed: "18s", parallax: 0.15 },
+];
+```
 
-### No other files need changes
-The `safe-client.ts` fallback and existing `try/catch` blocks in hooks are already solid. The gap was purely at the top-level error handling layer.
+### FloatingAdPlaceholder prop addition
+- Add `animationClass?: string` prop, default to `"animate-balloon-float"`
+- Apply it to the wrapper element instead of hardcoded class
 
+### Files changed
+1. `src/index.css` -- add `balloon-roam` keyframes and class
+2. `src/components/HeroAdPlaceholders.tsx` -- reposition mobile balloon, pass animation class
+3. `src/components/FloatingAdPlaceholder.tsx` -- accept and use custom animation class
