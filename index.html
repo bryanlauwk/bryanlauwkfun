@@ -31,7 +31,22 @@
 </head>
 
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div id="static-fallback" style="min-height:100vh;background:#0a0a0f;display:flex;align-items:center;justify-content:center;text-align:center;padding:1.5rem;">
+        <div>
+          <h1 style="font-family:Playfair Display,Georgia,serif;font-size:2rem;color:hsl(350,85%,55%);margin-bottom:0.5rem;letter-spacing:0.05em;">Bryan Lau</h1>
+          <p style="font-family:Inter,sans-serif;font-size:0.875rem;color:hsl(240,5%,65%);">Initializing…</p>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      setTimeout(function(){
+        var f=document.getElementById('static-fallback');
+        if(f){
+          f.innerHTML='<div><h1 style="font-family:Playfair Display,Georgia,serif;font-size:2rem;color:hsl(350,85%,55%);margin-bottom:0.5rem;">Signal Lost</h1><p style="font-family:Inter,sans-serif;font-size:0.875rem;color:hsl(240,5%,65%);margin-bottom:1.5rem;">The page took too long to load.</p><button onclick="location.reload()" style="padding:0.5rem 1.5rem;border:1px solid hsl(350,85%,55%,0.5);color:hsl(350,85%,55%);background:transparent;font-family:JetBrains Mono,monospace;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;cursor:pointer;border-radius:4px;">Reload</button></div>';
+        }
+      },8000);
+    </script>
   </body>
 </html>
