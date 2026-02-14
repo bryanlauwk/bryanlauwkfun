@@ -527,16 +527,16 @@
 
 @keyframes balloon-float {
   0%, 100% { transform: translateY(0) translateX(0); }
-  25% { transform: translateY(-10px) translateX(3px); }
-  50% { transform: translateY(-4px) translateX(-2px); }
-  75% { transform: translateY(-12px) translateX(1px); }
+  25% { transform: translateY(-15px) translateX(5px); }
+  50% { transform: translateY(-6px) translateX(-3px); }
+  75% { transform: translateY(-18px) translateX(2px); }
 }
 
 @keyframes broom-drift {
   0%, 100% { transform: translateX(0) translateY(0); }
-  25% { transform: translateX(8px) translateY(-3px); }
-  50% { transform: translateX(4px) translateY(2px); }
-  75% { transform: translateX(12px) translateY(-2px); }
+  25% { transform: translateX(12px) translateY(-5px); }
+  50% { transform: translateX(6px) translateY(3px); }
+  75% { transform: translateX(16px) translateY(-3px); }
 }
 
 @keyframes lantern-rise {
