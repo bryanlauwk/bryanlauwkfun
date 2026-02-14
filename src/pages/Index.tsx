@@ -5,6 +5,7 @@ import { UpsideDownParticles } from "@/components/UpsideDownParticles";
 import { TypewriterMotto } from "@/components/TypewriterMotto";
 
 import { GuestBook } from "@/components/GuestBook";
+import { SponsorStrip } from "@/components/SponsorStrip";
 import heroImage from "@/assets/dark-fantasy-hero.jpg";
 
 const Index = () => {
@@ -68,6 +69,9 @@ const Index = () => {
             
             <ProjectGrid />
           </section>
+
+          {/* Sponsor Strip */}
+          <SponsorStrip />
 
           {/* Guest Book section */}
           <GuestBook />

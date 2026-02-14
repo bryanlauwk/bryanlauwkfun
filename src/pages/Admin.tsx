@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import {
@@ -11,6 +11,15 @@ import {
   type Project,
 } from "@/hooks/useProjects";
 import { useAdminGuestBook, useDeleteGuestBookEntry, type GuestBookEntry } from "@/hooks/useGuestBook";
+import {
+  useAdminSponsors,
+  useCreateSponsor,
+  useUpdateSponsor,
+  useDeleteSponsor,
+  useReorderSponsors,
+  uploadSponsorLogo,
+  type Sponsor,
+} from "@/hooks/useSponsors";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -53,6 +62,8 @@ import {
   Gamepad2,
   MessageSquare,
   FolderKanban,
+  Handshake,
+  Upload,
 } from "lucide-react";
 import {
   DndContext,
@@ -251,6 +262,45 @@ function GuestBookEntryCard({
   );
 }
 
+interface SortableSponsorCardProps {
+  sponsor: Sponsor;
+  onEdit: (sponsor: Sponsor) => void;
+  onDelete: (id: string) => void;
+  onToggleVisibility: (sponsor: Sponsor) => void;
+}
+
+function SortableSponsorCard({ sponsor, onEdit, onDelete, onToggleVisibility }: SortableSponsorCardProps) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: sponsor.id });
+  const style = { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.5 : 1 };
+
+  return (
+    <Card ref={setNodeRef} style={style} className={`${!sponsor.is_visible ? "opacity-60" : ""} ${isDragging ? "shadow-lg" : ""}`}>
+      <CardContent className="flex items-center gap-4 p-4">
+        <button {...attributes} {...listeners} className="cursor-grab touch-none text-muted-foreground hover:text-foreground active:cursor-grabbing">
+          <GripVertical className="h-5 w-5" />
+        </button>
+        <div className="h-12 w-20 flex-shrink-0 overflow-hidden rounded border border-border bg-background p-1">
+          <img src={sponsor.logo_url} alt={sponsor.name} className="h-full w-full object-contain" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <h3 className="font-semibold text-foreground truncate">{sponsor.name}</h3>
+          <p className="text-xs text-muted-foreground truncate">{sponsor.website_url || "No URL"}</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <Switch checked={sponsor.is_visible} onCheckedChange={() => onToggleVisibility(sponsor)} />
+          {sponsor.website_url && (
+            <Button variant="ghost" size="icon" asChild>
+              <a href={sponsor.website_url} target="_blank" rel="noopener noreferrer"><ExternalLink className="h-4 w-4" /></a>
+            </Button>
+          )}
+          <Button variant="ghost" size="icon" onClick={() => onEdit(sponsor)}><Pencil className="h-4 w-4" /></Button>
+          <Button variant="ghost" size="icon" onClick={() => onDelete(sponsor.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
 export default function Admin() {
   const navigate = useNavigate();
   const { user, isAdmin, loading: authLoading, signOut } = useAuth();
@@ -261,6 +311,13 @@ export default function Admin() {
   const { data: guestBookEntries, isLoading: guestBookLoading } = useAdminGuestBook(shouldFetchData);
   const deleteGuestBookEntry = useDeleteGuestBookEntry();
   
+  // Sponsor hooks
+  const { data: sponsors, isLoading: sponsorsLoading } = useAdminSponsors(shouldFetchData);
+  const createSponsor = useCreateSponsor();
+  const updateSponsor = useUpdateSponsor();
+  const deleteSponsor = useDeleteSponsor();
+  const reorderSponsors = useReorderSponsors();
+
   const createProject = useCreateProject();
   const updateProject = useUpdateProject();
   const deleteProject = useDeleteProject();
@@ -274,6 +331,16 @@ export default function Admin() {
   const [localProjects, setLocalProjects] = useState<Project[]>([]);
   const [deleteGuestEntryId, setDeleteGuestEntryId] = useState<string | null>(null);
 
+  // Sponsor state
+  const [sponsorDialogOpen, setSponsorDialogOpen] = useState(false);
+  const [editingSponsor, setEditingSponsor] = useState<Sponsor | null>(null);
+  const [sponsorForm, setSponsorForm] = useState({ name: "", website_url: "", is_visible: true });
+  const [sponsorLogoFile, setSponsorLogoFile] = useState<File | null>(null);
+  const [sponsorLogoPreview, setSponsorLogoPreview] = useState<string | null>(null);
+  const [localSponsors, setLocalSponsors] = useState<Sponsor[]>([]);
+  const [deleteSponsorId, setDeleteSponsorId] = useState<string | null>(null);
+  const sponsorFileRef = useRef<HTMLInputElement>(null);
+
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -286,6 +353,12 @@ export default function Admin() {
       setLocalProjects(projects);
     }
   }, [projects]);
+
+  useEffect(() => {
+    if (sponsors) {
+      setLocalSponsors(sponsors);
+    }
+  }, [sponsors]);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -459,6 +532,96 @@ export default function Admin() {
     }
   };
 
+  // Sponsor handlers
+  const handleOpenSponsorDialog = (sponsor?: Sponsor) => {
+    if (sponsor) {
+      setEditingSponsor(sponsor);
+      setSponsorForm({ name: sponsor.name, website_url: sponsor.website_url || "", is_visible: sponsor.is_visible });
+      setSponsorLogoPreview(sponsor.logo_url);
+    } else {
+      setEditingSponsor(null);
+      setSponsorForm({ name: "", website_url: "", is_visible: true });
+      setSponsorLogoPreview(null);
+    }
+    setSponsorLogoFile(null);
+    setSponsorDialogOpen(true);
+  };
+
+  const handleSponsorLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setSponsorLogoFile(file);
+      setSponsorLogoPreview(URL.createObjectURL(file));
+    }
+  };
+
+  const handleSponsorSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!sponsorForm.name.trim()) {
+      toast({ title: "Name required", variant: "destructive" });
+      return;
+    }
+
+    try {
+      let logoUrl = editingSponsor?.logo_url || "";
+
+      if (sponsorLogoFile) {
+        logoUrl = await uploadSponsorLogo(sponsorLogoFile);
+      }
+
+      if (!logoUrl) {
+        toast({ title: "Logo required", description: "Please upload a logo image.", variant: "destructive" });
+        return;
+      }
+
+      const data = {
+        name: sponsorForm.name.trim(),
+        logo_url: logoUrl,
+        website_url: sponsorForm.website_url.trim() || null,
+        is_visible: sponsorForm.is_visible,
+      };
+
+      if (editingSponsor) {
+        await updateSponsor.mutateAsync({ id: editingSponsor.id, ...data });
+        toast({ title: "Sponsor updated!" });
+      } else {
+        await createSponsor.mutateAsync(data);
+        toast({ title: "Sponsor added!" });
+      }
+      setSponsorDialogOpen(false);
+    } catch (error: any) {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    }
+  };
+
+  const handleDeleteSponsor = async () => {
+    if (!deleteSponsorId) return;
+    try {
+      await deleteSponsor.mutateAsync(deleteSponsorId);
+      toast({ title: "Sponsor deleted!" });
+    } catch (error: any) {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    } finally {
+      setDeleteSponsorId(null);
+    }
+  };
+
+  const handleSponsorDragEnd = async (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (over && active.id !== over.id) {
+      const oldIndex = localSponsors.findIndex((s) => s.id === active.id);
+      const newIndex = localSponsors.findIndex((s) => s.id === over.id);
+      const newOrder = arrayMove(localSponsors, oldIndex, newIndex);
+      setLocalSponsors(newOrder);
+      try {
+        await reorderSponsors.mutateAsync(newOrder.map((s, i) => ({ id: s.id, display_order: i })));
+      } catch (error: any) {
+        setLocalSponsors(sponsors || []);
+        toast({ title: "Error reordering", description: error.message, variant: "destructive" });
+      }
+    }
+  };
+
   // Loading state with specific messages
   if (authLoading) {
     return (
@@ -485,6 +648,7 @@ export default function Admin() {
 
   const projectCount = projects?.length ?? 0;
   const guestBookCount = guestBookEntries?.length ?? 0;
+  const sponsorCount = sponsors?.length ?? 0;
 
   return (
     <div className="min-h-screen bg-background">
@@ -497,7 +661,7 @@ export default function Admin() {
             <div>
               <h1 className="font-display text-xl font-bold text-foreground">Admin Dashboard</h1>
               <p className="text-sm text-muted-foreground">
-                {projectCount} project{projectCount !== 1 ? "s" : ""} · {guestBookCount} guest book entr{guestBookCount !== 1 ? "ies" : "y"}
+                {projectCount} project{projectCount !== 1 ? "s" : ""} · {sponsorCount} sponsor{sponsorCount !== 1 ? "s" : ""} · {guestBookCount} guest book entr{guestBookCount !== 1 ? "ies" : "y"}
               </p>
             </div>
           </div>
@@ -509,7 +673,7 @@ export default function Admin() {
 
       <main className="container mx-auto px-4 py-8">
         <Tabs defaultValue="projects" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 max-w-md">
+          <TabsList className="grid w-full grid-cols-3 max-w-lg">
             <TabsTrigger value="projects" className="flex items-center gap-2">
               <FolderKanban className="h-4 w-4" />
               Projects
@@ -520,6 +684,15 @@ export default function Admin() {
               {guestBookCount > 0 && (
                 <Badge variant="secondary" className="ml-1">
                   {guestBookCount}
+                </Badge>
+              )}
+            </TabsTrigger>
+            <TabsTrigger value="sponsors" className="flex items-center gap-2">
+              <Handshake className="h-4 w-4" />
+              Sponsors
+              {sponsorCount > 0 && (
+                <Badge variant="secondary" className="ml-1">
+                  {sponsorCount}
                 </Badge>
               )}
             </TabsTrigger>
@@ -765,8 +938,152 @@ export default function Admin() {
               </>
             )}
           </TabsContent>
+
+          {/* Sponsors Tab */}
+          <TabsContent value="sponsors" className="space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 className="font-display text-lg font-semibold text-foreground">Manage Sponsors</h2>
+              <Dialog open={sponsorDialogOpen} onOpenChange={setSponsorDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button onClick={() => handleOpenSponsorDialog()}>
+                    <Plus className="mr-2 h-4 w-4" />
+                    Add Sponsor
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-lg">
+                  <DialogHeader>
+                    <DialogTitle className="font-display">
+                      {editingSponsor ? "Edit Sponsor" : "Add Sponsor"}
+                    </DialogTitle>
+                    <DialogDescription>
+                      Upload a brand logo and configure the sponsor.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <form onSubmit={handleSponsorSubmit} className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="sponsor-name">Name *</Label>
+                      <Input
+                        id="sponsor-name"
+                        placeholder="Brand name"
+                        value={sponsorForm.name}
+                        onChange={(e) => setSponsorForm((p) => ({ ...p, name: e.target.value }))}
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label>Logo *</Label>
+                      <div className="flex items-center gap-4">
+                        {sponsorLogoPreview && (
+                          <img src={sponsorLogoPreview} alt="Preview" className="h-12 w-auto max-w-[100px] object-contain rounded border border-border bg-background p-1" />
+                        )}
+                        <Button type="button" variant="outline" onClick={() => sponsorFileRef.current?.click()}>
+                          <Upload className="mr-2 h-4 w-4" />
+                          {sponsorLogoPreview ? "Change" : "Upload"}
+                        </Button>
+                        <input ref={sponsorFileRef} type="file" accept="image/jpeg,image/png,image/gif,image/webp" className="hidden" onChange={handleSponsorLogoChange} />
+                      </div>
+                      <p className="text-xs text-muted-foreground">JPEG, PNG, GIF, or WebP. Max 5MB.</p>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="sponsor-url">Website URL</Label>
+                      <Input
+                        id="sponsor-url"
+                        type="url"
+                        placeholder="https://..."
+                        value={sponsorForm.website_url}
+                        onChange={(e) => setSponsorForm((p) => ({ ...p, website_url: e.target.value }))}
+                      />
+                    </div>
+
+                    <div className="flex items-center justify-between rounded-lg border p-3">
+                      <div className="space-y-0.5">
+                        <Label htmlFor="sponsor-visibility">Visible on homepage</Label>
+                        <p className="text-xs text-muted-foreground">Hidden sponsors won't appear publicly</p>
+                      </div>
+                      <Switch
+                        id="sponsor-visibility"
+                        checked={sponsorForm.is_visible}
+                        onCheckedChange={(checked) => setSponsorForm((p) => ({ ...p, is_visible: checked }))}
+                      />
+                    </div>
+
+                    <Button type="submit" className="w-full" disabled={createSponsor.isPending || updateSponsor.isPending}>
+                      {(createSponsor.isPending || updateSponsor.isPending) && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                      {editingSponsor ? "Update Sponsor" : "Add Sponsor"}
+                    </Button>
+                  </form>
+                </DialogContent>
+              </Dialog>
+            </div>
+
+            {sponsorsLoading ? (
+              <div className="space-y-3">
+                {[...Array(3)].map((_, i) => (
+                  <Skeleton key={i} className="h-20 w-full" />
+                ))}
+              </div>
+            ) : localSponsors.length === 0 ? (
+              <Card className="border-dashed">
+                <CardContent className="flex flex-col items-center justify-center py-12">
+                  <Handshake className="h-12 w-12 text-muted-foreground/50 mb-4" />
+                  <p className="mb-4 text-muted-foreground">No sponsors yet</p>
+                  <Button onClick={() => handleOpenSponsorDialog()}>
+                    <Plus className="mr-2 h-4 w-4" />
+                    Add your first sponsor
+                  </Button>
+                </CardContent>
+              </Card>
+            ) : (
+              <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleSponsorDragEnd}>
+                <SortableContext items={localSponsors.map((s) => s.id)} strategy={verticalListSortingStrategy}>
+                  <div className="space-y-3">
+                    {localSponsors.map((sponsor) => (
+                      <SortableSponsorCard
+                        key={sponsor.id}
+                        sponsor={sponsor}
+                        onEdit={handleOpenSponsorDialog}
+                        onDelete={(id) => setDeleteSponsorId(id)}
+                        onToggleVisibility={async (s) => {
+                          try {
+                            await updateSponsor.mutateAsync({ id: s.id, is_visible: !s.is_visible });
+                            toast({ title: s.is_visible ? "Sponsor hidden" : "Sponsor visible" });
+                          } catch (error: any) {
+                            toast({ title: "Error", description: error.message, variant: "destructive" });
+                          }
+                        }}
+                      />
+                    ))}
+                  </div>
+                </SortableContext>
+              </DndContext>
+            )}
+          </TabsContent>
         </Tabs>
       </main>
+
+      {/* Delete Sponsor Confirmation */}
+      <AlertDialog open={!!deleteSponsorId} onOpenChange={() => setDeleteSponsorId(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Sponsor?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete the sponsor.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDeleteSponsor}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {deleteSponsor.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       {/* Delete Guest Book Entry Confirmation */}
       <AlertDialog open={!!deleteGuestEntryId} onOpenChange={() => setDeleteGuestEntryId(null)}>
