@@ -146,12 +146,20 @@ export function FloatingAdPlaceholder({ name, scale = 1, id, price, href, showTe
         {/* Price tag */}
         {price && (
           <>
-            <rect x="75" y="142" width="90" height="18" rx="9" fill="hsl(35 90% 55%)" fillOpacity="0.8" />
+            <rect
+              x={showText ? 75 : 60}
+              y={showText ? 142 : 100}
+              width={showText ? 90 : 120}
+              height={showText ? 18 : 26}
+              rx={showText ? 9 : 13}
+              fill="hsl(35 90% 55%)"
+              fillOpacity="0.8"
+            />
             <text
               x="120"
-              y="155"
+              y={showText ? 155 : 119}
               textAnchor="middle"
-              fontSize="9"
+              fontSize={showText ? 9 : 14}
               fontFamily="monospace"
               fontWeight="bold"
               fill="hsl(0 0% 10%)"
