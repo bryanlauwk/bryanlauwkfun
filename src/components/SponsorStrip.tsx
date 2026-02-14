@@ -1,10 +1,10 @@
 import { usePublicSponsors } from "@/hooks/useSponsors";
-import { FloatingAdPlaceholder } from "@/components/FloatingAdPlaceholder";
 
 export function SponsorStrip() {
   const { data: sponsors } = usePublicSponsors();
+  const realSponsors = sponsors?.filter((s) => s.logo_url) ?? [];
 
-  if (!sponsors || sponsors.length === 0) return null;
+  if (realSponsors.length === 0) return null;
 
   return (
     <section className="mt-16 md:mt-24 mb-8">
@@ -17,15 +17,13 @@ export function SponsorStrip() {
       </div>
 
       <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
-        {sponsors.map((sponsor) => {
-          const content = sponsor.logo_url ? (
+        {realSponsors.map((sponsor) => {
+          const content = (
             <img
-              src={sponsor.logo_url}
+              src={sponsor.logo_url!}
               alt={sponsor.name}
               className="h-10 md:h-12 w-auto max-w-[120px] md:max-w-[150px] object-contain opacity-25 grayscale mix-blend-luminosity hover:opacity-70 hover:grayscale-0 transition-all duration-500"
             />
-          ) : (
-            <FloatingAdPlaceholder name={sponsor.name} variant={sponsors.indexOf(sponsor)} />
           );
 
           return sponsor.website_url ? (
