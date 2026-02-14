@@ -2,15 +2,13 @@ import { usePublicSponsors } from "@/hooks/useSponsors";
 import { FloatingAdPlaceholder } from "@/components/FloatingAdPlaceholder";
 
 const positions = [
-  { left: "8%", top: "12%", delay: "0s" },
-  { left: "62%", top: "22%", delay: "2s" },
-  { left: "32%", top: "6%", delay: "4s" },
+  { left: "3%", top: "30%", delay: "0s" },
+  { left: "72%", top: "8%", delay: "2s" },
+  { left: "85%", top: "45%", delay: "4s" },
 ];
 
 const mobilePositions = [
-  { left: "5%", top: "18%", delay: "0s" },
-  { left: "60%", top: "28%", delay: "2s" },
-  { left: "30%", top: "8%", delay: "4s" },
+  { left: "5%", top: "55%", delay: "0s" },
 ];
 
 export function HeroAdPlaceholders() {
