@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 export interface Sponsor {
   id: string;
   name: string;
-  logo_url: string;
+  logo_url: string | null;
   website_url: string | null;
   display_order: number;
   is_visible: boolean;
