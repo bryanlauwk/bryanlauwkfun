@@ -56,6 +56,11 @@ const handler = async (req: Request): Promise<Response> => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  if (req.method !== "POST") {
+    return new Response(JSON.stringify({ error: "Method not allowed" }),
+      { status: 405, headers: { "Content-Type": "application/json", ...corsHeaders } });
+  }
+
   cleanupRateLimitStore();
 
   const clientIP = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
@@ -187,8 +192,7 @@ const handler = async (req: Request): Promise<Response> => {
 
   } catch (error: unknown) {
     console.error("Error in submit-guest-book function:", error);
-    const errorMessage = error instanceof Error ? error.message : "Unknown error";
-    return new Response(JSON.stringify({ error: errorMessage }),
+    return new Response(JSON.stringify({ error: "An internal error occurred. Please try again later." }),
       { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } });
   }
 };
