@@ -1,71 +1,102 @@
 
 
-# UI Improvements for Project Cards ("Drops")
+# Sponsor Brand Logos — Admin-Managed, Background-Blended
 
-Three improvements to make the project cards more polished and inviting.
+Add a "Sponsors" strip to the homepage where brand logos float subtly in the background, blending with the dark fantasy aesthetic. Admins can fully manage these logos from the dashboard.
 
 ---
 
-## 1. Gold audience tag on each card
+## How It Works
 
-Inspired by the uploaded reference image (the gold "Oscar Nominee" label), each card will display a gold-bordered tag at the top indicating the target audience (e.g., "Gamers", "Foodies", "Data Nerds").
+Logos appear in a horizontal strip (between Drops and Guest Book, or below the hero), rendered at low opacity with a grayscale + blend-mode treatment so they feel like part of the atmosphere rather than intrusive ads. On hover, they gently reveal in full color.
 
-**Database change**: Add a `tag` column to the `projects` table (nullable text, default null). This allows setting tags per project via the admin panel.
+---
 
-```sql
-ALTER TABLE public.projects ADD COLUMN tag text DEFAULT NULL;
+## 1. Database: New `sponsors` table
+
+Create a new table to store sponsor data:
+
+```text
+sponsors
+  - id (uuid, PK)
+  - name (text, not null)
+  - logo_url (text, not null) — URL from storage bucket
+  - website_url (text, nullable) — optional link
+  - display_order (integer, default 0)
+  - is_visible (boolean, default true)
+  - created_at (timestamptz)
+  - updated_at (timestamptz)
 ```
 
-**Card UI**: In `StrangerThingsCard.tsx`, render the tag (when present) as a small gold-bordered label in the card header, styled like the reference image:
-- Gold border with subtle gold text
-- Uppercase, small mono font, tracking-wide
-- Positioned in the header bar next to "Drop #01"
+RLS policies:
+- SELECT: anyone can view visible sponsors (public)
+- INSERT/UPDATE/DELETE: admin only (using existing `has_role` function)
 
-**Admin panel**: Add a "Tag" text input to the project create/edit form so you can set labels like "Gamers", "Foodies", "Data", "Music Lovers", etc.
+Also create a `sponsor-logos` storage bucket (public) for logo uploads.
 
----
+## 2. New component: `SponsorStrip.tsx`
 
-## 2. More visible card borders
+A horizontal row of logos styled to blend into the background:
 
-Currently the card border is very subtle (`border-border`). Improve the default (non-hovered) state to be more inviting:
+- Logos rendered at ~20-30% opacity, grayscale filter, with `mix-blend-mode: luminosity`
+- On hover: opacity rises to 70%, grayscale drops, subtle glow appears
+- Wrapped in optional `<a>` tags if a website URL exists
+- Section header: a subtle "Supported by" label in mono font, matching the existing divider style
+- Responsive: horizontal scroll on mobile, centered grid on desktop
 
-- Change default border from `border-border` to `border-border/60` with a subtle `ring-1 ring-primary/10` glow
-- Add a faint gradient shimmer along the top edge of the card (a 2px line using `bg-gradient-to-r from-transparent via-primary/20 to-transparent`)
-- This signals interactivity without being aggressive
+Placement in `Index.tsx`: between the Drops section and the Guest Book section.
 
----
+## 3. Data hooks: `useSponsors.ts`
 
-## 3. Varied CTAs instead of repeating "Check it out"
+Following the existing `useProjects.ts` pattern:
 
-Replace the identical "Check it out" on every card with varied, contextual CTAs that rotate based on the card index:
+- `usePublicSponsors()` — fetches visible sponsors ordered by display_order
+- `useAdminSponsors()` — fetches all sponsors (admin)
+- `useCreateSponsor()` / `useUpdateSponsor()` / `useDeleteSponsor()` — mutations
+- `uploadSponsorLogo(file)` — uploads to `sponsor-logos` bucket with same validation pattern as project images
 
-```typescript
-const CTA_VARIANTS = [
-  "Explore",
-  "Dive in",
-  "Take a look",
-  "See more",
-  "Open it up",
-];
+## 4. Admin panel: New "Sponsors" tab
+
+Add a third tab to the Admin dashboard alongside "Projects" and "Guest Book":
+
+- List of sponsors with drag-to-reorder (same pattern as projects)
+- Create/edit dialog with fields: Name, Logo (file upload), Website URL, Visible toggle
+- Logo preview thumbnail in the list
+- Delete with confirmation
+
+## 5. Integration in `Index.tsx`
+
+Add the `SponsorStrip` component between the Drops and Guest Book sections:
+
+```text
+  Drops
+  ──────────
+  [Project Cards]
+
+  Supported by
+  ──────────
+  [Logo] [Logo] [Logo] [Logo]
+
+  Guest Book
+  ──────────
 ```
 
-Each card picks its CTA based on `index % CTA_VARIANTS.length`, so adjacent cards always show different text. This keeps the section feeling dynamic rather than copy-pasted.
-
 ---
 
-## Summary of file changes
+## Summary of changes
 
-| File | Change |
-|------|--------|
-| Migration SQL | Add `tag` column to `projects` table |
-| `src/components/StrangerThingsCard.tsx` | Gold tag label, improved borders, varied CTAs |
-| `src/pages/Admin.tsx` | Add "Tag" field to project form |
-| `src/hooks/useProjects.ts` | Add `tag` to Project type and mutations |
+| Item | Details |
+|------|---------|
+| Migration SQL | Create `sponsors` table + RLS + `sponsor-logos` bucket |
+| `src/hooks/useSponsors.ts` | CRUD hooks + logo upload |
+| `src/components/SponsorStrip.tsx` | Public-facing blended logo strip |
+| `src/pages/Admin.tsx` | New "Sponsors" tab with full CRUD |
+| `src/pages/Index.tsx` | Add SponsorStrip between Drops and Guest Book |
 
 ## Technical notes
 
-- The `tag` column is nullable so existing projects without tags render fine (no tag shown)
-- The `types.ts` file will auto-update after the migration runs
-- The gold label styling uses Tailwind utilities: `border border-amber-500/60 text-amber-400 bg-amber-500/10`
-- No new dependencies required
+- Logo blending uses CSS: `opacity-25 grayscale hover:opacity-70 hover:grayscale-0 mix-blend-luminosity transition-all duration-500`
+- Storage bucket uses same validation pattern as project images (JPEG/PNG/GIF/WebP, 5MB max)
+- The strip hides entirely if no visible sponsors exist (no empty state shown)
+- Admin tab header updates to show sponsor count alongside project and guest book counts
 
