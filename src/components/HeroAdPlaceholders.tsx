@@ -4,10 +4,8 @@ import { useEffect, useRef, useState, useCallback } from "react";
 
 const layout = [
   { left: "2%",  top: "30%", scale: 1.0,  opacity: 0.9, delay: "0s",   speed: "7s",   parallax: 0.15 },
-  { left: "72%", top: "8%",  scale: 0.7,  opacity: 0.9, delay: "1.5s", speed: "6.5s", parallax: 0.2  },
-  { left: "40%", top: "55%", scale: 0.7,  opacity: 0.9, delay: "3s",   speed: "6s",   parallax: 0.25 },
-  { left: "80%", top: "42%", scale: 0.7,  opacity: 0.9, delay: "4.5s", speed: "5.5s", parallax: 0.3  },
-  { left: "55%", top: "5%",  scale: 0.45, opacity: 0.9, delay: "6s",   speed: "5s",   parallax: 0.35 },
+  { left: "72%", top: "8%",  scale: 0.7,  opacity: 0.9, delay: "2s",   speed: "6s",   parallax: 0.2  },
+  { left: "55%", top: "50%", scale: 0.45, opacity: 0.9, delay: "4s",   speed: "5.5s", parallax: 0.3  },
 ];
 
 const mobileLayout = [
