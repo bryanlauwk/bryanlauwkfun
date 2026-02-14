@@ -1,52 +1,38 @@
 
-# Move Ad Placeholders into the Hero Sky
+# Make Ad Placeholders Visible and Non-Overlapping
 
-Relocate the floating ad placeholders from the "Supported by" strip (between cards and guest book) into the hero background area, so they appear as atmospheric elements drifting in the dark fantasy sky. Remove the "Supported by" section entirely.
-
----
+## Problems
+1. The placeholders are at 30% opacity (`opacity-30` on the wrapper) with already-low SVG fill opacities (0.12-0.4), making them nearly invisible against the dark background
+2. Positions overlap with the centered headline ("Late Nights, Wild Ideas") which sits roughly at 20-40% from top
 
 ## Changes
 
-### 1. `src/pages/Index.tsx`
+### 1. `src/components/FloatingAdPlaceholder.tsx`
 
-- **Remove** the `<SponsorStrip />` component from between ProjectGrid and GuestBook (line 74)
-- **Add** a new `<HeroAdPlaceholders />` layer inside the hero background `div` (the `fixed inset-0 z-0` container), positioned with `absolute` so the floating illustrations appear scattered across the sky portion of the hero image
-- The placeholders render with `pointer-events-none` so they don't interfere with scrolling, but each individual ad has `pointer-events-auto` on hover for potential click interaction
+**Boost visibility** while keeping the atmospheric feel:
+- Change wrapper opacity from `opacity-30` to `opacity-60`, hover from `opacity-60` to `opacity-90`
+- Increase SVG fill opacities across all three variants (balloon gradient stops from 0.4/0.25 to 0.6/0.45, stroke opacities from 0.3 to 0.5, text opacity from 0.5 to 0.7, etc.)
+- Increase broom handle and bristle opacities similarly
+- Increase lantern body fill and glow opacities
+- Scale up SVG sizes slightly (balloon from 160x144 to 200x180, broom from 176x112 to 210x134, lantern from 128x144 to 160x180) for better presence in the sky
 
-### 2. New component: `src/components/HeroAdPlaceholders.tsx`
+### 2. `src/components/HeroAdPlaceholders.tsx`
 
-A lightweight wrapper that fetches sponsors without logos and renders `FloatingAdPlaceholder` instances at scattered positions across the viewport:
+**Reposition to avoid the headline** (headline is centered, roughly 15-45% from top):
+- Balloon: move to far left edge of sky -- `left: "3%", top: "30%"` (left side, beside the headline not behind it)
+- Broom: move to right side -- `left: "72%", top: "8%"` (upper right, above headline)
+- Lantern: move to far right -- `left: "85%", top: "45%"` (right side, below headline level)
+- Mobile: only show one placeholder, positioned at `left: "5%", top: "55%"` (below the headline area)
 
-- Uses `usePublicSponsors()` to get sponsors without `logo_url`
-- Positions each placeholder using `absolute` with predefined coordinates that place them in the "sky" area of the hero (upper portion of the screen):
-  - Balloon: top-left area (~10% from left, ~15% from top)
-  - Broom: right side (~65% from left, ~25% from top)
-  - Lantern: center-left (~35% from left, ~8% from top)
-- Each has staggered animation delays for natural feel
-- Container is `fixed inset-0 z-[1] pointer-events-none` so it floats above the background image but below all content
+This spreads them into the "sky" margins around the centered content, like atmospheric elements drifting at the edges of the frame.
 
-### 3. `src/components/SponsorStrip.tsx`
-
-- **Keep the file** but update it to only render sponsors that **have** a `logo_url` (real sponsors with uploaded logos). If none exist, it returns null — effectively hiding the entire "Supported by" row when only placeholders exist
-- This way, when real sponsors are added later, the strip reappears between cards and guest book
-
-### 4. No CSS changes needed
-
-The balloon-float, broom-drift, and lantern-rise animations already exist in `index.css`.
-
----
+### 3. `src/index.css` (minor)
+- Increase animation travel distances slightly for more visible movement (balloon vertical bob from 10px to 15px, broom horizontal drift from 8px to 12px)
 
 ## Summary
 
 | File | Change |
 |------|--------|
-| `src/components/HeroAdPlaceholders.tsx` | New — renders ad placeholders scattered in the hero sky |
-| `src/pages/Index.tsx` | Add HeroAdPlaceholders in the hero bg area; remove SponsorStrip from content flow |
-| `src/components/SponsorStrip.tsx` | Filter to only show sponsors with logos (hide when only placeholders exist) |
-
-## Technical notes
-
-- Placeholders use `fixed` positioning to stay in the sky as the user scrolls, creating a parallax-like feel against the scrolling content
-- The `z-[1]` layering places them above the hero image but below the main content (`z-10`), so they peek through naturally
-- On mobile, positions adjust to avoid overlapping the hero headline
-- Real sponsors with logos still appear in the "Supported by" strip if/when added via admin
+| `src/components/FloatingAdPlaceholder.tsx` | Boost SVG opacities, increase sizes |
+| `src/components/HeroAdPlaceholders.tsx` | Reposition to margins around headline |
+| `src/index.css` | Slightly larger animation travel |
