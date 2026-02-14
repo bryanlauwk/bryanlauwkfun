@@ -112,6 +112,7 @@ export type Database = {
       }
       sponsors: {
         Row: {
+          balloon_text: string
           created_at: string
           display_order: number
           id: string
@@ -122,6 +123,7 @@ export type Database = {
           website_url: string | null
         }
         Insert: {
+          balloon_text?: string
           created_at?: string
           display_order?: number
           id?: string
@@ -132,6 +134,7 @@ export type Database = {
           website_url?: string | null
         }
         Update: {
+          balloon_text?: string
           created_at?: string
           display_order?: number
           id?: string

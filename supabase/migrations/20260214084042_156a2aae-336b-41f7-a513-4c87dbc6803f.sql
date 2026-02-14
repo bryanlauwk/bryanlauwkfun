@@ -1,0 +1,1 @@
+ALTER TABLE public.sponsors ADD COLUMN balloon_text text NOT NULL DEFAULT 'Your Brand Here';

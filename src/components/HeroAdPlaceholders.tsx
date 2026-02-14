@@ -36,7 +36,7 @@ export function HeroAdPlaceholders() {
 
   if (placeholders.length === 0) return null;
 
-  const getName = (i: number) => placeholders[i % placeholders.length].name;
+  const getText = (i: number) => placeholders[i % placeholders.length].balloon_text;
   const getId = (i: number) => `balloon-${i}`;
 
   return (
@@ -54,7 +54,7 @@ export function HeroAdPlaceholders() {
             transform: `translateY(${-scrollY * pos.parallax}px)`,
           }}
         >
-          <FloatingAdPlaceholder name={getName(i)} scale={pos.scale} id={getId(i)} />
+          <FloatingAdPlaceholder name={getText(i)} scale={pos.scale} id={getId(i)} />
         </div>
       ))}
       {mobileLayout.map((pos, i) => (
@@ -70,7 +70,7 @@ export function HeroAdPlaceholders() {
             transform: `translateY(${-scrollY * pos.parallax}px)`,
           }}
         >
-          <FloatingAdPlaceholder name={getName(i)} scale={pos.scale} id={`mobile-${i}`} />
+          <FloatingAdPlaceholder name={getText(i)} scale={pos.scale} id={`mobile-${i}`} />
         </div>
       ))}
     </div>

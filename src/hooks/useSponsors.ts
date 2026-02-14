@@ -6,6 +6,7 @@ export interface Sponsor {
   name: string;
   logo_url: string | null;
   website_url: string | null;
+  balloon_text: string;
   display_order: number;
   is_visible: boolean;
   created_at: string;
