@@ -9,7 +9,7 @@ const layout = [
 ];
 
 const mobileLayout = [
-  { left: "60%", top: "12%", scale: 0.7, opacity: 0.9, delay: "0s", speed: "6s", parallax: 0.2 },
+  { left: "65%", top: "2%", scale: 0.55, opacity: 0.85, delay: "0s", speed: "18s", parallax: 0.15, animationClass: "animate-balloon-roam" },
 ];
 
 export function HeroAdPlaceholders() {
@@ -76,7 +76,7 @@ export function HeroAdPlaceholders() {
             transform: `translateY(${-scrollY * pos.parallax}px)`,
           }}
         >
-          <FloatingAdPlaceholder name={getText(i)} scale={pos.scale} id={`mobile-${i}`} price={getPrice(pos.scale)} href={mailtoHref(pos.scale)} showText={pos.scale >= 1.0} />
+          <FloatingAdPlaceholder name={getText(i)} scale={pos.scale} id={`mobile-${i}`} price={getPrice(pos.scale)} href={mailtoHref(pos.scale)} showText={pos.scale >= 1.0} animationClass={(pos as any).animationClass} />
         </div>
       ))}
     </div>
