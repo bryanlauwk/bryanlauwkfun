@@ -351,7 +351,7 @@ export default function Admin() {
   // Sponsor state
   const [sponsorDialogOpen, setSponsorDialogOpen] = useState(false);
   const [editingSponsor, setEditingSponsor] = useState<Sponsor | null>(null);
-  const [sponsorForm, setSponsorForm] = useState({ name: "", website_url: "", is_visible: true });
+  const [sponsorForm, setSponsorForm] = useState({ name: "", website_url: "", balloon_text: "Your Brand Here", is_visible: true });
   const [sponsorLogoFile, setSponsorLogoFile] = useState<File | null>(null);
   const [sponsorLogoPreview, setSponsorLogoPreview] = useState<string | null>(null);
   const [localSponsors, setLocalSponsors] = useState<Sponsor[]>([]);
@@ -553,11 +553,11 @@ export default function Admin() {
   const handleOpenSponsorDialog = (sponsor?: Sponsor) => {
     if (sponsor) {
       setEditingSponsor(sponsor);
-      setSponsorForm({ name: sponsor.name, website_url: sponsor.website_url || "", is_visible: sponsor.is_visible });
+      setSponsorForm({ name: sponsor.name, website_url: sponsor.website_url || "", balloon_text: sponsor.balloon_text || "Your Brand Here", is_visible: sponsor.is_visible });
       setSponsorLogoPreview(sponsor.logo_url);
     } else {
       setEditingSponsor(null);
-      setSponsorForm({ name: "", website_url: "", is_visible: true });
+      setSponsorForm({ name: "", website_url: "", balloon_text: "Your Brand Here", is_visible: true });
       setSponsorLogoPreview(null);
     }
     setSponsorLogoFile(null);
@@ -590,6 +590,7 @@ export default function Admin() {
         name: sponsorForm.name.trim(),
         logo_url: logoUrl,
         website_url: sponsorForm.website_url.trim() || null,
+        balloon_text: sponsorForm.balloon_text.trim() || "Your Brand Here",
         is_visible: sponsorForm.is_visible,
       };
 
@@ -1017,6 +1018,17 @@ export default function Admin() {
                         value={sponsorForm.website_url}
                         onChange={(e) => setSponsorForm((p) => ({ ...p, website_url: e.target.value }))}
                       />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="sponsor-balloon-text">Balloon Display Text</Label>
+                      <Input
+                        id="sponsor-balloon-text"
+                        placeholder="Your Brand Here"
+                        value={sponsorForm.balloon_text}
+                        onChange={(e) => setSponsorForm((p) => ({ ...p, balloon_text: e.target.value }))}
+                      />
+                      <p className="text-xs text-muted-foreground">Text shown on the floating balloon ad placeholder.</p>
                     </div>
 
                     <div className="flex items-center justify-between rounded-lg border p-3">
