@@ -1,5 +1,5 @@
 import { usePublicSponsors } from "@/hooks/useSponsors";
-import { Mail } from "lucide-react";
+import { FloatingAdPlaceholder } from "@/components/FloatingAdPlaceholder";
 
 export function SponsorStrip() {
   const { data: sponsors } = usePublicSponsors();
@@ -25,17 +25,7 @@ export function SponsorStrip() {
               className="h-10 md:h-12 w-auto max-w-[120px] md:max-w-[150px] object-contain opacity-25 grayscale mix-blend-luminosity hover:opacity-70 hover:grayscale-0 transition-all duration-500"
             />
           ) : (
-            <div className="group flex flex-col items-center gap-1.5 px-6 py-3 border border-dashed border-muted-foreground/20 rounded-lg hover:border-muted-foreground/40 transition-all duration-500">
-              <div className="flex items-center gap-2 opacity-30 group-hover:opacity-60 transition-opacity duration-500">
-                <Mail className="h-3.5 w-3.5 text-muted-foreground" />
-                <span className="font-mono text-xs text-muted-foreground whitespace-nowrap">
-                  {sponsor.name}
-                </span>
-              </div>
-              <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground/30 group-hover:text-muted-foreground/50 transition-colors duration-500">
-                Ad Space
-              </span>
-            </div>
+            <FloatingAdPlaceholder name={sponsor.name} variant={sponsors.indexOf(sponsor)} />
           );
 
           return sponsor.website_url ? (
