@@ -1,150 +1,143 @@
 interface FloatingAdPlaceholderProps {
   name: string;
-  variant: number;
+  scale?: number;
+  id: string;
 }
 
-function HotAirBalloon({ name }: { name: string }) {
+export function FloatingAdPlaceholder({ name, scale = 1, id }: FloatingAdPlaceholderProps) {
+  const w = Math.round(240 * scale);
+  const h = Math.round(280 * scale);
+
   return (
     <div className="animate-balloon-float">
-      <svg viewBox="0 0 200 180" width="200" height="180" className="overflow-visible">
-        {/* Balloon envelope */}
+      <svg
+        viewBox="0 0 240 280"
+        width={w}
+        height={h}
+        className="overflow-visible"
+      >
         <defs>
-          <linearGradient id="balloon-grad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="hsl(350 85% 55%)" stopOpacity="0.6" />
-            <stop offset="100%" stopColor="hsl(280 70% 50%)" stopOpacity="0.45" />
-          </linearGradient>
-        </defs>
-        <ellipse cx="100" cy="65" rx="52" ry="60" fill="url(#balloon-grad)" stroke="hsl(350 85% 55%)" strokeWidth="1.5" strokeOpacity="0.5" />
-        {/* Stripes */}
-        <path d="M70 30 Q100 130 130 30" fill="none" stroke="hsl(350 85% 55%)" strokeWidth="0.8" strokeOpacity="0.35" />
-        <path d="M60 45 Q100 140 140 45" fill="none" stroke="hsl(280 70% 50%)" strokeWidth="0.8" strokeOpacity="0.3" />
-        {/* Ropes */}
-        <line x1="72" y1="118" x2="82" y2="145" stroke="currentColor" strokeWidth="0.8" opacity="0.35" />
-        <line x1="128" y1="118" x2="118" y2="145" stroke="currentColor" strokeWidth="0.8" opacity="0.35" />
-        <line x1="100" y1="125" x2="100" y2="145" stroke="currentColor" strokeWidth="0.8" opacity="0.35" />
-        {/* Basket */}
-        <rect x="82" y="145" width="36" height="18" rx="3" fill="hsl(30 40% 25%)" fillOpacity="0.5" stroke="hsl(30 40% 35%)" strokeWidth="1" strokeOpacity="0.5" />
-        {/* Brand text on balloon */}
-        <text
-          x="100"
-          y="68"
-          textAnchor="middle"
-          fontSize="11"
-          fontFamily="Georgia, serif"
-          fill="currentColor"
-          opacity="0.7"
-          letterSpacing="0.5"
-        >
-          {name}
-        </text>
-      </svg>
-    </div>
-  );
-}
-
-function FlyingBroom({ name }: { name: string }) {
-  return (
-    <div className="animate-broom-drift">
-      <svg viewBox="0 0 220 140" width="210" height="134" className="overflow-visible">
-        {/* Broom handle */}
-        <line x1="30" y1="70" x2="140" y2="65" stroke="hsl(30 40% 30%)" strokeWidth="3" strokeLinecap="round" opacity="0.6" />
-        {/* Bristles */}
-        <path d="M140 65 L170 50 L175 65 L170 80 Z" fill="hsl(30 50% 25%)" fillOpacity="0.5" stroke="hsl(30 40% 30%)" strokeWidth="1" strokeOpacity="0.5" />
-        <line x1="145" y1="65" x2="168" y2="55" stroke="hsl(30 40% 30%)" strokeWidth="0.5" opacity="0.35" />
-        <line x1="145" y1="67" x2="172" y2="65" stroke="hsl(30 40% 30%)" strokeWidth="0.5" opacity="0.35" />
-        <line x1="145" y1="69" x2="168" y2="75" stroke="hsl(30 40% 30%)" strokeWidth="0.5" opacity="0.35" />
-        {/* Trailing banner */}
-        <path
-          d="M28 68 Q15 58 10 68 L10 88 Q15 82 28 88 L80 85 L80 72 Z"
-          fill="hsl(350 85% 55%)"
-          fillOpacity="0.25"
-          stroke="hsl(350 85% 55%)"
-          strokeWidth="1"
-          strokeOpacity="0.5"
-        />
-        {/* Banner tail notch */}
-        <path d="M10 68 L4 78 L10 88" fill="none" stroke="hsl(350 85% 55%)" strokeWidth="1" strokeOpacity="0.4" />
-        {/* Brand text on banner */}
-        <text
-          x="45"
-          y="82"
-          textAnchor="middle"
-          fontSize="10"
-          fontFamily="Georgia, serif"
-          fill="currentColor"
-          opacity="0.7"
-          letterSpacing="0.5"
-        >
-          {name}
-        </text>
-        {/* Sparkle trail */}
-        <circle cx="22" cy="60" r="1.5" fill="hsl(350 85% 55%)" opacity="0.35" />
-        <circle cx="35" cy="55" r="1" fill="hsl(280 70% 50%)" opacity="0.3" />
-        <circle cx="15" cy="65" r="1" fill="hsl(200 100% 60%)" opacity="0.3" />
-      </svg>
-    </div>
-  );
-}
-
-function FloatingLantern({ name }: { name: string }) {
-  return (
-    <div className="animate-lantern-rise">
-      <svg viewBox="0 0 160 180" width="160" height="180" className="overflow-visible">
-        <defs>
-          <radialGradient id="lantern-glow" cx="50%" cy="40%" r="50%">
-            <stop offset="0%" stopColor="hsl(35 90% 60%)" stopOpacity="0.5" />
-            <stop offset="70%" stopColor="hsl(350 85% 55%)" stopOpacity="0.2" />
+          {/* Balloon envelope gradient */}
+          <radialGradient id={`env-${id}`} cx="50%" cy="40%" r="55%">
+            <stop offset="0%" stopColor="hsl(350 85% 55%)" stopOpacity="0.7" />
+            <stop offset="50%" stopColor="hsl(280 70% 40%)" stopOpacity="0.55" />
+            <stop offset="100%" stopColor="hsl(250 30% 15%)" stopOpacity="0.4" />
+          </radialGradient>
+          {/* Neon glow aura */}
+          <radialGradient id={`glow-${id}`} cx="50%" cy="45%" r="60%">
+            <stop offset="0%" stopColor="hsl(350 85% 55%)" stopOpacity="0.35" />
+            <stop offset="50%" stopColor="hsl(350 85% 55%)" stopOpacity="0.12" />
             <stop offset="100%" stopColor="transparent" stopOpacity="0" />
           </radialGradient>
+          {/* Basket fire glow */}
+          <radialGradient id={`fire-${id}`} cx="50%" cy="0%" r="80%">
+            <stop offset="0%" stopColor="hsl(35 90% 60%)" stopOpacity="0.6" />
+            <stop offset="60%" stopColor="hsl(350 85% 55%)" stopOpacity="0.2" />
+            <stop offset="100%" stopColor="transparent" stopOpacity="0" />
+          </radialGradient>
+          {/* VHS scanline pattern */}
+          <pattern id={`scan-${id}`} width="240" height="4" patternUnits="userSpaceOnUse">
+            <rect width="240" height="1" fill="hsl(0 0% 0%)" fillOpacity="0.12" />
+          </pattern>
+          {/* Film grain noise */}
+          <filter id={`grain-${id}`}>
+            <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" result="noise" />
+            <feComposite in="SourceGraphic" in2="noise" operator="in" />
+          </filter>
         </defs>
-        {/* Glow aura */}
-        <ellipse cx="80" cy="75" rx="55" ry="60" fill="url(#lantern-glow)" className="animate-glow-pulse" />
-        {/* Lantern body */}
+
+        {/* Outer glow aura - animated */}
+        <ellipse
+          cx="120" cy="110" rx="100" ry="110"
+          fill={`url(#glow-${id})`}
+          className="animate-balloon-glow-pulse"
+        />
+
+        {/* Balloon envelope */}
         <path
-          d="M60 45 Q58 30 80 25 Q102 30 100 45 L105 110 Q80 120 55 110 Z"
-          fill="hsl(35 70% 50%)"
-          fillOpacity="0.25"
-          stroke="hsl(35 70% 50%)"
-          strokeWidth="1.5"
+          d="M120 20 C60 20 40 70 40 110 C40 150 60 175 80 190 L75 195 L165 195 L160 190 C180 175 200 150 200 110 C200 70 180 20 120 20 Z"
+          fill={`url(#env-${id})`}
+          stroke="hsl(350 85% 55%)"
+          strokeWidth="1.2"
           strokeOpacity="0.5"
         />
-        {/* Lantern top */}
-        <path d="M70 28 Q80 18 90 28" fill="none" stroke="hsl(35 70% 50%)" strokeWidth="1.5" strokeOpacity="0.5" />
-        {/* Ribs */}
-        <line x1="80" y1="28" x2="80" y2="115" stroke="hsl(35 70% 50%)" strokeWidth="0.5" strokeOpacity="0.25" />
-        <path d="M60 45 Q80 50 100 45" fill="none" stroke="hsl(35 70% 50%)" strokeWidth="0.5" strokeOpacity="0.25" />
-        <path d="M57 75 Q80 82 103 75" fill="none" stroke="hsl(35 70% 50%)" strokeWidth="0.5" strokeOpacity="0.25" />
-        {/* Flame */}
-        <ellipse cx="80" cy="120" rx="4" ry="6" fill="hsl(35 90% 60%)" fillOpacity="0.5" />
-        {/* Brand text */}
+
+        {/* Vertical panel stripes */}
+        <path d="M95 22 C90 80 88 140 82 188" fill="none" stroke="hsl(280 70% 50%)" strokeWidth="1" strokeOpacity="0.3" />
+        <path d="M120 18 C120 80 120 140 120 193" fill="none" stroke="hsl(350 85% 55%)" strokeWidth="0.8" strokeOpacity="0.25" />
+        <path d="M145 22 C150 80 152 140 158 188" fill="none" stroke="hsl(280 70% 50%)" strokeWidth="1" strokeOpacity="0.3" />
+
+        {/* Horizontal bands */}
+        <path d="M48 70 Q120 78 192 70" fill="none" stroke="hsl(350 85% 55%)" strokeWidth="0.6" strokeOpacity="0.2" />
+        <path d="M42 110 Q120 120 198 110" fill="none" stroke="hsl(350 85% 55%)" strokeWidth="0.6" strokeOpacity="0.2" />
+        <path d="M50 150 Q120 160 190 150" fill="none" stroke="hsl(280 70% 50%)" strokeWidth="0.6" strokeOpacity="0.2" />
+
+        {/* VHS scanline overlay on envelope */}
+        <path
+          d="M120 20 C60 20 40 70 40 110 C40 150 60 175 80 190 L75 195 L165 195 L160 190 C180 175 200 150 200 110 C200 70 180 20 120 20 Z"
+          fill={`url(#scan-${id})`}
+          opacity="0.6"
+        />
+
+        {/* Ropes with sag curves */}
+        <path d="M82 192 Q88 210 92 225" fill="none" stroke="hsl(30 30% 50%)" strokeWidth="0.8" strokeOpacity="0.5" />
+        <path d="M120 195 Q120 212 120 228" fill="none" stroke="hsl(30 30% 50%)" strokeWidth="0.8" strokeOpacity="0.5" />
+        <path d="M158 192 Q152 210 148 225" fill="none" stroke="hsl(30 30% 50%)" strokeWidth="0.8" strokeOpacity="0.5" />
+
+        {/* Cross ropes */}
+        <path d="M92 215 Q120 220 148 215" fill="none" stroke="hsl(30 30% 50%)" strokeWidth="0.5" strokeOpacity="0.35" />
+
+        {/* Basket */}
+        <rect x="88" y="225" width="64" height="24" rx="4" fill="hsl(30 35% 18%)" fillOpacity="0.7" stroke="hsl(30 40% 30%)" strokeWidth="1.2" strokeOpacity="0.6" />
+        {/* Basket weave lines */}
+        <line x1="104" y1="225" x2="104" y2="249" stroke="hsl(30 40% 30%)" strokeWidth="0.5" strokeOpacity="0.3" />
+        <line x1="120" y1="225" x2="120" y2="249" stroke="hsl(30 40% 30%)" strokeWidth="0.5" strokeOpacity="0.3" />
+        <line x1="136" y1="225" x2="136" y2="249" stroke="hsl(30 40% 30%)" strokeWidth="0.5" strokeOpacity="0.3" />
+        <line x1="88" y1="237" x2="152" y2="237" stroke="hsl(30 40% 30%)" strokeWidth="0.5" strokeOpacity="0.3" />
+
+        {/* Basket rim */}
+        <rect x="86" y="223" width="68" height="4" rx="2" fill="hsl(30 40% 25%)" fillOpacity="0.6" stroke="hsl(30 40% 30%)" strokeWidth="0.8" strokeOpacity="0.5" />
+
+        {/* Basket fire glow underneath */}
+        <ellipse cx="120" cy="222" rx="20" ry="8" fill={`url(#fire-${id})`} className="animate-balloon-glow-pulse" />
+
+        {/* Fire flame */}
+        <ellipse cx="120" cy="220" rx="5" ry="8" fill="hsl(35 90% 60%)" fillOpacity="0.5" />
+        <ellipse cx="120" cy="218" rx="3" ry="5" fill="hsl(45 95% 70%)" fillOpacity="0.4" />
+
+        {/* Brand text on balloon body with glow */}
         <text
-          x="80"
-          y="78"
+          x="120"
+          y="115"
           textAnchor="middle"
-          fontSize="10"
+          fontSize="14"
           fontFamily="Georgia, serif"
-          fill="currentColor"
-          opacity="0.7"
-          letterSpacing="0.5"
+          fill="hsl(45 20% 90%)"
+          opacity="0.85"
+          letterSpacing="1"
+          style={{ textShadow: '0 0 8px hsl(350 85% 55% / 0.6)' }}
         >
           {name}
         </text>
+        {/* Subtitle */}
+        <text
+          x="120"
+          y="132"
+          textAnchor="middle"
+          fontSize="8"
+          fontFamily="monospace"
+          fill="hsl(45 20% 90%)"
+          opacity="0.45"
+          letterSpacing="2"
+        >
+          AD SPACE
+        </text>
+
+        {/* Floating spore particles */}
+        <circle cx="55" cy="60" r="1.5" fill="hsl(350 85% 55%)" opacity="0.3" className="animate-spore-float" style={{ '--drift': '8px', '--spore-opacity': '0.3' } as React.CSSProperties} />
+        <circle cx="185" cy="85" r="1" fill="hsl(280 70% 50%)" opacity="0.25" className="animate-spore-float" style={{ '--drift': '-6px', '--spore-opacity': '0.25', animationDelay: '1s' } as React.CSSProperties} />
+        <circle cx="40" cy="140" r="1.2" fill="hsl(200 100% 60%)" opacity="0.2" className="animate-spore-float" style={{ '--drift': '10px', '--spore-opacity': '0.2', animationDelay: '2.5s' } as React.CSSProperties} />
       </svg>
-    </div>
-  );
-}
-
-export function FloatingAdPlaceholder({ name, variant }: FloatingAdPlaceholderProps) {
-  const normalizedVariant = variant % 3;
-
-  return (
-    <div className="group flex flex-col items-center gap-2 opacity-60 hover:opacity-90 transition-opacity duration-500">
-      {normalizedVariant === 0 && <HotAirBalloon name={name} />}
-      {normalizedVariant === 1 && <FlyingBroom name={name} />}
-      {normalizedVariant === 2 && <FloatingLantern name={name} />}
-      <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground/40 group-hover:text-muted-foreground/60 transition-colors duration-500">
-        Ad Space
-      </span>
     </div>
   );
 }
