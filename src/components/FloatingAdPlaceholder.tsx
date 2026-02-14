@@ -5,14 +5,15 @@ interface FloatingAdPlaceholderProps {
   price?: string;
   href?: string;
   showText?: boolean;
+  animationClass?: string;
 }
 
-export function FloatingAdPlaceholder({ name, scale = 1, id, price, href, showText = true }: FloatingAdPlaceholderProps) {
+export function FloatingAdPlaceholder({ name, scale = 1, id, price, href, showText = true, animationClass = "animate-balloon-float" }: FloatingAdPlaceholderProps) {
   const w = Math.round(240 * scale);
   const h = Math.round(280 * scale);
 
   const Wrapper = href ? 'a' : 'div';
-  const wrapperProps = href ? { href, target: '_blank', rel: 'noopener noreferrer', className: 'animate-balloon-float block cursor-pointer group' } : { className: 'animate-balloon-float' };
+  const wrapperProps = href ? { href, target: '_blank', rel: 'noopener noreferrer', className: `${animationClass} block cursor-pointer group` } : { className: animationClass };
 
   return (
     <Wrapper {...wrapperProps as any}>
