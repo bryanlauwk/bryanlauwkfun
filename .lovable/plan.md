@@ -1,36 +1,48 @@
 
 
-# Fix: Make App Resilient to Missing Environment Variables
+# Fix Intermittent Crashes -- Full Diagnosis and Remediation
 
-## Problem
+## Root Causes Found
 
-The preview is showing a blank white page because `VITE_SUPABASE_URL` is temporarily not being injected into the runtime environment. The Supabase client crashes with `"supabaseUrl is required"` before React can render anything.
+After scanning the entire codebase, I identified **three distinct crash vectors**:
 
-This is a transient Lovable Cloud issue -- your code and database are intact.
+### 1. Unhandled Promise Rejections (Primary Cause)
+Multiple async operations across the app (background music fetch, visitor counter RPC, guest book queries, sponsor queries) can throw errors that propagate as **unhandled promise rejections**. React Error Boundaries do NOT catch these -- they only catch synchronous render errors. An unhandled rejection can crash the entire tab.
 
-## Solution
+**Affected files:** `useBackgroundMusic.ts`, `useVisitorCounter.ts`, `useAuth.ts`
 
-Add a fallback in the Supabase client initialization so the app doesn't crash when env vars are momentarily unavailable. The `.env` file already has the correct values, so we can use them as hardcoded fallbacks.
+### 2. ErrorBoundary Not Wired Into App
+The `ErrorBoundary` component exists but is **not used anywhere**. It was removed from `main.tsx` during the previous refactor. So even synchronous render crashes show a blank page.
 
-## Changes
+### 3. QueryClient Has No Default Error Handling
+The `QueryClient` in `App.tsx` is created with zero configuration -- no `retry` limits, no `onError` handler. Failed queries retry infinitely by default (3 times), but if all retries fail, the error bubbles up unhandled.
 
-### `src/integrations/supabase/client.ts`
+---
 
-**Wait** -- this file is auto-generated and cannot be edited directly. Instead, the fix is to add error boundaries so the app gracefully handles the crash.
+## Plan
 
-### Better approach: Add an Error Boundary to `src/App.tsx`
+### Step 1: Add global `unhandledrejection` listener in `App.tsx`
+Add a `useEffect` in the App component that listens for `window.addEventListener("unhandledrejection", ...)` and prevents the crash by logging the error and showing a toast notification instead.
 
-Wrap the app in a React Error Boundary that catches the Supabase initialization failure and shows a "Retrying..." screen instead of a blank page. This way, if the env vars are temporarily missing, users see a friendly message rather than nothing.
+### Step 2: Re-wrap the app in the ErrorBoundary in `main.tsx`
+Restore the `<ErrorBoundary>` wrapper around `<App />` so synchronous render errors display the "Signal Lost" fallback instead of a white screen.
 
-### Technical Details
+### Step 3: Configure QueryClient with sensible defaults
+Set `retry: 2` and a default `onError` callback on the QueryClient so failed data fetches degrade gracefully (show stale data or empty states) instead of crashing.
 
-1. Create a new `src/components/ErrorBoundary.tsx` component:
-   - Catches runtime errors (like the Supabase crash)
-   - Shows a styled retry screen with a "Reload" button
-   - Matches the dark theme aesthetic
+---
 
-2. Update `src/App.tsx`:
-   - Wrap the entire app tree in the ErrorBoundary component
+## Technical Details
 
-This is a small, defensive change. Once the Lovable Cloud env vars stabilize (which they should on the next build), the app will render normally again.
+### `src/main.tsx`
+- Import `ErrorBoundary`
+- Wrap `<App />` with `<ErrorBoundary>`
+
+### `src/App.tsx`
+- Convert `App` from arrow-expression to include a `useEffect` for the global rejection handler
+- Configure `QueryClient` with `defaultOptions.queries.retry = 2`
+- Show a `toast.error()` on unhandled rejections instead of crashing
+
+### No other files need changes
+The `safe-client.ts` fallback and existing `try/catch` blocks in hooks are already solid. The gap was purely at the top-level error handling layer.
 
