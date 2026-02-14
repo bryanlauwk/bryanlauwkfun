@@ -5,7 +5,7 @@ import { UpsideDownParticles } from "@/components/UpsideDownParticles";
 import { TypewriterMotto } from "@/components/TypewriterMotto";
 
 import { GuestBook } from "@/components/GuestBook";
-import { SponsorStrip } from "@/components/SponsorStrip";
+import { HeroAdPlaceholders } from "@/components/HeroAdPlaceholders";
 import heroImage from "@/assets/dark-fantasy-hero.jpg";
 
 const Index = () => {
@@ -26,6 +26,9 @@ const Index = () => {
         {/* Fog layer at bottom */}
         <div className="fog-layer" />
       </div>
+
+      {/* Floating ad placeholders in the sky */}
+      <HeroAdPlaceholders />
 
       {/* Lightning flash effect */}
       <div className="fixed inset-0 z-0 bg-accent/5 animate-lightning pointer-events-none" />
@@ -69,9 +72,6 @@ const Index = () => {
             
             <ProjectGrid />
           </section>
-
-          {/* Sponsor Strip */}
-          <SponsorStrip />
 
           {/* Guest Book section */}
           <GuestBook />
