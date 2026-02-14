@@ -1,65 +1,63 @@
 
-# Improve Mobile Balloon Layout and Add Dynamic Roaming Animation
 
-## Problem
-On mobile, the single balloon sits at `left: 60%, top: 12%` which overlaps with the hero headline ("Late Nights, Wild Ideas"). The current `balloon-float` animation has very subtle movement (max -18px vertical, 6px horizontal), making it feel static.
+# Fix Persistent Intermittent Page Crashes
 
-## Solution
+## Diagnosis
 
-### 1. Reposition the mobile balloon to avoid headline overlap
-Move the mobile balloon to the top-right corner area where it won't interfere with the headline text.
+After a thorough codebase scan, the app code itself is solid -- all hooks use `safe-client.ts` with hardcoded fallbacks, and the ErrorBoundary + unhandled rejection handler are in place. The intermittent crashes are caused by **two remaining gaps**:
 
-**File: `src/components/HeroAdPlaceholders.tsx`**
-- Change `mobileLayout` from `{ left: "60%", top: "12%" }` to `{ left: "65%", top: "2%" }` -- pushes it to the upper-right sky area, well above the headline
-- Reduce scale from `0.7` to `0.55` so it feels like a distant balloon in the sky
+### Gap 1: No HTML-level fallback when JavaScript fails entirely
+If the Vite bundle fails to load (network hiccup, HMR error, env injection failure), the user sees a **blank white page** because `index.html` has an empty `<div id="root"></div>` with no fallback content. The ErrorBoundary can't help if React never mounts.
 
-### 2. Create a new dynamic roaming animation for mobile
-Replace the subtle `balloon-float` with a more dramatic `balloon-roam` animation that drifts left/right, up/down, and scales slightly (closer/further effect).
+### Gap 2: Auto-generated `client.ts` can throw at module evaluation
+The auto-generated `src/integrations/supabase/client.ts` calls `createClient(undefined, undefined)` when env vars aren't injected. Even though no app code imports it directly, Vite's module graph may still evaluate it. This is a file we cannot edit (auto-generated), but we can ensure nothing triggers its evaluation.
 
-**File: `src/index.css`**
-- Add a new `@keyframes balloon-roam` with wider movement range:
-  - Horizontal drift: -20px to +25px (roaming left and right)
-  - Vertical drift: 0 to -30px (floating up and settling back)
-  - Scale oscillation: 0.95 to 1.08 (closer/further depth effect)
-  - Slight rotation: -1deg to 1deg (natural wind sway)
-- Duration: ~18s for a slow, organic feel
-- Add `.animate-balloon-roam` class
+---
 
-### 3. Apply the roaming animation on mobile only
-**File: `src/components/HeroAdPlaceholders.tsx`**
-- Add a `className` field to the mobile layout config
-- Use `animate-balloon-roam` for mobile balloons instead of the default `animate-balloon-float`
+## Plan
 
-**File: `src/components/FloatingAdPlaceholder.tsx`**
-- Accept an optional `animationClass` prop to override the default `animate-balloon-float`
+### Step 1: Add a no-JS fallback directly in `index.html`
+Add a `<noscript>` tag and a lightweight inline `<style>` + `<div>` inside the `#root` element that shows a "Loading..." message. This gets replaced when React mounts successfully, but remains visible if the JS bundle fails entirely.
 
-## Technical Details
-
-### New keyframes (index.css)
-```css
-@keyframes balloon-roam {
-  0%   { transform: translateY(0)    translateX(0)    scale(1)    rotate(0deg);   }
-  15%  { transform: translateY(-12px) translateX(20px)  scale(1.05) rotate(0.8deg); }
-  30%  { transform: translateY(-25px) translateX(8px)   scale(0.97) rotate(-0.5deg);}
-  50%  { transform: translateY(-15px) translateX(-18px) scale(1.06) rotate(0.6deg); }
-  70%  { transform: translateY(-28px) translateX(12px)  scale(0.95) rotate(-0.8deg);}
-  85%  { transform: translateY(-8px)  translateX(-10px) scale(1.03) rotate(0.3deg); }
-  100% { transform: translateY(0)    translateX(0)    scale(1)    rotate(0deg);   }
-}
+```html
+<div id="root">
+  <div id="static-fallback" style="...dark theme styles...">
+    <h1>Bryan Lau</h1>
+    <p>Loading...</p>
+  </div>
+</div>
 ```
 
-### Mobile layout update
-```typescript
-const mobileLayout = [
-  { left: "65%", top: "2%", scale: 0.55, opacity: 0.85, delay: "0s", speed: "18s", parallax: 0.15 },
-];
+React's `createRoot().render()` will replace the contents of `#root`, so this fallback disappears automatically on successful load.
+
+### Step 2: Add an inline error recovery script in `index.html`
+Add a small inline `<script>` that sets a timeout -- if React hasn't mounted within 8 seconds, it shows a "Reload" button. This catches the case where the JS bundle loads but crashes silently before React renders.
+
+```html
+<script>
+  setTimeout(function() {
+    var root = document.getElementById('root');
+    if (root && root.childElementCount <= 1) {
+      // Show reload button
+    }
+  }, 8000);
+</script>
 ```
 
-### FloatingAdPlaceholder prop addition
-- Add `animationClass?: string` prop, default to `"animate-balloon-float"`
-- Apply it to the wrapper element instead of hardcoded class
+### Step 3: Wrap `main.tsx` entry point in try-catch
+Wrap the `createRoot().render()` call in a try-catch so that if even the ErrorBoundary fails to mount (e.g., import resolution error), the static fallback remains visible with a reload prompt.
 
-### Files changed
-1. `src/index.css` -- add `balloon-roam` keyframes and class
-2. `src/components/HeroAdPlaceholders.tsx` -- reposition mobile balloon, pass animation class
-3. `src/components/FloatingAdPlaceholder.tsx` -- accept and use custom animation class
+---
+
+## Files Changed
+
+1. **`index.html`** -- Add static fallback content inside `#root` and an inline recovery script
+2. **`src/main.tsx`** -- Wrap the render call in try-catch with DOM-based error recovery
+
+## What This Solves
+
+- Blank white page when JS bundle fails to load
+- Blank page when env vars aren't injected during hot-reload
+- Blank page when any import throws at module evaluation time
+- Users always see either the app OR a branded "reload" prompt -- never a blank page
+
