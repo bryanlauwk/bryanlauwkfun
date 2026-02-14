@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { safeSupabase as supabase } from "@/integrations/supabase/safe-client";
 
 const CACHED_MUSIC_PATH = "stranger-music.mp3";
 const BUCKET_NAME = "audio-assets";
