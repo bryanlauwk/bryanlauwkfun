@@ -4,9 +4,10 @@ interface FloatingAdPlaceholderProps {
   id: string;
   price?: string;
   href?: string;
+  showText?: boolean;
 }
 
-export function FloatingAdPlaceholder({ name, scale = 1, id, price, href }: FloatingAdPlaceholderProps) {
+export function FloatingAdPlaceholder({ name, scale = 1, id, price, href, showText = true }: FloatingAdPlaceholderProps) {
   const w = Math.round(240 * scale);
   const h = Math.round(280 * scale);
 
@@ -111,32 +112,36 @@ export function FloatingAdPlaceholder({ name, scale = 1, id, price, href }: Floa
         <ellipse cx="120" cy="218" rx="3" ry="5" fill="hsl(45 95% 70%)" fillOpacity="0.4" />
 
         {/* Brand text on balloon body with glow */}
-        <text
-          x="120"
-          y="115"
-          textAnchor="middle"
-          fontSize="14"
-          fontFamily="Georgia, serif"
-          fill="hsl(45 20% 90%)"
-          opacity="0.85"
-          letterSpacing="1"
-          style={{ textShadow: '0 0 8px hsl(350 85% 55% / 0.6)' }}
-        >
-          {name}
-        </text>
-        {/* Subtitle */}
-        <text
-          x="120"
-          y="132"
-          textAnchor="middle"
-          fontSize="8"
-          fontFamily="monospace"
-          fill="hsl(45 20% 90%)"
-          opacity="0.45"
-          letterSpacing="2"
-        >
-          AD SPACE
-        </text>
+        {showText && (
+          <>
+            <text
+              x="120"
+              y="115"
+              textAnchor="middle"
+              fontSize="14"
+              fontFamily="Georgia, serif"
+              fill="hsl(45 20% 90%)"
+              opacity="0.85"
+              letterSpacing="1"
+              style={{ textShadow: '0 0 8px hsl(350 85% 55% / 0.6)' }}
+            >
+              {name}
+            </text>
+            {/* Subtitle */}
+            <text
+              x="120"
+              y="132"
+              textAnchor="middle"
+              fontSize="8"
+              fontFamily="monospace"
+              fill="hsl(45 20% 90%)"
+              opacity="0.45"
+              letterSpacing="2"
+            >
+              AD SPACE
+            </text>
+          </>
+        )}
 
         {/* Price tag */}
         {price && (

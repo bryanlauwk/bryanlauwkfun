@@ -60,7 +60,7 @@ export function HeroAdPlaceholders() {
             transform: `translateY(${-scrollY * pos.parallax}px)`,
           }}
         >
-          <FloatingAdPlaceholder name={getText(i)} scale={pos.scale} id={getId(i)} price={getPrice(pos.scale)} href={mailtoHref(pos.scale)} />
+          <FloatingAdPlaceholder name={getText(i)} scale={pos.scale} id={getId(i)} price={getPrice(pos.scale)} href={mailtoHref(pos.scale)} showText={pos.scale >= 1.0} />
         </div>
       ))}
       {mobileLayout.map((pos, i) => (
@@ -76,7 +76,7 @@ export function HeroAdPlaceholders() {
             transform: `translateY(${-scrollY * pos.parallax}px)`,
           }}
         >
-          <FloatingAdPlaceholder name={getText(i)} scale={pos.scale} id={`mobile-${i}`} price={getPrice(pos.scale)} href={mailtoHref(pos.scale)} />
+          <FloatingAdPlaceholder name={getText(i)} scale={pos.scale} id={`mobile-${i}`} price={getPrice(pos.scale)} href={mailtoHref(pos.scale)} showText={pos.scale >= 1.0} />
         </div>
       ))}
     </div>
