@@ -110,7 +110,7 @@ export type Database = {
           display_order: number
           id: string
           is_visible: boolean
-          logo_url: string
+          logo_url: string | null
           name: string
           updated_at: string
           website_url: string | null
@@ -120,7 +120,7 @@ export type Database = {
           display_order?: number
           id?: string
           is_visible?: boolean
-          logo_url: string
+          logo_url?: string | null
           name: string
           updated_at?: string
           website_url?: string | null
@@ -130,7 +130,7 @@ export type Database = {
           display_order?: number
           id?: string
           is_visible?: boolean
-          logo_url?: string
+          logo_url?: string | null
           name?: string
           updated_at?: string
           website_url?: string | null

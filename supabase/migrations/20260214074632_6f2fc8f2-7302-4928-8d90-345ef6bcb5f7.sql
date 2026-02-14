@@ -1,0 +1,1 @@
+ALTER TABLE public.sponsors ALTER COLUMN logo_url DROP NOT NULL;
