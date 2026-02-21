@@ -3,6 +3,7 @@ import { CinematicFooter } from "@/components/CinematicFooter";
 import { ProjectGrid } from "@/components/ProjectGrid";
 import { UpsideDownParticles } from "@/components/UpsideDownParticles";
 import { TypewriterMotto } from "@/components/TypewriterMotto";
+import { CrypticWhisper } from "@/components/CrypticWhisper";
 
 import { GuestBook } from "@/components/GuestBook";
 import { HeroAdPlaceholders } from "@/components/HeroAdPlaceholders";
@@ -44,30 +45,31 @@ const Index = () => {
         <div className="max-w-7xl mx-auto">
           {/* Hero section */}
           <section className="text-center mb-12 md:mb-24 animate-fade-in-up">
-            <h1 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-6 md:mb-10 leading-tight">
+            <h1 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-6 md:mb-10 leading-tight animate-breathe">
               <span className="block text-foreground">Late Nights,</span>
               <span className="block animate-shimmer">Wild Ideas</span>
             </h1>
             
             {/* Improved subtitle with better visual hierarchy */}
             <div className="max-w-xl mx-auto mb-6 md:mb-8">
-              <p className="text-base md:text-lg text-foreground/90 leading-relaxed font-mono px-4 py-3 bg-background/60 backdrop-blur-sm rounded-sm border border-border/20">
+              <p className="text-base md:text-lg text-foreground/90 leading-relaxed font-mono px-4 py-3 bg-background/60 backdrop-blur-sm rounded-sm border border-border/20 scratched-surface">
                 Experiments, games, and things that crawled out of late nights.
               </p>
             </div>
             
             {/* Typewriter Motto */}
             <TypewriterMotto />
+            <CrypticWhisper />
           </section>
 
           {/* Projects section */}
           <section>
             <div className="flex items-center gap-4 mb-8 md:mb-12">
-              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+              <div className="grunge-divider" />
               <h2 className="font-serif text-2xl md:text-3xl font-semibold stranger-glow uppercase tracking-wider">
                 Drops
               </h2>
-              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+              <div className="grunge-divider" />
             </div>
             
             <ProjectGrid />

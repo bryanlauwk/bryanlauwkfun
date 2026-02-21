@@ -148,19 +148,19 @@ export function GuestBook() {
     <section className="mt-12 md:mt-24">
       {/* Section header */}
       <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-12">
-        <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-        <h2 className="font-serif text-xl md:text-3xl font-semibold stranger-glow uppercase tracking-wider flex items-center gap-2 md:gap-3">
+        <div className="grunge-divider" />
+        <h2 className="font-serif text-xl md:text-3xl font-semibold stranger-glow uppercase tracking-wider flex items-center gap-2 md:gap-3 animate-breathe">
           <MessageSquare className="w-5 h-5 md:w-6 md:h-6 animate-electrical-flicker" />
           Say Something
         </h2>
-        <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+        <div className="grunge-divider" />
       </div>
 
       <div className="max-w-2xl mx-auto">
         {/* Unified form */}
         <form
           onSubmit={handleSubmit}
-          className="relative bg-card/80 backdrop-blur-sm border border-border rounded-sm p-6 mb-8"
+          className="relative bg-card/80 backdrop-blur-sm border border-border rounded-sm p-6 mb-8 scratched-surface"
         >
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
 

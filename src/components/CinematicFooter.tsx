@@ -4,7 +4,7 @@ export function CinematicFooter() {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="relative z-20 py-10 md:py-12 px-4 md:px-12 border-t border-border/30">
+    <footer className="relative z-20 py-10 md:py-12 px-4 md:px-12 border-t border-border/30 torn-edge-top">
       {/* Decorative top line */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
       
@@ -44,11 +44,11 @@ export function CinematicFooter() {
           
           {/* Motto */}
           <div className="flex items-center gap-2 text-muted-foreground">
-            <Skull className="w-4 h-4 text-primary animate-electrical-flicker" />
+            <Skull className="w-4 h-4 text-primary animate-twitch" />
             <span className="font-mono uppercase tracking-widest text-xs">
               Don't die out there
             </span>
-            <Skull className="w-4 h-4 text-primary animate-electrical-flicker" style={{ animationDelay: '0.5s' }} />
+            <Skull className="w-4 h-4 text-primary animate-twitch" style={{ animationDelay: '2.5s' }} />
           </div>
           
           {/* Divider */}
