@@ -1,65 +1,34 @@
 
+# Redesign Particles: Crispy Glass Bubbles (Idea Light Bulbs)
 
-# Fine-Tune Floating Particles to Match the Site's Essence
+## Concept
 
-## Current State
+Replace the three particle types (embers, pixel dust, ash) with a single unified theme: **crispy glass bubbles** -- translucent, hollow-looking circles that float upward like ideas rising from the mind. They evoke light bulbs / thought bubbles and tie directly to the "experiments and wild ideas" identity.
 
-The `UpsideDownParticles` component renders:
-- **40 round "spore" dots** (2-6px, float upward over 8-20s)
-- **15 flat "ash" rectangles** (4-12px wide, float upward over 12-20s)
+## Changes
 
-Both use generic `bg-muted-foreground` coloring and simple round/rectangular shapes. They feel like a Stranger Things "Upside Down" effect but don't specifically evoke "experiments, games, and things that crawled out of late nights."
+### File: `src/components/UpsideDownParticles.tsx`
 
-## Proposed Changes
+**Strip down to one particle type** -- remove the ember/pixel/ash split entirely.
 
-All changes happen in a single file: `src/components/UpsideDownParticles.tsx`
+**Glass bubble properties:**
+- **Count**: ~20 bubbles (fewer but more visible)
+- **Size**: 6-18px diameter (much bigger than current 1-4px)
+- **Shape**: `rounded-full` with a transparent center and a thin colored border (no `backgroundColor` -- use `border` instead to create the hollow glass look)
+- **Border colors**: Mix of warm amber `hsl(40 80% 65%)`, soft gold `hsl(45 70% 70%)`, and faint crimson `hsl(350 60% 60%)` -- like warm light bulb filament glow
+- **Opacity**: 0.2 - 0.5 (significantly more visible than current 0.05-0.4)
+- **Speed**: 10-22s float duration (leisurely rise)
+- **Drift**: -40px to +40px horizontal wander
+- **Inner highlight**: A tiny pseudo-highlight via `box-shadow: inset` to simulate glass refraction -- a small bright spot inside each bubble
 
-### A. Retheme the Particle Types
+**Rendering change:**
+- Instead of `backgroundColor`, each bubble uses:
+  - `border: 1px solid <color>` (the glass edge)
+  - `boxShadow: inset 2px -2px 4px <color at 0.15>, 0 0 6px <color at 0.1>` (inner highlight + outer glow)
+  - `backgroundColor: transparent`
+- This creates the hollow, crispy glass look
 
-Replace the two generic particle types with three thematic ones:
+**Simplify types:** Remove the `ParticleType` union and color arrays. Single `Bubble` interface with `borderColor` instead of `color`.
 
-1. **Embers / Sparks** (the main dots) -- tiny glowing points in crimson/amber tones, like sparks from a late-night soldering iron or dying campfire. Use `bg-primary` (crimson) and `bg-amber-500` with low opacity. Smaller (1-3px), faster (6-14s), slight upward drift with random horizontal wander.
-
-2. **Code Fragments / Pixel Dust** -- tiny square particles (not round) representing the digital/experimental side. Use `bg-accent` (lightning blue) at very low opacity. Small (2-4px), slow float (10-18s). Square shape via `rounded-none` instead of `rounded-full`.
-
-3. **Ash / Debris** (keep but refine) -- larger, slower, elongated shapes representing the "crawled out of late nights" residue. Slightly more visible. Keep rectangular shape. Use `bg-foreground` at very low opacity.
-
-### B. Tune the Physics
-
-- **Reduce total count** from 55 to ~35 particles for a cleaner, more intentional feel
-  - 18 embers, 10 pixel-dust squares, 7 ash pieces
-- **Vary the drift** more dramatically -- some particles should wander left/right significantly (-50px to +50px) instead of floating mostly straight up
-- **Stagger timing** better -- spread delays across 0-20s so particles don't cluster at startup
-- **Slow the largest particles** down (15-25s) so the layering feels like depth
-
-### C. Add Subtle Color Variation
-
-Instead of all particles being the same muted gray, introduce a color pool:
-- 50% crimson/primary tones (the "wild ideas" fire)
-- 30% accent/blue tones (the "experiments" tech glow)
-- 20% warm amber (the "late nights" warmth)
-
-Each particle randomly picks from this pool via inline style.
-
-### D. Vary Opacity Curves
-
-Currently all particles have a flat 0.2-0.6 opacity. Adjust to:
-- Embers: 0.15-0.4 (subtle glow)
-- Pixel dust: 0.08-0.2 (barely visible, ghostly)
-- Ash: 0.05-0.15 (atmospheric haze)
-
-This creates depth layers -- bright sparks in front, faint digital noise behind.
-
-## Technical Details
-
-### File Modified
-- `src/components/UpsideDownParticles.tsx` -- restructure particle generation with three typed categories, new color assignments, and adjusted sizing/timing
-
-### No CSS Changes Needed
-The existing `animate-spore-float` and `animate-ash-float` keyframes in `index.css` already handle the motion. We only change the particle properties (color, size, count, shape, opacity, timing) in the component.
-
-### Performance
-- Fewer total particles (35 vs 55) means less DOM nodes
-- All animations remain GPU-composited (transform + opacity only)
-- `useMemo` keeps particle configs stable across re-renders
-
+### No CSS changes needed
+Reuses existing `animate-spore-float` keyframe for the upward float motion.
