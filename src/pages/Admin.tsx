@@ -64,10 +64,7 @@ import {
   FolderKanban,
   Handshake,
   Upload,
-  ImageIcon,
-  RefreshCw,
 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 import {
   DndContext,
   closestCenter,
@@ -360,68 +357,6 @@ export default function Admin() {
   const [localSponsors, setLocalSponsors] = useState<Sponsor[]>([]);
   const [deleteSponsorId, setDeleteSponsorId] = useState<string | null>(null);
   const sponsorFileRef = useRef<HTMLInputElement>(null);
-
-  // Background generation state
-  const [bgGenerating, setBgGenerating] = useState(false);
-  const [bgPreview, setBgPreview] = useState<string | null>(null);
-  const [bgSaving, setBgSaving] = useState(false);
-  const [currentBgUrl, setCurrentBgUrl] = useState<string | null>(null);
-
-  // Load current background setting
-  useEffect(() => {
-    if (shouldFetchData) {
-      supabase
-        .from('site_settings')
-        .select('value')
-        .eq('key', 'hero_background_url')
-        .maybeSingle()
-        .then(({ data }) => {
-          if (data?.value) setCurrentBgUrl(data.value);
-        });
-    }
-  }, [shouldFetchData]);
-
-  const handleGenerateBackground = async () => {
-    setBgGenerating(true);
-    setBgPreview(null);
-    try {
-      const { data, error } = await supabase.functions.invoke('generate-background', {
-        method: 'POST',
-        body: {},
-      });
-      if (error) throw error;
-      if (data?.imageUrl) {
-        setBgPreview(data.imageUrl);
-      } else if (data?.base64) {
-        setBgPreview(data.base64);
-      } else {
-        throw new Error('No image returned');
-      }
-      toast({ title: "Background generated!", description: "Preview it below, then confirm to set it live." });
-    } catch (error: any) {
-      toast({ title: "Generation failed", description: error.message, variant: "destructive" });
-    } finally {
-      setBgGenerating(false);
-    }
-  };
-
-  const handleConfirmBackground = async () => {
-    if (!bgPreview) return;
-    setBgSaving(true);
-    try {
-      const { error } = await supabase
-        .from('site_settings')
-        .upsert({ key: 'hero_background_url', value: bgPreview }, { onConflict: 'key' });
-      if (error) throw error;
-      setCurrentBgUrl(bgPreview);
-      setBgPreview(null);
-      toast({ title: "Background saved!", description: "The homepage will now use this background." });
-    } catch (error: any) {
-      toast({ title: "Save failed", description: error.message, variant: "destructive" });
-    } finally {
-      setBgSaving(false);
-    }
-  };
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -751,7 +686,7 @@ export default function Admin() {
 
       <main className="container mx-auto px-4 py-8">
         <Tabs defaultValue="projects" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 max-w-2xl">
+          <TabsList className="grid w-full grid-cols-3 max-w-lg">
             <TabsTrigger value="projects" className="flex items-center gap-2">
               <FolderKanban className="h-4 w-4" />
               Projects
@@ -773,10 +708,6 @@ export default function Admin() {
                   {sponsorCount}
                 </Badge>
               )}
-            </TabsTrigger>
-            <TabsTrigger value="background" className="flex items-center gap-2">
-              <ImageIcon className="h-4 w-4" />
-              Background
             </TabsTrigger>
           </TabsList>
 
@@ -1161,65 +1092,6 @@ export default function Admin() {
                   </div>
                 </SortableContext>
               </DndContext>
-            )}
-          </TabsContent>
-
-          {/* Background Tab */}
-          <TabsContent value="background" className="space-y-6">
-            <div className="flex items-center justify-between">
-              <h2 className="font-display text-lg font-semibold text-foreground">Hero Background</h2>
-              <Button onClick={handleGenerateBackground} disabled={bgGenerating}>
-                {bgGenerating ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <RefreshCw className="mr-2 h-4 w-4" />}
-                {bgGenerating ? "Generating..." : "Generate New Background"}
-              </Button>
-            </div>
-
-            {currentBgUrl && !bgPreview && (
-              <Card>
-                <CardContent className="p-4 space-y-3">
-                  <p className="text-sm font-medium text-foreground">Current Background</p>
-                  <img src={currentBgUrl} alt="Current hero background" className="w-full max-h-64 object-cover rounded-lg border border-border" />
-                </CardContent>
-              </Card>
-            )}
-
-            {!currentBgUrl && !bgPreview && !bgGenerating && (
-              <Card className="border-dashed">
-                <CardContent className="flex flex-col items-center justify-center py-12">
-                  <ImageIcon className="h-12 w-12 text-muted-foreground/50 mb-4" />
-                  <p className="text-muted-foreground mb-2">No custom background set</p>
-                  <p className="text-sm text-muted-foreground">Using the default static hero image. Generate one to replace it.</p>
-                </CardContent>
-              </Card>
-            )}
-
-            {bgGenerating && (
-              <Card>
-                <CardContent className="flex flex-col items-center justify-center py-12">
-                  <Loader2 className="h-10 w-10 animate-spin text-primary mb-4" />
-                  <p className="text-muted-foreground">Generating grunge background... this may take a moment.</p>
-                </CardContent>
-              </Card>
-            )}
-
-            {bgPreview && (
-              <Card>
-                <CardContent className="p-4 space-y-4">
-                  <p className="text-sm font-medium text-foreground">Preview</p>
-                  <img src={bgPreview} alt="Generated background preview" className="w-full max-h-80 object-cover rounded-lg border border-border" />
-                  <div className="flex gap-3">
-                    <Button onClick={handleConfirmBackground} disabled={bgSaving}>
-                      {bgSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                      Set as Background
-                    </Button>
-                    <Button variant="outline" onClick={() => setBgPreview(null)}>Discard</Button>
-                    <Button variant="secondary" onClick={handleGenerateBackground} disabled={bgGenerating}>
-                      {bgGenerating ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <RefreshCw className="mr-2 h-4 w-4" />}
-                      Try Again
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
             )}
           </TabsContent>
         </Tabs>

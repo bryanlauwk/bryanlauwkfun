@@ -40,7 +40,7 @@ serve(async (req) => {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
-    const prompt = `A dark, distressed abstract background texture in ultra high resolution 16:9 aspect ratio. Grungy industrial aesthetic: cracked concrete walls, peeling paint layers, rust stains, and weathered metal surfaces. Dark color palette of deep charcoal, muted crimson, and desaturated teal. Analog film grain and subtle light leaks reminiscent of 1980s photography. Faint unsettling details: diagonal scratch marks, dripping ink trails, barely-visible occult symbols etched into the surface. No distinct focal subject -- purely abstract textural background. The overall mood is oppressive, decayed, and subtly menacing. Ultra high resolution.`;
+    const prompt = `A mystical deep-sea octopus in a cosmic underwater abyss, ultra high resolution 16:9 aspect ratio hero image. The octopus is the central figure, surrounded by 3 distinct floating glowing portal frames or mystical screens arranged around it - these should be clearly visible empty rectangular/circular frames that can hold content. The text "bryanlauwk.fun" appears elegantly at the top center in decorative script lettering, glowing softly. Deep teal (#0D5F5F) and warm gold color palette. Constellations and mystical symbols scattered in the dark background. Hand-drawn illustration style with magical atmosphere. The octopus holds a vintage pocket watch in one tentacle. Jellyfish and floating lanterns add ambient lighting. The 3 portal frames should be positioned: one on the left side, one center-bottom, and one on the right side - clearly visible as interactive hotspot areas.`;
 
     console.log("Generating background with Nano Banana...");
 
