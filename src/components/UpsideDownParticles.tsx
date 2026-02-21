@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-interface Bubble {
+interface Orb {
   id: number;
   left: string;
   size: number;
@@ -8,15 +8,15 @@ interface Bubble {
   delay: number;
   opacity: number;
   drift: number;
-  borderColor: string;
+  color: string;
 }
 
-const BUBBLE_COLORS = [
-  "hsl(40 80% 65%)",   // warm amber
-  "hsl(45 70% 70%)",   // soft gold
-  "hsl(350 60% 60%)",  // faint crimson
-  "hsl(35 75% 60%)",   // deep amber
-  "hsl(45 65% 75%)",   // pale gold
+const ORB_COLORS = [
+  "hsl(48 95% 60%)",   // Joy – warm golden yellow
+  "hsl(210 70% 55%)",  // Sadness – soft blue
+  "hsl(0 80% 50%)",    // Anger – fiery red
+  "hsl(140 60% 45%)",  // Disgust – vivid green
+  "hsl(270 60% 55%)",  // Fear – rich purple
 ];
 
 function pickRandom<T>(arr: T[]): T {
@@ -24,25 +24,25 @@ function pickRandom<T>(arr: T[]): T {
 }
 
 export function UpsideDownParticles() {
-  const bubbles = useMemo<Bubble[]>(() => {
+  const orbs = useMemo<Orb[]>(() => {
     return Array.from({ length: 20 }, (_, i) => {
-      const size = 6 + Math.random() * 12; // 6-18px
+      const size = 6 + Math.random() * 12;
       return {
         id: i,
         left: `${Math.random() * 100}%`,
         size,
-        duration: 10 + Math.random() * 12, // 10-22s
+        duration: 10 + Math.random() * 12,
         delay: Math.random() * 20,
-        opacity: 0.2 + Math.random() * 0.3, // 0.2-0.5
+        opacity: 0.3 + Math.random() * 0.3,
         drift: -40 + Math.random() * 80,
-        borderColor: pickRandom(BUBBLE_COLORS),
+        color: pickRandom(ORB_COLORS),
       };
     });
   }, []);
 
   return (
     <div className="fixed inset-0 pointer-events-none z-[5] overflow-hidden">
-      {bubbles.map((b) => (
+      {orbs.map((b) => (
         <div
           key={b.id}
           className="absolute rounded-full animate-spore-float"
@@ -51,9 +51,8 @@ export function UpsideDownParticles() {
             bottom: "-20px",
             width: b.size,
             height: b.size,
-            backgroundColor: "transparent",
-            border: `1px solid ${b.borderColor}`,
-            boxShadow: `inset 2px -2px 4px ${b.borderColor.replace(")", " / 0.15)")}, 0 0 6px ${b.borderColor.replace(")", " / 0.1)")}`,
+            backgroundColor: b.color,
+            boxShadow: `inset 0 -3px 6px rgba(0,0,0,0.2), inset 2px 2px 4px rgba(255,255,255,0.3), 0 0 12px ${b.color.replace(")", " / 0.5)")}, 0 0 24px ${b.color.replace(")", " / 0.25)")}`,
             opacity: b.opacity,
             animationDuration: `${b.duration}s`,
             animationDelay: `${b.delay}s`,
