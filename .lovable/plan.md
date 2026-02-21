@@ -1,34 +1,36 @@
 
-# Redesign Particles: Crispy Glass Bubbles (Idea Light Bulbs)
+
+# Replace Glass Bubbles with Inside Out Memory Orbs
 
 ## Concept
 
-Replace the three particle types (embers, pixel dust, ash) with a single unified theme: **crispy glass bubbles** -- translucent, hollow-looking circles that float upward like ideas rising from the mind. They evoke light bulbs / thought bubbles and tie directly to the "experiments and wild ideas" identity.
+Transform the floating particles into glowing, solid-colored spheres inspired by the Memory Orbs from Disney Pixar's Inside Out. Each orb represents an emotion with its signature color, glowing softly as it floats upward -- like memories rising from the mind.
 
 ## Changes
 
 ### File: `src/components/UpsideDownParticles.tsx`
 
-**Strip down to one particle type** -- remove the ember/pixel/ash split entirely.
+**Color palette** -- the five core emotion colors:
+- **Joy**: `hsl(48 95% 60%)` -- warm golden yellow
+- **Sadness**: `hsl(210 70% 55%)` -- soft blue
+- **Anger**: `hsl(0 80% 50%)` -- fiery red
+- **Disgust**: `hsl(140 60% 45%)` -- vivid green
+- **Fear**: `hsl(270 60% 55%)` -- rich purple
 
-**Glass bubble properties:**
-- **Count**: ~20 bubbles (fewer but more visible)
-- **Size**: 6-18px diameter (much bigger than current 1-4px)
-- **Shape**: `rounded-full` with a transparent center and a thin colored border (no `backgroundColor` -- use `border` instead to create the hollow glass look)
-- **Border colors**: Mix of warm amber `hsl(40 80% 65%)`, soft gold `hsl(45 70% 70%)`, and faint crimson `hsl(350 60% 60%)` -- like warm light bulb filament glow
-- **Opacity**: 0.2 - 0.5 (significantly more visible than current 0.05-0.4)
-- **Speed**: 10-22s float duration (leisurely rise)
-- **Drift**: -40px to +40px horizontal wander
-- **Inner highlight**: A tiny pseudo-highlight via `box-shadow: inset` to simulate glass refraction -- a small bright spot inside each bubble
+**Orb styling** (replacing hollow glass borders with solid glowing spheres):
+- `backgroundColor` set to the emotion color
+- `border` removed (no more hollow look)
+- `boxShadow` changed to a multi-layer radial glow:
+  - Inner: `inset 0 -3px 6px rgba(0,0,0,0.2)` (depth/roundness)
+  - Inner highlight: `inset 2px 2px 4px rgba(255,255,255,0.3)` (glossy surface reflection)
+  - Outer glow: `0 0 12px <color at 0.5>, 0 0 24px <color at 0.25>` (soft ambient glow)
+- This creates a translucent, luminous orb that looks like it's glowing from within
 
-**Rendering change:**
-- Instead of `backgroundColor`, each bubble uses:
-  - `border: 1px solid <color>` (the glass edge)
-  - `boxShadow: inset 2px -2px 4px <color at 0.15>, 0 0 6px <color at 0.1>` (inner highlight + outer glow)
-  - `backgroundColor: transparent`
-- This creates the hollow, crispy glass look
-
-**Simplify types:** Remove the `ParticleType` union and color arrays. Single `Bubble` interface with `borderColor` instead of `color`.
+**Size and count stay similar:**
+- ~20 orbs, 6-18px diameter
+- 10-22s float duration, -40px to +40px drift
+- Opacity bumped slightly to 0.3-0.6 so the colors read clearly
 
 ### No CSS changes needed
-Reuses existing `animate-spore-float` keyframe for the upward float motion.
+Reuses existing `animate-spore-float` keyframe.
+
