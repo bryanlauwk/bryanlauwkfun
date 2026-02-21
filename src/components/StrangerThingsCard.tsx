@@ -104,7 +104,9 @@ export function StrangerThingsCard({ project, index, isFocused = false }: Strang
       onClick={handleClick}
       style={{ animationDelay: `${index * 150}ms` }}
     >
-      <div className={`relative bg-card/80 backdrop-blur-sm border rounded-sm overflow-hidden transition-all duration-500 animate-fade-in-up ${isActive ? 'border-primary/50 ring-2 ring-primary/30' : 'border-border/60 ring-1 ring-primary/10'}`}>
+      <div className={`relative bg-card/80 backdrop-blur-sm border rounded-sm overflow-hidden transition-all duration-500 animate-fade-in-up grunge-border ink-splatter ${isActive ? 'border-primary/50 ring-2 ring-primary/30' : 'border-border/60 ring-1 ring-primary/10'}`}
+        style={{ '--splatter-top': index % 2 === 0 ? '-8px' : 'auto', '--splatter-right': index % 2 === 0 ? '-8px' : 'auto', '--splatter-left': index % 2 !== 0 ? '-8px' : 'auto' } as React.CSSProperties}
+      >
         
         {/* Top gradient shimmer */}
         <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/20 to-transparent z-10" />
@@ -142,7 +144,7 @@ export function StrangerThingsCard({ project, index, isFocused = false }: Strang
           {/* Large decorative monogram */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none">
             <span 
-              className={`font-serif text-[120px] font-bold leading-none transition-all duration-500 ${isActive ? 'text-primary/10 stranger-glow' : 'text-muted/5'}`}
+              className={`font-serif text-[120px] font-bold leading-none transition-all duration-500 ${isActive ? 'text-primary/10 stranger-glow animate-twitch' : 'text-muted/5'}`}
             >
               {monogram}
             </span>
