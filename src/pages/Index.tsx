@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { CinematicHeader } from "@/components/CinematicHeader";
 import { CinematicFooter } from "@/components/CinematicFooter";
 import { ProjectGrid } from "@/components/ProjectGrid";
@@ -7,16 +8,30 @@ import { CrypticWhisper } from "@/components/CrypticWhisper";
 
 import { GuestBook } from "@/components/GuestBook";
 import { HeroAdPlaceholders } from "@/components/HeroAdPlaceholders";
+import { supabase } from "@/integrations/supabase/client";
 import heroImage from "@/assets/dark-fantasy-hero.jpg";
 
 const Index = () => {
+  const [bgUrl, setBgUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    supabase
+      .from('site_settings')
+      .select('value')
+      .eq('key', 'hero_background_url')
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data?.value) setBgUrl(data.value);
+      });
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col bg-background relative overflow-hidden">
 
       {/* Hero background */}
       <div className="fixed inset-0 z-0">
         <img
-          src={heroImage}
+          src={bgUrl || heroImage}
           alt=""
           className="w-full h-full object-cover opacity-60"
         />
