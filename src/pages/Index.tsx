@@ -45,17 +45,14 @@ const Index = () => {
         <div className="max-w-7xl mx-auto">
           {/* Hero section */}
           <section className="text-center mb-12 md:mb-24 animate-fade-in-up">
-            <h1 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-6 md:mb-10 leading-tight animate-breathe">
-              <span className="block text-foreground">Late Nights,</span>
-              <span className="block animate-shimmer">Wild Ideas</span>
+            <h1 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-8 md:mb-10 leading-tight animate-breathe">
+              <span className="block text-foreground">I make things</span>
+              <span className="block animate-shimmer">for fun</span>
             </h1>
             
-            {/* Improved subtitle with better visual hierarchy */}
-            <div className="max-w-xl mx-auto mb-6 md:mb-8">
-              <p className="text-base md:text-lg text-foreground/90 leading-relaxed font-mono px-4 py-3 bg-background/60 backdrop-blur-sm rounded-sm border border-border/20 scratched-surface">
-                Experiments, games, and things that crawled out of late nights.
-              </p>
-            </div>
+            <p className="font-mono text-sm md:text-base text-foreground/70 tracking-widest uppercase mb-10">
+              games · experiments · rabbit holes
+            </p>
             
             {/* Typewriter Motto */}
             <TypewriterMotto />
