@@ -16,6 +16,10 @@ const getCorsHeaders = (origin: string | null) => {
   };
 };
 
+const DAY_PROMPT = `A warm sunlit cosmic underwater scene, ultra high resolution 16:9 aspect ratio hero image. A mystical octopus in a bright coral reef bathed in golden sunlight. Sun rays pierce through crystal-clear water from above, creating god rays. Warm amber and golden tones dominate. Floating lanterns drift upward like jellyfish. The text "bryanlauwk.fun" appears elegantly at the top center in decorative script lettering, glowing warmly. Scattered constellations visible even in daylight. Hand-drawn illustration style with magical warm atmosphere. The octopus holds a vintage pocket watch in one tentacle. Tropical fish and sea butterflies add life and color.`;
+
+const NIGHT_PROMPT = `A dark mystical deep-sea cosmic abyss, ultra high resolution 16:9 aspect ratio hero image. A mystical octopus is the central figure in a moonlit underwater void. Deep teal (#0D5F5F) and indigo color palette with bioluminescent accents. A massive moon visible through the water surface above. Glowing jellyfish and bioluminescent creatures illuminate the darkness. The text "bryanlauwk.fun" appears elegantly at the top center in decorative script lettering, glowing with cool blue light. Starfield and mystical symbols scattered in the dark background. Hand-drawn illustration style with eerie magical atmosphere. The octopus holds a vintage pocket watch in one tentacle. Floating lanterns cast soft warm pools of light against the cold deep.`;
+
 serve(async (req) => {
   const origin = req.headers.get("origin");
   const corsHeaders = getCorsHeaders(origin);
@@ -40,9 +44,39 @@ serve(async (req) => {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
-    const prompt = `A mystical deep-sea octopus in a cosmic underwater abyss, ultra high resolution 16:9 aspect ratio hero image. The octopus is the central figure, surrounded by 3 distinct floating glowing portal frames or mystical screens arranged around it - these should be clearly visible empty rectangular/circular frames that can hold content. The text "bryanlauwk.fun" appears elegantly at the top center in decorative script lettering, glowing softly. Deep teal (#0D5F5F) and warm gold color palette. Constellations and mystical symbols scattered in the dark background. Hand-drawn illustration style with magical atmosphere. The octopus holds a vintage pocket watch in one tentacle. Jellyfish and floating lanterns add ambient lighting. The 3 portal frames should be positioned: one on the left side, one center-bottom, and one on the right side - clearly visible as interactive hotspot areas.`;
+    // Parse timeOfDay from body
+    const body = await req.json();
+    const timeOfDay = body.timeOfDay === "day" ? "day" : "night";
 
-    console.log("Generating background with Nano Banana...");
+    // Build cache key based on date + time of day
+    const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+    const cacheFileName = `bg-${timeOfDay}-${today}.png`;
+
+    // Check cache first if we have storage access
+    if (SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
+      const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+
+      // Check if cached image exists
+      const { data: existingFile } = await supabase.storage
+        .from('backgrounds')
+        .list('', { search: cacheFileName });
+
+      if (existingFile && existingFile.length > 0) {
+        const { data: publicUrl } = supabase.storage
+          .from('backgrounds')
+          .getPublicUrl(cacheFileName);
+
+        console.log("Returning cached background:", publicUrl.publicUrl);
+        return new Response(
+          JSON.stringify({ success: true, imageUrl: publicUrl.publicUrl, cached: true }),
+          { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+    }
+
+    // Generate new image
+    const prompt = timeOfDay === "day" ? DAY_PROMPT : NIGHT_PROMPT;
+    console.log(`Generating ${timeOfDay} background with gemini-3-pro-image-preview...`);
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -51,13 +85,8 @@ serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash-image",
-        messages: [
-          {
-            role: "user",
-            content: prompt,
-          },
-        ],
+        model: "google/gemini-3-pro-image-preview",
+        messages: [{ role: "user", content: prompt }],
         modalities: ["image", "text"],
       }),
     });
@@ -65,7 +94,7 @@ serve(async (req) => {
     if (!response.ok) {
       const errorText = await response.text();
       console.error("AI gateway error:", response.status, errorText);
-      
+
       if (response.status === 429) {
         return new Response(
           JSON.stringify({ error: "Rate limits exceeded, please try again later." }),
@@ -78,7 +107,7 @@ serve(async (req) => {
           { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
         );
       }
-      
+
       return new Response(
         JSON.stringify({ error: "Failed to generate image" }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -96,20 +125,17 @@ serve(async (req) => {
       );
     }
 
-    // If we have Supabase credentials, upload to storage
+    // Upload to storage with cache filename
     if (SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
       try {
         const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
-        
-        // Convert base64 to blob
+
         const base64Data = imageData.replace(/^data:image\/\w+;base64,/, '');
         const imageBytes = Uint8Array.from(atob(base64Data), c => c.charCodeAt(0));
-        
-        const fileName = `immersive-background-${Date.now()}.png`;
-        
-        const { data: uploadData, error: uploadError } = await supabase.storage
+
+        const { error: uploadError } = await supabase.storage
           .from('backgrounds')
-          .upload(fileName, imageBytes, {
+          .upload(cacheFileName, imageBytes, {
             contentType: 'image/png',
             upsert: true,
           });
@@ -117,15 +143,15 @@ serve(async (req) => {
         if (!uploadError) {
           const { data: publicUrl } = supabase.storage
             .from('backgrounds')
-            .getPublicUrl(fileName);
-          
+            .getPublicUrl(cacheFileName);
+
           console.log("Image uploaded to storage:", publicUrl.publicUrl);
-          
+
           return new Response(
-            JSON.stringify({ 
-              success: true, 
+            JSON.stringify({
+              success: true,
               imageUrl: publicUrl.publicUrl,
-              base64: imageData 
+              cached: false,
             }),
             { headers: { ...corsHeaders, "Content-Type": "application/json" } }
           );
@@ -137,12 +163,9 @@ serve(async (req) => {
       }
     }
 
-    // Return base64 directly if storage upload fails or is not configured
+    // Fallback: return base64
     return new Response(
-      JSON.stringify({ 
-        success: true, 
-        base64: imageData 
-      }),
+      JSON.stringify({ success: true, base64: imageData }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
 
