@@ -8,31 +8,18 @@ import { CrypticWhisper } from "@/components/CrypticWhisper";
 import { GuestBook } from "@/components/GuestBook";
 import { HeroAdPlaceholders } from "@/components/HeroAdPlaceholders";
 import heroImage from "@/assets/dark-fantasy-hero.jpg";
-import { useTimeOfDayBackground } from "@/hooks/useTimeOfDayBackground";
 
 const Index = () => {
-  const { backgroundUrl, isLoading } = useTimeOfDayBackground();
-
   return (
     <div className="min-h-screen flex flex-col bg-background relative overflow-hidden">
 
       {/* Hero background */}
       <div className="fixed inset-0 z-0">
-        {/* Static fallback always visible */}
         <img
           src={heroImage}
           alt=""
-          className="w-full h-full object-cover opacity-60 absolute inset-0"
+          className="w-full h-full object-cover opacity-60"
         />
-        {/* AI-generated background with crossfade */}
-        {backgroundUrl && (
-          <img
-            src={backgroundUrl}
-            alt=""
-            className="w-full h-full object-cover opacity-60 absolute inset-0 transition-opacity duration-1000 ease-in-out"
-            style={{ opacity: isLoading ? 0 : 0.6 }}
-          />
-        )}
         {/* Film grain overlay */}
         <div className="absolute inset-0 film-grain" />
         {/* Vignette */}
