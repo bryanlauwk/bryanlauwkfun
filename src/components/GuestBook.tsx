@@ -239,11 +239,13 @@ export function GuestBook() {
                 placeholder={placeholderMap[category]}
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                className="bg-background/50 border-border/50 font-mono text-sm placeholder:text-muted-foreground/50 min-h-[100px]"
+                className="bg-background/50 border-border/50 font-mono text-sm placeholder:text-muted-foreground/50 min-h-[100px] transition-shadow duration-200 focus:ring-2 focus:ring-primary/20"
                 maxLength={1000}
+                onFocus={() => setTextareaFocused(true)}
+                onBlur={() => setTextareaFocused(false)}
               />
               {errors.message && <p className="text-xs text-destructive mt-1 font-mono">{errors.message}</p>}
-              <div className="text-xs text-muted-foreground/50 text-right mt-1 font-mono">
+              <div className={`text-xs text-muted-foreground/50 text-right mt-1 font-mono transition-opacity duration-200 ${textareaFocused || message.length > 0 ? 'opacity-100' : 'opacity-0'}`}>
                 {message.length}/1000
               </div>
             </div>

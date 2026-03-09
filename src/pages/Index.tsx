@@ -4,6 +4,7 @@ import { ProjectGrid } from "@/components/ProjectGrid";
 import { UpsideDownParticles } from "@/components/UpsideDownParticles";
 import { TypewriterMotto } from "@/components/TypewriterMotto";
 import { CrypticWhisper } from "@/components/CrypticWhisper";
+import { ScrollSection } from "@/components/ScrollSection";
 
 import { GuestBook } from "@/components/GuestBook";
 import { HeroAdPlaceholders } from "@/components/HeroAdPlaceholders";
@@ -45,22 +46,24 @@ const Index = () => {
         <div className="max-w-7xl mx-auto">
           {/* Hero section */}
           <section className="text-center mb-12 md:mb-24 animate-fade-in-up">
-            <h1 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-8 md:mb-10 leading-tight animate-breathe">
+            <h1 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-6 md:mb-8 leading-tight animate-breathe">
               <span className="block text-foreground">I make things</span>
               <span className="block animate-shimmer">for fun</span>
             </h1>
             
-            <p className="font-mono text-sm md:text-base text-foreground/70 tracking-widest uppercase mb-10">
+            <p className="font-mono text-sm md:text-base text-foreground/70 tracking-widest uppercase mb-8">
               games · experiments · rabbit holes
             </p>
             
             {/* Typewriter Motto */}
-            <TypewriterMotto />
+            <div className="mt-2">
+              <TypewriterMotto />
+            </div>
             <CrypticWhisper />
           </section>
 
           {/* Projects section */}
-          <section>
+          <ScrollSection animation="fade-up" className="mt-16 md:mt-32">
             <div className="flex items-center gap-4 mb-8 md:mb-12">
               <div className="grunge-divider" />
               <h2 className="font-serif text-2xl md:text-3xl font-semibold stranger-glow uppercase tracking-wider">
@@ -70,10 +73,12 @@ const Index = () => {
             </div>
             
             <ProjectGrid />
-          </section>
+          </ScrollSection>
 
           {/* Guest Book section */}
-          <GuestBook />
+          <ScrollSection animation="fade-up" className="mt-16 md:mt-32">
+            <GuestBook />
+          </ScrollSection>
         </div>
       </main>
 

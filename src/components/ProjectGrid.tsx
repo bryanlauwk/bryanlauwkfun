@@ -2,15 +2,20 @@ import { usePublicProjects } from "@/hooks/useProjects";
 import { StrangerThingsCard } from "./StrangerThingsCard";
 import { Skeleton } from "./ui/skeleton";
 import { useKeyboardNavigation } from "@/hooks/useKeyboardNavigation";
+import { useIntersection } from "@/hooks/useIntersection";
+import { cn } from "@/lib/utils";
 
-function PowerSurgeSkeleton() {
+function ShimmerSkeleton({ delay = 0 }: { delay?: number }) {
   return (
-    <div className="relative bg-card border border-border rounded-lg overflow-hidden">
-      <Skeleton className="aspect-video w-full animate-power-surge" />
+    <div 
+      className="relative bg-card border border-border rounded-sm overflow-hidden opacity-0 animate-fade-in-up"
+      style={{ animationDelay: `${delay}ms`, animationFillMode: 'forwards' }}
+    >
+      <Skeleton className="aspect-video w-full animate-skeleton-shimmer" />
       <div className="p-5 space-y-3">
-        <Skeleton className="h-6 w-3/4 animate-power-surge" style={{ animationDelay: "0.1s" }} />
-        <Skeleton className="h-4 w-full animate-power-surge" style={{ animationDelay: "0.2s" }} />
-        <Skeleton className="h-4 w-2/3 animate-power-surge" style={{ animationDelay: "0.3s" }} />
+        <Skeleton className="h-6 w-3/4 animate-skeleton-shimmer" style={{ animationDelay: "0.1s" }} />
+        <Skeleton className="h-4 w-full animate-skeleton-shimmer" style={{ animationDelay: "0.2s" }} />
+        <Skeleton className="h-4 w-2/3 animate-skeleton-shimmer" style={{ animationDelay: "0.3s" }} />
       </div>
     </div>
   );
@@ -18,6 +23,7 @@ function PowerSurgeSkeleton() {
 
 export function ProjectGrid() {
   const { data: projects, isLoading } = usePublicProjects();
+  const { ref, hasBeenInView } = useIntersection({ threshold: 0.1, triggerOnce: true });
 
   const { focusedIndex } = useKeyboardNavigation({
     itemCount: projects?.length ?? 0,
@@ -33,7 +39,7 @@ export function ProjectGrid() {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
         {Array.from({ length: 3 }).map((_, i) => (
-          <PowerSurgeSkeleton key={i} />
+          <ShimmerSkeleton key={i} delay={i * 150} />
         ))}
       </div>
     );
@@ -55,14 +61,24 @@ export function ProjectGrid() {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+    <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
       {projects.map((project, index) => (
-        <StrangerThingsCard 
-          key={project.id} 
-          project={project} 
-          index={index}
-          isFocused={focusedIndex === index}
-        />
+        <div
+          key={project.id}
+          className={cn(
+            "transition-all duration-700 ease-out",
+            hasBeenInView
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-8"
+          )}
+          style={{ transitionDelay: `${index * 100}ms` }}
+        >
+          <StrangerThingsCard 
+            project={project} 
+            index={index}
+            isFocused={focusedIndex === index}
+          />
+        </div>
       ))}
     </div>
   );
