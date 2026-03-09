@@ -144,8 +144,10 @@ export function GuestBook() {
     private: "Your private message to Bryan...",
   };
 
+  const [textareaFocused, setTextareaFocused] = useState(false);
+
   return (
-    <section className="mt-12 md:mt-24">
+    <section>
       {/* Section header */}
       <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-12">
         <div className="grunge-divider" />
