@@ -2,8 +2,6 @@ import { usePublicProjects } from "@/hooks/useProjects";
 import { StrangerThingsCard } from "./StrangerThingsCard";
 import { Skeleton } from "./ui/skeleton";
 import { useKeyboardNavigation } from "@/hooks/useKeyboardNavigation";
-import { useIntersection } from "@/hooks/useIntersection";
-import { cn } from "@/lib/utils";
 
 function ShimmerSkeleton({ delay = 0 }: { delay?: number }) {
   return (
@@ -23,7 +21,6 @@ function ShimmerSkeleton({ delay = 0 }: { delay?: number }) {
 
 export function ProjectGrid() {
   const { data: projects, isLoading } = usePublicProjects();
-  const { ref, hasBeenInView } = useIntersection({ threshold: 0.1, triggerOnce: true });
 
   const { focusedIndex } = useKeyboardNavigation({
     itemCount: projects?.length ?? 0,
@@ -61,17 +58,12 @@ export function ProjectGrid() {
   }
 
   return (
-    <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
       {projects.map((project, index) => (
         <div
           key={project.id}
-          className={cn(
-            "transition-all duration-700 ease-out",
-            hasBeenInView
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-8"
-          )}
-          style={{ transitionDelay: `${index * 100}ms` }}
+          className="opacity-0 animate-fade-in-up"
+          style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'forwards' }}
         >
           <StrangerThingsCard 
             project={project} 
