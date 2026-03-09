@@ -144,8 +144,10 @@ export function GuestBook() {
     private: "Your private message to Bryan...",
   };
 
+  const [textareaFocused, setTextareaFocused] = useState(false);
+
   return (
-    <section className="mt-12 md:mt-24">
+    <section>
       {/* Section header */}
       <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-12">
         <div className="grunge-divider" />
@@ -185,8 +187,8 @@ export function GuestBook() {
                   }}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-xs font-mono uppercase tracking-wider border transition-all duration-200 ${
                     isActive
-                      ? "border-primary/60 bg-primary/10 text-primary stranger-glow"
-                      : "border-border/50 bg-background/30 text-muted-foreground hover:border-border hover:text-foreground"
+                      ? "border-primary/60 bg-primary/10 text-primary stranger-glow -translate-y-px"
+                      : "border-border/50 bg-background/30 text-muted-foreground hover:border-border hover:text-foreground translate-y-0"
                   }`}
                 >
                   <Icon className="w-3 h-3" />
@@ -211,7 +213,7 @@ export function GuestBook() {
                 placeholder="Your name (or codename)"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="bg-background/50 border-border/50 font-mono text-sm placeholder:text-muted-foreground/50"
+                className="bg-background/50 border-border/50 font-mono text-sm placeholder:text-muted-foreground/50 transition-shadow duration-200 focus:ring-2 focus:ring-primary/20"
                 maxLength={50}
               />
               {errors.name && <p className="text-xs text-destructive mt-1 font-mono">{errors.name}</p>}
@@ -225,7 +227,7 @@ export function GuestBook() {
                   placeholder="Your email (for reply)"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-background/50 border-border/50 font-mono text-sm placeholder:text-muted-foreground/50"
+                  className="bg-background/50 border-border/50 font-mono text-sm placeholder:text-muted-foreground/50 transition-shadow duration-200 focus:ring-2 focus:ring-primary/20"
                   maxLength={255}
                 />
                 {errors.email && <p className="text-xs text-destructive mt-1 font-mono">{errors.email}</p>}
@@ -237,11 +239,13 @@ export function GuestBook() {
                 placeholder={placeholderMap[category]}
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                className="bg-background/50 border-border/50 font-mono text-sm placeholder:text-muted-foreground/50 min-h-[100px]"
+                className="bg-background/50 border-border/50 font-mono text-sm placeholder:text-muted-foreground/50 min-h-[100px] transition-shadow duration-200 focus:ring-2 focus:ring-primary/20"
                 maxLength={1000}
+                onFocus={() => setTextareaFocused(true)}
+                onBlur={() => setTextareaFocused(false)}
               />
               {errors.message && <p className="text-xs text-destructive mt-1 font-mono">{errors.message}</p>}
-              <div className="text-xs text-muted-foreground/50 text-right mt-1 font-mono">
+              <div className={`text-xs text-muted-foreground/50 text-right mt-1 font-mono transition-opacity duration-200 ${textareaFocused || message.length > 0 ? 'opacity-100' : 'opacity-0'}`}>
                 {message.length}/1000
               </div>
             </div>

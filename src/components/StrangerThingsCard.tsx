@@ -47,10 +47,10 @@ function generateLightPositions(count: number) {
 }
 
 function ChristmasLights({ isActive }: { isActive: boolean }) {
-  const positions = useMemo(() => generateLightPositions(20), []);
+  const positions = useMemo(() => generateLightPositions(12), []);
   
   return (
-    <div className={`absolute inset-0 pointer-events-none z-10 transition-opacity duration-500 ${isActive ? 'opacity-100' : 'opacity-40'}`}>
+    <div className={`absolute inset-0 pointer-events-none z-10 transition-opacity duration-500 ${isActive ? 'opacity-100' : 'opacity-20'}`}>
       {positions.map((pos, i) => (
         <div
           key={i}
@@ -104,7 +104,7 @@ export function StrangerThingsCard({ project, index, isFocused = false }: Strang
       onClick={handleClick}
       style={{ animationDelay: `${index * 150}ms` }}
     >
-      <div className={`relative bg-card/80 backdrop-blur-sm border rounded-sm overflow-hidden transition-all duration-500 animate-fade-in-up grunge-border ink-splatter ${isActive ? 'border-primary/50 ring-2 ring-primary/30' : 'border-border/60 ring-1 ring-primary/10'}`}
+      <div className={`relative bg-card/80 backdrop-blur-sm border rounded-sm overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] grunge-border ink-splatter ${isActive ? 'border-primary/50 ring-2 ring-primary/30 -translate-y-1 shadow-xl shadow-primary/10' : 'border-border/60 ring-1 ring-primary/10 translate-y-0 shadow-md shadow-background/50'}`}
         style={{ '--splatter-top': index % 2 === 0 ? '-8px' : 'auto', '--splatter-right': index % 2 === 0 ? '-8px' : 'auto', '--splatter-left': index % 2 !== 0 ? '-8px' : 'auto' } as React.CSSProperties}
       >
         
@@ -112,12 +112,6 @@ export function StrangerThingsCard({ project, index, isFocused = false }: Strang
         <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/20 to-transparent z-10" />
 
         <ChristmasLights isActive={isActive} />
-        
-        {/* VHS distortion on hover/focus */}
-        <div className={`absolute inset-0 pointer-events-none z-20 transition-opacity duration-300 ${isActive ? 'opacity-100' : 'opacity-0'}`}>
-          <div className="vhs-scanlines" />
-          <div className="vhs-tracking" />
-        </div>
 
         {/* Upside Down overlay */}
         <div className={`absolute inset-0 pointer-events-none z-30 bg-[hsl(220,100%,50%)] mix-blend-overlay transition-opacity duration-500 ${isActive ? 'opacity-15' : 'opacity-0'}`} />
@@ -156,7 +150,7 @@ export function StrangerThingsCard({ project, index, isFocused = false }: Strang
           </h3>
           
           {/* Decorative line */}
-          <div className={`w-16 h-0.5 mb-4 transition-all duration-500 ${isActive ? 'bg-primary w-full' : 'bg-border'}`} />
+          <div className={`h-0.5 mb-4 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${isActive ? 'bg-primary w-full' : 'bg-border w-16'}`} />
           
           {/* Description */}
           {project.description && (

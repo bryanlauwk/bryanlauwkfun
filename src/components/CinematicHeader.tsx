@@ -1,9 +1,17 @@
+import { useState, useEffect } from "react";
 import { useVisitorCounter } from "@/hooks/useVisitorCounter";
 import { SoundToggle } from "./SoundToggle";
 import faviconImage from "/favicon.png";
 
 export function CinematicHeader() {
   const { count, isLoading } = useVisitorCounter();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <>
@@ -15,7 +23,7 @@ export function CinematicHeader() {
         Skip to main content
       </a>
       
-      <header className="relative z-20 px-4 py-3 md:px-12 md:py-6">
+      <header className={`sticky top-0 z-50 px-4 py-3 md:px-12 md:py-6 backdrop-blur-md transition-all duration-300 ${scrolled ? 'bg-background/80 border-b border-border/30' : 'bg-transparent border-b border-transparent'}`}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-2 md:gap-3">

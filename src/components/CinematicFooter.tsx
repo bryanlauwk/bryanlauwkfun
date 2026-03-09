@@ -4,7 +4,7 @@ export function CinematicFooter() {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="relative z-20 py-10 md:py-12 px-4 md:px-12 border-t border-border/30 torn-edge-top">
+    <footer className="relative z-20 py-16 md:py-20 px-4 md:px-12 border-t border-border/30 torn-edge-top">
       {/* Decorative top line */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
       
@@ -17,7 +17,7 @@ export function CinematicFooter() {
               href="https://github.com/bryanlauwk" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="p-2 rounded-sm border border-border/30 bg-card/30 hover:bg-card/60 hover:border-primary/30 transition-all duration-300 group"
+              className="p-3 rounded-sm border border-border/30 bg-card/30 hover:bg-card/60 hover:border-primary/30 hover:scale-110 transition-all duration-300 group"
               aria-label="GitHub"
             >
               <Github className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" />
@@ -26,7 +26,7 @@ export function CinematicFooter() {
               href="https://twitter.com/bryanlauwk" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="p-2 rounded-sm border border-border/30 bg-card/30 hover:bg-card/60 hover:border-primary/30 transition-all duration-300 group"
+              className="p-3 rounded-sm border border-border/30 bg-card/30 hover:bg-card/60 hover:border-primary/30 hover:scale-110 transition-all duration-300 group"
               aria-label="Twitter"
             >
               <Twitter className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" />
@@ -35,7 +35,7 @@ export function CinematicFooter() {
               href="https://linkedin.com/in/bryanlauwk" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="p-2 rounded-sm border border-border/30 bg-card/30 hover:bg-card/60 hover:border-primary/30 transition-all duration-300 group"
+              className="p-3 rounded-sm border border-border/30 bg-card/30 hover:bg-card/60 hover:border-primary/30 hover:scale-110 transition-all duration-300 group"
               aria-label="LinkedIn"
             >
               <Linkedin className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" />
