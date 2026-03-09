@@ -227,7 +227,7 @@ export function GuestBook() {
                   placeholder="Your email (for reply)"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-background/50 border-border/50 font-mono text-sm placeholder:text-muted-foreground/50"
+                  className="bg-background/50 border-border/50 font-mono text-sm placeholder:text-muted-foreground/50 transition-shadow duration-200 focus:ring-2 focus:ring-primary/20"
                   maxLength={255}
                 />
                 {errors.email && <p className="text-xs text-destructive mt-1 font-mono">{errors.email}</p>}
