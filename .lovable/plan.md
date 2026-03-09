@@ -1,79 +1,55 @@
 
 
-# Improve Hero Headline and Subtitles
+# Why Your Drops Are Invisible
 
-## Problem
+Your project data is loading fine -- the API returns all 6 projects. The problem is a **race condition in the scroll-triggered reveal** introduced during the Airbnb polish.
 
-The current hero area stacks four text elements tightly:
-1. "Late Nights, Wild Ideas" (big serif headline)
-2. "Experiments, games, and things that crawled out of late nights." (mono subtitle in a box)
-3. TypewriterMotto pill ("Good luck, have fun, don't die")
-4. CrypticWhisper (tiny faded text)
+## Root Cause
 
-This creates a cramped, repetitive block -- "late nights" appears twice, and three distinct text treatments compete for attention.
+In `ProjectGrid.tsx`, cards start with `opacity-0 translate-y-8` and only become visible when `hasBeenInView` flips to `true`. But `useIntersection` has a bug: when `triggerOnce` is `true`, the effect re-runs every time `hasBeenInView` changes (it's in the dependency array). On the first intersection, `hasBeenInView` becomes `true`, which re-creates the observer, and depending on timing the new observer may not fire again -- leaving cards invisible.
 
-## Proposed Changes
+Additionally, the `ref` is typed as `RefObject<HTMLDivElement>` (created via `useRef<HTMLDivElement>(null)`) which in React 18 is read-only and may not attach properly when passed as a `ref` prop.
 
-### A. New Headline Copy
+## Fix
 
-Replace "Late Nights, Wild Ideas" with something punchier that captures the spirit without repeating "late nights":
+**`src/hooks/useIntersection.ts`**:
+- Remove `hasBeenInView` from the `useEffect` dependency array to prevent the observer from being re-created
+- When `triggerOnce` is true and element enters view, immediately set both states and disconnect the observer
+- Use a callback ref pattern or cast to `LegacyRef` to ensure the ref attaches correctly
 
-```
-I make things
-  for fun
-```
+**`src/components/ProjectGrid.tsx`**:
+- No changes needed -- once the hook works correctly, `hasBeenInView` will flip to `true` and cards will animate in
 
-Line 1 ("I make things") in foreground color, Line 2 ("for fun") in the shimmer/primary accent. Short, personal, memorable -- and directly ties to the domain name (bryan.fun).
+## Technical Detail
 
-### B. Simplify to One Subtitle
+```typescript
+// useIntersection.ts fix - stable observer that doesn't re-create
+useEffect(() => {
+  const element = ref.current;
+  if (!element) return;
 
-Remove the boxed paragraph subtitle entirely. Replace it with a single clean line below the headline:
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setHasBeenInView(true);
+          setIsInView(true);
+          if (triggerOnce) {
+            observer.disconnect();
+          }
+        } else if (!triggerOnce) {
+          setIsInView(false);
+        }
+      });
+    },
+    { threshold, rootMargin }
+  );
 
-```
-games · experiments · rabbit holes
-```
-
-Styled as a spaced-out mono line with interpunct separators -- no background box, no border. This is scannable at a glance and covers the three pillars of the site.
-
-### C. More Breathing Room
-
-- Increase margin between headline and subtitle (from `mb-6` to `mb-8`)
-- Increase margin between subtitle and the TypewriterMotto (from `mb-6` to `mb-10`)
-- Keep the TypewriterMotto and CrypticWhisper as they are -- they work well as a secondary "transmission" element lower down
-
-### D. File Changes
-
-**`src/pages/Index.tsx`** (hero section, ~lines 48-65):
-- Replace the `h1` content with the new two-line headline
-- Replace the `div.max-w-xl` subtitle block with the clean interpunct line
-- Adjust spacing classes
-
-No other files need changes.
-
-## Technical Details
-
-### Index.tsx Hero Section (before)
-```jsx
-<h1>
-  <span>Late Nights,</span>
-  <span>Wild Ideas</span>
-</h1>
-<div className="max-w-xl mx-auto mb-6">
-  <p className="... font-mono ... bg-background/60 backdrop-blur-sm ...">
-    Experiments, games, and things that crawled out of late nights.
-  </p>
-</div>
+  observer.observe(element);
+  return () => observer.disconnect();
+}, [threshold, rootMargin, triggerOnce]);
+// ↑ removed hasBeenInView from deps
 ```
 
-### Index.tsx Hero Section (after)
-```jsx
-<h1>
-  <span>I make things</span>
-  <span>for fun</span>
-</h1>
-<p className="font-mono text-sm md:text-base text-foreground/70 tracking-widest uppercase mb-10">
-  games · experiments · rabbit holes
-</p>
-```
+Single file change, ~10 lines modified.
 
-The TypewriterMotto and CrypticWhisper remain unchanged below, providing the secondary atmospheric layer.
