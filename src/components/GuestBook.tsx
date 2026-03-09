@@ -213,7 +213,7 @@ export function GuestBook() {
                 placeholder="Your name (or codename)"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="bg-background/50 border-border/50 font-mono text-sm placeholder:text-muted-foreground/50"
+                className="bg-background/50 border-border/50 font-mono text-sm placeholder:text-muted-foreground/50 transition-shadow duration-200 focus:ring-2 focus:ring-primary/20"
                 maxLength={50}
               />
               {errors.name && <p className="text-xs text-destructive mt-1 font-mono">{errors.name}</p>}
