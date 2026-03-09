@@ -35,18 +35,15 @@ export function useIntersection(
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          const inView = entry.isIntersecting;
-          
-          if (inView) {
+          if (entry.isIntersecting) {
             setHasBeenInView(true);
-          }
-          
-          if (triggerOnce && hasBeenInView) {
             setIsInView(true);
-            return;
+            if (triggerOnce) {
+              observer.disconnect();
+            }
+          } else if (!triggerOnce) {
+            setIsInView(false);
           }
-          
-          setIsInView(inView);
         });
       },
       { threshold, rootMargin }
@@ -57,7 +54,7 @@ export function useIntersection(
     return () => {
       observer.disconnect();
     };
-  }, [threshold, rootMargin, triggerOnce, hasBeenInView]);
+  }, [threshold, rootMargin, triggerOnce]);
 
   return { ref, isInView, hasBeenInView };
 }
