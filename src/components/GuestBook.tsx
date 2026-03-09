@@ -187,8 +187,8 @@ export function GuestBook() {
                   }}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-xs font-mono uppercase tracking-wider border transition-all duration-200 ${
                     isActive
-                      ? "border-primary/60 bg-primary/10 text-primary stranger-glow"
-                      : "border-border/50 bg-background/30 text-muted-foreground hover:border-border hover:text-foreground"
+                      ? "border-primary/60 bg-primary/10 text-primary stranger-glow -translate-y-px"
+                      : "border-border/50 bg-background/30 text-muted-foreground hover:border-border hover:text-foreground translate-y-0"
                   }`}
                 >
                   <Icon className="w-3 h-3" />
