@@ -1,7 +1,6 @@
-import { useState, useMemo } from "react";
-import { ArrowRight, Radio } from "lucide-react";
+import { useState } from "react";
+import { ArrowUpRight } from "lucide-react";
 import type { Tables } from "@/integrations/supabase/types";
-import { useStrangerSFX } from "@/hooks/useStrangerSFX";
 
 interface StrangerThingsCardProps {
   project: Tables<"projects">;
@@ -9,88 +8,13 @@ interface StrangerThingsCardProps {
   isFocused?: boolean;
 }
 
-// Christmas light colors
-const LIGHT_COLORS = [
-  "hsl(0, 100%, 55%)",
-  "hsl(199, 92%, 70%)",
-  "hsl(145, 100%, 68%)",
-  "hsl(45, 100%, 60%)",
-  "hsl(25, 100%, 50%)",
-];
-
-const CTA_VARIANTS = [
-  "Explore",
-  "Dive in",
-  "Take a look",
-  "See more",
-  "Open it up",
-];
-
-function generateLightPositions(count: number) {
-  const positions: { top?: string; bottom?: string; left?: string; right?: string }[] = [];
-  const perSide = Math.floor(count / 4);
-  
-  for (let i = 0; i < perSide; i++) {
-    positions.push({ top: "-4px", left: `${(i + 0.5) * (100 / perSide)}%` });
-  }
-  for (let i = 0; i < perSide; i++) {
-    positions.push({ right: "-4px", top: `${(i + 0.5) * (100 / perSide)}%` });
-  }
-  for (let i = 0; i < perSide; i++) {
-    positions.push({ bottom: "-4px", right: `${(i + 0.5) * (100 / perSide)}%` });
-  }
-  for (let i = 0; i < perSide; i++) {
-    positions.push({ left: "-4px", bottom: `${(i + 0.5) * (100 / perSide)}%` });
-  }
-  
-  return positions;
-}
-
-function ChristmasLights({ isActive }: { isActive: boolean }) {
-  const positions = useMemo(() => generateLightPositions(12), []);
-  
-  return (
-    <div className={`absolute inset-0 pointer-events-none z-10 transition-opacity duration-500 ${isActive ? 'opacity-100' : 'opacity-20'}`}>
-      {positions.map((pos, i) => (
-        <div
-          key={i}
-          className="absolute w-1.5 h-1.5 rounded-full animate-christmas-light"
-          style={{
-            ...pos,
-            backgroundColor: LIGHT_COLORS[i % LIGHT_COLORS.length],
-            animationDelay: `${Math.random() * 2}s`,
-            boxShadow: isActive ? `0 0 8px 3px ${LIGHT_COLORS[i % LIGHT_COLORS.length]}` : `0 0 4px 1px ${LIGHT_COLORS[i % LIGHT_COLORS.length]}`,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
+const CTA_VARIANTS = ["Explore", "Dive in", "Take a look", "See more", "Open it up"];
 
 export function StrangerThingsCard({ project, index, isFocused = false }: StrangerThingsCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const isActive = isHovered || isFocused;
-  const { playElectricalCrackle, playPowerSurge } = useStrangerSFX();
 
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-    playElectricalCrackle();
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
-
-  const handleClick = () => {
-    playPowerSurge();
-  };
-
-  // Get the first letter for the monogram
-  const monogram = project.title.charAt(0).toUpperCase();
-  
-  // Episode number style
   const episodeNum = String(index + 1).padStart(2, "0");
-
   const ctaText = CTA_VARIANTS[index % CTA_VARIANTS.length];
 
   return (
@@ -98,76 +22,56 @@ export function StrangerThingsCard({ project, index, isFocused = false }: Strang
       href={project.href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative block"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onClick={handleClick}
-      style={{ animationDelay: `${index * 150}ms` }}
+      className="group relative block h-full"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      <div className={`relative bg-card/80 backdrop-blur-sm border rounded-sm overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] grunge-border ink-splatter ${isActive ? 'border-primary/50 ring-2 ring-primary/30 -translate-y-1 shadow-xl shadow-primary/10' : 'border-border/60 ring-1 ring-primary/10 translate-y-0 shadow-md shadow-background/50'}`}
-        style={{ '--splatter-top': index % 2 === 0 ? '-8px' : 'auto', '--splatter-right': index % 2 === 0 ? '-8px' : 'auto', '--splatter-left': index % 2 !== 0 ? '-8px' : 'auto' } as React.CSSProperties}
+      <div
+        className={`relative h-full bg-card border-2 border-foreground rounded-2xl overflow-hidden transition-all duration-300 ${
+          isActive
+            ? "-translate-x-1 -translate-y-1 shadow-[8px_8px_0_hsl(var(--foreground))]"
+            : "shadow-[4px_4px_0_hsl(var(--foreground))]"
+        }`}
       >
-        
-        {/* Top gradient shimmer */}
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/20 to-transparent z-10" />
-
-        <ChristmasLights isActive={isActive} />
-
-        {/* Upside Down overlay */}
-        <div className={`absolute inset-0 pointer-events-none z-30 bg-[hsl(220,100%,50%)] mix-blend-overlay transition-opacity duration-500 ${isActive ? 'opacity-15' : 'opacity-0'}`} />
-
-        {/* Header with episode number */}
-        <div className="px-5 pt-5 pb-3 border-b border-border/50">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="font-mono text-xs text-muted-foreground uppercase tracking-widest">
-                Drop #{episodeNum}
-              </span>
-              {project.tag && (
-                <span className="inline-flex items-center border border-amber-500/60 text-amber-400 bg-amber-500/10 rounded-sm px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest">
-                  {project.tag}
-                </span>
-              )}
-            </div>
-            <Radio className={`w-4 h-4 transition-colors duration-300 ${isActive ? 'text-primary animate-electrical-flicker' : 'text-muted-foreground'}`} />
-          </div>
+        {/* Header */}
+        <div className="px-5 pt-5 pb-3 flex items-center justify-between">
+          <span className="font-mono text-xs text-foreground/60 uppercase tracking-widest font-medium">
+            #{episodeNum}
+          </span>
+          {project.tag && (
+            <span className="inline-flex items-center bg-primary text-primary-foreground rounded-full px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-widest font-bold">
+              {project.tag}
+            </span>
+          )}
         </div>
 
-        {/* Main content - Typography focused */}
-        <div className="p-5 min-h-[180px] flex flex-col">
-          {/* Large decorative monogram */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none">
-            <span 
-              className={`font-serif text-[120px] font-bold leading-none transition-all duration-500 ${isActive ? 'text-primary/10 stranger-glow animate-twitch' : 'text-muted/5'}`}
-            >
-              {monogram}
-            </span>
-          </div>
-          
-          {/* Title */}
-          <h3 className={`relative z-10 font-serif text-2xl md:text-3xl font-bold uppercase tracking-wider mb-3 transition-all duration-300 ${isActive ? 'stranger-glow' : 'text-foreground'}`}>
+        {/* Main content */}
+        <div className="p-5 pt-2 min-h-[180px] flex flex-col">
+          <h3 className="font-serif text-2xl md:text-3xl font-black uppercase tracking-tight mb-3 text-foreground leading-[0.95]">
             {project.title}
           </h3>
-          
-          {/* Decorative line */}
-          <div className={`h-0.5 mb-4 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${isActive ? 'bg-primary w-full' : 'bg-border w-16'}`} />
-          
-          {/* Description */}
+
+          <div
+            className={`h-1 mb-4 bg-primary rounded-full transition-all duration-500 ease-out ${
+              isActive ? "w-full" : "w-12"
+            }`}
+          />
+
           {project.description && (
-            <p className="relative z-10 text-muted-foreground text-sm leading-relaxed font-mono tracking-tight flex-1">
+            <p className="text-foreground/70 text-sm leading-relaxed flex-1">
               {project.description}
             </p>
           )}
-          
-          {/* CTA */}
-          <div className="relative z-10 flex items-center gap-2 mt-4 text-primary font-mono text-xs uppercase tracking-widest group-hover:tracking-[0.15em] transition-all duration-300">
-            <span className="animate-electrical-flicker">{ctaText}</span>
-            <ArrowRight className="w-3 h-3 group-hover:translate-x-2 transition-transform duration-300" />
+
+          <div className="flex items-center gap-2 mt-5 text-foreground font-mono text-xs uppercase tracking-widest font-bold">
+            <span>{ctaText}</span>
+            <ArrowUpRight
+              className={`w-4 h-4 transition-transform duration-300 ${
+                isActive ? "translate-x-1 -translate-y-1" : ""
+              }`}
+            />
           </div>
         </div>
-        
-        {/* Bottom glow */}
-        <div className={`absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-primary/15 to-transparent pointer-events-none transition-opacity duration-500 ${isActive ? 'opacity-100' : 'opacity-0'}`} />
       </div>
     </a>
   );
