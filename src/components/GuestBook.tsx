@@ -148,14 +148,12 @@ export function GuestBook() {
 
   return (
     <section>
-      {/* Section header */}
-      <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-12">
-        <div className="grunge-divider" />
-        <h2 className="font-serif text-xl md:text-3xl font-semibold stranger-glow uppercase tracking-wider flex items-center gap-2 md:gap-3 animate-breathe">
-          <MessageSquare className="w-5 h-5 md:w-6 md:h-6 animate-electrical-flicker" />
+      <div className="mb-8 md:mb-12">
+        <h2 className="font-serif text-4xl md:text-6xl font-black uppercase tracking-tight text-foreground flex items-center gap-3">
+          <MessageSquare className="w-8 h-8 md:w-10 md:h-10" />
           Say Something
         </h2>
-        <div className="grunge-divider" />
+        <div className="h-2 w-24 bg-primary mt-3 rounded-full" />
       </div>
 
       <div className="max-w-2xl mx-auto">
