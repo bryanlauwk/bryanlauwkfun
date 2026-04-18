@@ -1,79 +1,86 @@
 
 
-# Improve Hero Headline and Subtitles
+# Pivot to "Swing Up" Aesthetic — Bright Editorial Sport
 
-## Problem
+## Reference Analysis
 
-The current hero area stacks four text elements tightly:
-1. "Late Nights, Wild Ideas" (big serif headline)
-2. "Experiments, games, and things that crawled out of late nights." (mono subtitle in a box)
-3. TypewriterMotto pill ("Good luck, have fun, don't die")
-4. CrypticWhisper (tiny faded text)
+The uploaded mockup shows a radically different visual language:
+- **Background**: Warm off-white `#FAFAF7` (cream paper)
+- **Accent**: Electric lime green `#C6FF2E` used as a solid block behind the headline
+- **Ink**: Near-black `#0A0E0A` for type and line work
+- **Type**: Heavy 900-weight sans-serif (Archivo / similar) — punchy, oversized, editorial
+- **Illustration**: Flat, minimal line drawings (badminton racquet, phone mockup) with thick 6px strokes
+- **Mood**: Sporty, modern, confident, daylight — opposite of the current "80s dark fantasy"
 
-This creates a cramped, repetitive block -- "late nights" appears twice, and three distinct text treatments compete for attention.
+## Confirmation Needed
 
-## Proposed Changes
+This is a **complete aesthetic overhaul**, not a tweak. It will replace:
+- The dark indigo + crimson + glow palette
+- Stranger Things / horror motifs (Christmas lights, electrical flicker, fog, lightning, Memory Orbs)
+- Serif drama type with sans-serif editorial type
+- All the grunge / film grain / vignette / VHS effects
 
-### A. New Headline Copy
+I'll proceed assuming you want the **full pivot**. If you only want the *new color/type system* but want to keep the dark fantasy weirdness somewhere, stop me and say so.
 
-Replace "Late Nights, Wild Ideas" with something punchier that captures the spirit without repeating "late nights":
+---
 
-```
-I make things
-  for fun
-```
+## Plan
 
-Line 1 ("I make things") in foreground color, Line 2 ("for fun") in the shimmer/primary accent. Short, personal, memorable -- and directly ties to the domain name (bryan.fun).
+### 1. Design Tokens (`src/index.css`)
+Replace `:root` and `.dark` HSL variables:
+- `--background`: `60 20% 97%` (cream)
+- `--foreground`: `120 15% 5%` (near-black)
+- `--primary`: `75 100% 59%` (lime `#C6FF2E`); `--primary-foreground`: dark green `120 65% 14%`
+- `--card`: pure white; `--border`: soft warm gray
+- `--accent`: same lime; `--secondary`: dark ink
+- Remove crimson, electric purple, lightning blue
+Remove/neutralize atmospheric utilities: `film-grain`, `vignette`, `fog-layer`, `stranger-glow`, `grunge-divider`, `ink-splatter`, `animate-lightning`, `animate-shimmer`, `animate-breathe`, `animate-twitch`, `animate-electrical-flicker`, `animate-christmas-light`. Keep them as no-ops or strip class usages.
 
-### B. Simplify to One Subtitle
+### 2. Typography (`tailwind.config.ts` + `index.html`)
+- Add Google Fonts link: **Archivo** (700/900) for display, **Inter** (400/500/600) for body, drop the existing serif/mono dramatics
+- Map `font-serif` → Archivo Black, `font-sans` → Inter, `font-mono` → keep as small editorial caption only
 
-Remove the boxed paragraph subtitle entirely. Replace it with a single clean line below the headline:
+### 3. Hero (`src/pages/Index.tsx`)
+- Remove `heroImage`, film-grain, vignette, fog-layer, lightning, `UpsideDownParticles`, `HeroAdPlaceholders`, `CrypticWhisper`, `TypewriterMotto` from the hero composition (we can keep them as easter eggs elsewhere or delete — see Q below)
+- New hero structure:
+  - Left: a **lime green block** (`bg-primary` rounded-2xl) containing the headline "I make things / for fun" in `font-serif` (Archivo Black) `text-7xl/none` dark green
+  - Right: a small flat-line illustration (inline SVG) — a stylized phone/badminton-style mark, but themed to "things I make" (e.g., a controller + cursor + sparkle in 6px black strokes)
+  - Below: short editorial subtitle in Inter medium: "games · experiments · rabbit holes"
+- Generous whitespace, left-aligned (not centered)
 
-```
-games · experiments · rabbit holes
-```
+### 4. Section Headings & Cards
+- "Drops" heading: Archivo Black, oversized, left-aligned, with a small lime underline accent instead of grunge dividers
+- `StrangerThingsCard.tsx` → simplified to a clean white card with thick black border, Archivo title, lime hover-accent on the line and CTA arrow. Remove Christmas lights, monogram ghost, blue overlay, electrical flicker. Keep the lift+shadow polish.
 
-Styled as a spaced-out mono line with interpunct separators -- no background box, no border. This is scannable at a glance and covers the three pillars of the site.
+### 5. Header & Footer
+- `CinematicHeader`: white/cream sticky bar, black logo wordmark in Archivo, lime hover underline on nav links
+- `CinematicFooter`: cream background, simple black icons, lime hover
 
-### C. More Breathing Room
+### 6. Guest Book
+- White card on cream, lime focus rings (already primary-themed so it'll inherit), black type
 
-- Increase margin between headline and subtitle (from `mb-6` to `mb-8`)
-- Increase margin between subtitle and the TypewriterMotto (from `mb-6` to `mb-10`)
-- Keep the TypewriterMotto and CrypticWhisper as they are -- they work well as a secondary "transmission" element lower down
+### 7. Background ambience
+- Remove all dark-fantasy background layers (orbs, grain, vignette, fog, lightning)
+- Add a single subtle grid or paper-texture noise at ~3% opacity for warmth — optional
 
-### D. File Changes
+---
 
-**`src/pages/Index.tsx`** (hero section, ~lines 48-65):
-- Replace the `h1` content with the new two-line headline
-- Replace the `div.max-w-xl` subtitle block with the clean interpunct line
-- Adjust spacing classes
+## Files Changed
 
-No other files need changes.
+| File | Change |
+|---|---|
+| `src/index.css` | New cream/lime palette, neutralize atmospheric utilities |
+| `tailwind.config.ts` | Archivo + Inter font families |
+| `index.html` | Google Fonts link |
+| `src/pages/Index.tsx` | New hero with lime block + flat SVG, remove dark-fantasy layers |
+| `src/components/StrangerThingsCard.tsx` | Strip horror effects, clean editorial card |
+| `src/components/CinematicHeader.tsx` | Light theme styling |
+| `src/components/CinematicFooter.tsx` | Light theme styling |
+| `src/components/GuestBook.tsx` | Light theme adjustments |
 
-## Technical Details
+---
 
-### Index.tsx Hero Section (before)
-```jsx
-<h1>
-  <span>Late Nights,</span>
-  <span>Wild Ideas</span>
-</h1>
-<div className="max-w-xl mx-auto mb-6">
-  <p className="... font-mono ... bg-background/60 backdrop-blur-sm ...">
-    Experiments, games, and things that crawled out of late nights.
-  </p>
-</div>
-```
+## One Open Question
 
-### Index.tsx Hero Section (after)
-```jsx
-<h1>
-  <span>I make things</span>
-  <span>for fun</span>
-</h1>
-<p className="font-mono text-sm md:text-base text-foreground/70 tracking-widest uppercase mb-10">
-  games · experiments · rabbit holes
-</p>
-```
+What happens to the **dark fantasy easter eggs** (Konami code → Upside Down, CrypticWhisper, Memory Orbs, sound effects)? I'll keep them wired up but disabled by default unless you say otherwise — they can still trigger via Konami code as a hidden mode.
 
-The TypewriterMotto and CrypticWhisper remain unchanged below, providing the secondary atmospheric layer.
