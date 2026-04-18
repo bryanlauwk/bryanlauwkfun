@@ -14,7 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        serif: ["Playfair Display", "Georgia", "serif"],
+        serif: ["Archivo", "Inter", "sans-serif"],
+        display: ["Archivo", "Inter", "sans-serif"],
         sans: ["Inter", "Segoe UI", "sans-serif"],
         mono: ["JetBrains Mono", "Fira Code", "monospace"],
       },

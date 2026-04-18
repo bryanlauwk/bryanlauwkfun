@@ -1,68 +1,44 @@
-import { Skull, Github, Twitter, Linkedin } from "lucide-react";
+import { Github, Twitter, Linkedin } from "lucide-react";
 
 export function CinematicFooter() {
   const currentYear = new Date().getFullYear();
-  
+
   return (
-    <footer className="relative z-20 py-16 md:py-20 px-4 md:px-12 border-t border-border/30 torn-edge-top">
-      {/* Decorative top line */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
-      
+    <footer className="relative z-20 py-16 md:py-24 px-4 md:px-12 border-t-2 border-foreground/10 bg-background">
       <div className="max-w-7xl mx-auto">
-        {/* Main footer content */}
-        <div className="flex flex-col items-center gap-6 md:gap-8">
-          {/* Social links */}
-          <div className="flex items-center gap-4">
-            <a 
-              href="https://github.com/bryanlauwk" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="p-3 rounded-sm border border-border/30 bg-card/30 hover:bg-card/60 hover:border-primary/30 hover:scale-110 transition-all duration-300 group"
-              aria-label="GitHub"
-            >
-              <Github className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" />
-            </a>
-            <a 
-              href="https://twitter.com/bryanlauwk" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="p-3 rounded-sm border border-border/30 bg-card/30 hover:bg-card/60 hover:border-primary/30 hover:scale-110 transition-all duration-300 group"
-              aria-label="Twitter"
-            >
-              <Twitter className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" />
-            </a>
-            <a 
-              href="https://linkedin.com/in/bryanlauwk" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="p-3 rounded-sm border border-border/30 bg-card/30 hover:bg-card/60 hover:border-primary/30 hover:scale-110 transition-all duration-300 group"
-              aria-label="LinkedIn"
-            >
-              <Linkedin className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" />
-            </a>
+        <div className="flex flex-col items-center gap-8">
+          <div className="flex items-center gap-3">
+            {[
+              { href: "https://github.com/bryanlauwk", Icon: Github, label: "GitHub" },
+              { href: "https://twitter.com/bryanlauwk", Icon: Twitter, label: "Twitter" },
+              { href: "https://linkedin.com/in/bryanlauwk", Icon: Linkedin, label: "LinkedIn" },
+            ].map(({ href, Icon, label }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 rounded-full border-2 border-foreground bg-card hover:bg-primary hover:-translate-y-1 transition-all duration-200"
+                aria-label={label}
+              >
+                <Icon className="w-4 h-4 text-foreground" />
+              </a>
+            ))}
           </div>
-          
-          {/* Motto */}
-          <div className="flex items-center gap-2 text-muted-foreground">
-            <Skull className="w-4 h-4 text-primary animate-twitch" />
-            <span className="font-mono uppercase tracking-widest text-xs">
+
+          <div className="flex items-center gap-3 text-foreground/70">
+            <span className="h-2 w-2 rounded-full bg-primary" />
+            <span className="font-mono uppercase tracking-[0.3em] text-xs font-medium">
               Don't die out there
             </span>
-            <Skull className="w-4 h-4 text-primary animate-twitch" style={{ animationDelay: '2.5s' }} />
+            <span className="h-2 w-2 rounded-full bg-primary" />
           </div>
-          
-          {/* Divider */}
-          <div className="w-24 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-          
-          {/* Copyright */}
-          <p className="text-xs text-muted-foreground/70 font-mono text-center">
-            © {currentYear} bryanlauwk · Made somewhere in the void
+
+          <p className="text-xs text-foreground/50 font-mono text-center">
+            © {currentYear} bryanlauwk · Made somewhere in the daylight
           </p>
         </div>
       </div>
-      
-      {/* Decorative bottom glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
     </footer>
   );
 }
