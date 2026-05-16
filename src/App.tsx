@@ -13,6 +13,11 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
+import StiveLanding from "./pages/stive/Landing";
+import StiveUpload from "./pages/stive/Upload";
+import StiveAnalyze from "./pages/stive/Analyze";
+import StiveGenerate from "./pages/stive/Generate";
+import StiveUniverse from "./pages/stive/Universe";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -52,6 +57,11 @@ const App = () => {
                 <Route path="/" element={<Index />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/admin" element={<Admin />} />
+                <Route path="/stive" element={<StiveLanding />} />
+                <Route path="/stive/upload" element={<StiveUpload />} />
+                <Route path="/stive/analyze" element={<StiveAnalyze />} />
+                <Route path="/stive/generate" element={<StiveGenerate />} />
+                <Route path="/stive/universe" element={<StiveUniverse />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
