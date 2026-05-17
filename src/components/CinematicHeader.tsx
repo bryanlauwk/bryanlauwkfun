@@ -40,7 +40,7 @@ export function CinematicHeader() {
               <span className="font-serif text-base md:text-xl font-black uppercase tracking-tight text-foreground">
                 Bryan Lau
               </span>
-              <span className="font-mono text-[10px] md:text-xs text-foreground/60 uppercase tracking-[0.2em]">
+              <span className="font-mono text-[10px] md:text-xs text-muted-foreground uppercase tracking-[0.2em]">
                 Web collective
               </span>
             </div>

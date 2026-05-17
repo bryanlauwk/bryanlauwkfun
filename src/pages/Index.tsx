@@ -3,8 +3,14 @@ import { CinematicFooter } from "@/components/CinematicFooter";
 import { ProjectGrid } from "@/components/ProjectGrid";
 import { ScrollSection } from "@/components/ScrollSection";
 import { GuestBook } from "@/components/GuestBook";
+import { useSEO } from "@/hooks/useSEO";
 
 const Index = () => {
+  useSEO({
+    title: "Bryan Lau — Games, experiments and rabbit holes",
+    description: "Drops from Bryan Lau: small games, web experiments and side projects made for fun. Late nights, wild ideas, shipped weekly.",
+    canonical: "https://www.bryanlauwk.fun/",
+  });
   return (
     <div className="min-h-screen flex flex-col bg-background relative">
       <CinematicHeader />
@@ -49,7 +55,7 @@ const Index = () => {
               </div>
             </div>
 
-            <p className="font-mono text-xs md:text-sm text-foreground/70 tracking-[0.3em] uppercase mt-8 md:mt-10">
+            <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-[0.3em] uppercase mt-8 md:mt-10">
               games · experiments · rabbit holes
             </p>
           </section>

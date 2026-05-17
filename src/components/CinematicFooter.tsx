@@ -26,7 +26,7 @@ export function CinematicFooter() {
             ))}
           </div>
 
-          <div className="flex items-center gap-3 text-foreground/70">
+          <div className="flex items-center gap-3 text-muted-foreground">
             <span className="h-2 w-2 rounded-full bg-primary" />
             <span className="font-mono uppercase tracking-[0.3em] text-xs font-medium">
               Don't die out there
@@ -34,7 +34,7 @@ export function CinematicFooter() {
             <span className="h-2 w-2 rounded-full bg-primary" />
           </div>
 
-          <p className="text-xs text-foreground/50 font-mono text-center">
+          <p className="text-xs text-muted-foreground font-mono text-center">
             © {currentYear} bryanlauwk · Made somewhere in the daylight
           </p>
         </div>
