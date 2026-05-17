@@ -35,7 +35,7 @@ export function StrangerThingsCard({ project, index, isFocused = false }: Strang
       >
         {/* Header */}
         <div className="px-5 pt-5 pb-3 flex items-center justify-between">
-          <span className="font-mono text-xs text-foreground/60 uppercase tracking-widest font-medium">
+          <span className="font-mono text-xs text-muted-foreground uppercase tracking-widest font-medium">
             #{episodeNum}
           </span>
           {project.tag && (
@@ -58,7 +58,7 @@ export function StrangerThingsCard({ project, index, isFocused = false }: Strang
           />
 
           {project.description && (
-            <p className="text-foreground/70 text-sm leading-relaxed flex-1">
+            <p className="text-muted-foreground text-sm leading-relaxed flex-1">
               {project.description}
             </p>
           )}

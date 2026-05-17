@@ -55,7 +55,7 @@ const Index = () => {
               </div>
             </div>
 
-            <p className="font-mono text-xs md:text-sm text-foreground/70 tracking-[0.3em] uppercase mt-8 md:mt-10">
+            <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-[0.3em] uppercase mt-8 md:mt-10">
               games · experiments · rabbit holes
             </p>
           </section>
