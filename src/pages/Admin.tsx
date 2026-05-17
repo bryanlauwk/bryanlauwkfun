@@ -318,7 +318,15 @@ function SortableSponsorCard({ sponsor, onEdit, onDelete, onToggleVisibility }: 
   );
 }
 
+import { useSEO } from "@/hooks/useSEO";
+
 export default function Admin() {
+  useSEO({
+    title: "Admin — Bryan Lau",
+    description: "Internal control room for managing drops, guest book and sponsors on bryanlauwk.fun.",
+    canonical: "https://www.bryanlauwk.fun/admin",
+    noindex: true,
+  });
   const navigate = useNavigate();
   const { user, isAdmin, loading: authLoading, signOut } = useAuth();
   
