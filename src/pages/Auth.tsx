@@ -6,8 +6,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { useSEO } from "@/hooks/useSEO";
 
 export default function Auth() {
+  useSEO({
+    title: "Sign in — Bryan Lau",
+    description: "Sign in to manage drops, guest book messages and sponsors on bryanlauwk.fun.",
+    canonical: "https://www.bryanlauwk.fun/auth",
+    noindex: true,
+  });
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
