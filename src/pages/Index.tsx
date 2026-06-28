@@ -3,6 +3,8 @@ import { CinematicFooter } from "@/components/CinematicFooter";
 import { ProjectGrid } from "@/components/ProjectGrid";
 import { ScrollSection } from "@/components/ScrollSection";
 import { GuestBook } from "@/components/GuestBook";
+import { StampBadge } from "@/components/StampBadge";
+import { MarkerUnderline, RedactionReveal } from "@/components/RedactionReveal";
 import { useSEO } from "@/hooks/useSEO";
 
 const Index = () => {
@@ -18,7 +20,13 @@ const Index = () => {
       <main id="main-content" className="flex-1 relative z-10 px-4 md:px-12 py-8 md:py-16">
         <div className="max-w-7xl mx-auto">
           {/* Hero */}
-          <section className="mb-16 md:mb-28 animate-fade-in-up">
+          <section className="mb-16 md:mb-28 animate-fade-in-up relative">
+            <div className="absolute -inset-x-4 -top-6 -bottom-10 bg-grid-paper -z-10 rounded-2xl" aria-hidden="true" />
+
+            <div className="mb-4 md:mb-6 flex items-center gap-3">
+              <StampBadge label="Dossier // Portfolio" />
+            </div>
+
             <div className="grid md:grid-cols-[1.4fr_1fr] gap-6 md:gap-10 items-center">
               {/* Lime block headline */}
               <div className="bg-primary rounded-2xl p-8 md:p-12 lg:p-14 border-2 border-foreground shadow-[6px_6px_0_hsl(var(--foreground))]">
@@ -56,7 +64,7 @@ const Index = () => {
             </div>
 
             <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-[0.3em] uppercase mt-8 md:mt-10">
-              games · experiments · rabbit holes
+              <MarkerUnderline>games</MarkerUnderline> · experiments · rabbit holes
             </p>
           </section>
 
@@ -67,6 +75,10 @@ const Index = () => {
                 Drops
               </h2>
               <div className="h-2 w-24 bg-primary mt-3 rounded-full" />
+              <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-wider mt-4">
+                shipped on a whim, kept because{" "}
+                <RedactionReveal>they worked</RedactionReveal>.
+              </p>
             </div>
             <ProjectGrid />
           </ScrollSection>
