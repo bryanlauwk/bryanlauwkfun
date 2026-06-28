@@ -9,8 +9,8 @@ import { useSEO } from "@/hooks/useSEO";
 
 const Index = () => {
   useSEO({
-    title: "Bryan Lau — Games, experiments and rabbit holes",
-    description: "Drops from Bryan Lau: small games, web experiments and side projects made for fun. Late nights, wild ideas, shipped weekly.",
+    title: "Bryan Lau — I build dumb ideas. They keep working.",
+    description: "Bryan Lau builds dumb ideas that keep working. Some of them ship. Games, experiments and rabbit holes, late nights, shipped weekly.",
     canonical: "https://www.bryanlauwk.fun/",
   });
   return (
@@ -24,16 +24,16 @@ const Index = () => {
             <div className="absolute -inset-x-4 -top-6 -bottom-10 bg-grid-paper -z-10 rounded-2xl" aria-hidden="true" />
 
             <div className="mb-4 md:mb-6 flex items-center gap-3">
-              <StampBadge label="Dossier // Portfolio" />
+              <StampBadge label="Built to be screenshotted" />
             </div>
 
             <div className="grid md:grid-cols-[1.4fr_1fr] gap-6 md:gap-10 items-center">
               {/* Lime block headline */}
               <div className="bg-primary rounded-2xl p-8 md:p-12 lg:p-14 border-2 border-foreground shadow-[6px_6px_0_hsl(var(--foreground))]">
-                <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase leading-[0.9] tracking-tight text-primary-foreground">
-                  <span className="block">I make</span>
-                  <span className="block">things</span>
-                  <span className="block italic">for fun.</span>
+                <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase leading-[1.05] tracking-tight text-primary-foreground">
+                  <span className="block">I build dumb ideas.</span>
+                  <span className="block">They keep working.</span>
+                  <span className="block italic">Some of them ship.</span>
                 </h1>
               </div>
 
