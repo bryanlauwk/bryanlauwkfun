@@ -6,6 +6,7 @@ import { GuestBook } from "@/components/GuestBook";
 import { StampBadge } from "@/components/StampBadge";
 import { MarkerUnderline, RedactionReveal } from "@/components/RedactionReveal";
 import { useSEO } from "@/hooks/useSEO";
+import heroPortrait from "@/assets/hero-portrait.png";
 
 const Index = () => {
   useSEO({
@@ -37,29 +38,14 @@ const Index = () => {
                 </h1>
               </div>
 
-              {/* Flat-line illustration */}
+              {/* Portrait illustration */}
               <div className="flex justify-center md:justify-end">
-                <svg
-                  viewBox="0 0 240 240"
-                  className="w-48 h-48 md:w-64 md:h-64 lg:w-72 lg:h-72"
-                  fill="none"
-                  stroke="hsl(var(--foreground))"
-                  strokeWidth="6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                >
-                  {/* Phone / browser frame */}
-                  <rect x="40" y="30" width="120" height="170" rx="14" />
-                  <line x1="40" y1="60" x2="160" y2="60" />
-                  <circle cx="55" cy="45" r="3" fill="hsl(var(--foreground))" />
-                  {/* Cursor arrow */}
-                  <path d="M85 100 L85 150 L100 138 L110 160 L120 156 L110 134 L130 134 Z" fill="hsl(var(--primary))" />
-                  {/* Sparkles */}
-                  <path d="M180 70 L180 90 M170 80 L190 80" />
-                  <path d="M195 130 L195 145 M188 137 L202 137" />
-                  <path d="M55 175 L55 188 M48 181 L62 181" />
-                </svg>
+                <img
+                  src={heroPortrait}
+                  alt="Bryan Lau portrait illustration"
+                  className="w-56 h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 object-contain"
+                  loading="eager"
+                />
               </div>
             </div>
 
