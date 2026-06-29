@@ -41,6 +41,9 @@
     --input: 60 10% 88%;
     --ring: 75 100% 45%;
 
+    /* MSCHF Dossier red — for tape, stamps, marker bars */
+    --dossier-red: 4 86% 55%;
+
     --radius: 0.75rem;
 
     --sidebar-background: 60 20% 97%;
@@ -101,7 +104,55 @@
   }
 }
 
-/* ===== NEUTRALIZED LEGACY EFFECTS (kept as no-ops) ===== */
+/* ===== MSCHF DOSSIER UTILITIES ===== */
+.bg-grid-paper {
+  background-color: hsl(var(--background));
+  background-image:
+    linear-gradient(hsl(var(--foreground) / 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--foreground) / 0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Red marker tape — quote strip */
+.dossier-tape {
+  position: relative;
+  display: inline-block;
+  padding: 0.5rem 1.25rem;
+  background: hsl(var(--dossier-red));
+  color: hsl(0 0% 100%);
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transform: rotate(-1.2deg);
+  box-shadow: 0 2px 0 hsl(var(--foreground) / 0.15);
+  clip-path: polygon(1% 8%, 99% 0%, 100% 92%, 0% 100%);
+}
+
+/* Red CONFIDENTIAL / stamp style */
+.dossier-stamp {
+  display: inline-block;
+  padding: 0.35rem 0.8rem;
+  border: 3px solid hsl(var(--dossier-red));
+  color: hsl(var(--dossier-red));
+  font-family: "Archivo", sans-serif;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  background: transparent;
+  opacity: 0.92;
+  filter: contrast(1.05);
+}
+
+/* Black tape corner */
+.dossier-tape-black {
+  position: absolute;
+  width: 80px;
+  height: 22px;
+  background: hsl(var(--foreground));
+  opacity: 0.85;
+  pointer-events: none;
+}
 .film-grain::before,
 .vignette::after,
 .lightning-overlay::before,

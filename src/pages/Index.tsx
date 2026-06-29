@@ -20,39 +20,70 @@ const Index = () => {
 
       <main id="main-content" className="flex-1 relative z-10 px-4 md:px-12 py-8 md:py-16">
         <div className="max-w-7xl mx-auto">
-          {/* Hero */}
+          {/* Hero — MSCHF Structured Chaos dossier */}
           <section className="mb-16 md:mb-28 animate-fade-in-up relative">
-            <div className="absolute -inset-x-4 -top-6 -bottom-10 bg-grid-paper -z-10 rounded-2xl" aria-hidden="true" />
-
-            <div className="mb-4 md:mb-6 flex items-center gap-3">
-              <StampBadge label="Built to be screenshotted" />
+            {/* paper + grid + tape */}
+            <div className="absolute -inset-x-4 -top-6 -bottom-10 bg-grid-paper -z-10 rounded-2xl border-2 border-foreground/10 overflow-hidden" aria-hidden="true">
+              <span className="dossier-tape-black left-6 -top-2 rotate-[-8deg]" />
+              <span className="dossier-tape-black right-10 -top-2 rotate-[6deg]" />
             </div>
 
-            <div className="grid md:grid-cols-[1.4fr_1fr] gap-6 md:gap-10 items-center">
-              {/* Lime block headline */}
-              <div className="bg-primary rounded-2xl p-8 md:p-12 lg:p-14 border-2 border-foreground shadow-[6px_6px_0_hsl(var(--foreground))]">
-                <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase leading-[1.05] tracking-tight text-primary-foreground">
-                  <span className="block">I build dumb ideas.</span>
-                  <span className="block">They keep working.</span>
-                  <span className="block italic">Some of them ship.</span>
+            {/* dossier header strip */}
+            <div className="flex items-center justify-between mb-6 md:mb-10 font-mono text-[10px] md:text-xs uppercase tracking-[0.25em] text-muted-foreground">
+              <span>Dossier // Internal Distribution Only</span>
+              <span className="hidden md:inline">File 001 — bryan.fun</span>
+            </div>
+
+            <div className="mb-4 md:mb-6 flex items-center gap-4 flex-wrap">
+              <StampBadge label="Built to be screenshotted" />
+              <span className="dossier-stamp" style={{ transform: "rotate(-4deg)" }}>Confidential</span>
+            </div>
+
+            <div className="grid md:grid-cols-[1.5fr_1fr] gap-6 md:gap-10 items-center">
+              {/* Headline — raw black Archivo on cream paper */}
+              <div className="relative">
+                <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase leading-[0.95] tracking-tight text-foreground">
+                  <span className="block">I build</span>
+                  <span className="block">dumb ideas.</span>
+                  <span className="block">They keep</span>
+                  <span className="block">
+                    <MarkerUnderline>working.</MarkerUnderline>
+                  </span>
                 </h1>
               </div>
 
-              {/* Portrait illustration */}
-              <div className="flex justify-center md:justify-end">
+              {/* Portrait — blends naturally into cream paper */}
+              <div className="relative flex justify-center md:justify-end">
+                <div
+                  className="absolute inset-0 -z-10 rounded-full blur-2xl opacity-40"
+                  style={{ background: "radial-gradient(circle at 50% 45%, hsl(75 100% 59% / 0.55), transparent 60%)" }}
+                  aria-hidden="true"
+                />
                 <img
                   src={heroPortrait}
                   alt="Bryan Lau portrait illustration"
-                  className="w-56 h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 object-contain"
+                  className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain mix-blend-multiply drop-shadow-[6px_8px_0_hsl(var(--foreground)/0.08)]"
                   loading="eager"
+                  style={{ filter: "contrast(1.02)" }}
                 />
               </div>
             </div>
 
-            <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-[0.3em] uppercase mt-8 md:mt-10">
-              <MarkerUnderline>games</MarkerUnderline> · experiments · rabbit holes
+            {/* MSCHF red marker-tape quote */}
+            <div className="mt-8 md:mt-10 flex flex-col md:flex-row md:items-end gap-4 md:gap-8">
+              <p className="dossier-tape text-sm md:text-base max-w-2xl">
+                In a crowded market, safe is invisible — and therefore the most dangerous thing a brand can do.
+              </p>
+              <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.25em] text-muted-foreground">
+                — Gabe Whaley, MSCHF
+              </span>
+            </div>
+
+            <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-[0.3em] uppercase mt-6 md:mt-8">
+              games · experiments · rabbit holes
             </p>
           </section>
+
 
           {/* Drops */}
           <ScrollSection animation="fade-up" className="mt-16 md:mt-24">
