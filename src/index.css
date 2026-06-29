@@ -41,6 +41,9 @@
     --input: 60 10% 88%;
     --ring: 75 100% 45%;
 
+    /* MSCHF Dossier red — for tape, stamps, marker bars */
+    --dossier-red: 4 86% 55%;
+
     --radius: 0.75rem;
 
     --sidebar-background: 60 20% 97%;
