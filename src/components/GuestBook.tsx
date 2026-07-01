@@ -289,21 +289,21 @@ export function GuestBook() {
               return (
                 <div
                   key={entry.id}
-                  className="relative bg-card/50 backdrop-blur-sm border border-border/50 rounded-sm p-4 animate-fade-in-up"
+                  className="relative bg-card border-2 border-foreground rounded-md p-4 shadow-[3px_3px_0_hsl(var(--foreground))] animate-fade-in-up"
                   style={{ animationDelay: `${index * 50}ms` }}
                 >
                   <div className="flex items-start justify-between gap-4 mb-2">
                     <div className="flex items-center gap-2">
-                      <CatIcon className="w-3 h-3 text-primary/60" />
-                      <div className="font-serif text-sm font-semibold text-foreground">
+                      <CatIcon className="w-3.5 h-3.5 text-foreground" />
+                      <div className="font-mono text-xs font-bold text-foreground uppercase tracking-[0.15em]">
                         {entry.name}
                       </div>
                     </div>
-                    <div className="font-mono text-xs text-muted-foreground/70">
+                    <div className="font-mono text-[10px] text-muted-foreground uppercase tracking-widest">
                       {formatDate(entry.created_at)}
                     </div>
                   </div>
-                  <p className="font-mono text-sm text-muted-foreground leading-relaxed">
+                  <p className="font-mono text-sm text-foreground leading-relaxed border-l-2 border-primary pl-3">
                     {entry.message}
                   </p>
                 </div>
