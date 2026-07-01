@@ -23,34 +23,41 @@ export function CinematicHeader() {
       </a>
 
       <header
-        className={`sticky top-0 z-50 px-4 py-3 md:px-12 md:py-5 transition-all duration-300 ${
+        className={`sticky top-0 z-50 px-4 py-3 md:px-8 md:py-4 transition-all duration-300 relative ${
           scrolled
-            ? "bg-background/85 backdrop-blur-md border-b-2 border-foreground/10"
-            : "bg-transparent border-b-2 border-transparent"
+            ? "bg-background/90 backdrop-blur-md border-b-2 border-foreground"
+            : "bg-background/60 backdrop-blur-sm border-b-2 border-foreground/20"
         }`}
       >
+        {/* dossier tape corners */}
+        <span className="dossier-tape-black left-8 -top-2 rotate-[-6deg]" aria-hidden="true" />
+        <span className="dossier-tape-black right-16 -top-2 rotate-[4deg]" aria-hidden="true" />
+
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img
               src={faviconImage}
               alt="Bryan Lau"
-              className="w-9 h-9 md:w-10 md:h-10 rounded-lg object-cover border-2 border-foreground"
+              className="w-9 h-9 md:w-10 md:h-10 rounded-md object-cover border-2 border-foreground shadow-[3px_3px_0_hsl(var(--foreground))]"
             />
             <div className="flex flex-col leading-tight">
               <span className="font-serif text-base md:text-xl font-black uppercase tracking-tight text-foreground">
                 Bryan Lau
               </span>
-              <span className="font-mono text-[10px] md:text-xs text-muted-foreground uppercase tracking-[0.2em]">
-                Web collective
+              <span className="font-mono text-[10px] md:text-xs text-muted-foreground uppercase tracking-[0.25em]">
+                File 001 · Web collective
               </span>
             </div>
           </div>
 
           <div className="flex items-center gap-3 md:gap-4">
+            <span className="hidden md:inline-block dossier-stamp text-[10px]" style={{ transform: "rotate(-3deg)" }}>
+              Classified
+            </span>
             <SoundToggle />
             <div className="visitor-counter flex items-center gap-1.5 text-xs md:text-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-              <span>{isLoading ? "---" : (count ?? 0).toString().padStart(3, "0")}</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+              <span>VIS·{isLoading ? "---" : (count ?? 0).toString().padStart(4, "0")}</span>
             </div>
           </div>
         </div>
