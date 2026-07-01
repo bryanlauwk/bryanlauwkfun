@@ -160,13 +160,16 @@ export function GuestBook() {
         {/* Unified form */}
         <form
           onSubmit={handleSubmit}
-          className="relative bg-card/80 backdrop-blur-sm border border-border rounded-sm p-6 mb-8 scratched-surface"
+          className="relative bg-card border-2 border-foreground rounded-lg p-6 mb-8 shadow-[6px_6px_0_hsl(var(--foreground))]"
         >
-          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+          <span className="dossier-tape-black left-8 -top-1.5 rotate-[-6deg]" aria-hidden="true" />
 
-          <div className="flex items-center gap-2 mb-4 text-xs font-mono text-muted-foreground uppercase tracking-widest">
-            <Radio className="w-3 h-3 animate-electrical-flicker text-primary" />
-            Drop a message
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-2 text-[10px] font-mono text-foreground uppercase tracking-[0.25em] font-bold">
+              <Radio className="w-3 h-3 text-primary" />
+              Transmission Form
+            </div>
+            <span className="dossier-stamp text-[10px]" style={{ transform: "rotate(3deg)" }}>Open</span>
           </div>
 
           {/* Category selector */}
@@ -286,21 +289,21 @@ export function GuestBook() {
               return (
                 <div
                   key={entry.id}
-                  className="relative bg-card/50 backdrop-blur-sm border border-border/50 rounded-sm p-4 animate-fade-in-up"
+                  className="relative bg-card border-2 border-foreground rounded-md p-4 shadow-[3px_3px_0_hsl(var(--foreground))] animate-fade-in-up"
                   style={{ animationDelay: `${index * 50}ms` }}
                 >
                   <div className="flex items-start justify-between gap-4 mb-2">
                     <div className="flex items-center gap-2">
-                      <CatIcon className="w-3 h-3 text-primary/60" />
-                      <div className="font-serif text-sm font-semibold text-foreground">
+                      <CatIcon className="w-3.5 h-3.5 text-foreground" />
+                      <div className="font-mono text-xs font-bold text-foreground uppercase tracking-[0.15em]">
                         {entry.name}
                       </div>
                     </div>
-                    <div className="font-mono text-xs text-muted-foreground/70">
+                    <div className="font-mono text-[10px] text-muted-foreground uppercase tracking-widest">
                       {formatDate(entry.created_at)}
                     </div>
                   </div>
-                  <p className="font-mono text-sm text-muted-foreground leading-relaxed">
+                  <p className="font-mono text-sm text-foreground leading-relaxed border-l-2 border-primary pl-3">
                     {entry.message}
                   </p>
                 </div>

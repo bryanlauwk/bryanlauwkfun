@@ -85,8 +85,18 @@ const Index = () => {
           </section>
 
 
-          {/* Drops */}
-          <ScrollSection animation="fade-up" className="mt-16 md:mt-24">
+          {/* Drops — dossier section */}
+          <ScrollSection animation="fade-up" className="mt-16 md:mt-24 relative">
+            <div className="absolute -inset-x-4 -top-6 -bottom-10 bg-grid-paper -z-10 rounded-2xl border-2 border-foreground/10 overflow-hidden" aria-hidden="true">
+              <span className="dossier-tape-black left-10 -top-2 rotate-[-5deg]" />
+              <span className="dossier-tape-black right-16 -top-2 rotate-[4deg]" />
+            </div>
+
+            <div className="flex items-center justify-between mb-4 font-mono text-[10px] md:text-xs uppercase tracking-[0.25em] text-muted-foreground">
+              <span>Section 02 // Field Reports</span>
+              <span className="hidden md:inline dossier-stamp text-[10px]" style={{ transform: "rotate(2deg)" }}>Evidence</span>
+            </div>
+
             <div className="mb-8 md:mb-12">
               <h2 className="font-serif text-4xl md:text-6xl font-black uppercase tracking-tight text-foreground">
                 Drops
@@ -100,8 +110,16 @@ const Index = () => {
             <ProjectGrid />
           </ScrollSection>
 
-          {/* Guest Book */}
-          <ScrollSection animation="fade-up" className="mt-20 md:mt-32">
+          {/* Guest Book — dossier section */}
+          <ScrollSection animation="fade-up" className="mt-20 md:mt-32 relative">
+            <div className="absolute -inset-x-4 -top-6 -bottom-10 bg-grid-paper -z-10 rounded-2xl border-2 border-foreground/10 overflow-hidden" aria-hidden="true">
+              <span className="dossier-tape-black left-8 -top-2 rotate-[6deg]" />
+              <span className="dossier-tape-black right-12 -top-2 rotate-[-4deg]" />
+            </div>
+            <div className="flex items-center justify-between mb-4 font-mono text-[10px] md:text-xs uppercase tracking-[0.25em] text-muted-foreground">
+              <span>Section 03 // Incoming Transmissions</span>
+              <span className="hidden md:inline dossier-stamp text-[10px]" style={{ transform: "rotate(-2deg)" }}>Log</span>
+            </div>
             <GuestBook />
           </ScrollSection>
         </div>
