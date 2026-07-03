@@ -5,17 +5,13 @@ export function CinematicFooter() {
 
   return (
     <footer className="relative z-20 py-16 md:py-24 px-4 md:px-12 border-t-2 border-foreground bg-background overflow-hidden">
-      {/* dossier grid paper backdrop */}
       <div className="absolute inset-0 bg-grid-paper opacity-40 pointer-events-none" aria-hidden="true" />
-      {/* black tape corners */}
       <span className="dossier-tape-black left-10 -top-2 rotate-[-4deg]" aria-hidden="true" />
       <span className="dossier-tape-black right-20 -top-2 rotate-[3deg]" aria-hidden="true" />
 
       <div className="max-w-7xl mx-auto relative">
-        {/* dossier meta strip */}
         <div className="flex items-center justify-between mb-10 font-mono text-[10px] md:text-xs uppercase tracking-[0.25em] text-muted-foreground">
-          <span>End of File — 001</span>
-          <span className="hidden md:inline">Distribution: Anyone weird enough</span>
+          <span>Studio · {currentYear}</span>
         </div>
 
         <div className="flex flex-col items-center gap-8">
@@ -38,13 +34,12 @@ export function CinematicFooter() {
             ))}
           </div>
 
-          {/* red marker-tape motto */}
-          <p className="dossier-tape text-xs md:text-sm">
+          <p className="font-mono text-xs md:text-sm text-foreground uppercase tracking-[0.3em]">
             Good luck, have fun, don't die.
           </p>
 
           <p className="text-xs text-muted-foreground font-mono text-center uppercase tracking-[0.2em]">
-            © {currentYear} bryanlauwk · Assembled somewhere in the daylight
+            © {currentYear} bryanlauwk
           </p>
         </div>
       </div>
