@@ -18,8 +18,7 @@ export default function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
-  const { signIn, signUp } = useAuth();
+  const { signIn } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -28,18 +27,9 @@ export default function Auth() {
     setIsLoading(true);
 
     try {
-      if (mode === "signin") {
-        await signIn(email, password);
-        toast({ title: "Signed in successfully!" });
-        navigate("/admin");
-      } else {
-        await signUp(email, password);
-        toast({
-          title: "Account created!",
-          description: "You can now sign in.",
-        });
-        setMode("signin");
-      }
+      await signIn(email, password);
+      toast({ title: "Signed in successfully!" });
+      navigate("/admin");
     } catch (error: any) {
       toast({
         title: "Error",
@@ -55,14 +45,8 @@ export default function Auth() {
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl">
-            {mode === "signin" ? "Admin Sign In" : "Create Account"}
-          </CardTitle>
-          <CardDescription>
-            {mode === "signin"
-              ? "Sign in to manage your projects"
-              : "Create an account to get started"}
-          </CardDescription>
+          <CardTitle className="text-2xl">Admin Sign In</CardTitle>
+          <CardDescription>Sign in to manage your projects</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -90,39 +74,9 @@ export default function Auth() {
               />
             </div>
             <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading
-                ? "Loading..."
-                : mode === "signin"
-                ? "Sign In"
-                : "Sign Up"}
+              {isLoading ? "Loading..." : "Sign In"}
             </Button>
           </form>
-
-          <div className="mt-4 text-center text-sm text-muted-foreground">
-            {mode === "signin" ? (
-              <>
-                Don't have an account?{" "}
-                <button
-                  type="button"
-                  onClick={() => setMode("signup")}
-                  className="text-primary underline-offset-4 hover:underline"
-                >
-                  Sign up
-                </button>
-              </>
-            ) : (
-              <>
-                Already have an account?{" "}
-                <button
-                  type="button"
-                  onClick={() => setMode("signin")}
-                  className="text-primary underline-offset-4 hover:underline"
-                >
-                  Sign in
-                </button>
-              </>
-            )}
-          </div>
         </CardContent>
       </Card>
     </div>
