@@ -45,20 +45,18 @@ export function CinematicHeader() {
                 Bryan Lau
               </span>
               <span className="font-mono text-[10px] md:text-xs text-muted-foreground uppercase tracking-[0.25em]">
-                File 001 · Web collective
+                Playable art & experiments
               </span>
             </div>
           </div>
 
           <div className="flex items-center gap-3 md:gap-4">
-            <span className="hidden md:inline-block dossier-stamp text-[10px]" style={{ transform: "rotate(-3deg)" }}>
-              Classified
-            </span>
             <SoundToggle />
             <div className="visitor-counter flex items-center gap-1.5 text-xs md:text-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-              <span>VIS·{isLoading ? "---" : (count ?? 0).toString().padStart(4, "0")}</span>
+              <span>{isLoading ? "---" : (count ?? 0).toLocaleString()}</span>
             </div>
+
           </div>
         </div>
       </header>
