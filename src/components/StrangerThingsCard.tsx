@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import type { Tables } from "@/integrations/supabase/types";
+import { slugFor } from "@/lib/slug";
 
 interface StrangerThingsCardProps {
   project: Tables<"projects">;
@@ -16,14 +18,12 @@ export function StrangerThingsCard({ project, index, isFocused = false }: Strang
   const year = new Date(project.created_at ?? Date.now()).getFullYear();
 
   return (
-    <a
-      href={project.href}
-      target="_blank"
-      rel="noopener noreferrer"
+    <Link
+      to={`/drops/${slugFor(project)}`}
       className="group relative block h-full"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      aria-label={`Play ${project.title}`}
+      aria-label={`Open ${project.title}`}
     >
       <div
         className={`relative h-full bg-card border-2 border-foreground rounded-lg overflow-hidden transition-all duration-300 ${
@@ -86,6 +86,6 @@ export function StrangerThingsCard({ project, index, isFocused = false }: Strang
           <span>{year}</span>
         </div>
       </div>
-    </a>
+    </Link>
   );
 }

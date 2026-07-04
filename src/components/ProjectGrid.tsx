@@ -1,9 +1,11 @@
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Search, X } from "lucide-react";
 import { usePublicProjects } from "@/hooks/useProjects";
 import { StrangerThingsCard } from "./StrangerThingsCard";
 import { Skeleton } from "./ui/skeleton";
 import { useKeyboardNavigation } from "@/hooks/useKeyboardNavigation";
+import { slugFor } from "@/lib/slug";
 
 function DossierSkeleton({ delay = 0, index = 0 }: { delay?: number; index?: number }) {
   const num = String(index + 1).padStart(2, "0");
@@ -39,6 +41,7 @@ const NEW_WINDOW_DAYS = 45;
 
 export function ProjectGrid() {
   const { data: projects, isLoading } = usePublicProjects();
+  const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState<string>("all");
 
@@ -92,8 +95,8 @@ export function ProjectGrid() {
     columns: 3,
     onSelect: (index) => {
       const target = filtered[index];
-      if (target?.href) {
-        window.open(target.href, "_blank", "noopener,noreferrer");
+      if (target) {
+        navigate(`/drops/${slugFor(target)}`);
       }
     },
   });
