@@ -95,8 +95,8 @@ export function ProjectGrid() {
     columns: 3,
     onSelect: (index) => {
       const target = filtered[index];
-      if (target?.href) {
-        window.open(target.href, "_blank", "noopener,noreferrer");
+      if (target) {
+        navigate(`/drops/${slugFor(target)}`);
       }
     },
   });
