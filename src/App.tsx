@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
+import DropDetail from "./pages/DropDetail";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient({
