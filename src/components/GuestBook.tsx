@@ -102,7 +102,7 @@ export function GuestBook() {
     const result = formSchema.safeParse(data);
     if (!result.success) {
       const fieldErrors: Record<string, string> = {};
-      result.error.errors.forEach((err) => {
+      result.error.issues.forEach((err: { path: (string | number)[]; message: string }) => {
         if (err.path[0]) fieldErrors[String(err.path[0])] = err.message;
       });
       // Email required for private/sponsorship
