@@ -1,0 +1,121 @@
+{
+  "version": 1,
+  "sdk_version": "0.20.0",
+  "path": "/functions/v1/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "bryanlauwk-fun-mcp",
+      "version": "0.1.0",
+      "title": "bryanlauwk.fun"
+    },
+    "tools": [
+      {
+        "name": "list_drops",
+        "title": "List drops",
+        "description": "List public drops (creative playable art & experiments) from bryanlauwk.fun.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": true
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "limit": {
+              "default": 20,
+              "description": "Max drops to return.",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50
+            },
+            "tag": {
+              "description": "Optional tag filter (exact match).",
+              "type": "string"
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_drop",
+        "title": "Get drop",
+        "description": "Fetch a single visible drop by its title (case-insensitive contains match).",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": true
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Full or partial drop title."
+            }
+          },
+          "required": [
+            "title"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "submit_message",
+        "title": "Submit guest book message",
+        "description": "Send a public feedback or idea message to bryanlauwk.fun's guest book. For private/sponsorship inquiries include an email.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": true
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 50,
+              "description": "Sender name (1-50 chars)."
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1000,
+              "description": "Message body (1-1000 chars)."
+            },
+            "category": {
+              "default": "feedback",
+              "description": "Message category.",
+              "type": "string",
+              "enum": [
+                "feedback",
+                "idea",
+                "sponsorship",
+                "private"
+              ]
+            },
+            "email": {
+              "description": "Required for private/sponsorship.",
+              "type": "string",
+              "maxLength": 255,
+              "format": "email",
+              "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+            }
+          },
+          "required": [
+            "name",
+            "message"
+          ]
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
