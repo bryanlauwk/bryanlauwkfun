@@ -200,7 +200,6 @@ export type Database = {
         }
         Returns: boolean
       }
-      increment_page_view: { Args: { p_page_path?: string }; Returns: number }
     }
     Enums: {
       app_role: "admin" | "user"
