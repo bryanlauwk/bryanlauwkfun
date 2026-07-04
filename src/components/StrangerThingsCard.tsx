@@ -86,6 +86,6 @@ export function StrangerThingsCard({ project, index, isFocused = false }: Strang
           <span>{year}</span>
         </div>
       </div>
-    </a>
+    </Link>
   );
 }
