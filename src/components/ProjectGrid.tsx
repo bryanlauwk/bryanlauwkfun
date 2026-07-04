@@ -1,9 +1,11 @@
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Search, X } from "lucide-react";
 import { usePublicProjects } from "@/hooks/useProjects";
 import { StrangerThingsCard } from "./StrangerThingsCard";
 import { Skeleton } from "./ui/skeleton";
 import { useKeyboardNavigation } from "@/hooks/useKeyboardNavigation";
+import { slugFor } from "@/lib/slug";
 
 function DossierSkeleton({ delay = 0, index = 0 }: { delay?: number; index?: number }) {
   const num = String(index + 1).padStart(2, "0");
