@@ -8,14 +8,15 @@ export function useVisitorCounter() {
   useEffect(() => {
     const incrementAndFetch = async () => {
       try {
-        const { data, error } = await supabase.rpc("increment_page_view", {
-          p_page_path: "/",
+        const { data, error } = await supabase.functions.invoke("track-view", {
+          body: { path: "/" },
         });
 
         if (error) {
           console.error("Error incrementing page view:", error);
-        } else {
-          setCount(data as number);
+          await fetchCount();
+        } else if (data && typeof (data as { count?: number }).count === "number") {
+          setCount((data as { count: number }).count);
         }
       } catch (err) {
         console.error("Error with visitor counter:", err);
