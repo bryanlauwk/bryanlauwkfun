@@ -19,50 +19,64 @@ export function useKeyboardNavigation({
     (event: KeyboardEvent) => {
       if (itemCount === 0) return;
 
+      // Don't intercept keys when user is typing in a form field or editable element
+      const target = event.target as HTMLElement | null;
+      if (target) {
+        const tag = target.tagName;
+        if (
+          tag === "INPUT" ||
+          tag === "TEXTAREA" ||
+          tag === "SELECT" ||
+          target.isContentEditable
+        ) {
+          return;
+        }
+      }
+
       const currentIndex = focusedIndex ?? -1;
       let newIndex: number | null = null;
 
       switch (event.key) {
         case "ArrowRight":
-          event.preventDefault();
           if (currentIndex === -1) {
             newIndex = 0;
           } else if (currentIndex < itemCount - 1) {
             newIndex = currentIndex + 1;
           }
+          event.preventDefault();
           break;
 
         case "ArrowLeft":
-          event.preventDefault();
           if (currentIndex === -1) {
             newIndex = 0;
           } else if (currentIndex > 0) {
             newIndex = currentIndex - 1;
           }
+          event.preventDefault();
           break;
 
         case "ArrowDown":
-          event.preventDefault();
           if (currentIndex === -1) {
             newIndex = 0;
           } else if (currentIndex + columns < itemCount) {
             newIndex = currentIndex + columns;
           }
+          event.preventDefault();
           break;
 
         case "ArrowUp":
-          event.preventDefault();
           if (currentIndex === -1) {
             newIndex = 0;
           } else if (currentIndex - columns >= 0) {
             newIndex = currentIndex - columns;
           }
+          event.preventDefault();
           break;
 
         case "Enter":
         case " ":
-          event.preventDefault();
           if (focusedIndex !== null && onSelect) {
+            event.preventDefault();
             playPowerSurge();
             onSelect(focusedIndex);
           }
