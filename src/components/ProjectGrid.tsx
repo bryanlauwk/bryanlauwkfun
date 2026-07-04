@@ -41,6 +41,7 @@ const NEW_WINDOW_DAYS = 45;
 
 export function ProjectGrid() {
   const { data: projects, isLoading } = usePublicProjects();
+  const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState<string>("all");
 
