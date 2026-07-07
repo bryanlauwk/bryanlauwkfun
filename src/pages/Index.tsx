@@ -8,8 +8,8 @@ import heroPortrait from "@/assets/hero-portrait-photo.png";
 
 const Index = () => {
   useSEO({
-    title: "Bryan Lau — Playable art & small experiments",
-    description: "Bryan Lau makes playable art, small web experiments, and interactive things he had to build. Some of them work. Click one.",
+    title: "Bryan Lau — For the curious",
+    description: "Bryan Lau makes small playable art, browser-born experiments, and interactive things for the curious. A stranger kind of internet.",
     canonical: "https://www.bryanlauwk.fun/",
   });
   return (
