@@ -8,8 +8,8 @@ import heroPortrait from "@/assets/hero-portrait-photo.png";
 
 const Index = () => {
   useSEO({
-    title: "Bryan Lau — Playable art & small experiments",
-    description: "Bryan Lau makes playable art, small web experiments, and interactive things he had to build. Some of them work. Click one.",
+    title: "Bryan Lau — For the curious",
+    description: "Bryan Lau makes small playable art, browser-born experiments, and interactive things for the curious. A stranger kind of internet.",
     canonical: "https://www.bryanlauwk.fun/",
   });
   return (
@@ -34,11 +34,11 @@ const Index = () => {
             <div className="grid md:grid-cols-[1.5fr_1fr] gap-10 md:gap-12 items-center">
               <div className="relative">
                 <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase leading-[0.92] tracking-tight text-foreground">
-                  <span className="block">I build</span>
-                  <span className="block">dumb ideas.</span>
-                  <span className="block">They keep</span>
+                  <span className="block">For the curious.</span>
+                  <span className="block">A stranger</span>
+                  <span className="block">kind of</span>
                   <span className="block">
-                    <MarkerUnderline>working.</MarkerUnderline>
+                    <MarkerUnderline>internet.</MarkerUnderline>
                   </span>
                 </h1>
                 <p className="exhibit-label mt-8 md:mt-10 !tracking-[0.3em]">
@@ -135,12 +135,12 @@ const Index = () => {
                     do not trust with a keyboard →
                   </div>
 
-                  {/* Certified dumb stamp — kept, restyled corner */}
+                  {/* Certified curious stamp — kept, restyled corner */}
                   <span
                     className="dossier-stamp absolute -bottom-10 right-4 rotate-[10deg] text-[10px] md:text-xs bg-background/95"
                     aria-hidden="true"
                   >
-                    Certified dumb
+                    Certified curious
                   </span>
                 </figure>
               </div>
