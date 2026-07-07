@@ -140,7 +140,7 @@ const Index = () => {
                     className="dossier-stamp absolute -bottom-10 right-4 rotate-[10deg] text-[10px] md:text-xs bg-background/95"
                     aria-hidden="true"
                   >
-                    Certified dumb
+                    Certified curious
                   </span>
                 </figure>
               </div>
