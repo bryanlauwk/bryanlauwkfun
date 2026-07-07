@@ -181,7 +181,7 @@ function verify(html: string, canonical: string, title: string): string[] {
  * Bake a "drop not found" head into a standalone HTML file.
  * Used for `dist/drops/index.html` and `dist/drops/404.html` so crawlers that
  * land on a stale or unknown /drops/<slug> URL see a proper 404-style preview
- * (noindex, correct title, canonical, og:*/twitter:*) instead of the homepage.
+ * (noindex, correct title, canonical, og and twitter tags) instead of the homepage.
  */
 function renderNotFoundHtml(template: string, canonicalPath: string): string {
   const canonical = `${BASE_URL}${canonicalPath}`;
