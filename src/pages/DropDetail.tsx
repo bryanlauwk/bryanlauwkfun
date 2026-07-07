@@ -23,8 +23,8 @@ export default function DropDetail() {
       <div className="min-h-screen flex flex-col bg-background">
         <CinematicHeader />
         <main className="flex-1 flex items-center justify-center">
-          <p className="font-mono text-xs uppercase tracking-[0.3em] text-muted-foreground animate-pulse">
-            Retrieving file…
+          <p className="exhibit-label animate-electrical-flicker">
+            Installing exhibit…
           </p>
         </main>
         <CinematicFooter />
@@ -46,10 +46,10 @@ export default function DropDetail() {
         <CinematicHeader />
         <main className="flex-1 flex items-center justify-center px-4">
           <div className="text-center">
-            <p className="font-mono text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">
-              Case File // Missing
+            <p className="exhibit-label mb-3">
+              Exhibit missing from collection
             </p>
-            <h1 className="font-serif text-4xl font-black uppercase text-foreground mb-4">
+            <h1 className="font-display text-4xl font-black uppercase text-foreground mb-4">
               Drop not found
             </h1>
             <Link
@@ -131,30 +131,27 @@ export default function DropDetail() {
             <ArrowLeft className="w-3.5 h-3.5" /> All drops
           </Link>
 
-          <article className="relative bg-card border-2 border-foreground rounded-lg shadow-[6px_6px_0_hsl(var(--foreground))] overflow-hidden">
-            <span
-              className="absolute -top-2 left-8 w-20 h-4 bg-foreground/85 rotate-[-6deg] pointer-events-none z-10"
-              aria-hidden="true"
-            />
+          <article className="relative bg-card border border-foreground/15 overflow-hidden">
+            <div className="h-0.5 w-full bg-primary" aria-hidden="true" />
 
-            <div className="px-6 pt-6 pb-3 flex items-center justify-between border-b-2 border-dashed border-foreground/20 bg-grid-paper">
-              <span className="font-mono text-[10px] uppercase tracking-[0.3em] font-bold">
-                Case File · Drop
+            <div className="px-6 pt-5 pb-3 flex items-center justify-between border-b border-foreground/10">
+              <span className="exhibit-label">
+                Exhibit file · Drop
               </span>
               {project.tag && (
-                <span className="inline-flex items-center bg-foreground text-primary rounded-sm px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest font-bold">
+                <span className="inline-flex items-center border border-primary/60 text-primary px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-widest font-bold">
                   {project.tag}
                 </span>
               )}
             </div>
 
             <div className="p-6 md:p-10 space-y-6">
-              <h1 className="font-serif text-4xl md:text-6xl font-black uppercase tracking-tight text-foreground leading-[0.95]">
+              <h1 className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight text-foreground leading-[0.95]">
                 {project.title}
               </h1>
-              <div className="h-2 w-24 bg-primary rounded-full" />
+              <div className="h-1 w-24 bg-primary" />
               {project.description && (
-                <p className="text-muted-foreground text-base md:text-lg leading-relaxed font-mono max-w-2xl">
+                <p className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-2xl">
                   {project.description}
                 </p>
               )}
@@ -163,15 +160,20 @@ export default function DropDetail() {
                 href={project.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-3 border-2 border-foreground rounded-sm bg-primary font-mono text-sm uppercase tracking-widest font-bold text-foreground shadow-[4px_4px_0_hsl(var(--foreground))] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_hsl(var(--foreground))] transition-all"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground border border-primary font-mono text-sm uppercase tracking-widest font-bold hover:bg-transparent hover:text-primary transition-colors"
               >
-                Open the drop
+                Enter the exhibit
                 <ArrowUpRight className="w-4 h-4" />
               </a>
 
-              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground pt-2">
+              <p className="exhibit-label pt-2">
                 Opens {new URL(project.href).hostname} in a new tab
               </p>
+            </div>
+
+            <div className="px-6 py-2.5 border-t border-foreground/10 flex items-center justify-between exhibit-label !text-[9px]">
+              <span>Please touch the art</span>
+              <span className="barcode h-3 w-16 inline-block" aria-hidden="true" />
             </div>
           </article>
         </div>

@@ -78,43 +78,17 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        flicker: {
-          "0%, 100%": { opacity: "1" },
-          "50%": { opacity: "0.85" },
-          "75%": { opacity: "0.95" },
-        },
-        "glow-pulse": {
-          "0%, 100%": { filter: "drop-shadow(0 0 8px hsl(350 85% 55% / 0.5))" },
-          "50%": { filter: "drop-shadow(0 0 20px hsl(350 85% 55% / 0.8))" },
-        },
-        "lightning-flash": {
-          "0%, 90%, 100%": { opacity: "0" },
-          "92%, 95%": { opacity: "0.3" },
-          "93%, 97%": { opacity: "0.1" },
-        },
-        "fog-drift": {
-          "0%": { transform: "translateX(0) translateY(0)" },
-          "50%": { transform: "translateX(20px) translateY(-10px)" },
-          "100%": { transform: "translateX(0) translateY(0)" },
-        },
-        "float-gentle": {
-          "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-8px)" },
-        },
         "fade-in-up": {
           from: { opacity: "0", transform: "translateY(20px)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
+        "fade-in": {
+          from: { opacity: "0" },
+          to: { opacity: "1" },
+        },
         "scale-in": {
           from: { opacity: "0", transform: "scale(0.9)" },
           to: { opacity: "1", transform: "scale(1)" },
-        },
-        "christmas-light": {
-          "0%, 100%": { opacity: "1", transform: "scale(1)" },
-          "10%": { opacity: "0.4" },
-          "30%": { opacity: "0.6" },
-          "50%": { opacity: "0.8", transform: "scale(1.1)" },
-          "70%": { opacity: "0.5" },
         },
         "electrical-flicker": {
           "0%, 100%": { opacity: "1" },
@@ -129,14 +103,9 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        flicker: "flicker 4s ease-in-out infinite",
-        "glow-pulse": "glow-pulse 3s ease-in-out infinite",
-        lightning: "lightning-flash 8s ease-in-out infinite",
-        fog: "fog-drift 12s ease-in-out infinite",
-        "float-gentle": "float-gentle 4s ease-in-out infinite",
         "fade-in-up": "fade-in-up 0.8s ease-out forwards",
+        "fade-in": "fade-in 0.5s ease-out forwards",
         "scale-in": "scale-in 0.6s ease-out forwards",
-        "christmas-light": "christmas-light 2s ease-in-out infinite",
         "electrical-flicker": "electrical-flicker 3s ease-in-out infinite",
       },
     },

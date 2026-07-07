@@ -7,28 +7,24 @@ import { Skeleton } from "./ui/skeleton";
 import { useKeyboardNavigation } from "@/hooks/useKeyboardNavigation";
 import { slugFor } from "@/lib/slug";
 
-function DossierSkeleton({ delay = 0, index = 0 }: { delay?: number; index?: number }) {
+function ExhibitSkeleton({ delay = 0, index = 0 }: { delay?: number; index?: number }) {
   const num = String(index + 1).padStart(2, "0");
   return (
     <div
-      className="relative bg-card border-2 border-foreground rounded-lg overflow-hidden shadow-[4px_4px_0_hsl(var(--foreground))] opacity-0 animate-fade-in-up"
+      className="relative bg-card border border-foreground/15 overflow-hidden opacity-0 animate-fade-in-up"
       style={{ animationDelay: `${delay}ms`, animationFillMode: "forwards" }}
     >
-      <span
-        className="absolute -top-1.5 left-4 w-14 h-4 bg-foreground/85 rotate-[-8deg] pointer-events-none"
-        aria-hidden="true"
-      />
-      <div className="px-5 pt-5 pb-2 flex items-center justify-between bg-grid-paper border-b-2 border-dashed border-foreground/20">
-        <span className="font-mono text-[10px] text-foreground uppercase tracking-[0.25em] font-bold">
-          File · {num}
+      <div className="px-6 pt-6 pb-2 flex items-center justify-between">
+        <span className="font-mono text-[10px] text-muted-foreground uppercase tracking-[0.3em]">
+          Exhibit {num}
         </span>
-        <span className="font-mono text-[10px] text-muted-foreground uppercase tracking-[0.25em]">
-          Retrieving…
+        <span className="font-mono text-[10px] text-muted-foreground uppercase tracking-[0.3em] animate-electrical-flicker">
+          Installing…
         </span>
       </div>
-      <div className="p-5 space-y-3 min-h-[180px]">
+      <div className="p-6 pt-3 space-y-3 min-h-[180px]">
         <Skeleton className="h-8 w-3/4 animate-skeleton-shimmer" />
-        <Skeleton className="h-1.5 w-12 bg-primary/40 animate-skeleton-shimmer" style={{ animationDelay: "0.1s" }} />
+        <Skeleton className="h-1 w-12 bg-primary/40 animate-skeleton-shimmer" style={{ animationDelay: "0.1s" }} />
         <Skeleton className="h-4 w-full animate-skeleton-shimmer" style={{ animationDelay: "0.2s" }} />
         <Skeleton className="h-4 w-2/3 animate-skeleton-shimmer" style={{ animationDelay: "0.3s" }} />
         <Skeleton className="h-8 w-28 mt-4 animate-skeleton-shimmer" style={{ animationDelay: "0.4s" }} />
@@ -105,7 +101,7 @@ export function ProjectGrid() {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
         {Array.from({ length: 3 }).map((_, i) => (
-          <DossierSkeleton key={i} delay={i * 150} index={i} />
+          <ExhibitSkeleton key={i} delay={i * 150} index={i} />
         ))}
       </div>
     );
@@ -127,9 +123,9 @@ export function ProjectGrid() {
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search drops…"
+              placeholder="Search the collection…"
               aria-label="Search drops"
-              className="w-full bg-card border-2 border-foreground rounded-sm pl-9 pr-9 py-2.5 font-mono text-sm text-foreground placeholder:text-muted-foreground shadow-[3px_3px_0_hsl(var(--foreground))] focus:outline-none focus:shadow-[5px_5px_0_hsl(var(--foreground))] focus:-translate-x-0.5 focus:-translate-y-0.5 transition-all"
+              className="w-full bg-card border border-foreground/20 pl-9 pr-9 py-2.5 font-mono text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
             />
             {query && (
               <button
@@ -153,10 +149,10 @@ export function ProjectGrid() {
                   role="tab"
                   aria-selected={isActive}
                   onClick={() => setActiveFilter(f.id)}
-                  className={`font-mono text-[10px] uppercase tracking-[0.25em] font-bold px-3 py-1.5 border-2 border-foreground rounded-sm transition-all ${
+                  className={`font-mono text-[10px] uppercase tracking-[0.25em] font-bold px-3 py-1.5 border transition-colors ${
                     isActive
-                      ? "bg-primary text-foreground shadow-[3px_3px_0_hsl(var(--foreground))] -translate-x-0.5 -translate-y-0.5"
-                      : "bg-card text-foreground hover:bg-primary/20"
+                      ? "bg-primary text-primary-foreground border-primary"
+                      : "bg-transparent text-muted-foreground border-foreground/20 hover:text-foreground hover:border-foreground/50"
                   }`}
                 >
                   {f.label}
@@ -169,25 +165,21 @@ export function ProjectGrid() {
 
       {filtered.length === 0 ? (
         <div className="flex items-center justify-center min-h-[300px]">
-          <div className="relative text-center bg-card p-10 rounded-lg border-2 border-foreground shadow-[6px_6px_0_hsl(var(--foreground))] max-w-md">
+          <div className="relative text-center bg-card p-10 border border-foreground/15 max-w-md">
             <span
-              className="absolute -top-2 left-8 w-16 h-4 bg-foreground/85 rotate-[-6deg] pointer-events-none"
+              className="dossier-stamp absolute -top-4 -right-2 rotate-[8deg] bg-background"
               aria-hidden="true"
-            />
-            <span
-              className="absolute -top-4 -right-2 dossier-stamp"
-              style={{ transform: "rotate(8deg)" }}
             >
-              Redacted
+              Removed
             </span>
-            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-3">
-              Case File // Empty
+            <p className="exhibit-label mb-3">
+              This wall intentionally left blank
             </p>
-            <p className="font-serif text-3xl font-black uppercase text-foreground mb-2">
+            <p className="font-display text-3xl font-black uppercase text-foreground mb-2">
               {hasProjects ? "No matches" : "Nothing here yet"}
             </p>
             <p className="text-muted-foreground font-mono text-xs uppercase tracking-widest">
-              {hasProjects ? "Try another filter or query" : "New drops incoming…"}
+              {hasProjects ? "Try another filter or query" : "New works incoming…"}
             </p>
             {hasProjects && (query || activeFilter !== "all") && (
               <button
@@ -196,7 +188,7 @@ export function ProjectGrid() {
                   setQuery("");
                   setActiveFilter("all");
                 }}
-                className="mt-5 font-mono text-[10px] uppercase tracking-[0.25em] font-bold px-3 py-1.5 border-2 border-foreground rounded-sm bg-primary hover:shadow-[3px_3px_0_hsl(var(--foreground))] transition-all"
+                className="mt-5 font-mono text-[10px] uppercase tracking-[0.25em] font-bold px-3 py-1.5 border border-primary bg-primary text-primary-foreground hover:bg-transparent hover:text-primary transition-colors"
               >
                 Reset filters
               </button>

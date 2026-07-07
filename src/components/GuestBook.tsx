@@ -153,17 +153,15 @@ export function GuestBook() {
           <MessageSquare className="w-8 h-8 md:w-10 md:h-10" />
           Say Something
         </h2>
-        <div className="h-2 w-24 bg-primary mt-3 rounded-full" />
+        <div className="h-1 w-24 bg-primary mt-4" />
       </div>
 
       <div className="max-w-2xl mx-auto">
         {/* Unified form */}
         <form
           onSubmit={handleSubmit}
-          className="relative bg-card border-2 border-foreground rounded-lg p-6 mb-8 shadow-[6px_6px_0_hsl(var(--foreground))]"
+          className="relative bg-card border border-foreground/15 p-6 mb-8"
         >
-          <span className="dossier-tape-black left-8 -top-1.5 rotate-[-6deg]" aria-hidden="true" />
-
           <div className="flex items-center justify-between mb-5">
             <div className="flex items-center gap-2 text-[10px] font-mono text-foreground uppercase tracking-[0.25em] font-bold">
               <Radio className="w-3 h-3 text-primary" />
@@ -289,7 +287,7 @@ export function GuestBook() {
               return (
                 <div
                   key={entry.id}
-                  className="relative bg-card border-2 border-foreground rounded-md p-4 shadow-[3px_3px_0_hsl(var(--foreground))] animate-fade-in-up"
+                  className="relative bg-card border border-foreground/15 p-4 animate-fade-in-up"
                   style={{ animationDelay: `${index * 50}ms` }}
                 >
                   <div className="flex items-start justify-between gap-4 mb-2">
