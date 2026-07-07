@@ -177,6 +177,100 @@ function verify(html: string, canonical: string, title: string): string[] {
   return errs;
 }
 
+/**
+ * Bake a "drop not found" head into a standalone HTML file.
+ * Used for `dist/drops/index.html` and `dist/drops/404.html` so crawlers that
+ * land on a stale or unknown /drops/<slug> URL see a proper 404-style preview
+ * (noindex, correct title, canonical, og and twitter tags) instead of the homepage.
+ */
+function renderNotFoundHtml(template: string, canonicalPath: string): string {
+  const canonical = `${BASE_URL}${canonicalPath}`;
+  const title = "Drop not found — Bryan Lau";
+  const description =
+    "This drop doesn't exist or has been retired. Browse the current collection of drops from Bryan Lau.";
+
+  let html = template;
+
+  html = html.replace(/<title>[^<]*<\/title>/i, `<title>${esc(title)}</title>`);
+  html = html.replace(
+    /<meta\s+name="description"\s+content="[^"]*"\s*\/?>/i,
+    `<meta name="description" content="${esc(description)}" />`,
+  );
+
+  if (/<link\s+rel="canonical"[^>]*>/i.test(html)) {
+    html = html.replace(
+      /<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/i,
+      `<link rel="canonical" href="${canonical}" />`,
+    );
+  } else {
+    html = html.replace(
+      /<\/head>/i,
+      `    <link rel="canonical" href="${canonical}" />\n  </head>`,
+    );
+  }
+
+  // Force noindex + prerender 404 hint
+  if (/<meta\s+name="robots"[^>]*>/i.test(html)) {
+    html = html.replace(
+      /<meta\s+name="robots"\s+content="[^"]*"\s*\/?>/i,
+      `<meta name="robots" content="noindex,follow" />`,
+    );
+  } else {
+    html = html.replace(
+      /<\/head>/i,
+      `    <meta name="robots" content="noindex,follow" />\n    <meta name="prerender-status-code" content="404" />\n  </head>`,
+    );
+  }
+  if (!/prerender-status-code/i.test(html)) {
+    html = html.replace(
+      /<\/head>/i,
+      `    <meta name="prerender-status-code" content="404" />\n  </head>`,
+    );
+  }
+
+  html = html.replace(
+    /<meta\s+property="og:title"\s+content="[^"]*"\s*\/?>/i,
+    `<meta property="og:title" content="${esc(title)}" />`,
+  );
+  html = html.replace(
+    /<meta\s+property="og:description"\s+content="[^"]*"\s*\/?>/i,
+    `<meta property="og:description" content="${esc(description)}" />`,
+  );
+  html = html.replace(
+    /<meta\s+property="og:url"\s+content="[^"]*"\s*\/?>/i,
+    `<meta property="og:url" content="${canonical}" />`,
+  );
+  html = html.replace(
+    /<meta\s+property="og:type"\s+content="[^"]*"\s*\/?>/i,
+    `<meta property="og:type" content="website" />`,
+  );
+  html = html.replace(
+    /<meta\s+property="og:image"\s+content="[^"]*"\s*\/?>/i,
+    `<meta property="og:image" content="${OG_IMAGE}" />`,
+  );
+
+  html = html.replace(
+    /<meta\s+name="twitter:title"\s+content="[^"]*"\s*\/?>/i,
+    `<meta name="twitter:title" content="${esc(title)}" />`,
+  );
+  html = html.replace(
+    /<meta\s+name="twitter:description"\s+content="[^"]*"\s*\/?>/i,
+    `<meta name="twitter:description" content="${esc(description)}" />`,
+  );
+  html = html.replace(
+    /<meta\s+name="twitter:image"\s+content="[^"]*"\s*\/?>/i,
+    `<meta name="twitter:image" content="${OG_IMAGE}" />`,
+  );
+  if (!/twitter:card/i.test(html)) {
+    html = html.replace(
+      /<\/head>/i,
+      `    <meta name="twitter:card" content="summary_large_image" />\n    <meta name="twitter:site" content="${TWITTER_SITE}" />\n  </head>`,
+    );
+  }
+
+  return html;
+}
+
 async function main() {
   if (!existsSync(DIST)) {
     console.warn(`[prerender] ${DIST} does not exist — did vite build run?`);
@@ -189,8 +283,17 @@ async function main() {
   }
   const template = readFileSync(templatePath, "utf8");
   const drops = await fetchDrops();
+
+  // Always write the /drops/ 404 fallback, even when Supabase is unreachable.
+  const dropsDir = join(DIST, "drops");
+  mkdirSync(dropsDir, { recursive: true });
+  const notFoundHtml = renderNotFoundHtml(template, "/drops/");
+  writeFileSync(join(dropsDir, "index.html"), notFoundHtml);
+  writeFileSync(join(dropsDir, "404.html"), notFoundHtml);
+  console.log(`[prerender] wrote /drops/ 404-style fallback (index.html + 404.html).`);
+
   if (drops.length === 0) {
-    console.log("[prerender] no drops found — nothing to write.");
+    console.log("[prerender] no drops found — only fallback written.");
     return;
   }
 

@@ -34,14 +34,28 @@ export default function DropDetail() {
 
   if (!project) {
     const url = `${SITE}/drops/${slug ?? ""}`;
+    const title = "Drop not found — Bryan Lau";
+    const description = "This drop doesn't exist or has been retired. Browse the current collection of drops from Bryan Lau.";
     return (
       <div className="min-h-screen flex flex-col bg-background">
         <Helmet>
-          <title>Drop not found — Bryan Lau</title>
-          <meta name="description" content="This drop doesn't exist or has been retired." />
-          <meta name="robots" content="noindex,nofollow" />
+          <title>{title}</title>
+          <meta name="description" content={description} />
+          <meta name="robots" content="noindex,follow" />
+          {/* Hint for prerender-style crawlers to record a 404 */}
+          <meta name="prerender-status-code" content="404" />
           <link rel="canonical" href={url} />
+
+          <meta property="og:type" content="website" />
+          <meta property="og:title" content={title} />
+          <meta property="og:description" content={description} />
           <meta property="og:url" content={url} />
+          <meta property="og:image" content={`${SITE}/og-image.png`} />
+
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={title} />
+          <meta name="twitter:description" content={description} />
+          <meta name="twitter:image" content={`${SITE}/og-image.png`} />
         </Helmet>
         <CinematicHeader />
         <main className="flex-1 flex items-center justify-center px-4">
@@ -52,6 +66,9 @@ export default function DropDetail() {
             <h1 className="font-display text-4xl font-black uppercase text-foreground mb-4">
               Drop not found
             </h1>
+            <p className="text-muted-foreground max-w-md mx-auto mb-6 font-mono text-sm">
+              The slug <span className="text-primary">/drops/{slug}</span> isn't in the collection.
+            </p>
             <Link
               to="/"
               className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.25em] text-primary"
