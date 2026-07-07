@@ -3,7 +3,7 @@
 // supabase function: mcp
 // Bundled from src/lib/mcp/index.ts by @lovable.dev/mcp-js.
 // src/lib/mcp/index.ts
-import { defineMcp } from "npm:@lovable.dev/mcp-js@0.20.0";
+import { auth, defineMcp } from "npm:@lovable.dev/mcp-js@0.20.0";
 
 // src/lib/mcp/tools/list-drops.ts
 import { createClient } from "npm:@supabase/supabase-js@^2.90.1";
@@ -101,11 +101,16 @@ var submit_message_default = defineTool3({
 });
 
 // src/lib/mcp/index.ts
+var projectRef = "ywirnyuvvpenzajaajkg";
 var mcp_default = defineMcp({
   name: "bryanlauwk-fun-mcp",
   title: "bryanlauwk.fun",
   version: "0.1.0",
   instructions: "Tools for bryanlauwk.fun \u2014 a collection of playable art and creative web experiments. Use `list_drops` to browse drops, `get_drop` to fetch details of a specific drop, and `submit_message` to send feedback, ideas, or sponsorship inquiries.",
+  auth: auth.oauth.issuer({
+    issuer: `https://${projectRef}.supabase.co/auth/v1`,
+    acceptedAudiences: "authenticated"
+  }),
   tools: [list_drops_default, get_drop_default, submit_message_default]
 });
 
