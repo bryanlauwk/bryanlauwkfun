@@ -13,34 +13,27 @@ const Index = () => {
     canonical: "https://www.bryanlauwk.fun/",
   });
   return (
-    <div className="min-h-screen flex flex-col bg-background relative">
+    <div className="min-h-screen flex flex-col bg-background relative overflow-x-clip film-grain vignette">
       <CinematicHeader />
 
-      <main id="main-content" className="flex-1 relative z-10 px-4 md:px-12 py-8 md:py-16">
+      <main id="main-content" className="flex-1 relative z-10 px-4 md:px-12 py-10 md:py-20">
         <div className="max-w-7xl mx-auto">
-          {/* Hero */}
-          <section className="mb-16 md:mb-28 animate-fade-in-up relative">
-            {/* paper + grid + tape */}
-            <div className="absolute -inset-x-4 -top-6 -bottom-10 bg-grid-paper -z-10 rounded-2xl border-2 border-foreground/10 overflow-hidden" aria-hidden="true">
-              <span className="dossier-tape-black left-6 -top-2 rotate-[-8deg]" />
-              <span className="dossier-tape-black right-10 -top-2 rotate-[6deg]" />
+          {/* Hero — Room 01 */}
+          <section className="mb-20 md:mb-32 animate-fade-in-up relative">
+            <div className="flex items-center justify-between mb-8 md:mb-12 exhibit-label">
+              <span>Room 01 · Permanent collection</span>
+              <span className="hidden md:inline">1.3521°N 103.8198°E</span>
             </div>
 
-            {/* header strip */}
-            <div className="flex items-center justify-between mb-6 md:mb-10 font-mono text-[10px] md:text-xs uppercase tracking-[0.25em] text-muted-foreground">
-              <span>Field Notes · Ongoing</span>
-              <span className="hidden md:inline">Studio Log — bryan.fun</span>
-            </div>
-
-            <div className="mb-4 md:mb-6">
-              <span className="inline-block font-mono text-[10px] md:text-xs uppercase tracking-[0.3em] px-2 py-1 border border-foreground/40 text-foreground">
-                In Progress
+            <div className="mb-6 md:mb-8">
+              <span className="dossier-stamp text-xs md:text-sm rotate-[-2deg]">
+                Now showing
               </span>
             </div>
 
-            <div className="grid md:grid-cols-[1.5fr_1fr] gap-6 md:gap-10 items-center">
+            <div className="grid md:grid-cols-[1.5fr_1fr] gap-10 md:gap-12 items-center">
               <div className="relative">
-                <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase leading-[0.95] tracking-tight text-foreground">
+                <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase leading-[0.92] tracking-tight text-foreground">
                   <span className="block">I build</span>
                   <span className="block">dumb ideas.</span>
                   <span className="block">They keep</span>
@@ -48,39 +41,41 @@ const Index = () => {
                     <MarkerUnderline>working.</MarkerUnderline>
                   </span>
                 </h1>
+                <p className="exhibit-label mt-8 md:mt-10 !tracking-[0.3em]">
+                  playable art · small experiments · things I had to make
+                </p>
               </div>
 
+              {/* The artist — framed print on a bone-white plate */}
               <div className="relative flex justify-center md:justify-end">
-                <div
-                  className="absolute inset-0 -z-10 rounded-full blur-2xl opacity-40"
-                  style={{ background: "radial-gradient(circle at 50% 45%, hsl(75 100% 59% / 0.55), transparent 60%)" }}
-                  aria-hidden="true"
-                />
-                <img
-                  src={heroPortrait}
-                  alt="Bryan Lau portrait illustration"
-                  className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain mix-blend-multiply drop-shadow-[6px_8px_0_hsl(var(--foreground)/0.08)]"
-                  loading="eager"
-                  style={{ filter: "contrast(1.02)" }}
-                />
+                <figure className="relative rotate-1">
+                  <div className="border border-foreground/25 bg-[hsl(40_8%_92%)] p-3 md:p-4 shadow-[0_20px_60px_hsl(240_5%_0%/0.6)]">
+                    <img
+                      src={heroPortrait}
+                      alt="Bryan Lau portrait illustration"
+                      className="w-52 h-52 md:w-64 md:h-64 lg:w-80 lg:h-80 object-contain mix-blend-multiply grayscale contrast-125"
+                      loading="eager"
+                    />
+                  </div>
+                  <figcaption className="flex items-center justify-between mt-3 exhibit-label !text-[8px] md:!text-[9px]">
+                    <span>Fig. 01 — The artist, mixed media</span>
+                    <span className="barcode h-3 w-14 inline-block" aria-hidden="true" />
+                  </figcaption>
+                  <span
+                    className="dossier-stamp absolute -top-3 -right-3 md:-right-6 rotate-[8deg] text-[10px] md:text-xs bg-background"
+                    aria-hidden="true"
+                  >
+                    Certified dumb
+                  </span>
+                </figure>
               </div>
             </div>
-
-            <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-[0.3em] uppercase mt-8 md:mt-10">
-              playable art · small experiments · things I had to make
-            </p>
           </section>
 
-
-          {/* Drops */}
+          {/* Drops — Room 02 */}
           <ScrollSection animation="fade-up" className="mt-16 md:mt-24 relative">
-            <div className="absolute -inset-x-4 -top-6 -bottom-10 bg-grid-paper -z-10 rounded-2xl border-2 border-foreground/10 overflow-hidden" aria-hidden="true">
-              <span className="dossier-tape-black left-10 -top-2 rotate-[-5deg]" />
-              <span className="dossier-tape-black right-16 -top-2 rotate-[4deg]" />
-            </div>
-
-            <div className="flex items-center justify-between mb-4 font-mono text-[10px] md:text-xs uppercase tracking-[0.25em] text-muted-foreground">
-              <span>Now Playing</span>
+            <div className="flex items-center justify-between mb-4 exhibit-label">
+              <span>Room 02 · Interactive works</span>
               <span className="hidden md:inline-flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
                 Live
@@ -88,12 +83,12 @@ const Index = () => {
             </div>
 
             <div className="mb-8 md:mb-12">
-              <h2 className="font-serif text-4xl md:text-6xl font-black uppercase tracking-tight text-foreground">
+              <h2 className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight text-foreground">
                 Drops
               </h2>
-              <div className="h-2 w-24 bg-primary mt-3 rounded-full" />
+              <div className="h-1 w-24 bg-primary mt-4" />
               <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-wider mt-4">
-                Small playable things. Click one. Break it.{" "}
+                Small playable things. Please touch the art. Break it.{" "}
                 <RedactionReveal>Tell me what happened</RedactionReveal>.
               </p>
             </div>
