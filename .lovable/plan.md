@@ -1,46 +1,41 @@
 ## Goal
-Tone down the MSCHF-borrowed copy, strip the reference quote and screenshot sticker, and remove the Guest Book so the page reads as a portfolio of playable art & experiments.
+Replace the current "sketch on bone-white plate" hero portrait with a treated version of your real photo, styled as an investigative "exposé" collage that reads as part of the dark Exhibition base — torn paper, evidence tape, halftone, redaction, handwritten scribbles.
 
-## Changes
+## Source photo prep
+Use your uploaded selfie (`user-uploads://7225e5fd-...jpg`) and run it through `imagegen--edit_image` with a prompt that:
+- Removes the badminton jersey (replace with a plain dark tee or high-contrast shirt so the collarline reads as a photo fragment, not sportswear).
+- Removes the "Bryan" name label and paw print.
+- Removes the red/green radial background so the subject is isolated on a clean neutral field (transparent PNG output).
+- Keeps the face recognizable — no stylization of the face itself. Any "artistic" treatment happens in CSS, not in the source photo, so it still reads as *you*, not an illustration.
 
-### 1. Hero (`src/pages/Index.tsx`)
-- Remove `StampBadge` "Built to be screenshotted".
-- Remove the Gabe Whaley / MSCHF quote block and its attribution.
-- Rename dossier strip: `Dossier // Internal Distribution Only` → `Field Notes · Ongoing`. Keep file id but change to `Studio Log — bryan.fun`.
-- Keep the "Confidential" stamp? → replace with a subtler `In Progress` tag to reduce MSCHF mimicry.
-- Change tagline `games · experiments · rabbit holes` → `playable art · small experiments · things I had to make`.
-- Headline stays ("I build dumb ideas. They keep working.") — it's the user's voice.
+Output: `src/assets/hero-portrait-photo.png` (transparent, ~1200px).
 
-### 2. Drops section (`src/pages/Index.tsx`)
-- Section label: `Section 02 // Field Reports` → `Now Playing`.
-- Stamp `Evidence` → removed (or replaced with quiet `Live` dot).
-- Subcopy: rewrite from "shipped on a whim, kept because they worked" → "Small playable things. Click one. Break it. Tell me what happened."
+## Collage treatment (CSS + layered fragments, no new libraries)
+Rebuild the right column of the hero in `src/pages/Index.tsx` as a small pinned "case file" instead of a framed print. All pieces are real DOM layers so they animate and stay crisp:
 
-### 3. Guest Book — remove entirely
-- Delete the third `ScrollSection` wrapper and `<GuestBook />` usage from `Index.tsx`.
-- Remove the import.
-- Leave `src/components/GuestBook.tsx`, `useGuestBook`, and `submit-guest-book` edge function in place (unused) so no backend/auth churn. Note: private/sponsorship contact path is gone from the UI — flag for user.
+1. **Base photo fragment** — the treated portrait, clipped with an SVG `clip-path` into a torn-edge polygon (irregular top/bottom edges). Apply `filter: grayscale(1) contrast(1.15)` and a CSS halftone dot overlay (repeating radial-gradient) at ~20% opacity so it reads as newsprint, not a clean headshot.
+2. **Torn paper backing** — an off-white paper rectangle behind the photo, rotated ~-3°, with a subtle paper-fiber texture (existing film-grain works) and hard shadow. This is the "evidence plate."
+3. **Red evidence tape** — two short diagonal strips using `hsl(var(--primary))` with slight opacity + inner shadow, crossing one corner of the photo. Reuses the site's signal red.
+4. **Evidence tag** — small kraft-colored rectangle with a punched hole (CSS `radial-gradient` circle) and mono text: `EXHIBIT · A / SUBJECT: LAU, B. / 侦查中`. Bilingual EN/中 mirrors the poster.
+5. **Fingerprint mark** — a single SVG fingerprint (inline, hand-drawn look) tucked in a corner at low opacity in signal red.
+6. **Handwritten scribble** — one short handwritten note (e.g. "not to be trusted with a keyboard") rendered in a handwriting Google font (Caveat or Kalam — one new font import in `index.html`), rotated ~4°, in muted foreground color.
+7. **Redaction bar** — one black bar across the shirt/collar area, reinforcing the "expose" language and hiding any remaining jersey seam.
+8. **Barcode + case number strip** — reuse existing `.barcode` utility under the plate with `NO. 01 · FIG. 01 · LAU B.`
 
-### 4. Footer (`src/components/CinematicFooter.tsx`)
-- `End of File — 001` → `Studio · 2026`.
-- `Distribution: Anyone weird enough` → remove (too MSCHF).
-- Keep motto "Good luck, have fun, don't die" (core brand per memory) but drop the red marker-tape treatment → render as plain small caps mono so it's not styled like an MSCHF redaction.
+All pieces sit inside one relatively-positioned figure so the whole collage tilts as a unit and keeps the current hero grid layout.
 
-### 5. Header (`src/components/CinematicHeader.tsx`)
-- Subtitle `File 001 · Web collective` → `Playable art & experiments`.
-- Keep visitor counter but change `VIS·0000` format label → drop the file-tag styling; keep as a plain count.
-- Remove the "Classified" stamp.
+## What stays
+- Hero copy, headline, "Now showing" stamp, exhibit labels, grid layout, hero image column position/size — untouched.
+- Existing `certified dumb` stamp — kept as one of the collage elements (it already fits the language).
+- Portrait import name stays `heroPortrait` so nothing else in the codebase breaks; the old sketch file is left in place unused.
 
-### 6. Project cards (`src/components/StrangerThingsCard.tsx`)
-- Remove hover "Confidential / Eyes Only / Restricted" classification stamps.
-- Keep case-number meta but relabel: `BL-2026-01` → `No. 01` style.
-- Remove the barcode footer and "redaction" meta bar; replace with a single quiet line: tag + year.
-- Keep tape corner + hard shadow (that's the site's own language now, not MSCHF-specific).
+## Files changed
+- `src/pages/Index.tsx` — replace the `<figure>` block in the hero right column with the collage composition.
+- `src/index.css` — add small utilities: `.torn-edge` (clip-path), `.halftone` (radial-gradient overlay), `.handwritten` (font-family).
+- `index.html` — add one Google Font link for the handwriting font.
+- `src/assets/hero-portrait-photo.png` — new treated photo asset (via imagegen edit).
 
-### 7. Kept intentionally
-- Grid-paper backgrounds, tape corners, hard shadows, Archivo/mono type — these now belong to the site, not MSCHF.
-- Konami easter egg + audio system.
-- Admin, Auth, SEO hooks.
-
-## Open question flagged
-Removing Guest Book also removes the only public contact/sponsorship path. If you want a replacement (simple mailto, or a lighter "Get in touch" card), say so and I'll add it in build mode; otherwise I'll ship without it.
+## Not doing
+- No new npm packages.
+- No changes to Drops section, header, footer, or routing.
+- No AI-generated "illustration" of you — the face stays photographic so it reads real.
