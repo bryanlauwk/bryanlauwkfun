@@ -34,11 +34,11 @@ const Index = () => {
             <div className="grid md:grid-cols-[1.5fr_1fr] gap-10 md:gap-12 items-center">
               <div className="relative">
                 <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase leading-[0.92] tracking-tight text-foreground">
-                  <span className="block">I build</span>
-                  <span className="block">dumb ideas.</span>
-                  <span className="block">They keep</span>
+                  <span className="block">For the curious.</span>
+                  <span className="block">A stranger</span>
+                  <span className="block">kind of</span>
                   <span className="block">
-                    <MarkerUnderline>working.</MarkerUnderline>
+                    <MarkerUnderline>internet.</MarkerUnderline>
                   </span>
                 </h1>
                 <p className="exhibit-label mt-8 md:mt-10 !tracking-[0.3em]">
