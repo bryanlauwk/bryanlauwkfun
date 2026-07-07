@@ -135,7 +135,7 @@ const Index = () => {
                     do not trust with a keyboard →
                   </div>
 
-                  {/* Certified dumb stamp — kept, restyled corner */}
+                  {/* Certified curious stamp — kept, restyled corner */}
                   <span
                     className="dossier-stamp absolute -bottom-10 right-4 rotate-[10deg] text-[10px] md:text-xs bg-background/95"
                     aria-hidden="true"
