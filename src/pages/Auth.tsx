@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,6 +7,18 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useSEO } from "@/hooks/useSEO";
+
+/**
+ * Only accept a same-origin relative path as the post-login redirect target.
+ * This is what lets the OAuth consent route send unauthenticated users through
+ * sign-in and get them back to /.lovable/oauth/consent?authorization_id=…
+ * instead of dropping them on /admin.
+ */
+function safeNext(raw: string | null): string | null {
+  if (!raw) return null;
+  if (!raw.startsWith("/") || raw.startsWith("//")) return null;
+  return raw;
+}
 
 export default function Auth() {
   useSEO({
@@ -20,7 +32,9 @@ export default function Auth() {
   const [isLoading, setIsLoading] = useState(false);
   const { signIn } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { toast } = useToast();
+  const next = safeNext(searchParams.get("next"));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,7 +43,12 @@ export default function Auth() {
     try {
       await signIn(email, password);
       toast({ title: "Signed in successfully!" });
-      navigate("/admin");
+      if (next) {
+        // OAuth consent (or another same-origin flow) is waiting for us.
+        window.location.href = next;
+      } else {
+        navigate("/admin");
+      }
     } catch (error: any) {
       toast({
         title: "Error",
