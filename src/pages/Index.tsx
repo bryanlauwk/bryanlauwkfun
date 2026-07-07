@@ -129,7 +129,7 @@ const Index = () => {
 
                   {/* Handwritten scribble */}
                   <div
-                    className="handwritten absolute -top-6 -right-4 md:-right-8 rotate-[6deg] text-foreground/85 text-xl md:text-2xl leading-tight max-w-[160px] text-right"
+                    className="handwritten absolute -top-10 right-2 md:right-4 rotate-[6deg] text-foreground/85 text-lg md:text-xl leading-tight max-w-[180px] text-right pointer-events-none"
                     aria-hidden="true"
                   >
                     do not trust with a keyboard →
@@ -137,7 +137,7 @@ const Index = () => {
 
                   {/* Certified dumb stamp — kept, restyled corner */}
                   <span
-                    className="dossier-stamp absolute -bottom-4 -right-2 rotate-[10deg] text-[10px] md:text-xs bg-background/95"
+                    className="dossier-stamp absolute -bottom-10 right-4 rotate-[10deg] text-[10px] md:text-xs bg-background/95"
                     aria-hidden="true"
                   >
                     Certified dumb
