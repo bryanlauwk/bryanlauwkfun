@@ -81,7 +81,7 @@ async def run() -> int:
             )
             page = await no_js.new_page()
             await page.goto(BASE_URL, wait_until="domcontentloaded")
-            shell_text = norm(await page.evaluate("document.body.innerText"))
+            shell_text = norm(await page.evaluate("document.body.textContent"))
             all_passed &= check_phrases(f"{vp['name']} · first paint (no JS)", shell_text)
             await no_js.close()
 
@@ -90,7 +90,7 @@ async def run() -> int:
             page = await js.new_page()
             await page.goto(BASE_URL, wait_until="networkidle")
             await page.wait_for_selector("main#main-content h1")
-            hydrated_text = norm(await page.evaluate("document.body.innerText"))
+            hydrated_text = norm(await page.evaluate("document.body.textContent"))
             all_passed &= check_phrases(f"{vp['name']} · hydrated React", hydrated_text)
             await js.close()
 
