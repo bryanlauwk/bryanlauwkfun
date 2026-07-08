@@ -59,27 +59,49 @@
 </head>
 
   <body>
-    <div id="root">
-      <div id="static-fallback" style="min-height:100vh;background:#0b0b0d;color:#a3a3b0;font-family:Inter,sans-serif;display:flex;flex-direction:column;">
-        <header style="padding:0.75rem 1rem;display:flex;align-items:center;gap:0.75rem;border-bottom:1px solid rgba(255,255,255,0.08);">
-          <img src="/favicon.png" alt="Bryan Lau" width="36" height="36" style="border-radius:4px;filter:grayscale(1) contrast(1.25);border:1px solid rgba(255,255,255,0.25);">
-          <div style="line-height:1.1;">
-            <div style="font-family:'Archivo',Inter,sans-serif;font-size:1rem;font-weight:900;color:#e8e8ec;text-transform:uppercase;letter-spacing:-0.01em;">Bryan Lau</div>
-            <div style="font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.2em;color:#6b6b78;margin-top:2px;">Playable art · Ongoing exhibition</div>
-          </div>
-        </header>
-        <main style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:2rem 1.25rem;text-align:center;">
-          <p style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.3em;color:#6b6b78;margin:0 0 1.25rem;">Room 01 · Permanent collection</p>
-          <h1 style="font-family:'Archivo',Inter,sans-serif;font-size:clamp(2.5rem,9vw,5rem);font-weight:900;color:#e8e8ec;margin:0;text-transform:uppercase;line-height:0.92;letter-spacing:-0.02em;">
-            <span style="display:block;">For the curious.</span>
-            <span style="display:block;">A stranger</span>
-            <span style="display:block;">kind of</span>
-            <span style="display:block;color:hsl(4,90%,55%);">internet.</span>
-          </h1>
-          <p style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.3em;color:#8a8a99;margin:1.75rem 0 0;">playable art · small experiments · things I had to make</p>
-        </main>
-      </div>
+    <div id="root"></div>
+    <div id="static-fallback" style="position:fixed;inset:0;z-index:0;min-height:100vh;background:#0b0b0d;color:#a3a3b0;font-family:Inter,sans-serif;display:flex;flex-direction:column;">
+      <header style="padding:0.75rem 1rem;display:flex;align-items:center;gap:0.75rem;border-bottom:1px solid rgba(255,255,255,0.08);">
+        <img src="/favicon.png" alt="Bryan Lau" width="36" height="36" style="border-radius:4px;filter:grayscale(1) contrast(1.25);border:1px solid rgba(255,255,255,0.25);">
+        <div style="line-height:1.1;">
+          <div style="font-family:'Archivo',Inter,sans-serif;font-size:1rem;font-weight:900;color:#e8e8ec;text-transform:uppercase;letter-spacing:-0.01em;">Bryan Lau</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.2em;color:#6b6b78;margin-top:2px;">Playable art · Ongoing exhibition</div>
+        </div>
+      </header>
+      <main style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:2rem 1.25rem;text-align:center;">
+        <p style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.3em;color:#6b6b78;margin:0 0 1.25rem;">Room 01 · Permanent collection</p>
+        <h1 style="font-family:'Archivo',Inter,sans-serif;font-size:clamp(2.5rem,9vw,5rem);font-weight:900;color:#e8e8ec;margin:0;text-transform:uppercase;line-height:0.92;letter-spacing:-0.02em;">
+          <span style="display:block;">For the curious.</span>
+          <span style="display:block;">A stranger</span>
+          <span style="display:block;">kind of</span>
+          <span style="display:block;color:hsl(4,90%,55%);">internet.</span>
+        </h1>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.3em;color:#8a8a99;margin:1.75rem 0 0;">playable art · small experiments · things I had to make</p>
+        <noscript><p style="margin-top:2rem;color:#e8e8ec;font-family:'JetBrains Mono',monospace;font-size:11px;">Enable JavaScript to explore the interactive works.</p></noscript>
+      </main>
     </div>
+    <script>
+      // Safety net: if the React app never mounts within 8s, surface a reload prompt
+      // instead of leaving users stranded on the static shell.
+      window.__mountWatch = setTimeout(function () {
+        var root = document.getElementById('root');
+        if (root && root.childElementCount === 0) {
+          var shell = document.getElementById('static-fallback');
+          if (shell) {
+            var note = document.createElement('p');
+            note.style.cssText = 'margin-top:1.5rem;color:#e8e8ec;font-family:JetBrains Mono,monospace;font-size:11px;';
+            note.innerHTML = 'Trouble loading. <a href="/" style="color:hsl(4,90%,60%);text-decoration:underline;" onclick="location.reload();return false;">Tap to reload</a>.';
+            var main = shell.querySelector('main');
+            if (main) main.appendChild(note);
+          }
+        }
+      }, 8000);
+      window.addEventListener('error', function (e) {
+        // Log module-load errors so they show up in monitoring instead of silently blanking.
+        console.error('[boot]', (e && e.error) || e);
+      });
+    </script>
     <script type="module" src="/src/main.tsx"></script>
+
   </body>
 </html>
