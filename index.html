@@ -56,65 +56,24 @@
 
   <body>
     <div id="root">
-      <div id="static-fallback" style="min-height:100vh;background:#0b0b0d;color:#a3a3b0;font-family:Inter,sans-serif;">
-        <!-- Header -->
-        <header style="padding:0.75rem 1rem;display:flex;align-items:center;gap:0.5rem;">
-          <img src="/favicon.png" alt="Bryan Lau" width="32" height="32" style="border-radius:4px;">
-          <div>
-            <div style="font-family:'Archivo',Inter,sans-serif;font-size:1.25rem;font-weight:700;color:#e8e8ec;text-transform:uppercase;letter-spacing:0.05em;">Bryan Lau</div>
-            <div style="font-family:'JetBrains Mono',monospace;font-size:0.625rem;text-transform:uppercase;letter-spacing:0.2em;color:#6b6b78;">Web collective</div>
+      <div id="static-fallback" style="min-height:100vh;background:#0b0b0d;color:#a3a3b0;font-family:Inter,sans-serif;display:flex;flex-direction:column;">
+        <header style="padding:0.75rem 1rem;display:flex;align-items:center;gap:0.75rem;border-bottom:1px solid rgba(255,255,255,0.08);">
+          <img src="/favicon.png" alt="Bryan Lau" width="36" height="36" style="border-radius:4px;filter:grayscale(1) contrast(1.25);border:1px solid rgba(255,255,255,0.25);">
+          <div style="line-height:1.1;">
+            <div style="font-family:'Archivo',Inter,sans-serif;font-size:1rem;font-weight:900;color:#e8e8ec;text-transform:uppercase;letter-spacing:-0.01em;">Bryan Lau</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.2em;color:#6b6b78;margin-top:2px;">Playable art · Ongoing exhibition</div>
           </div>
         </header>
-
-        <!-- Hero -->
-        <main style="max-width:72rem;margin:0 auto;padding:2rem 1rem;">
-          <section style="text-align:center;margin-bottom:3rem;">
-            <h1 style="font-family:'Archivo',Inter,sans-serif;font-size:clamp(2rem,5vw,4rem);font-weight:700;color:#e8e8ec;margin:0 0 1rem;">
-              <span style="display:block;">For the curious.</span>
-              <span style="display:block;color:hsl(4,90%,55%);">A stranger kind of internet.</span>
-            </h1>
-            <p style="font-family:'JetBrains Mono',monospace;font-size:0.875rem;max-width:32rem;margin:0 auto;line-height:1.6;color:#8a8a99;">
-              Small playable art, browser-born experiments, and interactive things for the restless.
-            </p>
-          </section>
-
-          <!-- Projects -->
-          <section>
-            <h2 style="font-family:'Archivo',Inter,sans-serif;font-size:1.5rem;font-weight:600;text-align:center;color:#e8e8ec;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:2rem;">Drops</h2>
-            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;">
-              <a href="https://www.yuqiuren.fun/" target="_blank" rel="noopener noreferrer" style="display:block;padding:1.5rem;border:1px solid rgba(255,255,255,0.08);border-radius:8px;background:rgba(255,255,255,0.03);text-decoration:none;color:inherit;">
-                <h3 style="font-family:'Archivo',Inter,sans-serif;font-size:1.25rem;font-weight:600;color:#e8e8ec;margin:0 0 0.5rem;">Badminton Clash</h3>
-                <p style="font-size:0.875rem;margin:0;line-height:1.5;">Track match data and analyze performance trends over time, featuring match history archiving, and performance analytics with visualizations.</p>
-              </a>
-              <a href="https://elemental-block-blast.lovable.app" target="_blank" rel="noopener noreferrer" style="display:block;padding:1.5rem;border:1px solid rgba(255,255,255,0.08);border-radius:8px;background:rgba(255,255,255,0.03);text-decoration:none;color:inherit;">
-                <h3 style="font-family:'Archivo',Inter,sans-serif;font-size:1.25rem;font-weight:600;color:#e8e8ec;margin:0 0 0.5rem;">Elemental Block Blast</h3>
-                <p style="font-size:0.875rem;margin:0;line-height:1.5;">Master the elements in this explosive, chain-reacting block puzzle.</p>
-              </a>
-              <a href="https://infinitekitchen.bryanlauwk.fun/" target="_blank" rel="noopener noreferrer" style="display:block;padding:1.5rem;border:1px solid rgba(255,255,255,0.08);border-radius:8px;background:rgba(255,255,255,0.03);text-decoration:none;color:inherit;">
-                <h3 style="font-family:'Archivo',Inter,sans-serif;font-size:1.25rem;font-weight:600;color:#e8e8ec;margin:0 0 0.5rem;">Infinite Kitchen</h3>
-                <p style="font-size:0.875rem;margin:0;line-height:1.5;">An endless, calm kitchen where cooking never finishes—only discovery does.</p>
-              </a>
-              <a href="https://cny2026.bryanlauwk.fun/" target="_blank" rel="noopener noreferrer" style="display:block;padding:1.5rem;border:1px solid rgba(255,255,255,0.08);border-radius:8px;background:rgba(255,255,255,0.03);text-decoration:none;color:inherit;">
-                <h3 style="font-family:'Archivo',Inter,sans-serif;font-size:1.25rem;font-weight:600;color:#e8e8ec;margin:0 0 0.5rem;">马年新年歌排行榜</h3>
-                <p style="font-size:0.875rem;margin:0;line-height:1.5;">追踪 2026 马年最火新年歌排行榜</p>
-              </a>
-              <a href="https://inflationchart.bryanlauwk.fun/" target="_blank" rel="noopener noreferrer" style="display:block;padding:1.5rem;border:1px solid rgba(255,255,255,0.08);border-radius:8px;background:rgba(255,255,255,0.03);text-decoration:none;color:inherit;">
-                <h3 style="font-family:'Archivo',Inter,sans-serif;font-size:1.25rem;font-weight:600;color:#e8e8ec;margin:0 0 0.5rem;">Inflation Chart</h3>
-                <p style="font-size:0.875rem;margin:0;line-height:1.5;">A real-time tracker showing what's actually happening to food prices in Malaysia</p>
-              </a>
-            </div>
-          </section>
+        <main style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:2rem 1.25rem;text-align:center;">
+          <p style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.3em;color:#6b6b78;margin:0 0 1.25rem;">Room 01 · Permanent collection</p>
+          <h1 style="font-family:'Archivo',Inter,sans-serif;font-size:clamp(2.5rem,9vw,5rem);font-weight:900;color:#e8e8ec;margin:0;text-transform:uppercase;line-height:0.92;letter-spacing:-0.02em;">
+            <span style="display:block;">For the curious.</span>
+            <span style="display:block;">A stranger</span>
+            <span style="display:block;">kind of</span>
+            <span style="display:block;color:hsl(4,90%,55%);">internet.</span>
+          </h1>
+          <p style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.3em;color:#8a8a99;margin:1.75rem 0 0;">playable art · small experiments · things I had to make</p>
         </main>
-
-        <!-- Footer -->
-        <footer style="text-align:center;padding:2rem 1rem;border-top:1px solid rgba(255,255,255,0.06);">
-          <nav style="display:flex;justify-content:center;gap:1rem;margin-bottom:1rem;" aria-label="Social links">
-            <a href="https://github.com/bryanlauwk" target="_blank" rel="noopener noreferrer" aria-label="GitHub" style="color:#8a8a99;text-decoration:none;font-size:0.75rem;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:0.1em;">GitHub</a>
-            <a href="https://twitter.com/bryanlauwk" target="_blank" rel="noopener noreferrer" aria-label="Twitter" style="color:#8a8a99;text-decoration:none;font-size:0.75rem;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:0.1em;">Twitter</a>
-            <a href="https://linkedin.com/in/bryanlauwk" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" style="color:#8a8a99;text-decoration:none;font-size:0.75rem;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:0.1em;">LinkedIn</a>
-          </nav>
-          <p style="font-size:0.75rem;font-family:'JetBrains Mono',monospace;color:#6b6b78;margin:0;">© 2026 bryanlauwk · Made somewhere in the void</p>
-        </footer>
       </div>
     </div>
     <script type="module" src="/src/main.tsx"></script>
