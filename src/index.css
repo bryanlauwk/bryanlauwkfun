@@ -1720,3 +1720,11 @@
 @media (min-width: 768px) {
   #archive.lp-band { padding-top: 2rem; padding-bottom: 2rem; }
 }
+
+/* pass 5c — archive rhythm: shorter reflections, balanced ninth capsule */
+.lp-capsule-reflection { aspect-ratio: 5; opacity: 0.13; margin-top: -0.25rem; }
+.lp-capsules { row-gap: 1.25rem; }
+@media (min-width: 768px) { .lp-capsules { row-gap: 1.75rem; } }
+@media (min-width: 1280px) {
+  .lp-capsules .lp-capsule-last { grid-column: 2 / span 2; }
+}
