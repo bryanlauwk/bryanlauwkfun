@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useStrangerSFX } from "@/hooks/useStrangerSFX";
+import { useReveal } from "@/hooks/useReveal";
 
 const STORAGE_KEY = "lp-first-key";
 
@@ -27,15 +28,11 @@ function Defs({ id, warm }: { id: string; warm?: boolean }) {
       <filter id={`${id}-soft`} x="-50%" y="-50%" width="200%" height="200%">
         <feGaussianBlur stdDeviation="4" />
       </filter>
-      <filter id={`${id}-grain`}>
-        <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="7" />
-        <feColorMatrix type="saturate" values="0" />
-      </filter>
     </defs>
   );
 }
 
-/** A dimensional cast key — machined metal with an internal charge. */
+/** Machined metal / acrylic key with an internal charge. */
 function KeyObject({ awake }: { awake: boolean }) {
   return (
     <svg viewBox="0 0 120 120" className="h-32 w-full" aria-hidden="true">
@@ -52,7 +49,7 @@ function KeyObject({ awake }: { awake: boolean }) {
   );
 }
 
-/** A cast stone holding its own light. */
+/** Cloudy cast stone holding its own light. */
 function StoneObject() {
   return (
     <svg viewBox="0 0 120 120" className="h-32 w-full" aria-hidden="true">
@@ -73,7 +70,7 @@ function StoneObject() {
   );
 }
 
-/** A translucent card — refracting, thin, pocketable. */
+/** Translucent card — refracting, thin, pocketable. */
 function CardObject() {
   return (
     <svg viewBox="0 0 120 120" className="h-32 w-full" aria-hidden="true">
@@ -91,7 +88,7 @@ function CardObject() {
   );
 }
 
-/** A sealed capsule — nothing decided, including whether it exists. */
+/** Sealed prism capsule — nothing decided, including whether it exists. */
 function CapsuleObject() {
   return (
     <svg viewBox="0 0 120 120" className="h-32 w-full" aria-hidden="true">
@@ -109,15 +106,16 @@ function CapsuleObject() {
 }
 
 /**
- * Artifacts — concept studies for possible physical keys.
+ * Artifacts — concept studies for possible physical keys, presented as linked
+ * plinths on one continuous dark display shelf rather than four cards.
  * Nothing here is manufactured, owned or for sale.
- * The First Key stays interactive and remembers the visitor.
  */
 export function ArtifactsRow() {
   const [found, setFound] = useState(false);
   const [returning, setReturning] = useState(false);
   const [charging, setCharging] = useState(false);
   const { playPowerSurge } = useStrangerSFX();
+  const { ref, inView } = useReveal<HTMLDivElement>(0.15);
 
   useEffect(() => {
     try {
@@ -167,60 +165,72 @@ export function ArtifactsRow() {
           </p>
         </div>
 
-        <div className="lp-rail md:grid md:grid-cols-4 md:overflow-visible">
-          <button
-            type="button"
-            onClick={wake}
-            onPointerDown={() => setCharging(true)}
-            onPointerUp={() => setCharging(false)}
-            onPointerLeave={() => setCharging(false)}
-            aria-pressed={found}
-            className={`lp-artifact-card lp-object-wrap w-[15rem] md:w-auto ${found ? "is-awake" : ""} ${
-              charging ? "is-charging" : ""
-            }`}
-          >
-            <span className="lp-object lp-object--rich block">
-              <KeyObject awake={found} />
-            </span>
-            <span className="mt-5 text-[0.7rem] uppercase tracking-[0.28em] text-foreground">
-              The First Key
-            </span>
-            <span className="mt-2 text-xs leading-relaxed text-muted-foreground">
-              {firstKeyBody}
-            </span>
-            <span className="mt-4 lp-chip lp-chip--violet w-fit">
-              {found ? "Prototype · unlocked" : "Prototype · interactive"}
-            </span>
-          </button>
+        <div ref={ref} className={`lp-shelf ${inView ? "is-lit" : ""}`}>
+          <span aria-hidden="true" className="lp-shelf-surface" />
+          <span aria-hidden="true" className="lp-shelf-light" />
 
-          {[
-            {
-              title: "Light Stone Study",
-              body: "A palm-sized cast object that scatters its own internal starlight.",
-              Obj: StoneObject,
-            },
-            {
-              title: "Echo Card Study",
-              body: "A thin card exploring how a season could be carried in a pocket.",
-              Obj: CardObject,
-            },
-            {
-              title: "Unknown Capsule",
-              body: "A sealed future study. Nothing decided yet, including whether it exists.",
-              Obj: CapsuleObject,
-            },
-          ].map(({ title, body, Obj }) => (
-            <article key={title} className="lp-artifact-card w-[15rem] md:w-auto">
-              <span className="lp-object lp-object--rich block">
-                <Obj />
+          <div className="lp-rail lp-shelf-row md:grid md:grid-cols-4 md:overflow-visible">
+            <button
+              type="button"
+              onClick={wake}
+              onPointerDown={() => setCharging(true)}
+              onPointerUp={() => setCharging(false)}
+              onPointerLeave={() => setCharging(false)}
+              aria-pressed={found}
+              className={`lp-plinth lp-plinth--metal w-[15rem] md:w-auto ${found ? "is-awake" : ""} ${
+                charging ? "is-charging" : ""
+              }`}
+            >
+              <span className="lp-object lp-object--rich lp-plinth-object block">
+                <KeyObject awake={found} />
               </span>
-              <span className="mt-5 text-[0.7rem] uppercase tracking-[0.28em] text-foreground">
-                {title}
+              <span className="lp-plinth-label mt-4 text-[0.7rem] uppercase tracking-[0.28em] text-foreground">
+                The First Key
               </span>
-              <span className="mt-2 text-xs leading-relaxed text-muted-foreground">{body}</span>
-              <span className="mt-4 lp-chip w-fit">Concept in development</span>
-            </article>
-          ))}
+              <span className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                {firstKeyBody}
+              </span>
+              <span className="mt-4 lp-chip lp-chip--violet w-fit">
+                {found ? "Prototype · unlocked" : "Prototype · interactive"}
+              </span>
+            </button>
+
+            {[
+              {
+                title: "Light Stone Study",
+                body: "A palm-sized cast object that scatters its own internal starlight.",
+                Obj: StoneObject,
+                material: "stone",
+              },
+              {
+                title: "Echo Card Study",
+                body: "A thin card exploring how a season could be carried in a pocket.",
+                Obj: CardObject,
+                material: "card",
+              },
+              {
+                title: "Unknown Capsule",
+                body: "A sealed future study. Nothing decided yet, including whether it exists.",
+                Obj: CapsuleObject,
+                material: "prism",
+              },
+            ].map(({ title, body, Obj, material }) => (
+              <article
+                key={title}
+                tabIndex={0}
+                className={`lp-plinth lp-plinth--${material} w-[15rem] md:w-auto`}
+              >
+                <span className="lp-object lp-object--rich lp-plinth-object block">
+                  <Obj />
+                </span>
+                <span className="lp-plinth-label mt-4 text-[0.7rem] uppercase tracking-[0.28em] text-foreground">
+                  {title}
+                </span>
+                <span className="mt-2 text-xs leading-relaxed text-muted-foreground">{body}</span>
+                <span className="mt-4 lp-chip w-fit">Concept in development</span>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </section>
