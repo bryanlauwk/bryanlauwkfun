@@ -65,8 +65,8 @@ export function PastSeasons({ projects, isLoading }: PastSeasonsProps) {
                     <img
                       src={capsuleArt}
                       alt=""
-                      loading="lazy"
-                      decoding="async"
+                      loading="eager"
+                      decoding="sync"
                       style={sphereStyle(sphere)}
                       className="absolute"
                     />
