@@ -3,12 +3,14 @@ import { SoundToggle } from "@/components/SoundToggle";
 import { useVisitorCounter } from "@/hooks/useVisitorCounter";
 
 const LINKS = [
-  { id: "now", label: "Current Season" },
-  { id: "archive", label: "Past Seasons" },
-  { id: "artifact", label: "Artifact" },
+  { id: "now", label: "Current Drop" },
+  { id: "worlds", label: "Worlds" },
+  { id: "experiences", label: "Experiences" },
+  { id: "ideas", label: "Ideas Forest" },
+  { id: "archive", label: "Dream Archive" },
   { id: "about", label: "About" },
-
 ];
+
 
 export function PlaygroundNav() {
   const { count, isLoading } = useVisitorCounter();

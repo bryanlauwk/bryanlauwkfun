@@ -2,9 +2,10 @@ import { useMemo } from "react";
 import { PlaygroundNav } from "@/components/playground/PlaygroundNav";
 import { ArrivalSection } from "@/components/playground/ArrivalSection";
 import { CurrentSeason } from "@/components/playground/CurrentSeason";
-import { ArtifactsRow } from "@/components/playground/ArtifactsRow";
-import { UpcomingSeason } from "@/components/playground/UpcomingSeason";
-import { SeasonArchive } from "@/components/playground/SeasonArchive";
+import { FeaturedWorlds } from "@/components/playground/FeaturedWorlds";
+import { FeaturedExperiences } from "@/components/playground/FeaturedExperiences";
+import { IdeasForest } from "@/components/playground/IdeasForest";
+import { DreamArchive } from "@/components/playground/DreamArchive";
 import { ExitStrip } from "@/components/playground/ExitStrip";
 import { PlaygroundFooter } from "@/components/playground/PlaygroundFooter";
 import { usePublicProjects } from "@/hooks/useProjects";
@@ -14,7 +15,7 @@ const Index = () => {
   useSEO({
     title: "Bryan Lau — The Living Playground",
     description:
-      "A living playground of small playable art and browser-born experiments by Bryan Lau. A new season is always growing.",
+      "Interactive art, playful technology and AI experiences by Bryan Lau. A living playground of small playable worlds.",
     canonical: "https://www.bryanlauwk.fun/",
   });
 
@@ -45,9 +46,10 @@ const Index = () => {
         <main id="main-content" className="flex-1">
           <ArrivalSection />
           <CurrentSeason project={featured} isLoading={isLoading} />
-          <ArtifactsRow />
-          <UpcomingSeason />
-          <SeasonArchive projects={rest} isLoading={isLoading} />
+          <FeaturedWorlds projects={rest} isLoading={isLoading} />
+          <FeaturedExperiences projects={rest} isLoading={isLoading} />
+          <IdeasForest />
+          <DreamArchive projects={projects ?? []} isLoading={isLoading} />
           <ExitStrip />
         </main>
 
