@@ -75,12 +75,14 @@ export function CurrentSeason({ project, isLoading }: CurrentSeasonProps) {
               )}
               <span
                 aria-hidden="true"
-                className="absolute inset-0 bg-[linear-gradient(90deg,#020409_2%,rgba(2,4,9,0.55)_38%,rgba(2,4,9,0.15)_100%)]"
+                className="absolute inset-0 bg-[linear-gradient(90deg,#020409_2%,rgba(2,4,9,0.5)_34%,rgba(2,4,9,0.1)_100%)]"
               />
-              <span
-                aria-hidden="true"
-                className="absolute inset-0 opacity-60 [background-image:radial-gradient(rgba(200,215,255,0.5)_0.6px,transparent_0.7px)] [background-size:26px_26px]"
-              />
+              {project.image_url && !imageFailed && (
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-0 opacity-50 [background-image:radial-gradient(rgba(200,215,255,0.5)_0.6px,transparent_0.7px)] [background-size:26px_26px]"
+                />
+              )}
             </div>
           </Link>
         ) : (
