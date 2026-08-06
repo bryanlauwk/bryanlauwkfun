@@ -1661,7 +1661,7 @@
 
 /* 5. Archive grid rhythm */
 .lp-capsules .lp-capsule-last { grid-column: 1 / -1; }
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   .lp-capsules .lp-capsule-last { grid-column: auto; }
 }
 
