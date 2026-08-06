@@ -1673,3 +1673,50 @@
 @media (min-width: 1280px) {
   .lp-capsules .lp-capsule-last { grid-column-start: 2; }
 }
+
+/* ================================================================
+   Living Playground — closing bands continuity (pass 5)
+   ================================================================ */
+
+/* one continuous dark gradient across artifact → next → archive → mind */
+.lp-band { background: transparent; }
+#artifact.lp-band,
+#next.lp-band,
+#archive.lp-band,
+#about.lp-band { background: linear-gradient(180deg, #020409 0%, #04070f 40%, #03060d 72%, #020409 100%); }
+
+/* softer, shorter seams so bands bleed instead of stacking black slabs */
+#artifact .lp-seam-top,
+#artifact .lp-seam-bottom,
+#next .lp-seam-top,
+#next .lp-seam-bottom { height: 8rem; }
+
+/* artifacts: painting reaches lower, plate overlaps its lower edge */
+.lp-feature-art--wide { bottom: 8%; }
+.lp-plate--overlap { margin-top: -3.5rem; }
+@media (min-width: 768px) {
+  .lp-plate--overlap { margin-top: -5rem; }
+}
+
+/* next season: full-bleed volumetric field, larger cocoon presence */
+#next .lp-signal-haze { inset: -22%; filter: blur(56px); }
+.lp-cocoon--large { filter: drop-shadow(0 0 90px hsl(var(--accent) / 0.32)); }
+
+/* trim dead vertical bands between the closing sections */
+#archive.lp-band { padding-top: 2.5rem; padding-bottom: 2.5rem; }
+@media (min-width: 768px) {
+  #archive.lp-band { padding-top: 3.5rem; padding-bottom: 3.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-cocoon--large { filter: none; }
+}
+
+/* pass 5b — final seam tightening between next season and the archive */
+#next .lp-seam-bottom { height: 5rem; }
+#next .lp-signal { padding-bottom: 2rem; }
+@media (min-width: 768px) { #next .lp-signal { padding-bottom: 3rem; } }
+#archive.lp-band { padding-top: 1.25rem; padding-bottom: 1.5rem; }
+@media (min-width: 768px) {
+  #archive.lp-band { padding-top: 2rem; padding-bottom: 2rem; }
+}
