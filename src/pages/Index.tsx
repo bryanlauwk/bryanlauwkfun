@@ -44,6 +44,8 @@ const Index = () => {
           <UpcomingSeason />
           <SeasonArchive projects={rest} isLoading={isLoading} />
           <Laboratory />
+          <AboutSection />
+
 
           <section id="signal" className="relative px-5 py-20 md:px-10 md:py-28">
             <div className="mx-auto max-w-4xl">
