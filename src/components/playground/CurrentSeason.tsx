@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import type { Project } from "@/hooks/useProjects";
 import { slugFor } from "@/lib/slug";
+import { CosmicPanel } from "./CosmicPanel";
 
 interface CurrentSeasonProps {
   project?: Project;
@@ -9,6 +11,9 @@ interface CurrentSeasonProps {
 }
 
 export function CurrentSeason({ project, isLoading }: CurrentSeasonProps) {
+  const [imageFailed, setImageFailed] = useState(false);
+
+
   return (
     <section
       id="now"
