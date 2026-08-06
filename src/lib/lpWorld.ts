@@ -55,70 +55,93 @@ export interface Palette {
 
 const PALETTES: Record<Archetype, Palette> = {
   pollen: {
-    base: "#040a12",
-    haze: "#0d3d3f",
-    far: "#0a2a34",
-    mid: "#124a45",
-    glow: "#63f6d0",
-    spark: "#eafff6",
+    base: "#02100c",
+    haze: "#0b5a3d",
+    far: "#07352a",
+    mid: "#12724c",
+    glow: "#7dffb0",
+    spark: "#eafff2",
   },
   ink: {
     base: "#05060f",
-    haze: "#241a4d",
+    haze: "#2a1a5e",
     far: "#150f33",
-    mid: "#2b1f63",
-    glow: "#8b6cff",
+    mid: "#3a2385",
+    glow: "#9b7bff",
     spark: "#e6e0ff",
   },
   paper: {
-    base: "#0a0710",
-    haze: "#3a2440",
-    far: "#25182c",
-    mid: "#4a2c3f",
-    glow: "#ffc48a",
-    spark: "#fff2e2",
+    base: "#120a08",
+    haze: "#5a3320",
+    far: "#301a14",
+    mid: "#7a4326",
+    glow: "#ffcf94",
+    spark: "#fff4e6",
   },
   mineral: {
     base: "#04070f",
-    haze: "#1c3560",
+    haze: "#1d3f7a",
     far: "#0f2246",
-    mid: "#1e3a72",
-    glow: "#7fb6ff",
-    spark: "#f0f6ff",
+    mid: "#2a56a8",
+    glow: "#8fc6ff",
+    spark: "#f4f9ff",
   },
   arcade: {
-    base: "#0b0410",
-    haze: "#48114a",
-    far: "#2b0a33",
-    mid: "#5b1550",
-    glow: "#ff67c3",
-    spark: "#ffe9fb",
+    base: "#100213",
+    haze: "#610f63",
+    far: "#33063b",
+    mid: "#8a1274",
+    glow: "#ff5cc8",
+    spark: "#ffe3f8",
   },
   reef: {
-    base: "#030c10",
-    haze: "#0c4152",
-    far: "#082a38",
-    mid: "#0f4f5e",
-    glow: "#57e0ff",
-    spark: "#e8fbff",
+    base: "#01100f",
+    haze: "#0a5566",
+    far: "#062f3c",
+    mid: "#0d7183",
+    glow: "#3ee0ff",
+    spark: "#e2fbff",
   },
   cloud: {
-    base: "#060810",
-    haze: "#2b3358",
+    base: "#070911",
+    haze: "#3a4270",
     far: "#1a2140",
-    mid: "#39406b",
-    glow: "#c9d6ff",
+    mid: "#525c96",
+    glow: "#dfe7ff",
     spark: "#ffffff",
   },
   orbit: {
-    base: "#0a0509",
-    haze: "#4a2216",
-    far: "#2e1410",
-    mid: "#63301b",
-    glow: "#ffb457",
-    spark: "#fff0d6",
+    base: "#100503",
+    haze: "#6a2a10",
+    far: "#37160b",
+    mid: "#993d15",
+    glow: "#ffb03d",
+    spark: "#fff2d6",
   },
 };
+
+/**
+ * Semantic routing — obvious subjects get a fitting world before the hash
+ * fallback runs. Order matters: earlier rules win.
+ */
+const KEYWORD_RULES: Array<[Archetype, RegExp]> = [
+  ["orbit", /badminton|sport|match|racket|tennis|футбол|football|soccer|fitness|run|kinetic|motion/i],
+  ["reef", /kitchen|food|cook|recipe|chef|restaurant|meal|menu|eat|bite|snack|厨|食|菜/i],
+  ["mineral", /block|brick|cube|stack|tetris|build|构|方块/i],
+  ["cloud", /chart|charts|data|trend|graph|dashboard|analytic|stat|metric|insight|报表|数据/i],
+  ["arcade", /rac(e|ing)|arcade|drift|kart|pixel|retro|coin|speed|赛/i],
+  ["paper", /art|draw|paint|sketch|toy|doodle|colou?r|craft|画|绘|玩/i],
+  ["pollen", /kldex|durian|tropical|fruit|jungle|garden|farm|榴莲|热带/i],
+  ["ink", /write|writing|word|letter|story|poem|chat|talk|note|字|文/i],
+];
+
+function semanticArchetype(hints: string): Archetype | null {
+  for (const [archetype, re] of KEYWORD_RULES) {
+    if (re.test(hints)) return archetype;
+  }
+  return null;
+}
+
 
 /** FNV-1a — small, stable, no dependencies. */
 export function hashString(input: string): number {
