@@ -55,7 +55,7 @@ export function CurrentSeason({ project, isLoading }: CurrentSeasonProps) {
 
               <div className="mt-10 flex flex-wrap items-center gap-5">
                 <span className="lp-button lp-button--ghost">
-                  Play it
+                  Enter Experience
                   <ArrowUpRight className="h-4 w-4 transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1" />
                 </span>
                 {project.tag && <span className="lp-chip">{project.tag}</span>}
