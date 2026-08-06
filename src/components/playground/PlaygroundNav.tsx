@@ -3,10 +3,11 @@ import { SoundToggle } from "@/components/SoundToggle";
 import { useVisitorCounter } from "@/hooks/useVisitorCounter";
 
 const LINKS = [
-  { id: "now", label: "Current" },
-  { id: "archive", label: "Archive" },
-  { id: "lab", label: "Lab" },
+  { id: "now", label: "Current Season" },
+  { id: "archive", label: "Past Seasons" },
+  { id: "lab", label: "Laboratory" },
   { id: "about", label: "About" },
+
 ];
 
 export function PlaygroundNav() {
