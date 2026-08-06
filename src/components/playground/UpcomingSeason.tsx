@@ -27,7 +27,7 @@ export function UpcomingSeason() {
           <span aria-hidden="true" className="lp-seam-bottom" />
         </div>
 
-        <div className="relative mx-auto max-w-[110rem] px-6 pb-16 pt-[15rem] md:px-14 md:pb-24 md:pt-32">
+        <div className="relative mx-auto max-w-[110rem] px-6 pb-16 pt-[15rem] md:px-14 md:pb-28 md:pt-40">
           <div className="md:grid md:grid-cols-[minmax(0,46%)_minmax(0,1fr)]">
             <div aria-hidden="true" className="hidden md:block" />
             <div className="lp-signal-copy max-w-xl">
