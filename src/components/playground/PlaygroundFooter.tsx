@@ -1,6 +1,5 @@
-import { Github, Twitter, Linkedin } from "lucide-react";
-
 export function PlaygroundFooter() {
+
   const year = new Date().getFullYear();
 
   return (
