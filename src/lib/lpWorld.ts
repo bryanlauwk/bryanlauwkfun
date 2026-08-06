@@ -176,10 +176,15 @@ export interface WorldSpec {
   tilt: number;
 }
 
-export function worldFor(key: string): WorldSpec {
+/**
+ * @param key   stable identity (id::title) — drives the seed
+ * @param hints free text (title, tag, description) used for semantic routing
+ */
+export function worldFor(key: string, hints = ""): WorldSpec {
   const seed = hashString(key);
-  const archetype = ARCHETYPES[seed % ARCHETYPES.length];
+  const archetype = semanticArchetype(`${hints} ${key}`) ?? ARCHETYPES[seed % ARCHETYPES.length];
   const rng = makeRng(seed);
+
   return {
     seed,
     archetype,
