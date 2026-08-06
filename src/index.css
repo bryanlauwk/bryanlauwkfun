@@ -811,6 +811,30 @@
 .lp-blueprint:hover { border-color: hsl(var(--lp-blue) / 0.5); }
 .lp-blueprint svg { stroke: hsl(var(--lp-blue) / 0.7); fill: none; }
 
+/* ---- Companion orb ---- */
+.lp-orb {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 3.25rem;
+  width: 3.25rem;
+  border-radius: 9999px;
+  border: 1px solid hsl(var(--accent) / 0.28);
+  background:
+    radial-gradient(circle at 36% 30%, hsl(var(--accent) / 0.32), transparent 62%),
+    hsl(220 60% 3% / 0.7);
+  box-shadow: 0 0 32px hsl(var(--accent) / 0.18), inset 0 0 22px hsl(var(--accent) / 0.12);
+  backdrop-filter: blur(14px);
+  animation: lp-breathe 6s ease-in-out infinite;
+  transition: border-color 0.5s ease, box-shadow 0.5s ease;
+}
+.lp-orb:hover {
+  border-color: hsl(var(--accent) / 0.6);
+  box-shadow: 0 0 48px hsl(var(--accent) / 0.3), inset 0 0 26px hsl(var(--accent) / 0.2);
+}
+
+
+
 /* ---- Motion ---- */
 @keyframes lp-spin { to { transform: rotate(360deg); } }
 
