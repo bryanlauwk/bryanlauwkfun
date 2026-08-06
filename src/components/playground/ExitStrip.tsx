@@ -129,10 +129,10 @@ export function ExitStrip() {
                     </p>
                     <div className="mt-3 flex flex-wrap items-center gap-4">
                       <a href="#archive" className="text-[9px] uppercase tracking-[0.24em] text-accent hover:underline">
-                        Past Seasons
+                        Dream Archive
                       </a>
-                      <a href="#artifact" className="text-[9px] uppercase tracking-[0.24em] text-accent hover:underline">
-                        The First Key
+                      <a href="#experiences" className="text-[9px] uppercase tracking-[0.24em] text-accent hover:underline">
+                        Experiences
                       </a>
                       <button
                         type="button"
@@ -202,7 +202,7 @@ export function ExitStrip() {
             <button
               type="button"
               onClick={() => setSignalOpen(true)}
-              aria-label="Leave a signal"
+              aria-label="Leave a message in the sky"
               className="lp-arrow"
             >
               <Mail className="h-4 w-4" />
