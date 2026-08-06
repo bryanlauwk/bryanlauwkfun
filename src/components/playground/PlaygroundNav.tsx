@@ -56,13 +56,6 @@ export function PlaygroundNav() {
             </span>
 
             <div className="flex items-center gap-2">
-              <a
-                href="#companion"
-                aria-label="Bryan's Mind — companion"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-[hsl(var(--lp-hair)/0.28)] transition-colors hover:border-accent/60"
-              >
-                <span className="lp-orb" aria-hidden="true" />
-              </a>
               <SoundToggle />
             </div>
           </div>
@@ -70,14 +63,15 @@ export function PlaygroundNav() {
 
         <nav
           aria-label="Sections, compact"
-          className="flex items-center justify-center gap-6 border-t border-[hsl(var(--lp-hair)/0.12)] px-6 py-2.5 md:hidden"
+          className="lp-rail items-center gap-6 border-t border-[hsl(var(--lp-hair)/0.12)] px-6 py-2.5 md:hidden"
         >
           {LINKS.map((l) => (
-            <a key={l.id} href={`#${l.id}`} className="lp-navlink">
+            <a key={l.id} href={`#${l.id}`} className="lp-navlink whitespace-nowrap">
               {l.label}
             </a>
           ))}
         </nav>
+
       </header>
     </>
   );
