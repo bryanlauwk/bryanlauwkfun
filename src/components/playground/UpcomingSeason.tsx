@@ -61,7 +61,7 @@ export function UpcomingSeason() {
 
             {/* the living forming signal */}
             <span aria-hidden="true" className="lp-cocoon lp-cocoon--large">
-              <svg viewBox="0 0 320 220" className="h-48 w-full md:h-64">
+              <svg viewBox="0 0 320 220" className="h-56 w-full md:h-80">
                 <defs>
                   <radialGradient id="lp-cocoon-volume" cx="50%" cy="50%" r="50%">
                     <stop offset="0%" stopColor="hsl(var(--accent))" stopOpacity="0.55" />

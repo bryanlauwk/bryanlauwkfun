@@ -33,7 +33,7 @@ export function ExitStrip() {
   };
 
   return (
-    <section id="about" className="relative" aria-labelledby="exit-heading">
+    <section id="about" className="lp-band relative" aria-labelledby="exit-heading">
       <div ref={ref} className={`lp-feature is-quiet ${inView ? "is-live" : ""}`}>
         <div className="lp-feature-art lp-feature-art--tall">
           <img
@@ -47,7 +47,7 @@ export function ExitStrip() {
           <span className="lp-seam-top" />
         </div>
 
-        <div className="relative mx-auto max-w-[110rem] px-6 pb-20 pt-24 md:px-14 md:pb-28 md:pt-36">
+        <div className="relative mx-auto max-w-[110rem] px-6 pb-16 pt-20 md:px-14 md:pb-20 md:pt-28">
           <div className="grid gap-14 md:grid-cols-[minmax(0,26rem)_minmax(0,30rem)] md:gap-20">
             <div>
               <div className="flex items-start gap-4">
