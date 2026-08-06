@@ -43,9 +43,7 @@ export function PastSeasons({ projects, isLoading }: PastSeasonsProps) {
             {pairs.map(({ sphere, project }, i) => (
               <li
                 key={project.id}
-                className={`lp-capsule ${i === pairs.length - 1 && pairs.length % 2 === 1 ? "lp-capsule-last" : ""} ${
-                  i === pairs.length - 1 && pairs.length % 4 === 1 ? "xl:col-start-2" : ""
-                }`}
+                className={`lp-capsule ${i === pairs.length - 1 && pairs.length % 2 === 1 ? "lp-capsule-last" : ""}`}
                 style={{ ["--i" as string]: String(i), ["--dur" as string]: `${11 + (i % 5) * 2.4}s` } as React.CSSProperties}
               >
                 <Link to={`/drops/${slugFor(project)}`} className="lp-capsule-link group">

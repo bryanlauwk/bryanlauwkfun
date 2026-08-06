@@ -1669,3 +1669,7 @@
   .lp-signal-haze { animation: none !important; }
   .lp-capsule-link { opacity: 1 !important; transform: none !important; }
 }
+
+@media (min-width: 1280px) {
+  .lp-capsules .lp-capsule-last { grid-column-start: 2; }
+}
