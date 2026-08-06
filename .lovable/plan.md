@@ -1,66 +1,49 @@
-# Fix: Mobile stuck on static shell + full landing audit
+# Match the reference homepage
 
-## Problem
-On mobile, the page freezes on the `#static-fallback` shell in `index.html` and never hands off to the hydrated React UI. Desktop hydrates fine. Likely the React tree mounts but the fallback shell isn't being removed, or a mobile-only runtime error (audio/hover/scroll listener, image, or Supabase call) crashes hydration before first paint replaces the shell.
+Rebuild the homepage composition, copy and section rhythm to match the uploaded reference, while keeping the existing season-based nav labels and all real drop data.
 
-Root-cause candidates to check, in order:
+## What changes
 
-1. **Static shell never removed.** `index.html` renders `<div id="static-fallback">` inside `#root`. `createRoot(document.getElementById("root")!).render(...)` in `src/main.tsx` should replace it on mount, but if React throws during first render the ErrorBoundary may render *around* the shell or the shell may remain visible under a transparent React tree. On desktop it works because hydration completes; on mobile something throws.
-2. **Mobile-only crash in a top-level component.** Suspects: `useBackgroundMusic`, `KonamiCodeListener`, `UpsideDownOverlay`, `useVisitorCounter`, `CinematicHeader` scroll listener, `ProjectGrid` image loads, `useSEO` / `HelmetProvider`.
-3. **First-paint parity check gives false confidence.** `scripts/verify-first-paint.py` asserts required copy exists in shell + hydrated DOM, but does NOT assert the shell is actually removed/hidden after hydration — so a "stuck on shell" bug passes the check.
+**1. Hero (centered, reference-exact)**
+- Center the title block over the world instead of the current left-aligned layout.
+- Copy: `The Living Playground` / `Interactive art × playful technology × AI experiences` / `A digital world of experiments, stories, and playful systems built by Bryan Lau.`
+- The luminous orb sits centered on the horizon with concentric water ripples radiating outward, glowing shoreline grasses left and right, and a gold-and-cyan particle field.
+- Under the orb: `Move closer. Something responds.` plus a downward chevron.
+- Nav keeps the current labels (Current Season / Past Seasons / Artifact / About) with the reference's active-dot indicator styling.
 
-## Plan
+**2. Featured Worlds (new section)**
+- Five circular "world orbs" in a row, each a code-generated illustration: Playable Worlds, Interactive Web Experiments, Mini Games, AI Playground, Generative Ideas.
+- Categories and their counts are derived from real drop tags, so the row reflects actual work rather than invented content.
 
-### 1. Reproduce and capture the real error
-- Run Playwright at 390×844 against `http://localhost:8080`, JS enabled, capture:
-  - `console` messages (all levels) and `pageerror`
-  - Network failures
-  - Screenshot after `networkidle`
-  - DOM snapshot of `#root` — is `#static-fallback` still present? Is `main#main-content` present?
-- Repeat at 1280×900 to confirm desktop hydrates.
-- If mobile shows a runtime error, fix that specific component. If mobile DOM contains BOTH shell and hydrated `<main>`, the shell isn't being cleared → fix in step 2.
+**3. Featured Experiences (replaces the current Drop / Archive layout)**
+- Four-across image cards with title, one-line description and a circular arrow button, exactly like the reference.
+- Painted cinematic artwork is generated per drop and stored as project assets. Drops that already have a real image keep it.
+- The latest drop (画啦猜啦) stays first and is still linked as the current one.
 
-### 2. Guarantee the shell is removed on hydration
-Two robust options; pick one after step 1 confirms behavior:
-- **A (preferred):** Move `#static-fallback` OUT of `#root` (sibling div), and in `src/main.tsx` remove it synchronously right after `createRoot(...).render(...)`. React only owns `#root`, so it can never accidentally preserve the shell.
-- **B:** Keep it inside `#root` but ensure `createRoot` on an empty container — clear `#root.innerHTML` before rendering. Simpler but loses instant paint of the shell inside the React container.
+**4. Ideas Forest (new section)**
+- Six growth stages along a glowing curve — Spark, Seed, Sprout, Sapling, Tree, Forest — as line-art SVG plants that scale up left to right.
+- Copy: `Tiny thoughts. Wild branches. Infinite forests.` / `Ideas grow into essays, experiments, and stories.`
+- Stage labels/captions are mapped from drop tags so the forest reflects the real body of work.
 
-Go with **A**: keep instant paint, guarantee cleanup, no flash.
+**5. Dream Archive (new section)**
+- Six icon nodes on a connecting line over a moonlit horizon: Marketer, Builder, Experimenter, Creative Technologist, Curious Human, Next?
+- Reference copy, with the archive linking through to real drops.
 
-### 3. Fix whichever mobile-only crash step 1 surfaces
-Likely fixes (only apply what repro shows):
-- Guard `window.matchMedia` / `AudioContext` / `navigator.*` usage behind `typeof window !== "undefined"` and try/catch.
-- Ensure `useVisitorCounter` handles Supabase error without throwing during render.
-- Ensure `HelmetProvider` + `useSEO` isn't double-mounting.
-- Wrap the risky top-level side-effect components in a small ErrorBoundary so one crash doesn't blank the page.
+**6. About Bryan + Bryan's Mind**
+- Left: particle-portrait head silhouette. Center: three pillars (Marketer / Builder / Curious Human) with the reference's copy.
+- Right: a bordered "Bryan's Mind" panel with the glowing two-eyed orb, a `Show me something weird.` speech bubble and `I'm listening...`.
 
-### 4. Harden the first-paint parity check
-Extend `scripts/verify-first-paint.py` to also assert, in the hydrated run:
-- `document.getElementById("static-fallback")` is `null` (or `hidden`)
-- `main#main-content` exists and is visible
-- No `console.error` / `pageerror` fired during load
-Run at both viewports; fail loudly if the shell survives hydration.
+**7. Footer**
+- `Thanks for exploring. / See you next season.` with a small heart glyph.
+- The "Leave a Message in the Sky" form from the reference is skipped, as requested.
 
-### 5. Landing-journey audit (mobile 390 + desktop 1280)
-Walk the full flow with Playwright and screenshot each step; report anything broken or awkward:
-- `/` hero renders, header sticky behavior, visitor counter loads, sound toggle works
-- `Drops` grid renders all 9 projects from Supabase, cards are tappable, external links open
-- Click a drop → `/drops/:slug` renders (or falls through to external `href`)
-- Footer + guest book: submit a test message path renders, validation works
-- `/auth`, `/admin` (unauthenticated redirect), `/404` unknown route
-- Konami code / Upside Down overlay doesn't break mobile
-- Lighthouse-style quick checks: no layout shift from shell → hydrated, no horizontal scroll on 390px, tap targets ≥ 40px
-
-### 6. Deliverable
-- Root-cause writeup with the exact console error and offending file
-- Code fix (steps 2 + 3)
-- Updated `scripts/verify-first-paint.py`
-- Short audit report of journey findings with screenshots, ordered by severity
+**8. Removed / retired**
+- The current Upcoming Season cocoon band and the standalone Artifact vault are folded into the new structure so the page reads like the reference rather than layering two systems.
 
 ## Technical notes
-- Only touch presentation/runtime code; no schema or business-logic changes.
-- No new dependencies.
-- Keep the "Certified curious" / "For the curious" copy untouched.
 
-## Question before I start
-Do you want me to also fix any non-blocker journey issues I find in the audit (e.g. tap targets, missing alt text, mobile layout nits), or only the hydration bug + report the rest for you to triage?
+- New components under `src/components/playground/`: `FeaturedWorlds.tsx`, `FeaturedExperiences.tsx`, `IdeasForest.tsx`, `DreamArchive.tsx`, `AboutBryan.tsx`; `ArrivalSection.tsx` and `HeroWorld.tsx` recomposed to centered layout with ripple rings.
+- Drop artwork generated with the image tool into `src/assets/drops/` and mapped by project id, with the existing `MiniWorld` engine as fallback for any drop without art.
+- Tag-to-category and tag-to-stage mapping extends `src/lib/lpWorld.ts`; no schema or data changes.
+- Palette shifts from the current violet-led scheme to the reference's teal/emerald/gold on near-black, updated in the `.living-playground` scope in `src/index.css`.
+- Scroll-entry reveal (`useReveal`) applied to each new section; responsive down to 390px; no publish or backend changes.
