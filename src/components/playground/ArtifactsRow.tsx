@@ -92,8 +92,8 @@ export function ArtifactsRow() {
           </div>
         </div>
 
-        <div className="relative mx-auto max-w-[110rem] px-6 pb-16 pt-[22rem] md:px-14 md:pb-24 md:pt-[30rem]">
-          <div className="grid gap-10 md:grid-cols-[minmax(0,26rem)_minmax(0,24rem)] md:gap-20">
+        <div className="relative mx-auto max-w-[110rem] px-6 pb-12 pt-[17rem] md:px-14 md:pb-16 md:pt-[23rem]">
+          <div className="grid gap-8 md:grid-cols-[minmax(0,26rem)_minmax(0,26rem)] md:gap-20">
             <div>
               <p className="lp-label lp-label--violet">Interactive Artifact</p>
               <h2 id="artifact-heading" className="lp-display mt-5 text-3xl text-foreground md:text-[2.7rem]">
@@ -106,45 +106,48 @@ export function ArtifactsRow() {
               </p>
             </div>
 
-            <div className="lp-plate min-h-[10rem]" role="status" aria-live="polite">
-              {active ? (
-                <>
-                  <p className="lp-mono text-accent">{active.material}</p>
-                  <h3 className="lp-display mt-3 text-xl text-foreground">{active.name}</h3>
-                  <p className="mt-3 text-sm font-light leading-relaxed text-muted-foreground">
-                    {active.idea}
-                  </p>
-                </>
-              ) : (
-                <>
-                  <p className="lp-mono text-muted-foreground/70">Four pieces</p>
-                  <p className="mt-3 text-sm font-light leading-relaxed text-muted-foreground">
-                    Hover or focus a marker on the still life to read the idea behind
-                    each object.
-                  </p>
-                </>
-              )}
+            <div className="lp-plate lp-plate--overlap min-h-[10rem]">
+              <div role="status" aria-live="polite">
+                {active ? (
+                  <>
+                    <p className="lp-mono text-accent">{active.material}</p>
+                    <h3 className="lp-display mt-3 text-xl text-foreground">{active.name}</h3>
+                    <p className="mt-3 text-sm font-light leading-relaxed text-muted-foreground">
+                      {active.idea}
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <p className="lp-mono text-muted-foreground/70">Four pieces</p>
+                    <p className="mt-3 text-sm font-light leading-relaxed text-muted-foreground">
+                      Hover or focus a marker on the still life to read the idea behind
+                      each object.
+                    </p>
+                  </>
+                )}
+              </div>
+
+              <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 border-t border-[hsl(var(--lp-hair)/0.14)] pt-4">
+                {PIECES.map((piece) => (
+                  <li key={piece.id}>
+                    <button
+                      type="button"
+                      className={`lp-mono transition-colors ${
+                        active?.id === piece.id ? "text-accent" : "text-muted-foreground/70 hover:text-foreground"
+                      }`}
+                      onFocus={() => setActive(piece)}
+                      onPointerEnter={() => setActive(piece)}
+                      onClick={() => setActive(piece)}
+                    >
+                      {piece.name}
+                    </button>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
-
-          <ul className="mt-10 flex flex-wrap gap-x-8 gap-y-3">
-            {PIECES.map((piece) => (
-              <li key={piece.id}>
-                <button
-                  type="button"
-                  className={`lp-mono transition-colors ${
-                    active?.id === piece.id ? "text-accent" : "text-muted-foreground/70 hover:text-foreground"
-                  }`}
-                  onFocus={() => setActive(piece)}
-                  onPointerEnter={() => setActive(piece)}
-                  onClick={() => setActive(piece)}
-                >
-                  {piece.name}
-                </button>
-              </li>
-            ))}
-          </ul>
         </div>
+
       </div>
     </section>
   );
