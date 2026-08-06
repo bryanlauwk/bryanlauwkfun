@@ -1003,38 +1003,8 @@
 .lp-card-tilt { transform-origin: 60px 60px; transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
 .lp-artifact-card:hover .lp-card-tilt { transform: rotate(-4deg) scale(1.04); }
 
-/* ---- Upcoming season: forming signal ---- */
-.lp-signal {
-  border-radius: 0.5rem;
-  border: 1px solid hsl(var(--lp-hair) / 0.14);
-  background: linear-gradient(120deg, hsl(250 60% 8% / 0.55), hsl(220 60% 3% / 0.75));
-}
-.lp-signal-field {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 8% 60%, hsl(var(--accent) / 0.16), transparent 42%),
-    radial-gradient(circle at 92% 30%, hsl(200 90% 60% / 0.1), transparent 55%);
-  opacity: 0;
-  transform: scale(1.06);
-  transition: opacity 1.4s ease, transform 1.6s cubic-bezier(0.22, 1, 0.36, 1);
-  pointer-events: none;
-}
-.lp-signal.is-formed .lp-signal-field { opacity: 1; transform: scale(1); }
-.lp-cocoon {
-  display: block;
-  opacity: 0;
-  transform: translateY(14px) scale(0.94);
-  transition: opacity 1.2s ease, transform 1.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.lp-signal.is-formed .lp-cocoon { opacity: 1; transform: translateY(0) scale(1); }
-.lp-cocoon-glow { transform-origin: center; animation: lp-breathe 9s ease-in-out infinite; }
-.lp-cocoon-heart { transform-origin: center; animation: lp-breathe 4.5s ease-in-out infinite; }
-@keyframes lp-thread {
-  0%, 100% { opacity: 0.18; }
-  50% { opacity: 0.7; }
-}
-.lp-cocoon-thread { animation: lp-thread 6s ease-in-out infinite; }
+
+
 
 /* ---- Bryan's Mind creature ---- */
 @keyframes lp-mind-wobble {
