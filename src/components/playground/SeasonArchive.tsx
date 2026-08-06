@@ -80,7 +80,7 @@ export function SeasonArchive({ projects, isLoading }: SeasonArchiveProps) {
   return (
     <section
       id="archive"
-      className="relative px-6 py-20 md:px-14 md:py-28"
+      className="relative px-6 py-8 md:px-14 md:py-11"
       aria-labelledby="archive-heading"
     >
       <div className="mx-auto grid max-w-[110rem] gap-10 md:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] md:gap-14">
