@@ -47,23 +47,28 @@ export function MemoryCapsule({ project, index, isFocused = false }: MemoryCapsu
       to={`/drops/${slugFor(project)}`}
       onPointerMove={onMove}
       onPointerLeave={() => setTilt({ x: 0, y: 0 })}
-      className={`lp-world group w-[10.5rem] md:w-[12.5rem] ${isFocused ? "is-focused" : ""}`}
+      className={`lp-world lp-world--${spec.archetype} group w-[10.5rem] md:w-[12.5rem] ${
+        isFocused ? "is-focused" : ""
+      }`}
       aria-label={`Open ${project.title}`}
       style={
         {
           ["--mw-x" as string]: tilt.x.toFixed(3),
           ["--mw-y" as string]: tilt.y.toFixed(3),
           ["--mw-tilt" as string]: spec.tilt,
+          ["--mw-tempo" as string]: `${(12 / spec.tempo).toFixed(1)}s`,
         } as React.CSSProperties
       }
     >
       <span className="lp-world-sphere h-[10.5rem] w-[10.5rem] md:h-[12.5rem] md:w-[12.5rem]">
         <MiniWorld spec={spec} uid={uid} />
-        {/* glass: refraction, caustic rim, specular highlight */}
+        {/* glass: refraction, caustic sweep, rim, specular highlight */}
         <span aria-hidden="true" className="lp-glass-refract" />
+        <span aria-hidden="true" className="lp-glass-caustic" />
         <span aria-hidden="true" className="lp-glass-rim" />
         <span aria-hidden="true" className="lp-glass-spec" />
       </span>
+
       <span aria-hidden="true" className="lp-world-shadow" />
 
       <span className="mt-5 block text-[0.6rem] uppercase tracking-[0.3em] text-muted-foreground">
