@@ -2,44 +2,54 @@ export function UpcomingSeason() {
   return (
     <section
       id="next"
-      className="relative px-5 py-20 md:px-10 md:py-28"
+      className="relative px-6 py-16 md:px-14 md:py-20"
       aria-labelledby="next-heading"
     >
-      <div className="mx-auto max-w-5xl">
-        <div className="lp-panel lp-panel--quiet overflow-hidden p-8 md:p-14">
-          <p className="lp-label">Next transmission · forming</p>
+      <div className="mx-auto max-w-[110rem]">
+        <div className="lp-panel lp-panel--quiet relative overflow-hidden px-7 py-10 md:px-14 md:py-14">
+          <span
+            aria-hidden="true"
+            className="absolute inset-0 bg-[radial-gradient(circle_at_85%_20%,rgba(139,108,255,0.16),transparent_60%)]"
+          />
+          <div className="relative grid gap-8 md:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] md:gap-14">
+            <p className="lp-label lp-label--violet self-start">
+              <span className="mr-2 inline-block h-1 w-1 rounded-full bg-accent lp-pulse align-middle" />
+              Next transmission · forming
+            </p>
 
-          <h2
-            id="next-heading"
-            className="mt-5 font-tide text-3xl italic leading-tight text-foreground md:text-5xl"
-          >
-            Something is learning how to notice you.
-          </h2>
+            <div>
+              <h2
+                id="next-heading"
+                className="text-2xl font-extralight leading-tight tracking-[0.02em] text-foreground md:text-[2.1rem]"
+              >
+                Something is learning how to notice you.
+              </h2>
 
-          <p className="mt-6 max-w-2xl leading-relaxed text-muted-foreground">
-            It involves sound, a room that answers back, and at least one
-            decision I&apos;ll regret. You&apos;ll know when it opens — the door
-            here changes shape.
-          </p>
+              <p className="mt-5 max-w-xl text-sm font-light leading-relaxed text-muted-foreground">
+                It involves sound, a room that answers back, and at least one decision
+                I&apos;ll regret. You&apos;ll know when it opens — the door here changes shape.
+              </p>
 
-          <ul className="mt-10 grid gap-4 sm:grid-cols-3">
-            {[
-              { k: "Working title", v: "Room Tone" },
-              { k: "State", v: "Sketch → prototype" },
-              { k: "Opens", v: "Date unknown." },
-            ].map((row) => (
-              <li key={row.k} className="lp-shard">
-                <span className="lp-label">{row.k}</span>
-                <span className="mt-2 block font-tide text-xl italic text-foreground">
-                  {row.v}
-                </span>
-              </li>
-            ))}
-          </ul>
+              <dl className="mt-9 flex flex-wrap gap-x-14 gap-y-6">
+                {[
+                  { k: "Working title", v: "Room Tone" },
+                  { k: "State", v: "Sketch → prototype" },
+                  { k: "Opens", v: "Date unknown." },
+                ].map((row) => (
+                  <div key={row.k}>
+                    <dt className="text-[0.6rem] uppercase tracking-[0.3em] text-muted-foreground">
+                      {row.k}
+                    </dt>
+                    <dd className="mt-2 text-sm font-light text-foreground">{row.v}</dd>
+                  </div>
+                ))}
+              </dl>
 
-          <a href="#signal" className="lp-button lp-button--ghost mt-10">
-            Get told when it opens
-          </a>
+              <a href="#signal" className="lp-button mt-9">
+                Get told when it opens
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
