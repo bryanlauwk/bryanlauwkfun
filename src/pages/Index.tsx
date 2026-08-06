@@ -7,6 +7,7 @@ import { InteractiveArtifact } from "@/components/playground/InteractiveArtifact
 import { UpcomingSeason } from "@/components/playground/UpcomingSeason";
 import { SeasonArchive } from "@/components/playground/SeasonArchive";
 import { Laboratory } from "@/components/playground/Laboratory";
+import { AboutSection } from "@/components/playground/AboutSection";
 import { QuietCompanion } from "@/components/playground/QuietCompanion";
 import { PlaygroundFooter } from "@/components/playground/PlaygroundFooter";
 import { GuestBook } from "@/components/GuestBook";
@@ -43,6 +44,8 @@ const Index = () => {
           <UpcomingSeason />
           <SeasonArchive projects={rest} isLoading={isLoading} />
           <Laboratory />
+          <AboutSection />
+
 
           <section id="signal" className="relative px-5 py-20 md:px-10 md:py-28">
             <div className="mx-auto max-w-4xl">

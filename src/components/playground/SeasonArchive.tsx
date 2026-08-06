@@ -17,6 +17,7 @@ export function SeasonArchive({ projects, isLoading }: SeasonArchiveProps) {
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("all");
+  const [indexOpen, setIndexOpen] = useState(false);
 
   const filters = useMemo(() => {
     const tagCounts = new Map<string, number>();
@@ -78,60 +79,76 @@ export function SeasonArchive({ projects, isLoading }: SeasonArchiveProps) {
       aria-labelledby="archive-heading"
     >
       <div className="mx-auto max-w-6xl">
-        <p className="lp-label">Past seasons</p>
+        <p className="lp-label">Past Seasons</p>
         <h2
           id="archive-heading"
           className="mt-4 font-tide text-4xl italic text-foreground md:text-5xl"
         >
-          Memories the playground kept
+          Past Seasons
         </h2>
         <p className="mt-4 max-w-lg text-muted-foreground">
-          Everything that has been alive here before. Still playable, slightly
-          dustier.
+          Memory capsules from earlier worlds.
         </p>
 
         {projects.length > 0 && (
-          <div className="mt-10 flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
-            <div className="relative w-full max-w-sm">
-              <Search
-                className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
-                aria-hidden="true"
-              />
-              <input
-                type="search"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search the memories…"
-                aria-label="Search drops"
-                className="lp-input pl-11 pr-10"
-              />
-              {query && (
-                <button
-                  type="button"
-                  onClick={() => setQuery("")}
-                  aria-label="Clear search"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  <X className="h-4 w-4" />
-                </button>
-              )}
-            </div>
+          <div className="mt-10">
+            <button
+              type="button"
+              onClick={() => setIndexOpen((v) => !v)}
+              aria-expanded={indexOpen}
+              aria-controls="archive-index"
+              className="lp-button lp-button--ghost"
+            >
+              {indexOpen ? "Close archive index" : "Open archive index"}
+            </button>
 
-            <div className="flex flex-wrap gap-2" role="tablist" aria-label="Filter drops">
-              {filters.map((f) => (
-                <button
-                  key={f.id}
-                  role="tab"
-                  aria-selected={activeFilter === f.id}
-                  onClick={() => setActiveFilter(f.id)}
-                  className={`lp-filter ${activeFilter === f.id ? "is-active" : ""}`}
-                >
-                  {f.label}
-                </button>
-              ))}
+            <div
+              id="archive-index"
+              hidden={!indexOpen}
+              className="mt-6 flex flex-col gap-5 md:flex-row md:items-center md:justify-between"
+            >
+              <div className="relative w-full max-w-sm">
+                <Search
+                  className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+                  aria-hidden="true"
+                />
+                <input
+                  type="search"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Search the memories…"
+                  aria-label="Search drops"
+                  className="lp-input pl-11 pr-10"
+                />
+                {query && (
+                  <button
+                    type="button"
+                    onClick={() => setQuery("")}
+                    aria-label="Clear search"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
+
+              <div className="flex flex-wrap gap-2" role="tablist" aria-label="Filter drops">
+                {filters.map((f) => (
+                  <button
+                    key={f.id}
+                    role="tab"
+                    aria-selected={activeFilter === f.id}
+                    onClick={() => setActiveFilter(f.id)}
+                    className={`lp-filter ${activeFilter === f.id ? "is-active" : ""}`}
+                  >
+                    {f.label}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         )}
+
 
         <div className="mt-10">
           {isLoading ? (
