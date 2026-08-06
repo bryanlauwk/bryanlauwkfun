@@ -5,7 +5,7 @@ import { useVisitorCounter } from "@/hooks/useVisitorCounter";
 const LINKS = [
   { id: "now", label: "Current Season" },
   { id: "archive", label: "Past Seasons" },
-  { id: "lab", label: "Laboratory" },
+  { id: "artifact", label: "Artifact" },
   { id: "about", label: "About" },
 
 ];

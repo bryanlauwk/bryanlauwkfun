@@ -131,8 +131,8 @@ export function ExitStrip() {
                       <a href="#archive" className="text-[9px] uppercase tracking-[0.24em] text-accent hover:underline">
                         Past Seasons
                       </a>
-                      <a href="#lab" className="text-[9px] uppercase tracking-[0.24em] text-accent hover:underline">
-                        Laboratory
+                      <a href="#artifact" className="text-[9px] uppercase tracking-[0.24em] text-accent hover:underline">
+                        The First Key
                       </a>
                       <button
                         type="button"

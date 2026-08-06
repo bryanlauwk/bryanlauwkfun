@@ -5,7 +5,6 @@ import { CurrentSeason } from "@/components/playground/CurrentSeason";
 import { ArtifactsRow } from "@/components/playground/ArtifactsRow";
 import { UpcomingSeason } from "@/components/playground/UpcomingSeason";
 import { SeasonArchive } from "@/components/playground/SeasonArchive";
-import { Laboratory } from "@/components/playground/Laboratory";
 import { ExitStrip } from "@/components/playground/ExitStrip";
 import { PlaygroundFooter } from "@/components/playground/PlaygroundFooter";
 import { usePublicProjects } from "@/hooks/useProjects";
@@ -49,7 +48,6 @@ const Index = () => {
           <ArtifactsRow />
           <UpcomingSeason />
           <SeasonArchive projects={rest} isLoading={isLoading} />
-          <Laboratory />
           <ExitStrip />
         </main>
 
