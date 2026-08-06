@@ -42,7 +42,7 @@ export function InteractiveArtifact() {
       aria-labelledby="artifact-heading"
     >
       <div className="mx-auto max-w-5xl">
-        <p className="lp-label">Artifact · 001</p>
+        <p className="lp-label">Prototype artifact · concept in development</p>
 
         <div className="mt-8 grid items-center gap-12 md:grid-cols-[1fr_auto]">
           <div>
@@ -50,14 +50,19 @@ export function InteractiveArtifact() {
               id="artifact-heading"
               className="font-tide text-4xl italic text-foreground md:text-5xl"
             >
-              The first key
+              THE FIRST KEY
             </h2>
             <p className="mt-5 max-w-lg leading-relaxed text-muted-foreground">
+              A possible physical layer for this season — a small NFC-enabled
+              metal or acrylic token. Not made yet, not for sale. Just an idea
+              being tested here first.
+            </p>
+            <p className="mt-4 max-w-lg leading-relaxed text-muted-foreground">
               {found
                 ? returning
                   ? "You've held this before. It warmed up faster this time — it remembers the shape of your hand."
                   : "It opened. Nothing dramatic happened, which is exactly how real doors work. Keep it. It'll matter in a later season."
-                : "Every playground has one object nobody explains. Touch it and find out whether it likes you."}
+                : "Tap to unlock a hidden response."}
             </p>
 
             <button
@@ -69,9 +74,10 @@ export function InteractiveArtifact() {
               aria-pressed={found}
               className="lp-button mt-8"
             >
-              {found ? "Held" : "Touch it"}
+              {found ? "Held" : "Tap to unlock"}
             </button>
           </div>
+
 
           <button
             type="button"
