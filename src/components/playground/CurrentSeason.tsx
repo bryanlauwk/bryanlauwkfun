@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import type { Project } from "@/hooks/useProjects";
 import { slugFor } from "@/lib/slug";
+import { useReveal } from "@/hooks/useReveal";
 import { SketchRealm } from "./SketchRealm";
 
 interface CurrentSeasonProps {
@@ -10,92 +11,103 @@ interface CurrentSeasonProps {
   isLoading: boolean;
 }
 
+/**
+ * Current Drop — the boldest editorial moment after the hero.
+ * A full-bleed ink-becomes-life vignette; the type sits inside the scene
+ * rather than on a bordered card.
+ */
 export function CurrentSeason({ project, isLoading }: CurrentSeasonProps) {
   const [imageFailed, setImageFailed] = useState(false);
-
+  const { ref, inView } = useReveal<HTMLDivElement>(0.12);
 
   return (
     <section
       id="now"
-      className="relative z-20 -mt-28 px-6 md:-mt-40 md:px-14"
+      className="lp-scene relative z-20 -mt-24 md:-mt-36"
       aria-labelledby="now-heading"
     >
-      <div className="mx-auto max-w-[110rem]">
-        {isLoading ? (
-          <div className="lp-panel h-[320px] animate-pulse" />
-        ) : project ? (
-          <Link
-            to={`/drops/${slugFor(project)}`}
-            className="lp-panel lp-panel--feature group grid overflow-hidden md:grid-cols-[minmax(0,44%)_minmax(0,56%)]"
-            aria-label={`Enter the experience: ${project.title}`}
-          >
-            <span className="lp-panel-glow" aria-hidden="true" />
+      {isLoading ? (
+        <div className="mx-auto h-[420px] max-w-[110rem] animate-pulse px-6 md:px-14" />
+      ) : project ? (
+        <div ref={ref} className={`lp-drop ${inView ? "is-live" : ""}`}>
+          {/* the living vignette, full-bleed behind the type */}
+          <div className="lp-drop-stage" aria-hidden="true">
+            {project.image_url && !imageFailed ? (
+              <img
+                src={project.image_url}
+                alt=""
+                loading="lazy"
+                onError={() => setImageFailed(true)}
+                className="absolute inset-0 h-full w-full object-cover opacity-60"
+              />
+            ) : (
+              <SketchRealm />
+            )}
+            <span className="lp-drop-veil" />
+            <span className="lp-drop-seam" />
+          </div>
 
-            <div className="relative order-2 flex flex-col justify-center p-7 md:order-1 md:p-14">
-              <p className="lp-label lp-label--violet">Current Drop</p>
+          <div className="relative mx-auto flex min-h-[30rem] max-w-[110rem] items-end px-6 pb-14 pt-40 md:min-h-[40rem] md:items-center md:px-14 md:py-28">
+            <div className="max-w-xl md:max-w-[34rem]">
+              <p className="lp-label lp-label--violet lp-drop-in">
+                <span className="mr-2 inline-block h-1 w-1 rounded-full bg-accent lp-pulse align-middle" />
+                Current Drop · open now
+              </p>
 
               <h2
                 id="now-heading"
-                className="mt-6 text-3xl font-extralight leading-tight tracking-[0.02em] text-foreground transition-colors duration-500 group-hover:text-white md:text-[2.6rem]"
+                className="lp-drop-in mt-6 text-[2.5rem] font-extralight leading-[1.05] tracking-[0.02em] text-foreground md:text-[4.2rem]"
+                style={{ ["--d" as string]: "120ms" } as React.CSSProperties}
               >
                 {project.title}
               </h2>
 
               {project.description && (
-                <p className="mt-5 max-w-md text-sm font-light leading-relaxed text-muted-foreground md:text-[0.95rem]">
+                <p
+                  className="lp-drop-in mt-6 max-w-md text-sm font-light leading-relaxed text-muted-foreground md:text-[0.98rem]"
+                  style={{ ["--d" as string]: "220ms" } as React.CSSProperties}
+                >
                   {project.description}
                 </p>
               )}
 
-              <span className="lp-button mt-9 w-fit">
-                Enter the Experience
-                <ArrowRight className="h-3.5 w-3.5 transition-transform duration-500 group-hover:translate-x-1" />
-              </span>
-
-              <div className="mt-6 flex flex-wrap items-center gap-3">
-                <span className="lp-chip lp-chip--violet">
-                  <span className="mr-2 inline-block h-1 w-1 rounded-full bg-accent lp-pulse" />
-                  Limited transmission · currently open
-                </span>
-                {project.tag && <span className="lp-chip">{project.tag}</span>}
+              <div
+                className="lp-drop-in mt-10 flex flex-wrap items-center gap-5"
+                style={{ ["--d" as string]: "320ms" } as React.CSSProperties}
+              >
+                <Link
+                  to={`/drops/${slugFor(project)}`}
+                  className="lp-cta group"
+                  aria-label={`Enter the experience: ${project.title}`}
+                >
+                  Enter the experience
+                  <ArrowRight className="h-4 w-4 transition-transform duration-500 group-hover:translate-x-1.5" />
+                </Link>
+                {project.tag && (
+                  <span className="text-[0.6rem] uppercase tracking-[0.3em] text-muted-foreground">
+                    {project.tag}
+                  </span>
+                )}
               </div>
-            </div>
 
-            <div className="relative order-1 min-h-[240px] overflow-hidden md:order-2 md:min-h-[400px]">
-              {project.image_url && !imageFailed ? (
-                <img
-                  src={project.image_url}
-                  alt={project.title}
-                  loading="lazy"
-                  onError={() => setImageFailed(true)}
-                  className="absolute inset-0 h-full w-full object-cover opacity-70 transition-transform duration-[1600ms] group-hover:scale-[1.04]"
-                />
-              ) : (
-                <SketchRealm />
-              )}
-              <span
-                aria-hidden="true"
-                className="absolute inset-0 bg-[linear-gradient(90deg,#020409_2%,rgba(2,4,9,0.5)_34%,rgba(2,4,9,0.1)_100%)]"
-              />
-              {project.image_url && !imageFailed && (
-                <span
-                  aria-hidden="true"
-                  className="absolute inset-0 opacity-50 [background-image:radial-gradient(rgba(200,215,255,0.5)_0.6px,transparent_0.7px)] [background-size:26px_26px]"
-                />
-              )}
+              <p className="lp-drop-in mt-6 text-[0.6rem] uppercase tracking-[0.3em] text-muted-foreground/75"
+                style={{ ["--d" as string]: "400ms" } as React.CSSProperties}
+              >
+                Touch the ink. It answers.
+              </p>
             </div>
-          </Link>
-        ) : (
-          <div className="lp-panel p-10 text-center md:p-16">
-            <h2 id="now-heading" className="text-2xl font-extralight text-foreground">
-              The season is between breaths
-            </h2>
-            <p className="mt-3 text-sm text-muted-foreground">
-              Nothing is open yet. Something is being built in the dark.
-            </p>
           </div>
-        )}
-      </div>
+        </div>
+      ) : (
+        <div className="mx-auto max-w-[110rem] px-6 py-20 text-center md:px-14">
+          <h2 id="now-heading" className="text-2xl font-extralight text-foreground">
+            The season is between breaths
+          </h2>
+          <p className="mt-3 text-sm text-muted-foreground">
+            Nothing is open yet. Something is being built in the dark.
+          </p>
+        </div>
+      )}
     </section>
   );
 }
