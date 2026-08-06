@@ -499,3 +499,311 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* =====================================================================
+   THE LIVING PLAYGROUND
+   Scoped theme: deep tide-pool night, bioluminescent accent, warm ember.
+   Everything below only applies inside .living-playground.
+   ===================================================================== */
+
+.living-playground {
+  --background: 197 42% 5%;
+  --foreground: 40 24% 93%;
+
+  --card: 194 34% 8%;
+  --card-foreground: 40 24% 93%;
+
+  --popover: 194 34% 8%;
+  --popover-foreground: 40 24% 93%;
+
+  --primary: 172 62% 58%;
+  --primary-foreground: 197 45% 6%;
+
+  --secondary: 194 26% 13%;
+  --secondary-foreground: 40 24% 93%;
+
+  --muted: 194 22% 14%;
+  --muted-foreground: 190 12% 66%;
+
+  --accent: 172 66% 62%;
+  --accent-foreground: 197 45% 6%;
+
+  --border: 190 18% 18%;
+  --input: 190 18% 16%;
+  --ring: 172 62% 58%;
+
+  --lp-ember: 34 78% 66%;
+
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+/* ---- Ambient environment layers ---- */
+.lp-depth {
+  background:
+    radial-gradient(120% 80% at 50% -10%, hsl(174 55% 14% / 0.55), transparent 60%),
+    radial-gradient(90% 60% at 12% 30%, hsl(200 60% 12% / 0.5), transparent 65%),
+    radial-gradient(80% 70% at 88% 78%, hsl(34 60% 18% / 0.28), transparent 70%),
+    hsl(197 42% 5%);
+}
+
+.lp-drift {
+  background:
+    radial-gradient(45% 35% at 20% 20%, hsl(172 70% 40% / 0.14), transparent 70%),
+    radial-gradient(40% 30% at 80% 60%, hsl(34 80% 55% / 0.09), transparent 70%);
+  animation: lp-drift 34s ease-in-out infinite alternate;
+  filter: blur(20px);
+}
+
+@keyframes lp-drift {
+  0% { transform: translate3d(-2%, -1%, 0) scale(1); }
+  100% { transform: translate3d(3%, 2%, 0) scale(1.08); }
+}
+
+.lp-fog {
+  background: radial-gradient(ellipse at center, transparent 45%, hsl(197 50% 3% / 0.75) 100%);
+}
+
+/* ---- Type & primitives ---- */
+.living-playground .lp-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: hsl(var(--muted-foreground));
+}
+
+.living-playground h1,
+.living-playground h2,
+.living-playground h3 {
+  font-family: "Fraunces", "Georgia", serif;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+
+.lp-navlink {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: hsl(var(--muted-foreground));
+  transition: color 0.4s ease;
+  position: relative;
+}
+.lp-navlink::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  height: 1px;
+  width: 100%;
+  background: hsl(var(--accent));
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.lp-navlink:hover { color: hsl(var(--foreground)); }
+.lp-navlink:hover::after { transform: scaleX(1); transform-origin: left; }
+
+.lp-orb {
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 35% 30%, hsl(var(--accent)), hsl(174 60% 26%));
+  box-shadow: 0 0 14px hsl(var(--accent) / 0.55);
+  animation: lp-breathe 6s ease-in-out infinite;
+}
+
+.lp-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-radius: 9999px;
+  padding: 0.85rem 1.9rem;
+  background: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s ease, background 0.4s ease;
+  box-shadow: 0 0 0 hsl(var(--accent) / 0);
+}
+.lp-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px hsl(var(--accent) / 0.28);
+}
+.lp-button--ghost {
+  background: transparent;
+  color: hsl(var(--foreground));
+  border: 1px solid hsl(var(--foreground) / 0.18);
+}
+.lp-button--ghost:hover {
+  border-color: hsl(var(--accent) / 0.6);
+  color: hsl(var(--accent));
+  box-shadow: 0 12px 40px hsl(var(--accent) / 0.12);
+}
+
+.lp-chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  border: 1px solid hsl(var(--accent) / 0.35);
+  padding: 0.25rem 0.8rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.625rem;
+  text-transform: lowercase;
+  letter-spacing: 0.12em;
+  color: hsl(var(--accent));
+}
+
+.lp-input {
+  width: 100%;
+  border-radius: 9999px;
+  border: 1px solid hsl(var(--foreground) / 0.12);
+  background: hsl(var(--card) / 0.6);
+  padding: 0.8rem 1rem;
+  font-size: 0.875rem;
+  color: hsl(var(--foreground));
+  backdrop-filter: blur(12px);
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+.lp-input::placeholder { color: hsl(var(--muted-foreground)); }
+.lp-input:focus {
+  outline: none;
+  border-color: hsl(var(--accent) / 0.55);
+  box-shadow: 0 0 0 4px hsl(var(--accent) / 0.1);
+}
+
+.lp-filter {
+  border-radius: 9999px;
+  border: 1px solid hsl(var(--foreground) / 0.12);
+  padding: 0.45rem 1rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: hsl(var(--muted-foreground));
+  transition: all 0.4s ease;
+}
+.lp-filter:hover { color: hsl(var(--foreground)); border-color: hsl(var(--foreground) / 0.3); }
+.lp-filter.is-active {
+  background: hsl(var(--accent) / 0.14);
+  border-color: hsl(var(--accent) / 0.6);
+  color: hsl(var(--accent));
+}
+
+/* ---- Surfaces ---- */
+.lp-panel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.75rem;
+  border: 1px solid hsl(var(--foreground) / 0.1);
+  background: linear-gradient(160deg, hsl(var(--card) / 0.85), hsl(var(--background) / 0.6));
+  backdrop-filter: blur(14px);
+  transition: border-color 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.lp-panel--feature:hover {
+  border-color: hsl(var(--accent) / 0.4);
+  transform: translateY(-4px);
+}
+.lp-panel--quiet {
+  background: linear-gradient(160deg, hsl(var(--card) / 0.5), hsl(var(--background) / 0.35));
+  border-style: dashed;
+}
+.lp-panel-glow {
+  position: absolute;
+  inset: -40% 40% 40% -40%;
+  background: radial-gradient(circle, hsl(var(--accent) / 0.16), transparent 65%);
+  opacity: 0;
+  transition: opacity 0.7s ease;
+  pointer-events: none;
+}
+.lp-panel--feature:hover .lp-panel-glow { opacity: 1; }
+
+.lp-shard {
+  border-radius: 1.25rem;
+  border: 1px solid hsl(var(--foreground) / 0.09);
+  background: hsl(var(--card) / 0.5);
+  padding: 1.25rem 1.4rem;
+  backdrop-filter: blur(10px);
+  transition: border-color 0.5s ease, transform 0.5s ease;
+}
+.lp-shard:hover { border-color: hsl(var(--accent) / 0.32); transform: translateY(-3px); }
+.lp-shard--tall { padding: 1.75rem; height: 100%; }
+
+.lp-capsule {
+  position: relative;
+  display: block;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  border: 1px solid hsl(var(--foreground) / 0.09);
+  background: linear-gradient(155deg, hsl(var(--card) / 0.8), hsl(var(--background) / 0.5));
+  backdrop-filter: blur(12px);
+  transition: border-color 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.lp-capsule:hover,
+.lp-capsule.is-focused {
+  transform: translateY(-5px);
+  border-color: hsl(var(--accent) / 0.45);
+}
+.lp-capsule.is-focused { box-shadow: 0 0 0 2px hsl(var(--accent) / 0.35); }
+.lp-capsule-glow {
+  position: absolute;
+  inset: auto -30% -50% -30%;
+  height: 70%;
+  background: radial-gradient(circle, hsl(var(--accent) / 0.18), transparent 68%);
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+.lp-capsule:hover .lp-capsule-glow,
+.lp-capsule.is-focused .lp-capsule-glow { opacity: 1; }
+
+/* ---- Artifact ---- */
+.lp-artifact {
+  display: block;
+  border-radius: 9999px;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), filter 0.6s ease;
+  filter: saturate(0.55) brightness(0.8);
+}
+.lp-artifact:hover { transform: scale(1.03); filter: saturate(0.9) brightness(0.95); }
+.lp-artifact.is-charging { transform: scale(0.97); }
+.lp-artifact.is-awake { filter: saturate(1.15) brightness(1.1); }
+.lp-artifact .lp-key-halo { animation: lp-breathe 7s ease-in-out infinite; transform-origin: center; }
+.lp-artifact .lp-key-ring { transform-origin: center; animation: lp-spin 44s linear infinite; }
+.lp-artifact.is-awake .lp-key-ring { animation-duration: 16s; }
+.lp-artifact.is-awake .lp-key-core { filter: drop-shadow(0 0 12px hsl(var(--accent))); }
+
+@keyframes lp-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---- Motion ---- */
+@keyframes lp-breathe {
+  0%, 100% { opacity: 0.72; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.04); }
+}
+.lp-breathe { animation: lp-breathe 7s ease-in-out infinite; display: inline-block; }
+.lp-pulse { animation: lp-breathe 3.4s ease-in-out infinite; }
+
+@keyframes lp-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.lp-fade {
+  opacity: 0;
+  animation: lp-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.lp-whisper { animation: lp-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-drift,
+  .lp-breathe,
+  .lp-pulse,
+  .lp-orb,
+  .lp-artifact .lp-key-halo,
+  .lp-artifact .lp-key-ring { animation: none !important; }
+  .lp-fade { opacity: 1; animation: none !important; }
+}
