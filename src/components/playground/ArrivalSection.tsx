@@ -1,93 +1,83 @@
 import { HeroWorld } from "./HeroWorld";
 
+/**
+ * ArrivalSection — centred hero: a luminous orb rising above concentric
+ * ripples, with the title stacked underneath.
+ */
 export function ArrivalSection() {
   return (
     <section
       id="arrival"
-      className="relative min-h-[100svh] w-full overflow-hidden md:min-h-[105vh]"
+      className="relative min-h-[100svh] w-full overflow-hidden"
       aria-labelledby="arrival-heading"
     >
-      {/* original luminous particle environment */}
       <div className="absolute inset-0">
         <HeroWorld />
       </div>
 
-      {/* readability gradient — soft, not an opaque box */}
+      {/* centred orb + ripples */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,4,9,0)_28%,rgba(2,4,9,0.86)_52%,#020409_78%)] md:bg-[linear-gradient(90deg,#020409_0%,rgba(2,4,9,0.92)_22%,rgba(2,4,9,0.55)_46%,rgba(2,4,9,0)_70%)]"
-      />
-      <div
-        aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 h-52 bg-[linear-gradient(180deg,rgba(2,4,9,0)_0%,#020409_88%)]"
-      />
+        className="pointer-events-none absolute inset-x-0 top-[16%] flex justify-center md:top-[14%]"
+      >
+        <div className="relative h-[22rem] w-[22rem] md:h-[30rem] md:w-[30rem]">
+          <span className="absolute left-1/2 top-[36%] h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_42%_36%,rgba(233,241,255,0.95),rgba(140,170,255,0.55)_38%,rgba(90,120,255,0.16)_62%,transparent_74%)] blur-[1px] md:h-56 md:w-56" />
+          <span className="lp-pulse absolute left-1/2 top-[36%] h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,hsl(var(--accent)/0.28),transparent_68%)] md:h-[26rem] md:w-[26rem]" />
 
-
-      <div className="relative z-10 mx-auto flex min-h-[100svh] w-full max-w-[110rem] items-end px-6 pb-40 pt-32 md:min-h-[105vh] md:items-center md:px-14 md:pb-56 md:pt-0">
-        <div className="w-full md:w-[40%] md:pt-10">
-          <p className="lp-fade lp-label lp-label--violet" style={{ animationDelay: "100ms" }}>
-            Welcome
-          </p>
-
-          <h1
-            id="arrival-heading"
-            className="lp-fade mt-6 text-[2.4rem] font-extralight leading-[1.08] tracking-[0.05em] text-foreground sm:text-6xl md:text-[4rem] md:leading-[1.1]"
-            style={{ animationDelay: "220ms" }}
-          >
-            The Living
-            <br />
-            Playground
-          </h1>
-
-          <p className="lp-fade lp-stack mt-8" style={{ animationDelay: "320ms" }}>
-            Interactive experiences.
-            <br />
-            Collectible objects.
-            <br />
-            Digital worlds.
-          </p>
-
-          <p
-            className="lp-fade mt-7 text-[0.62rem] uppercase tracking-[0.34em] text-accent"
-            style={{ animationDelay: "400ms" }}
-          >
-            Built one season at a time.
-          </p>
-
-          <p
-            className="lp-fade mt-5 max-w-xs text-xs font-light leading-relaxed text-muted-foreground/85"
-            style={{ animationDelay: "460ms" }}
-          >
-            Season 00 · Prologue. An evolving world by Bryan Lau.
-          </p>
-
-
-          <div
-            className="lp-fade mt-10 flex items-center gap-5"
-            style={{ animationDelay: "540ms" }}
-          >
+          {[0, 1, 2, 3].map((i) => (
             <span
-              aria-hidden="true"
-              className="relative flex h-12 w-12 items-center justify-center rounded-full border border-dashed border-[hsl(var(--lp-hair)/0.3)]"
-            >
-              <span className="lp-pulse block h-5 w-5 rounded-full bg-[radial-gradient(circle_at_38%_32%,hsl(var(--accent)/0.75),transparent_70%)]" />
-            </span>
-            <span className="leading-relaxed">
-              <span className="block text-[0.65rem] uppercase tracking-[0.3em] text-foreground/85">
-                Move to explore
-              </span>
-              <span className="block text-[0.6rem] uppercase tracking-[0.3em] text-muted-foreground">
-                Everything reacts
-              </span>
-            </span>
-          </div>
+              key={i}
+              className="absolute left-1/2 bottom-[16%] -translate-x-1/2 rounded-[50%] border border-[hsl(var(--lp-hair)/0.22)]"
+              style={{
+                width: `${28 + i * 22}%`,
+                height: `${6 + i * 3}%`,
+                opacity: 0.5 - i * 0.1,
+                animation: `lp-float ${7 + i * 2}s ease-in-out infinite`,
+              }}
+            />
+          ))}
+        </div>
+      </div>
 
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 h-64 bg-[linear-gradient(180deg,rgba(2,4,9,0)_0%,#020409_86%)]"
+      />
 
-          <a
-            href="#now"
-            className="lp-button mt-10 hidden md:inline-flex"
-          >
-            Step inside
+      <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-3xl flex-col items-center justify-end px-6 pb-28 text-center md:justify-center md:pb-0 md:pt-24">
+        <p className="lp-fade lp-label lp-label--violet" style={{ animationDelay: "120ms" }}>
+          Season 00 · Prologue
+        </p>
+
+        <h1
+          id="arrival-heading"
+          className="lp-fade mt-6 text-[2.6rem] font-extralight leading-[1.08] tracking-[0.06em] text-foreground sm:text-6xl md:text-[4.25rem]"
+          style={{ animationDelay: "240ms" }}
+        >
+          The Living Playground
+        </h1>
+
+        <p
+          className="lp-fade mt-7 text-[0.66rem] uppercase tracking-[0.32em] text-foreground/80 md:text-xs"
+          style={{ animationDelay: "340ms" }}
+        >
+          Interactive art × playful technology × AI experiences
+        </p>
+
+        <p
+          className="lp-fade mt-6 max-w-md text-sm font-light leading-relaxed text-muted-foreground"
+          style={{ animationDelay: "420ms" }}
+        >
+          An evolving world by Bryan Lau. Everything here is playable, half-finished
+          on purpose, and still growing.
+        </p>
+
+        <div className="lp-fade mt-10 flex flex-wrap items-center justify-center gap-3" style={{ animationDelay: "520ms" }}>
+          <a href="#now" className="lp-button">
+            Enter the playground
+          </a>
+          <a href="#experiences" className="lp-button">
+            Browse experiences
           </a>
         </div>
       </div>
