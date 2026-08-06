@@ -1166,34 +1166,11 @@
 .lp-world:hover .lp-glass-caustic,
 .lp-world.is-focused .lp-glass-caustic { opacity: 1; transform: translateX(25%); }
 
-/* ---- Forming signal: large cocoon ---- */
-.lp-cocoon--large { width: 100%; }
-.lp-cocoon--large svg { overflow: visible; }
-.lp-cocoon-membrane {
-  transform-origin: center;
-  animation: lp-breathe 11s ease-in-out infinite;
-}
-.lp-cocoon--large .lp-cocoon-glow {
-  transform-origin: center;
-  transform: translate(calc(var(--sg-x, 0) * 4px), calc(var(--sg-y, 0) * 4px));
-}
-@keyframes lp-fragment-knit {
-  0%, 100% { opacity: 0.15; transform: translate(0, 0); }
-  50% { opacity: 0.85; transform: translate(-3px, 2px); }
-}
-.lp-fragment { animation: lp-fragment-knit 7s ease-in-out infinite; }
-.lp-cocoon-fragments {
-  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-  transform: translate(calc(var(--sg-x, 0) * -6px), calc(var(--sg-y, 0) * -6px));
+@media (prefers-reduced-motion: reduce) {
+  .lp-vault-object.is-charging { animation: none !important; }
+  .lp-glass-caustic { transition: none !important; transform: none !important; opacity: 1 !important; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .lp-fragment,
-  .lp-cocoon-membrane,
-  .lp-vault-object.is-charging { animation: none !important; }
-  .lp-glass-caustic,
-  .lp-cocoon-fragments { transition: none !important; transform: none !important; opacity: 1 !important; }
-}
 
 
 /* ================================================================
