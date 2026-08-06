@@ -9,31 +9,41 @@ export function ArrivalSection() {
     >
       <div className="mx-auto w-full max-w-4xl text-center">
         <p className="lp-label lp-fade" style={{ animationDelay: "120ms" }}>
-          You found the door
+          Season 00 · Prologue
         </p>
 
         <h1
           id="arrival-heading"
-          className="lp-fade mt-8 font-tide text-[2.6rem] leading-[1.04] tracking-[-0.02em] text-foreground sm:text-6xl md:text-7xl"
+          className="lp-fade mt-8 font-tide text-[2rem] leading-[1.06] tracking-[-0.02em] text-foreground [text-wrap:balance] sm:text-5xl md:text-7xl"
           style={{ animationDelay: "260ms" }}
         >
-          A place that is{" "}
-          <span className="lp-breathe italic text-accent">still growing</span>,
-          <br className="hidden sm:block" /> and knows you are here.
+          THE LIVING{" "}
+          <span className="lp-breathe italic text-accent">PLAYGROUND</span>
         </h1>
 
         <p
-          className="lp-fade mx-auto mt-8 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg"
-          style={{ animationDelay: "420ms" }}
+          className="lp-fade mt-7 font-tide text-xl italic text-foreground md:text-2xl"
+          style={{ animationDelay: "380ms" }}
         >
-          Not a portfolio. A playground that changes with the seasons — small
-          playable art, half-finished ideas, and things I had to make. Touch
-          everything. Break something. Tell me what happened.
+          Welcome to this season.
+        </p>
+
+        <p className="lp-fade lp-label mt-4" style={{ animationDelay: "440ms" }}>
+          An evolving world by Bryan Lau
+        </p>
+
+        <p
+          className="lp-fade mx-auto mt-8 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base"
+          style={{ animationDelay: "520ms" }}
+        >
+          A place that is still growing, and knows you are here. Small playable
+          art, half-finished ideas, and things I had to make. Touch everything.
+          Break something. Tell me what happened.
         </p>
 
         <div
           className="lp-fade mt-12 flex flex-col items-center gap-5"
-          style={{ animationDelay: "580ms" }}
+          style={{ animationDelay: "620ms" }}
         >
           <a href="#now" className="lp-button">
             Step inside
