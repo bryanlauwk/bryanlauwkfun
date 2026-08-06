@@ -1,9 +1,8 @@
 import { useMemo } from "react";
-import { LivingCanvas } from "@/components/playground/LivingCanvas";
 import { PlaygroundNav } from "@/components/playground/PlaygroundNav";
 import { ArrivalSection } from "@/components/playground/ArrivalSection";
 import { CurrentSeason } from "@/components/playground/CurrentSeason";
-import { InteractiveArtifact } from "@/components/playground/InteractiveArtifact";
+import { ArtifactsRow } from "@/components/playground/ArtifactsRow";
 import { UpcomingSeason } from "@/components/playground/UpcomingSeason";
 import { SeasonArchive } from "@/components/playground/SeasonArchive";
 import { Laboratory } from "@/components/playground/Laboratory";
@@ -16,7 +15,7 @@ import { useSEO } from "@/hooks/useSEO";
 
 const Index = () => {
   useSEO({
-    title: "Bryan Lau — A living playground",
+    title: "Bryan Lau — The Living Playground",
     description:
       "A living playground of small playable art and browser-born experiments by Bryan Lau. A new season is always growing.",
     canonical: "https://www.bryanlauwk.fun/",
@@ -32,7 +31,7 @@ const Index = () => {
 
   return (
     <div className="living-playground relative min-h-screen overflow-x-clip bg-background text-foreground">
-      <LivingCanvas />
+      <div className="lp-depth" aria-hidden="true" />
 
       <div className="relative z-10 flex min-h-screen flex-col">
         <PlaygroundNav />
@@ -40,14 +39,13 @@ const Index = () => {
         <main id="main-content" className="flex-1">
           <ArrivalSection />
           <CurrentSeason project={featured} isLoading={isLoading} />
-          <InteractiveArtifact />
-          <UpcomingSeason />
+          <ArtifactsRow />
           <SeasonArchive projects={rest} isLoading={isLoading} />
           <Laboratory />
+          <UpcomingSeason />
           <AboutSection />
 
-
-          <section id="signal" className="relative px-5 py-20 md:px-10 md:py-28">
+          <section id="signal" className="relative px-6 py-20 md:px-14 md:py-28">
             <div className="mx-auto max-w-4xl">
               <GuestBook />
             </div>

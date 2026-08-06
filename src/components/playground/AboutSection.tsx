@@ -10,52 +10,54 @@ export function AboutSection() {
   return (
     <section
       id="about"
-      className="relative px-5 py-20 md:px-10 md:py-28"
+      className="relative px-6 py-20 md:px-14 md:py-28"
       aria-labelledby="about-heading"
     >
-      <div className="mx-auto max-w-4xl">
-        <p className="lp-label">About</p>
+      <div className="mx-auto grid max-w-[110rem] gap-10 md:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] md:gap-14">
+        <p className="lp-label lp-label--violet self-start">About</p>
 
-        <h2
-          id="about-heading"
-          className="mt-4 font-tide text-3xl italic leading-tight text-foreground md:text-4xl"
-        >
-          Built by Bryan Lau — a creative growth marketer making things people
-          want to play with.
-        </h2>
-
-        <p className="mt-6 font-tide text-xl italic text-accent md:text-2xl">
-          Creativity is the interface. Growth is the outcome.
-        </p>
-
-        <div className="mt-10 flex flex-wrap items-center gap-4">
-          <a
-            href="https://ideas.bryanlauwk.fun"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="lp-button lp-button--ghost"
+        <div>
+          <h2
+            id="about-heading"
+            className="max-w-3xl text-xl font-extralight leading-relaxed tracking-[0.02em] text-foreground md:text-[1.8rem] md:leading-[1.5]"
           >
-            The Studio · my idea engine
-            <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-          </a>
-          <a href="#signal" className="lp-button lp-button--ghost">
-            Say hi
-          </a>
-        </div>
+            Built by Bryan Lau — a creative growth marketer making things people want to
+            play with.
+          </h2>
 
-        <div className="mt-8 flex items-center gap-2">
-          {SOCIALS.map(({ href, Icon, label }) => (
+          <p className="mt-6 text-sm uppercase tracking-[0.28em] text-accent">
+            Creativity is the interface. Growth is the outcome.
+          </p>
+
+          <div className="mt-10 flex flex-wrap items-center gap-3">
             <a
-              key={label}
-              href={href}
+              href="https://ideas.bryanlauwk.fun"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={label}
-              className="rounded-full border border-foreground/12 p-3 text-muted-foreground transition-colors hover:border-accent/50 hover:text-accent"
+              className="lp-button"
             >
-              <Icon className="h-4 w-4" />
+              The Studio · my idea engine
+              <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
             </a>
-          ))}
+            <a href="#signal" className="lp-button">
+              Say hi
+            </a>
+          </div>
+
+          <div className="mt-8 flex items-center gap-2">
+            {SOCIALS.map(({ href, Icon, label }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                className="lp-arrow"
+              >
+                <Icon className="h-4 w-4" />
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </section>
