@@ -21,7 +21,16 @@ const Index = () => {
 
   const { data: projects, isLoading } = usePublicProjects();
 
-  const featured = projects?.[0];
+  // Current Drop is always the public project with the latest valid created_at.
+  const featured = useMemo(() => {
+    const list = projects ?? [];
+    const dated = list
+      .map((p) => ({ p, ts: p.created_at ? new Date(p.created_at).getTime() : NaN }))
+      .filter((x) => Number.isFinite(x.ts))
+      .sort((a, b) => b.ts - a.ts);
+    return dated[0]?.p ?? list[0];
+  }, [projects]);
+
   const rest = useMemo(
     () => (projects ?? []).filter((p) => p.id !== featured?.id),
     [projects, featured?.id]

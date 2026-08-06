@@ -18,29 +18,58 @@ const SOCIALS = [
 
 function MindSphere() {
   return (
-    <svg viewBox="0 0 120 120" className="h-24 w-24 md:h-28 md:w-28" aria-hidden="true">
+    <svg viewBox="0 0 140 140" className="h-28 w-28 md:h-32 md:w-32" aria-hidden="true">
       <defs>
-        <radialGradient id="lp-mind" cx="38%" cy="32%" r="72%">
-          <stop offset="0%" stopColor="#b9c9ff" stopOpacity="0.6" />
-          <stop offset="45%" stopColor="#2b2350" stopOpacity="0.75" />
+        <radialGradient id="lp-mind-body" cx="36%" cy="30%" r="74%">
+          <stop offset="0%" stopColor="#dfe7ff" stopOpacity="0.92" />
+          <stop offset="26%" stopColor="#8b7cff" stopOpacity="0.7" />
+          <stop offset="62%" stopColor="#2a2258" stopOpacity="0.9" />
           <stop offset="100%" stopColor="#03050e" />
         </radialGradient>
+        <radialGradient id="lp-mind-halo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="hsl(var(--accent))" stopOpacity="0.5" />
+          <stop offset="100%" stopColor="hsl(var(--accent))" stopOpacity="0" />
+        </radialGradient>
+        <filter id="lp-mind-soft" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="5" />
+        </filter>
       </defs>
-      <ellipse
-        cx="60"
-        cy="62"
-        rx="52"
-        ry="16"
-        fill="none"
-        stroke="hsl(var(--accent) / 0.35)"
-        strokeWidth="0.6"
-        transform="rotate(-16 60 62)"
+
+      <circle cx="70" cy="70" r="60" fill="url(#lp-mind-halo)" className="lp-mw-breathe" />
+
+      {[0, 1, 2].map((i) => (
+        <ellipse
+          key={i}
+          cx="70"
+          cy="72"
+          rx={52 - i * 6}
+          ry={15 + i * 4}
+          fill="none"
+          stroke="hsl(var(--accent) / 0.32)"
+          strokeWidth="0.7"
+          transform={`rotate(${-20 + i * 30} 70 72)`}
+          className="lp-mind-ring"
+          style={{ animationDuration: `${26 + i * 12}s` }}
+        />
+      ))}
+
+      {/* liquid body with a soft wobble */}
+      <path
+        className="lp-mind-body"
+        d="M70 28 C96 28 112 48 112 70 C112 94 94 112 70 112 C46 112 28 94 28 70 C28 48 44 28 70 28 Z"
+        fill="url(#lp-mind-body)"
+        stroke="rgba(198,210,255,0.35)"
+        strokeWidth="0.8"
       />
-      <circle cx="60" cy="60" r="34" fill="url(#lp-mind)" stroke="rgba(190,205,255,0.35)" strokeWidth="0.8" />
-      <circle cx="50" cy="56" r="4.4" fill="#f2f6ff" opacity="0.9" />
-      <circle cx="70" cy="56" r="4.4" fill="#f2f6ff" opacity="0.9" />
-      <circle cx="18" cy="76" r="1.6" fill="hsl(var(--accent))" opacity="0.8" />
-      <circle cx="104" cy="50" r="1.2" fill="#9fc0ff" opacity="0.7" />
+      <ellipse cx="56" cy="54" rx="15" ry="10" fill="#ffffff" opacity="0.18" filter="url(#lp-mind-soft)" />
+
+      {/* expressive light */}
+      <circle cx="58" cy="66" r="5" fill="#f4f7ff" opacity="0.95" className="lp-mind-eye" />
+      <circle cx="82" cy="66" r="5" fill="#f4f7ff" opacity="0.95" className="lp-mind-eye" style={{ animationDelay: "0.2s" }} />
+      <path d="M60 84 Q70 92 80 84" stroke="rgba(226,232,255,0.55)" strokeWidth="1.4" fill="none" strokeLinecap="round" />
+
+      <circle cx="16" cy="92" r="2" fill="hsl(var(--accent))" opacity="0.8" className="lp-mw-flicker" />
+      <circle cx="124" cy="52" r="1.5" fill="#a8c4ff" opacity="0.7" className="lp-mw-flicker" />
     </svg>
   );
 }

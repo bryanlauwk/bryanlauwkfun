@@ -40,7 +40,8 @@ export function HeroWorld() {
     let motes: Mote[] = [];
     let filaments: Filament[] = [];
     let nodes: { x: number; y: number; r: number; c: string }[] = [];
-    const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
+    const pointer = { x: 0, y: 0, tx: 0, ty: 0, px: -1, py: -1, active: false };
+    let ripples: { x: number; y: number; born: number }[] = [];
 
     const palette = (): [number, number, number] => {
       const roll = Math.random();
@@ -195,8 +196,23 @@ export function HeroWorld() {
     const drawMotes = (wl: number, alpha: number, scale: number) => {
       motes.forEach((m) => {
         const drift = Math.sin(t * m.speed * 6 + m.phase) * 5;
-        const x = m.bx * w + drift + pointer.x * (m.core ? 14 : 22);
-        const y = m.by * h + Math.cos(t * m.speed * 5 + m.phase) * 4 + pointer.y * 8;
+        let x = m.bx * w + drift + pointer.x * (m.core ? 14 : 22);
+        let y = m.by * h + Math.cos(t * m.speed * 5 + m.phase) * 4 + pointer.y * 8;
+
+        // local attraction / repulsion around the pointer
+        if (pointer.active && pointer.px >= 0) {
+          const dx = x - pointer.px;
+          const dy = y - pointer.py;
+          const d2 = dx * dx + dy * dy;
+          const R = 150;
+          if (d2 < R * R && d2 > 1) {
+            const d = Math.sqrt(d2);
+            // outer motes are drawn in, core motes are gently pushed aside
+            const force = (1 - d / R) * (m.core ? -18 : 26);
+            x -= (dx / d) * force;
+            y -= (dy / d) * force;
+          }
+        }
         if (y > wl) return;
         const a =
           (0.24 + Math.abs(Math.sin(t * 3 + m.phase)) * 0.76 * m.twinkle) *
@@ -300,6 +316,23 @@ export function HeroWorld() {
       drawPortal(px, py, pr, breathe);
       drawMotes(wl, 1, 1);
 
+      // --- pointer ripples on the water ---
+      ripples = ripples.filter((r) => t - r.born < 2.2);
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(0, wl, w, h - wl);
+      ctx.clip();
+      ripples.forEach((r) => {
+        const age = (t - r.born) / 2.2;
+        const rad = 6 + age * Math.min(w, h) * 0.22;
+        ctx.strokeStyle = `rgba(205,226,255,${(1 - age) * 0.28})`;
+        ctx.lineWidth = 0.8;
+        ctx.beginPath();
+        ctx.ellipse(r.x, r.y, rad, rad * 0.28, 0, 0, Math.PI * 2);
+        ctx.stroke();
+      });
+      ctx.restore();
+
       // --- rocky silhouette at the right edge ---
       ctx.fillStyle = "rgba(1,2,6,0.96)";
       ctx.beginPath();
@@ -314,8 +347,17 @@ export function HeroWorld() {
 
     const onPointer = (e: PointerEvent) => {
       const rect = canvas.getBoundingClientRect();
-      pointer.tx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-      pointer.ty = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+      const lx = e.clientX - rect.left;
+      const ly = e.clientY - rect.top;
+      pointer.tx = (lx / rect.width - 0.5) * 2;
+      pointer.ty = (ly / rect.height - 0.5) * 2;
+      pointer.px = lx;
+      pointer.py = ly;
+      pointer.active = lx >= 0 && ly >= 0 && lx <= rect.width && ly <= rect.height;
+      if (pointer.active && ly > waterline() && ripples.length < 8) {
+        const last = ripples[ripples.length - 1];
+        if (!last || t - last.born > 0.35) ripples.push({ x: lx, y: ly, born: t });
+      }
     };
 
     resize();
