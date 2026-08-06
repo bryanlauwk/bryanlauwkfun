@@ -17,6 +17,7 @@ export function SeasonArchive({ projects, isLoading }: SeasonArchiveProps) {
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("all");
+  const [indexOpen, setIndexOpen] = useState(false);
 
   const filters = useMemo(() => {
     const tagCounts = new Map<string, number>();
