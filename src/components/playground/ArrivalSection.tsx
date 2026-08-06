@@ -1,89 +1,124 @@
-import { HeroWorld } from "./HeroWorld";
+import { useEffect, useRef, useState } from "react";
+import heroArt from "@/assets/living-playground-hero-v3.jpg";
+
+const MOTES = Array.from({ length: 18 }, (_, i) => ({
+  left: (i * 37) % 100,
+  delay: (i % 9) * 1.7,
+  dur: 16 + (i % 5) * 4,
+  size: i % 3 === 0 ? 3 : 2,
+}));
 
 /**
- * ArrivalSection — centred hero: a luminous orb rising above concentric
- * ripples, with the title stacked underneath.
+ * Arrival — the hero painting held edge to edge, with pointer parallax, a slow
+ * caustic shimmer over the water and a breathing orb glow. All motion is
+ * transform/opacity only and stops under prefers-reduced-motion.
  */
 export function ArrivalSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [p, setP] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+
+    let frame = 0;
+    const onMove = (e: PointerEvent) => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        const r = el.getBoundingClientRect();
+        setP({
+          x: ((e.clientX - r.left) / r.width - 0.5) * 2,
+          y: ((e.clientY - r.top) / r.height - 0.5) * 2,
+        });
+      });
+    };
+    el.addEventListener("pointermove", onMove, { passive: true });
+    return () => {
+      el.removeEventListener("pointermove", onMove);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, []);
+
   return (
     <section
+      ref={sectionRef}
       id="arrival"
-      className="relative min-h-[100svh] w-full overflow-hidden"
+      className="lp-arrival relative min-h-[100svh] w-full overflow-hidden"
       aria-labelledby="arrival-heading"
+      style={{ ["--px" as string]: p.x.toFixed(3), ["--py" as string]: p.y.toFixed(3) } as React.CSSProperties}
     >
-      <div className="absolute inset-0">
-        <HeroWorld />
-      </div>
+      <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
+        <img
+          src={heroArt}
+          alt=""
+          fetchPriority="high"
+          decoding="async"
+          className="lp-art-parallax absolute inset-0 h-full w-full object-cover object-[52%_62%]"
+        />
+        <span className="lp-caustics" />
+        <span className="lp-orb-breath" />
+        <span className="lp-veil" />
+        <span className="lp-seam-bottom" />
 
-      <div
-        aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 h-64 bg-[linear-gradient(180deg,rgba(2,4,9,0)_0%,#020409_86%)]"
-      />
-
-      <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-3xl flex-col items-center justify-center px-6 pb-24 pt-28 text-center md:pb-16 md:pt-32">
-        {/* centred orb rising above concentric ripples */}
-        <div
-          aria-hidden="true"
-          className="lp-fade relative mb-10 h-44 w-64 shrink-0 md:mb-14 md:h-60 md:w-96"
-          style={{ animationDelay: "60ms" }}
-        >
-          <span className="absolute left-1/2 top-[26%] h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_42%_36%,rgba(238,244,255,0.98),rgba(146,176,255,0.6)_38%,rgba(88,118,255,0.18)_62%,transparent_76%)] md:h-40 md:w-40" />
-          <span className="lp-pulse absolute left-1/2 top-[26%] h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,hsl(var(--accent)/0.3),transparent_68%)] md:h-80 md:w-80" />
-          {[0, 1, 2, 3].map((i) => (
+        <div className="lp-motes">
+          {MOTES.map((m, i) => (
             <span
               key={i}
-              className="absolute left-1/2 bottom-2 -translate-x-1/2 rounded-[50%] border border-[hsl(var(--lp-hair)/0.24)]"
               style={{
-                width: `${26 + i * 22}%`,
-                height: `${10 + i * 7}%`,
-                opacity: 0.55 - i * 0.11,
-                animation: `lp-float ${7 + i * 2}s ease-in-out infinite`,
+                left: `${m.left}%`,
+                width: m.size,
+                height: m.size,
+                animationDelay: `${m.delay}s`,
+                animationDuration: `${m.dur}s`,
               }}
             />
           ))}
         </div>
+      </div>
 
-        <p className="lp-fade lp-label lp-label--violet" style={{ animationDelay: "120ms" }}>
+      <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-3xl flex-col items-center justify-end px-6 pb-28 pt-32 text-center md:justify-center md:pb-24">
+        <p className="lp-fade lp-label lp-label--violet" style={{ animationDelay: "80ms" }}>
           Season 00 · Prologue
         </p>
 
-
         <h1
           id="arrival-heading"
-          className="lp-fade mt-6 text-[2.6rem] font-extralight leading-[1.08] tracking-[0.06em] text-foreground sm:text-6xl md:text-[4.25rem]"
-          style={{ animationDelay: "240ms" }}
+          className="lp-fade lp-display mt-6 text-[2.7rem] leading-[1.04] text-foreground sm:text-6xl md:text-[4.4rem]"
+          style={{ animationDelay: "200ms" }}
         >
           The Living Playground
         </h1>
 
         <p
-          className="lp-fade mt-7 text-[0.66rem] uppercase tracking-[0.32em] text-foreground/80 md:text-xs"
-          style={{ animationDelay: "340ms" }}
+          className="lp-fade mt-6 text-[0.62rem] uppercase tracking-[0.34em] text-foreground/80 md:text-[0.7rem]"
+          style={{ animationDelay: "300ms" }}
         >
           Interactive art × playful technology × AI experiences
         </p>
 
         <p
           className="lp-fade mt-6 max-w-md text-sm font-light leading-relaxed text-muted-foreground"
-          style={{ animationDelay: "420ms" }}
+          style={{ animationDelay: "380ms" }}
         >
           An evolving world by Bryan Lau. Everything here is playable, half-finished
           on purpose, and still growing.
         </p>
 
-        <div className="lp-fade mt-10 flex flex-wrap items-center justify-center gap-3" style={{ animationDelay: "520ms" }}>
+        <div className="lp-fade mt-9 flex flex-wrap items-center justify-center gap-3" style={{ animationDelay: "460ms" }}>
           <a href="#now" className="lp-button">
             Enter the playground
           </a>
-          <a href="#experiences" className="lp-button">
-            Browse experiences
+          <a href="#archive" className="lp-button">
+            Browse past seasons
           </a>
         </div>
       </div>
 
       <a
         href="#now"
-        className="lp-scroll-mark absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-center text-[0.55rem] uppercase tracking-[0.34em] text-muted-foreground hover:text-foreground md:bottom-10"
+        className="absolute bottom-7 left-1/2 z-10 -translate-x-1/2 text-center text-[0.55rem] uppercase tracking-[0.34em] text-muted-foreground transition-colors hover:text-foreground"
       >
         <span className="mx-auto mb-2 block h-8 w-px bg-[hsl(var(--lp-hair)/0.35)]" aria-hidden="true" />
         Scroll to enter

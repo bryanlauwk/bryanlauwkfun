@@ -2,10 +2,9 @@ import { useMemo } from "react";
 import { PlaygroundNav } from "@/components/playground/PlaygroundNav";
 import { ArrivalSection } from "@/components/playground/ArrivalSection";
 import { CurrentSeason } from "@/components/playground/CurrentSeason";
-import { FeaturedWorlds } from "@/components/playground/FeaturedWorlds";
-import { FeaturedExperiences } from "@/components/playground/FeaturedExperiences";
-import { IdeasForest } from "@/components/playground/IdeasForest";
-import { DreamArchive } from "@/components/playground/DreamArchive";
+import { ArtifactsRow } from "@/components/playground/ArtifactsRow";
+import { UpcomingSeason } from "@/components/playground/UpcomingSeason";
+import { PastSeasons } from "@/components/playground/PastSeasons";
 import { ExitStrip } from "@/components/playground/ExitStrip";
 import { PlaygroundFooter } from "@/components/playground/PlaygroundFooter";
 import { usePublicProjects } from "@/hooks/useProjects";
@@ -46,10 +45,9 @@ const Index = () => {
         <main id="main-content" className="flex-1">
           <ArrivalSection />
           <CurrentSeason project={featured} isLoading={isLoading} />
-          <FeaturedWorlds projects={rest} isLoading={isLoading} />
-          <FeaturedExperiences projects={rest} isLoading={isLoading} />
-          <IdeasForest />
-          <DreamArchive projects={projects ?? []} isLoading={isLoading} />
+          <ArtifactsRow />
+          <UpcomingSeason />
+          <PastSeasons projects={rest} isLoading={isLoading} />
           <ExitStrip />
         </main>
 
