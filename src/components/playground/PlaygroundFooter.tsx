@@ -4,9 +4,9 @@ export function PlaygroundFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative z-10 border-t border-foreground/10 px-5 py-16 md:px-10 md:py-20">
-      <div className="mx-auto flex max-w-6xl flex-col items-center gap-8 text-center">
-        <p className="font-tide text-2xl italic text-foreground md:text-3xl">
+    <footer className="relative z-10 border-t border-[hsl(var(--lp-hair)/0.14)] px-6 py-16 md:px-14 md:py-20">
+      <div className="mx-auto flex max-w-[110rem] flex-col items-center gap-8 text-center">
+        <p className="text-lg font-extralight tracking-[0.16em] text-foreground md:text-2xl">
           Good luck, have fun, don&apos;t die.
         </p>
 
@@ -22,7 +22,7 @@ export function PlaygroundFooter() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={label}
-              className="rounded-full border border-foreground/12 p-3 text-muted-foreground transition-colors hover:border-accent/50 hover:text-accent"
+              className="lp-arrow"
             >
               <Icon className="h-4 w-4" />
             </a>
@@ -30,6 +30,7 @@ export function PlaygroundFooter() {
         </div>
 
         <p className="lp-label">© {year} bryanlauwk · you were here</p>
+
       </div>
     </footer>
   );

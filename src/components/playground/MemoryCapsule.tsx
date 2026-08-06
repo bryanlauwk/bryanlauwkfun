@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { ArrowUpRight } from "lucide-react";
 import type { Project } from "@/hooks/useProjects";
 import { slugFor } from "@/lib/slug";
 
@@ -9,42 +8,47 @@ interface MemoryCapsuleProps {
   isFocused?: boolean;
 }
 
+/** A season rendered as a glass world orb. */
 export function MemoryCapsule({ project, index, isFocused = false }: MemoryCapsuleProps) {
-  const year = new Date(project.created_at ?? Date.now()).getFullYear();
-  const num = String(index + 1).padStart(2, "0");
+  const num = String(index).padStart(2, "0");
 
   return (
     <Link
       to={`/drops/${slugFor(project)}`}
-      className={`lp-capsule group ${isFocused ? "is-focused" : ""}`}
+      className={`lp-world group w-[10.5rem] md:w-[11.5rem] ${isFocused ? "is-focused" : ""}`}
       aria-label={`Open ${project.title}`}
     >
-      <span className="lp-capsule-glow" aria-hidden="true" />
-
-      <div className="relative flex h-full flex-col p-6 md:p-7">
-        <div className="flex items-center justify-between">
-          <span className="lp-label">Memory {num}</span>
-          <span className="font-mono text-[10px] text-muted-foreground">{year}</span>
-        </div>
-
-        <h3 className="mt-5 font-tide text-2xl leading-tight text-foreground transition-colors duration-500 group-hover:text-accent md:text-[1.7rem]">
-          {project.title}
-        </h3>
-
-        {project.description && (
-          <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
-            {project.description}
-          </p>
+      <span className="lp-world-sphere h-[10.5rem] w-[10.5rem] md:h-[11.5rem] md:w-[11.5rem]">
+        {project.image_url ? (
+          <img
+            src={project.image_url}
+            alt=""
+            loading="lazy"
+            className="absolute inset-0 h-full w-full object-cover opacity-55 transition-opacity duration-700 group-hover:opacity-80"
+          />
+        ) : (
+          <span
+            aria-hidden="true"
+            className="absolute inset-0 opacity-70 [background-image:radial-gradient(rgba(190,210,255,0.7)_0.7px,transparent_0.8px)] [background-size:14px_14px]"
+          />
         )}
+        <span
+          aria-hidden="true"
+          className="absolute inset-0 bg-[radial-gradient(circle_at_50%_78%,rgba(139,108,255,0.28),transparent_60%)]"
+        />
+      </span>
 
-        <div className="mt-6 flex items-center justify-between gap-3">
-          {project.tag ? <span className="lp-chip">{project.tag}</span> : <span />}
-          <span className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground transition-colors group-hover:text-accent">
-            Open
-            <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </span>
-        </div>
-      </div>
+      <span className="mt-5 block text-[0.6rem] uppercase tracking-[0.3em] text-muted-foreground">
+        Season {num}
+      </span>
+      <span className="mt-2 block text-sm font-light text-foreground transition-colors duration-500 group-hover:text-accent">
+        {project.title}
+      </span>
+      {project.tag && (
+        <span className="mt-1 block text-[0.6rem] uppercase tracking-[0.24em] text-muted-foreground/80">
+          {project.tag}
+        </span>
+      )}
     </Link>
   );
 }
