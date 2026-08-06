@@ -25,12 +25,12 @@ export function ArrivalSection() {
       <div className="relative z-10 mx-auto flex min-h-[100svh] w-full max-w-[110rem] items-end px-6 pb-40 pt-32 md:min-h-[105vh] md:items-center md:px-14 md:pb-56 md:pt-0">
         <div className="w-full md:w-[40%] md:pt-10">
           <p className="lp-fade lp-label lp-label--violet" style={{ animationDelay: "100ms" }}>
-            Welcome
+            Season 00 · Prologue
           </p>
 
           <h1
             id="arrival-heading"
-            className="lp-fade mt-6 text-[2.6rem] font-extralight leading-[1.08] tracking-[0.06em] text-foreground sm:text-6xl md:text-[4.1rem] md:leading-[1.1]"
+            className="lp-fade mt-6 text-[2.4rem] font-extralight leading-[1.08] tracking-[0.05em] text-foreground sm:text-6xl md:text-[4rem] md:leading-[1.1]"
             style={{ animationDelay: "220ms" }}
           >
             The Living
@@ -38,7 +38,21 @@ export function ArrivalSection() {
             Playground
           </h1>
 
-          <p className="lp-fade lp-stack mt-8" style={{ animationDelay: "340ms" }}>
+          <p
+            className="lp-fade mt-8 text-lg font-extralight tracking-[0.04em] text-foreground/90 md:text-xl"
+            style={{ animationDelay: "320ms" }}
+          >
+            Welcome to this season.
+          </p>
+
+          <p
+            className="lp-fade mt-3 text-sm font-light text-muted-foreground"
+            style={{ animationDelay: "380ms" }}
+          >
+            An evolving world by Bryan Lau.
+          </p>
+
+          <p className="lp-fade lp-stack mt-8" style={{ animationDelay: "440ms" }}>
             Interactive experiences.
             <br />
             Collectible objects.
@@ -47,21 +61,21 @@ export function ArrivalSection() {
           </p>
 
           <p
-            className="lp-fade mt-6 text-[0.7rem] uppercase tracking-[0.28em] text-accent"
-            style={{ animationDelay: "420ms" }}
+            className="lp-fade mt-6 max-w-xs text-xs font-light leading-relaxed text-muted-foreground/85"
+            style={{ animationDelay: "480ms" }}
           >
-            Built one season at a time.
+            A place that is still growing, and knows you are here.
           </p>
 
           <div
-            className="lp-fade mt-12 flex items-center gap-5"
-            style={{ animationDelay: "520ms" }}
+            className="lp-fade mt-10 flex items-center gap-5"
+            style={{ animationDelay: "540ms" }}
           >
             <span
               aria-hidden="true"
               className="relative flex h-12 w-12 items-center justify-center rounded-full border border-dashed border-[hsl(var(--lp-hair)/0.3)]"
             >
-              <span className="lp-orb" />
+              <span className="lp-pulse block h-5 w-5 rounded-full bg-[radial-gradient(circle_at_38%_32%,hsl(var(--accent)/0.75),transparent_70%)]" />
             </span>
             <span className="leading-relaxed">
               <span className="block text-[0.65rem] uppercase tracking-[0.3em] text-foreground/85">
@@ -72,6 +86,7 @@ export function ArrivalSection() {
               </span>
             </span>
           </div>
+
 
           <a
             href="#now"
