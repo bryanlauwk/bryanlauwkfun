@@ -15,12 +15,13 @@ export function ArrivalSection() {
       {/* readability gradient — soft, not an opaque box */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-[linear-gradient(90deg,#020409_0%,rgba(2,4,9,0.92)_22%,rgba(2,4,9,0.55)_46%,rgba(2,4,9,0)_70%)]"
+        className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,4,9,0)_28%,rgba(2,4,9,0.86)_52%,#020409_78%)] md:bg-[linear-gradient(90deg,#020409_0%,rgba(2,4,9,0.92)_22%,rgba(2,4,9,0.55)_46%,rgba(2,4,9,0)_70%)]"
       />
       <div
         aria-hidden="true"
         className="absolute inset-x-0 bottom-0 h-52 bg-[linear-gradient(180deg,rgba(2,4,9,0)_0%,#020409_88%)]"
       />
+
 
       <div className="relative z-10 mx-auto flex min-h-[100svh] w-full max-w-[110rem] items-end px-6 pb-40 pt-32 md:min-h-[105vh] md:items-center md:px-14 md:pb-56 md:pt-0">
         <div className="w-full md:w-[40%] md:pt-10">
