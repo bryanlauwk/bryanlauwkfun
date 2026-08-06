@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
+import { useReveal } from "@/hooks/useReveal";
 
 const CONCEPTS = [
   {
@@ -37,13 +38,6 @@ function Specimen({ variant }: { variant: number }) {
           <feGaussianBlur stdDeviation="5" />
         </filter>
       </defs>
-
-      {/* faint lab grid, kept as texture not as the subject */}
-      <g stroke="hsl(var(--lp-blue) / 0.28)" strokeWidth="0.5" opacity="0.35">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <line key={`h${i}`} x1="0" y1={i * 24} x2="220" y2={i * 24} />
-        ))}
-      </g>
 
       {variant === 0 && (
         /* breathing particle botanical */
@@ -100,12 +94,18 @@ function Specimen({ variant }: { variant: number }) {
           <ellipse cx="110" cy="112" rx="52" ry="6" fill="hsl(var(--lp-blue) / 0.25)" filter={`url(#lab-soft-${variant})`} />
         </g>
       )}
-
     </svg>
   );
 }
 
+/**
+ * Laboratory — a connected specimen table rather than a grid of research cards.
+ * Irregular translucent trays sit on one spilled-light surface, labels pinned
+ * beside each object, with small deliberate overlaps.
+ */
 export function Laboratory() {
+  const { ref, inView } = useReveal<HTMLDivElement>(0.14);
+
   return (
     <section
       id="lab"
@@ -136,53 +136,80 @@ export function Laboratory() {
           </a>
         </div>
 
-        <div className="lp-rail md:grid md:grid-cols-4 md:overflow-visible">
-          {CONCEPTS.map((c, i) => (
-            <article key={c.title} className="lp-blueprint lp-study w-[17rem] md:w-auto">
-              <Specimen variant={i} />
-              <span className="mt-5 block text-[0.6rem] uppercase tracking-[0.3em] text-muted-foreground">
-                Study {String(i + 1).padStart(2, "0")}
+        <div ref={ref} className={`lp-table ${inView ? "is-lit" : ""}`}>
+          <span aria-hidden="true" className="lp-table-surface" />
+          <span aria-hidden="true" className="lp-table-spill" />
+
+          <div className="lp-rail lp-table-row md:grid md:grid-cols-4 md:overflow-visible">
+            {CONCEPTS.map((c, i) => (
+              <article
+                key={c.title}
+                tabIndex={0}
+                className={`lp-tray lp-tray--${i} lp-study w-[17rem] md:w-auto`}
+                style={{ ["--tray-delay" as string]: `${i * 0.12}s` } as React.CSSProperties}
+              >
+                <span aria-hidden="true" className="lp-tray-glass" />
+                <Specimen variant={i} />
+                <span className="lp-pin mt-5 block text-[0.6rem] uppercase tracking-[0.3em] text-muted-foreground">
+                  Study {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="mt-2 text-sm font-light tracking-[0.04em] text-foreground">
+                  {c.title}
+                </h3>
+                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{c.body}</p>
+              </article>
+            ))}
+
+            <div
+              tabIndex={0}
+              className="lp-tray lp-tray--empty lp-study flex w-[17rem] flex-col items-center justify-center text-center md:w-auto"
+            >
+              <span aria-hidden="true" className="lp-empty-portal">
+                <svg viewBox="0 0 120 120" className="h-24 w-24">
+                  <defs>
+                    <radialGradient id="lab-portal" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stopColor="hsl(var(--accent))" stopOpacity="0.5" />
+                      <stop offset="100%" stopColor="hsl(var(--accent))" stopOpacity="0" />
+                    </radialGradient>
+                  </defs>
+                  <circle cx="60" cy="60" r="40" fill="url(#lab-portal)" className="lp-mw-breathe" />
+                  <circle
+                    cx="60"
+                    cy="60"
+                    r="28"
+                    fill="none"
+                    stroke="hsl(var(--lp-hair) / 0.5)"
+                    strokeWidth="1"
+                    strokeDasharray="4 8"
+                    className="lp-portal-ring"
+                  />
+                  {[0, 1, 2, 3, 4].map((i) => (
+                    <rect
+                      key={i}
+                      x={60 + Math.cos((i / 5) * 6.28) * 46}
+                      y={60 + Math.sin((i / 5) * 6.28) * 46}
+                      width="4"
+                      height="2"
+                      rx="1"
+                      fill="rgba(200,214,255,0.7)"
+                      className="lp-fragment"
+                      style={{ animationDelay: `${i * 0.7}s` }}
+                    />
+                  ))}
+                  <circle cx="60" cy="60" r="16" fill="none" stroke="hsl(var(--accent) / 0.5)" strokeWidth="0.8" />
+                  <path d="M60 50 L60 70 M50 60 L70 60" stroke="rgba(220,228,255,0.7)" strokeWidth="1.2" strokeLinecap="round" />
+                </svg>
+              </span>
+              <span className="lp-pin mt-5 block text-[0.6rem] uppercase tracking-[0.3em] text-muted-foreground">
+                Empty slot
               </span>
               <h3 className="mt-2 text-sm font-light tracking-[0.04em] text-foreground">
-                {c.title}
+                Suggest an idea
               </h3>
-              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{c.body}</p>
-            </article>
-          ))}
-
-          <div className="lp-blueprint lp-study lp-blueprint--empty flex w-[17rem] flex-col items-center justify-center text-center md:w-auto">
-            <span aria-hidden="true" className="lp-empty-portal">
-              <svg viewBox="0 0 120 120" className="h-24 w-24">
-                <defs>
-                  <radialGradient id="lab-portal" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stopColor="hsl(var(--accent))" stopOpacity="0.5" />
-                    <stop offset="100%" stopColor="hsl(var(--accent))" stopOpacity="0" />
-                  </radialGradient>
-                </defs>
-                <circle cx="60" cy="60" r="40" fill="url(#lab-portal)" className="lp-mw-breathe" />
-                <circle
-                  cx="60"
-                  cy="60"
-                  r="28"
-                  fill="none"
-                  stroke="hsl(var(--lp-hair) / 0.5)"
-                  strokeWidth="1"
-                  strokeDasharray="4 8"
-                  className="lp-portal-ring"
-                />
-                <circle cx="60" cy="60" r="16" fill="none" stroke="hsl(var(--accent) / 0.5)" strokeWidth="0.8" />
-                <path d="M60 50 L60 70 M50 60 L70 60" stroke="rgba(220,228,255,0.7)" strokeWidth="1.2" strokeLinecap="round" />
-              </svg>
-            </span>
-            <span className="mt-5 block text-[0.6rem] uppercase tracking-[0.3em] text-muted-foreground">
-              Empty slot
-            </span>
-            <h3 className="mt-2 text-sm font-light tracking-[0.04em] text-foreground">
-              Suggest an idea
-            </h3>
-            <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-              No shape yet. Ideas arrive by signal.
-            </p>
+              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                No shape yet. Ideas arrive by signal.
+              </p>
+            </div>
           </div>
         </div>
       </div>

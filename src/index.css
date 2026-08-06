@@ -1100,3 +1100,203 @@
   .lp-signal-field { transition: none !important; transform: none !important; }
   .lp-signal-field, .lp-cocoon { opacity: 1 !important; }
 }
+
+/* ================================================================
+   Living Playground — shelf, specimen table, forming signal (pass 2)
+   ================================================================ */
+
+/* ---- Artifacts: continuous museum shelf ---- */
+.lp-shelf {
+  position: relative;
+  border-radius: 0.5rem;
+  padding: 1.25rem 1rem 0;
+  background: linear-gradient(180deg, hsl(220 60% 5% / 0.55), hsl(220 65% 2% / 0.85));
+  border: 1px solid hsl(var(--lp-hair) / 0.12);
+  overflow: hidden;
+}
+.lp-shelf-surface {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 34%;
+  background: linear-gradient(180deg, hsl(215 60% 60% / 0.07), transparent 75%);
+  border-top: 1px solid hsl(var(--lp-hair) / 0.16);
+  pointer-events: none;
+}
+.lp-shelf-light {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 60% at 50% -10%, hsl(var(--accent) / 0.14), transparent 60%),
+    radial-gradient(80% 50% at 12% 110%, hsl(200 90% 60% / 0.08), transparent 70%);
+  opacity: 0;
+  transition: opacity 1.4s ease;
+  pointer-events: none;
+}
+.lp-shelf.is-lit .lp-shelf-light { opacity: 1; }
+.lp-shelf-row { position: relative; align-items: end; gap: 1rem; padding-bottom: 1.5rem; }
+
+.lp-plinth {
+  position: relative;
+  display: block;
+  text-align: left;
+  padding: 1rem 1rem 1.25rem;
+  border-radius: 0.25rem;
+  border: 1px solid hsl(var(--lp-hair) / 0.12);
+  background: linear-gradient(180deg, hsl(220 55% 7% / 0.5), hsl(220 60% 2% / 0.7));
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.9s ease var(--plinth-delay, 0s),
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1) var(--plinth-delay, 0s),
+    border-color 0.5s ease;
+}
+.lp-shelf.is-lit .lp-plinth { opacity: 1; transform: translateY(0); }
+.lp-plinth:hover { border-color: hsl(var(--accent) / 0.4); }
+.lp-plinth::after {
+  content: "";
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 0.35rem;
+  height: 6px;
+  border-radius: 9999px;
+  background: radial-gradient(ellipse at center, hsl(var(--accent) / 0.28), transparent 70%);
+  filter: blur(3px);
+}
+.lp-plinth-object { transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+.lp-plinth:hover .lp-plinth-object { transform: translateY(-5px); }
+.lp-plinth-label { display: block; }
+
+/* materials */
+.lp-plinth--metal { background: linear-gradient(180deg, hsl(220 20% 16% / 0.5), hsl(220 40% 3% / 0.85)); }
+.lp-plinth--stone { background: linear-gradient(180deg, hsl(250 14% 18% / 0.45), hsl(250 30% 3% / 0.85)); }
+.lp-plinth--card  { background: linear-gradient(180deg, hsl(30 30% 20% / 0.32), hsl(220 40% 3% / 0.85)); }
+.lp-plinth--prism { background: linear-gradient(180deg, hsl(190 60% 22% / 0.34), hsl(220 50% 3% / 0.85)); }
+.lp-plinth.is-awake { border-color: hsl(var(--accent) / 0.5); }
+.lp-plinth.is-charging { animation: lp-breathe 1.6s ease-in-out infinite; }
+
+/* ---- Archive glass: caustic sweep ---- */
+.lp-glass-caustic {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: linear-gradient(115deg, transparent 38%, rgba(255,255,255,0.16) 50%, transparent 62%);
+  opacity: 0;
+  transform: translateX(-25%);
+  transition: opacity 0.6s ease, transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+.lp-world:hover .lp-glass-caustic,
+.lp-world.is-focused .lp-glass-caustic { opacity: 1; transform: translateX(25%); }
+
+/* ---- Laboratory: connected specimen table ---- */
+.lp-table {
+  position: relative;
+  border-radius: 0.5rem;
+  padding: 1.25rem 1rem 1.5rem;
+  border: 1px solid hsl(var(--lp-blue) / 0.16);
+  background: linear-gradient(180deg, hsl(215 55% 5% / 0.6), hsl(220 60% 2% / 0.85));
+  overflow: hidden;
+}
+.lp-table-surface {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(hsl(var(--lp-blue) / 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--lp-blue) / 0.07) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(120% 90% at 50% 40%, #000 30%, transparent 85%);
+  pointer-events: none;
+}
+.lp-table-spill {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(70% 55% at 22% 0%, hsl(var(--accent) / 0.14), transparent 62%),
+    radial-gradient(60% 50% at 88% 100%, hsl(200 90% 60% / 0.1), transparent 68%);
+  opacity: 0;
+  transition: opacity 1.5s ease;
+  pointer-events: none;
+}
+.lp-table.is-lit .lp-table-spill { opacity: 1; }
+.lp-table-row { position: relative; gap: 0.75rem; align-items: start; }
+
+.lp-tray {
+  position: relative;
+  border-radius: 0.35rem;
+  border: 1px solid hsl(var(--lp-hair) / 0.14);
+  background: hsl(220 55% 6% / 0.4);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.9s ease var(--tray-delay, 0s),
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1) var(--tray-delay, 0s),
+    border-color 0.5s ease;
+}
+.lp-table.is-lit .lp-tray { opacity: 1; transform: translateY(0); }
+.lp-tray:hover { border-color: hsl(var(--lp-blue) / 0.45); }
+.lp-tray-glass {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(150deg, rgba(255,255,255,0.06), transparent 55%);
+  pointer-events: none;
+}
+/* irregular trays — slight offsets so the table reads as hand-arranged */
+.lp-tray--0 { border-top-left-radius: 1.1rem; }
+.lp-tray--1 { border-bottom-right-radius: 1.1rem; }
+.lp-tray--2 { border-top-right-radius: 1.1rem; }
+@media (min-width: 768px) {
+  .lp-tray--0 { transform: translateY(16px) rotate(-0.35deg); }
+  .lp-tray--1 { margin-top: 1.15rem; }
+  .lp-tray--2 { transform: translateY(16px) rotate(0.3deg); }
+  .lp-table.is-lit .lp-tray--0 { transform: translateY(0) rotate(-0.35deg); }
+  .lp-table.is-lit .lp-tray--2 { transform: translateY(0) rotate(0.3deg); }
+  .lp-tray--empty { margin-top: 0.5rem; }
+}
+.lp-tray--empty { border-style: dashed; background: transparent; }
+.lp-tray--empty:hover .lp-empty-portal { transform: scale(1.07) rotate(3deg); }
+.lp-pin { position: relative; padding-left: 0.85rem; }
+.lp-pin::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.32em;
+  height: 5px;
+  width: 5px;
+  border-radius: 9999px;
+  background: hsl(var(--accent) / 0.75);
+  box-shadow: 0 0 8px hsl(var(--accent) / 0.6);
+}
+
+/* ---- Forming signal: large cocoon ---- */
+.lp-cocoon--large { width: 100%; }
+.lp-cocoon--large svg { overflow: visible; }
+.lp-cocoon-membrane {
+  transform-origin: center;
+  animation: lp-breathe 11s ease-in-out infinite;
+}
+.lp-cocoon--large .lp-cocoon-glow {
+  transform-origin: center;
+  transform: translate(calc(var(--sg-x, 0) * 4px), calc(var(--sg-y, 0) * 4px));
+}
+@keyframes lp-fragment-knit {
+  0%, 100% { opacity: 0.15; transform: translate(0, 0); }
+  50% { opacity: 0.85; transform: translate(-3px, 2px); }
+}
+.lp-fragment { animation: lp-fragment-knit 7s ease-in-out infinite; }
+.lp-cocoon-fragments {
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translate(calc(var(--sg-x, 0) * -6px), calc(var(--sg-y, 0) * -6px));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-fragment,
+  .lp-cocoon-membrane,
+  .lp-plinth.is-charging { animation: none !important; }
+  .lp-plinth,
+  .lp-tray,
+  .lp-glass-caustic,
+  .lp-cocoon-fragments { transition: none !important; transform: none !important; opacity: 1 !important; }
+}

@@ -1,36 +1,14 @@
-import { Github, Twitter, Linkedin } from "lucide-react";
-
 export function PlaygroundFooter() {
+
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative z-10 border-t border-[hsl(var(--lp-hair)/0.14)] px-6 py-7 md:px-14 md:py-8">
-      <div className="mx-auto flex max-w-[110rem] flex-col items-center gap-4 text-center">
+    <footer className="relative z-10 border-t border-[hsl(var(--lp-hair)/0.14)] px-6 py-6 md:px-14 md:py-7">
+      <div className="mx-auto flex max-w-[110rem] flex-col items-center gap-2 text-center">
         <p className="text-[0.6rem] uppercase tracking-[0.3em] text-muted-foreground/80">
           Good luck, have fun, don&apos;t die.
         </p>
-
-        <div className="flex items-center gap-2">
-          {[
-            { href: "https://github.com/bryanlauwk", Icon: Github, label: "GitHub" },
-            { href: "https://twitter.com/bryanlauwk", Icon: Twitter, label: "Twitter" },
-            { href: "https://linkedin.com/in/bryanlauwk", Icon: Linkedin, label: "LinkedIn" },
-          ].map(({ href, Icon, label }) => (
-            <a
-              key={label}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={label}
-              className="lp-arrow"
-            >
-              <Icon className="h-4 w-4" />
-            </a>
-          ))}
-        </div>
-
         <p className="lp-label">© {year} bryanlauwk · you were here</p>
-
       </div>
     </footer>
   );
