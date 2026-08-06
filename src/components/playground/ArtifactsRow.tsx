@@ -56,8 +56,9 @@ export function ArtifactsRow() {
   const { ref, inView } = useReveal<HTMLDivElement>(0.15);
 
   return (
-    <section id="artifact" className="relative" aria-labelledby="artifact-heading">
+    <section id="artifact" className="lp-band relative" aria-labelledby="artifact-heading">
       <div ref={ref} className={`lp-feature is-quiet ${inView ? "is-live" : ""}`}>
+
         <div className="lp-feature-art lp-feature-art--wide">
           <img
             src={artifactArt}
