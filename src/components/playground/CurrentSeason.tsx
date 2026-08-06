@@ -56,19 +56,17 @@ export function CurrentSeason({ project, isLoading }: CurrentSeasonProps) {
               </div>
             </div>
 
-            <div className="relative order-1 min-h-[220px] overflow-hidden md:order-2 md:min-h-[420px]">
-              {project.image_url ? (
+            <div className="relative order-1 min-h-[200px] overflow-hidden md:order-2 md:min-h-[360px]">
+              {project.image_url && !imageFailed ? (
                 <img
                   src={project.image_url}
                   alt={project.title}
                   loading="lazy"
+                  onError={() => setImageFailed(true)}
                   className="absolute inset-0 h-full w-full object-cover opacity-70 transition-transform duration-[1600ms] group-hover:scale-[1.04]"
                 />
               ) : (
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0 bg-[radial-gradient(circle_at_60%_45%,rgba(139,108,255,0.35),transparent_62%),radial-gradient(circle_at_30%_70%,rgba(95,157,255,0.22),transparent_60%),#03060d]"
-                />
+                <CosmicPanel />
               )}
               <span
                 aria-hidden="true"
