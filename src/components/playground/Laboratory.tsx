@@ -1,54 +1,106 @@
-const NOTES = [
+import { ArrowUpRight } from "lucide-react";
+
+const CONCEPTS = [
   {
-    title: "Things that only exist at 2am",
-    body: "A list of ideas that seemed brilliant in the dark and merely interesting by breakfast. Some of them survive to become drops.",
+    title: "Light That Remembers",
+    body: "A room-scale study where illumination keeps a record of everyone who passed through it.",
   },
   {
-    title: "Failure log",
-    body: "The physics sim that ate a weekend. The shader that melted a laptop. Kept because the wreckage is more honest than the highlight reel.",
+    title: "The Object Listens",
+    body: "Prototyping a small physical thing that reacts to voice, breath and the silence between them.",
   },
   {
-    title: "Borrowed instincts",
-    body: "Notes on games, films and strangers on the internet who taught me that friction, mystery and a bit of danger beat convenience.",
+    title: "A Door for Strangers",
+    body: "An entry point that behaves differently depending on whether it has met you before.",
   },
 ];
+
+function Blueprint({ variant }: { variant: number }) {
+  return (
+    <svg viewBox="0 0 220 130" className="h-28 w-full" aria-hidden="true">
+      <g stroke="hsl(var(--lp-blue) / 0.4)" strokeWidth="0.6" fill="none">
+        {Array.from({ length: 7 }).map((_, i) => (
+          <line key={`h${i}`} x1="0" y1={i * 20} x2="220" y2={i * 20} opacity="0.25" />
+        ))}
+        {Array.from({ length: 12 }).map((_, i) => (
+          <line key={`v${i}`} x1={i * 20} y1="0" x2={i * 20} y2="130" opacity="0.25" />
+        ))}
+      </g>
+      <g stroke="rgba(214,224,255,0.75)" strokeWidth="0.9" fill="none" strokeLinecap="round">
+        {variant === 0 && (
+          <>
+            <circle cx="110" cy="65" r="34" />
+            <circle cx="110" cy="65" r="14" strokeDasharray="3 5" />
+            <path d="M110 20 L110 110 M60 65 L160 65" opacity="0.5" />
+            <path d="M76 100 Q110 40 144 100" stroke="hsl(var(--accent) / 0.8)" />
+          </>
+        )}
+        {variant === 1 && (
+          <>
+            <rect x="70" y="36" width="80" height="58" rx="6" />
+            <path d="M84 65 Q97 44 110 65 T136 65" stroke="hsl(var(--accent) / 0.8)" />
+            <path d="M70 104 L150 104" strokeDasharray="2 6" />
+            <circle cx="110" cy="26" r="3" fill="hsl(var(--lp-gold))" stroke="none" />
+          </>
+        )}
+        {variant === 2 && (
+          <>
+            <path d="M78 100 L78 38 Q110 20 142 38 L142 100" />
+            <path d="M78 66 L142 66" strokeDasharray="3 5" />
+            <circle cx="110" cy="66" r="8" stroke="hsl(var(--accent) / 0.85)" />
+            <path d="M110 100 L110 118" opacity="0.4" />
+          </>
+        )}
+      </g>
+    </svg>
+  );
+}
 
 export function Laboratory() {
   return (
     <section
       id="lab"
-      className="relative px-5 py-20 md:px-10 md:py-28"
+      className="relative px-6 py-20 md:px-14 md:py-28"
       aria-labelledby="lab-heading"
     >
-      <div className="mx-auto max-w-6xl">
-        <p className="lp-label">The laboratory</p>
-        <h2 id="lab-heading" className="mt-4 font-tide text-4xl italic text-foreground md:text-5xl">
-          Where things are still wrong
-        </h2>
-        <p className="mt-4 max-w-lg text-muted-foreground">
-          Process, mess and thinking out loud. No conclusions offered.
-        </p>
+      <div className="mx-auto grid max-w-[110rem] gap-10 md:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] md:gap-14">
+        <div>
+          <p className="lp-label lp-label--violet">Laboratory</p>
+          <h2
+            id="lab-heading"
+            className="mt-5 text-2xl font-extralight tracking-[0.03em] text-foreground md:text-[1.8rem]"
+          >
+            Where things are still wrong
+          </h2>
+          <p className="mt-4 text-sm font-light leading-relaxed text-muted-foreground">
+            Blueprints, half-thoughts and experiments in progress. No conclusions offered.
+          </p>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {NOTES.map((note, i) => (
-            <article key={note.title} className="lp-shard lp-shard--tall">
-              <span className="lp-label">Note {String(i + 1).padStart(2, "0")}</span>
-              <h3 className="mt-4 font-tide text-2xl italic leading-tight text-foreground">
-                {note.title}
+          <a
+            href="https://ideas.bryanlauwk.fun"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="lp-button mt-7"
+          >
+            The Studio · my idea engine
+            <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+          </a>
+        </div>
+
+        <div className="lp-rail md:grid md:grid-cols-3 md:overflow-visible">
+          {CONCEPTS.map((c, i) => (
+            <article key={c.title} className="lp-blueprint w-[17rem] md:w-auto">
+              <Blueprint variant={i} />
+              <span className="mt-5 block text-[0.6rem] uppercase tracking-[0.3em] text-muted-foreground">
+                Study {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 className="mt-2 text-sm font-light tracking-[0.04em] text-foreground">
+                {c.title}
               </h3>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{note.body}</p>
+              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{c.body}</p>
             </article>
           ))}
         </div>
-
-        <a
-          href="https://ideas.bryanlauwk.fun"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="lp-button lp-button--ghost mt-10"
-        >
-          The Studio · my idea engine
-        </a>
       </div>
     </section>
   );
