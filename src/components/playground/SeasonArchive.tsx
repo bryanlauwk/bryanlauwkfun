@@ -1,6 +1,6 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, X } from "lucide-react";
+import { Search, X, ArrowLeft, ArrowRight } from "lucide-react";
 import type { Project } from "@/hooks/useProjects";
 import { useKeyboardNavigation } from "@/hooks/useKeyboardNavigation";
 import { slugFor } from "@/lib/slug";
@@ -18,6 +18,7 @@ export function SeasonArchive({ projects, isLoading }: SeasonArchiveProps) {
   const [query, setQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("all");
   const [indexOpen, setIndexOpen] = useState(false);
+  const railRef = useRef<HTMLDivElement>(null);
 
   const filters = useMemo(() => {
     const tagCounts = new Map<string, number>();
@@ -72,97 +73,58 @@ export function SeasonArchive({ projects, isLoading }: SeasonArchiveProps) {
     },
   });
 
+  const scrollRail = (dir: 1 | -1) => {
+    railRef.current?.scrollBy({ left: dir * 340, behavior: "smooth" });
+  };
+
   return (
     <section
       id="archive"
-      className="relative px-5 py-20 md:px-10 md:py-28"
+      className="relative px-6 py-20 md:px-14 md:py-28"
       aria-labelledby="archive-heading"
     >
-      <div className="mx-auto max-w-6xl">
-        <p className="lp-label">Past Seasons</p>
-        <h2
-          id="archive-heading"
-          className="mt-4 font-tide text-4xl italic text-foreground md:text-5xl"
-        >
-          Past Seasons
-        </h2>
-        <p className="mt-4 max-w-lg text-muted-foreground">
-          Memory capsules from earlier worlds.
-        </p>
+      <div className="mx-auto grid max-w-[110rem] gap-10 md:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] md:gap-14">
+        <div>
+          <p className="lp-label lp-label--violet">Archive</p>
+          <h2
+            id="archive-heading"
+            className="mt-5 text-2xl font-extralight tracking-[0.03em] text-foreground md:text-[1.8rem]"
+          >
+            Past Seasons
+          </h2>
+          <p className="mt-4 text-sm font-light leading-relaxed text-muted-foreground">
+            Memory capsules from earlier worlds.
+          </p>
 
-        {projects.length > 0 && (
-          <div className="mt-10">
+          {projects.length > 0 && (
             <button
               type="button"
               onClick={() => setIndexOpen((v) => !v)}
               aria-expanded={indexOpen}
               aria-controls="archive-index"
-              className="lp-button lp-button--ghost"
+              className="lp-button mt-7"
             >
               {indexOpen ? "Close archive index" : "Open archive index"}
             </button>
+          )}
+        </div>
 
-            <div
-              id="archive-index"
-              hidden={!indexOpen}
-              className="mt-6 flex flex-col gap-5 md:flex-row md:items-center md:justify-between"
-            >
-              <div className="relative w-full max-w-sm">
-                <Search
-                  className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
-                  aria-hidden="true"
-                />
-                <input
-                  type="search"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search the memories…"
-                  aria-label="Search drops"
-                  className="lp-input pl-11 pr-10"
-                />
-                {query && (
-                  <button
-                    type="button"
-                    onClick={() => setQuery("")}
-                    aria-label="Clear search"
-                    className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    <X className="h-4 w-4" />
-                  </button>
-                )}
-              </div>
-
-              <div className="flex flex-wrap gap-2" role="tablist" aria-label="Filter drops">
-                {filters.map((f) => (
-                  <button
-                    key={f.id}
-                    role="tab"
-                    aria-selected={activeFilter === f.id}
-                    onClick={() => setActiveFilter(f.id)}
-                    className={`lp-filter ${activeFilter === f.id ? "is-active" : ""}`}
-                  >
-                    {f.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-
-
-        <div className="mt-10">
+        <div className="min-w-0">
           {isLoading ? (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} className="lp-panel h-56 animate-pulse" />
+            <div className="flex gap-4">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="h-[10.5rem] w-[10.5rem] animate-pulse rounded-full border border-[hsl(var(--lp-hair)/0.16)] bg-card/40"
+                />
               ))}
             </div>
           ) : filtered.length === 0 ? (
-            <div className="lp-panel px-8 py-14 text-center">
-              <p className="font-tide text-3xl italic text-foreground">
+            <div className="lp-panel px-8 py-12 text-center">
+              <p className="text-lg font-extralight text-foreground">
                 {projects.length ? "Nothing by that name" : "The archive is still empty"}
               </p>
-              <p className="mt-3 text-muted-foreground">
+              <p className="mt-3 text-sm text-muted-foreground">
                 {projects.length
                   ? "Try a softer word, or wander back to everything."
                   : "Only the current season exists so far."}
@@ -174,29 +136,90 @@ export function SeasonArchive({ projects, isLoading }: SeasonArchiveProps) {
                     setQuery("");
                     setActiveFilter("all");
                   }}
-                  className="lp-button mt-8"
+                  className="lp-button mt-7"
                 >
                   Show everything
                 </button>
               )}
             </div>
           ) : (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {filtered.map((project, index) => (
-                <div
-                  key={project.id}
-                  className="lp-fade"
-                  style={{ animationDelay: `${Math.min(index, 8) * 70}ms` }}
-                >
+            <>
+              <div ref={railRef} className="lp-rail gap-6 md:gap-10">
+                {filtered.map((project, index) => (
                   <MemoryCapsule
+                    key={project.id}
                     project={project}
                     index={index}
                     isFocused={focusedIndex === index}
                   />
-                </div>
+                ))}
+              </div>
+
+              <div className="mt-6 hidden justify-end gap-2 md:flex">
+                <button
+                  type="button"
+                  className="lp-arrow"
+                  aria-label="Scroll archive left"
+                  onClick={() => scrollRail(-1)}
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                </button>
+                <button
+                  type="button"
+                  className="lp-arrow"
+                  aria-label="Scroll archive right"
+                  onClick={() => scrollRail(1)}
+                >
+                  <ArrowRight className="h-4 w-4" />
+                </button>
+              </div>
+            </>
+          )}
+
+          <div
+            id="archive-index"
+            hidden={!indexOpen}
+            className="mt-8 flex flex-col gap-5 border-t border-[hsl(var(--lp-hair)/0.14)] pt-6 md:flex-row md:items-center md:justify-between"
+          >
+            <div className="relative w-full max-w-sm">
+              <Search
+                className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+                aria-hidden="true"
+              />
+              <input
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search the memories…"
+                aria-label="Search drops"
+                className="lp-input pl-10 pr-9"
+              />
+              {query && (
+                <button
+                  type="button"
+                  onClick={() => setQuery("")}
+                  aria-label="Clear search"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              )}
+            </div>
+
+            <div className="flex flex-wrap gap-2" role="tablist" aria-label="Filter drops">
+              {filters.map((f) => (
+                <button
+                  key={f.id}
+                  role="tab"
+                  aria-selected={activeFilter === f.id}
+                  onClick={() => setActiveFilter(f.id)}
+                  className={`lp-filter ${activeFilter === f.id ? "is-active" : ""}`}
+                >
+                  {f.label}
+                </button>
               ))}
             </div>
-          )}
+          </div>
         </div>
       </div>
     </section>
