@@ -19,7 +19,7 @@ export function PastSeasons({ projects, isLoading }: PastSeasonsProps) {
   const pairs = pairSpheres(projects);
 
   return (
-    <section id="archive" className="relative px-6 py-20 md:px-14 md:py-28" aria-labelledby="archive-heading">
+    <section id="archive" className="lp-band relative px-6 py-14 md:px-14 md:py-20" aria-labelledby="archive-heading">
       <div className="mx-auto max-w-[110rem]">
         <div className="max-w-xl">
           <p className="lp-label lp-label--violet">Past Seasons</p>
@@ -36,14 +36,14 @@ export function PastSeasons({ projects, isLoading }: PastSeasonsProps) {
         ) : (
           <ul
             ref={ref}
-            className={`lp-capsules mt-14 grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-3 md:mt-20 md:grid-cols-5 md:gap-x-8 md:gap-y-14 ${
+            className={`lp-capsules mt-10 grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 md:mt-14 md:gap-x-8 md:gap-y-10 xl:grid-cols-4 ${
               inView ? "is-live" : ""
             }`}
           >
             {pairs.map(({ sphere, project }, i) => (
               <li
                 key={project.id}
-                className="lp-capsule"
+                className={`lp-capsule ${i === pairs.length - 1 ? "lp-capsule-last xl:col-start-2" : ""}`}
                 style={{ ["--i" as string]: String(i), ["--dur" as string]: `${11 + (i % 5) * 2.4}s` } as React.CSSProperties}
               >
                 <Link to={`/drops/${slugFor(project)}`} className="lp-capsule-link group">
@@ -51,11 +51,13 @@ export function PastSeasons({ projects, isLoading }: PastSeasonsProps) {
                     <img
                       src={capsuleArt}
                       alt=""
-                      loading="lazy"
-                      decoding="async"
+                      loading="eager"
+                      decoding="sync"
+                      fetchPriority="high"
                       style={sphereStyle(sphere)}
                       className="absolute"
                     />
+
                     <span className="lp-capsule-sheen" aria-hidden="true" />
                     <span className="lp-capsule-core" aria-hidden="true" />
                   </span>
