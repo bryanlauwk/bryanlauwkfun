@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import type { Project } from "@/hooks/useProjects";
 import { slugFor } from "@/lib/slug";
+import { CosmicPanel } from "./CosmicPanel";
 
 interface CurrentSeasonProps {
   project?: Project;
@@ -9,6 +11,9 @@ interface CurrentSeasonProps {
 }
 
 export function CurrentSeason({ project, isLoading }: CurrentSeasonProps) {
+  const [imageFailed, setImageFailed] = useState(false);
+
+
   return (
     <section
       id="now"
@@ -56,28 +61,28 @@ export function CurrentSeason({ project, isLoading }: CurrentSeasonProps) {
               </div>
             </div>
 
-            <div className="relative order-1 min-h-[220px] overflow-hidden md:order-2 md:min-h-[420px]">
-              {project.image_url ? (
+            <div className="relative order-1 min-h-[200px] overflow-hidden md:order-2 md:min-h-[360px]">
+              {project.image_url && !imageFailed ? (
                 <img
                   src={project.image_url}
                   alt={project.title}
                   loading="lazy"
+                  onError={() => setImageFailed(true)}
                   className="absolute inset-0 h-full w-full object-cover opacity-70 transition-transform duration-[1600ms] group-hover:scale-[1.04]"
                 />
               ) : (
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0 bg-[radial-gradient(circle_at_60%_45%,rgba(139,108,255,0.35),transparent_62%),radial-gradient(circle_at_30%_70%,rgba(95,157,255,0.22),transparent_60%),#03060d]"
-                />
+                <CosmicPanel />
               )}
               <span
                 aria-hidden="true"
-                className="absolute inset-0 bg-[linear-gradient(90deg,#020409_2%,rgba(2,4,9,0.55)_38%,rgba(2,4,9,0.15)_100%)]"
+                className="absolute inset-0 bg-[linear-gradient(90deg,#020409_2%,rgba(2,4,9,0.5)_34%,rgba(2,4,9,0.1)_100%)]"
               />
-              <span
-                aria-hidden="true"
-                className="absolute inset-0 opacity-60 [background-image:radial-gradient(rgba(200,215,255,0.5)_0.6px,transparent_0.7px)] [background-size:26px_26px]"
-              />
+              {project.image_url && !imageFailed && (
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-0 opacity-50 [background-image:radial-gradient(rgba(200,215,255,0.5)_0.6px,transparent_0.7px)] [background-size:26px_26px]"
+                />
+              )}
             </div>
           </Link>
         ) : (

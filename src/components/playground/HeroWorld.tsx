@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 
 /**
- * HeroWorld — original luminous particle environment.
- * An abstract living tree/fountain of motes rising above a reflective
- * waterline, with a bright circular portal. Pure canvas, no 3D deps.
+ * HeroWorld — luminous particle environment.
+ * A vertical living form (tree / fountain / constellation) rising out of a
+ * reflective waterline, with a bright portal at its base. Pure canvas.
  */
 export function HeroWorld() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -32,42 +32,96 @@ export function HeroWorld() {
       phase: number;
       color: [number, number, number];
       twinkle: number;
+      core: boolean;
     };
 
+    type Filament = { pts: [number, number][]; hue: string; alpha: number };
+
     let motes: Mote[] = [];
+    let filaments: Filament[] = [];
+    let nodes: { x: number; y: number; r: number; c: string }[] = [];
     const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
 
     const palette = (): [number, number, number] => {
       const roll = Math.random();
-      if (roll > 0.94) return [214, 168, 71]; // sparse warm gold
-      if (roll > 0.62) return [139, 108, 255]; // violet
-      if (roll > 0.32) return [95, 157, 255]; // blue
-      return [232, 238, 255]; // cold white
+      if (roll > 0.94) return [226, 182, 92]; // sparse warm gold
+      if (roll > 0.6) return [148, 118, 255]; // violet
+      if (roll > 0.3) return [110, 170, 255]; // blue
+      return [238, 244, 255]; // cold white
     };
+
+    const centre = () => (w < 760 ? 0.5 : 0.63);
 
     const seed = () => {
       const small = w < 760;
-      const count = reduced ? 260 : small ? 420 : 1100;
-      const cx = small ? 0.5 : 0.62;
-      const cy = 0.42;
+      const cx = centre();
+      const base = 0.7; // waterline in normalised units
+      const count = reduced ? 420 : small ? 700 : 1750;
 
-      motes = Array.from({ length: count }, () => {
-        // Radial burst with a denser core: an abstract tree/fountain.
+      motes = Array.from({ length: count }, (_, i) => {
+        // Structured vertical form: dense along a central rising column,
+        // sparse in the outer halo.
+        const core = i % 10 !== 0; // 90% belong to the structured form
+        if (core) {
+          // height along the column, biased to the lower/middle body
+          const u = Math.pow(Math.random(), 0.85);
+          const y = base - u * (small ? 0.5 : 0.56);
+          // width flares out with height (fountain / tree canopy)
+          const flare = Math.pow(u, 1.35) * (small ? 0.3 : 0.26);
+          const g = (Math.random() + Math.random() + Math.random()) / 3 - 0.5;
+          const x = cx + g * 2 * flare;
+          return {
+            bx: x,
+            by: y,
+            r: 0.35 + Math.pow(Math.random(), 2.6) * 2.3,
+            speed: 0.1 + Math.random() * 0.5,
+            phase: Math.random() * Math.PI * 2,
+            color: palette(),
+            twinkle: 0.45 + Math.random() * 0.55,
+            core: true,
+          };
+        }
         const a = Math.random() * Math.PI * 2;
-        const rad = Math.pow(Math.random(), 1.9);
-        const spread = small ? 0.44 : 0.36;
-        const bx = cx + Math.cos(a) * rad * spread * (small ? 1 : 1.25);
-        const by = cy + Math.sin(a) * rad * spread * 0.82 - rad * 0.06;
+        const rad = 0.35 + Math.random() * 0.65;
         return {
-          bx,
-          by,
-          r: 0.4 + Math.pow(Math.random(), 2.4) * 2.2,
-          speed: 0.1 + Math.random() * 0.5,
+          bx: cx + Math.cos(a) * rad * (small ? 0.5 : 0.42),
+          by: base - 0.28 + Math.sin(a) * rad * 0.34,
+          r: 0.3 + Math.pow(Math.random(), 3) * 1.5,
+          speed: 0.08 + Math.random() * 0.35,
           phase: Math.random() * Math.PI * 2,
           color: palette(),
-          twinkle: 0.4 + Math.random() * 0.6,
+          twinkle: 0.3 + Math.random() * 0.5,
+          core: false,
         };
       });
+
+      // branching arcs / filaments radiating from the base of the column
+      const branchCount = small ? 5 : 9;
+      filaments = Array.from({ length: branchCount }, (_, i) => {
+        const dir = i % 2 === 0 ? 1 : -1;
+        const spread = (0.05 + (i / branchCount) * 0.22) * dir;
+        const top = base - (0.22 + Math.random() * 0.32);
+        const pts: [number, number][] = [];
+        for (let s = 0; s <= 10; s++) {
+          const u = s / 10;
+          pts.push([
+            cx + spread * Math.pow(u, 1.6) + Math.sin(u * 3 + i) * 0.012,
+            base - u * (base - top),
+          ]);
+        }
+        return {
+          pts,
+          hue: i % 3 === 0 ? "148,118,255" : i % 3 === 1 ? "110,170,255" : "225,235,255",
+          alpha: 0.1 + Math.random() * 0.14,
+        };
+      });
+
+      // 2–3 concentrated luminous nodes, brightest just above the water
+      nodes = [
+        { x: cx, y: base - 0.06, r: 1, c: "245,250,255" },
+        { x: cx - 0.055, y: base - 0.3, r: 0.62, c: "150,120,255" },
+        { x: cx + 0.07, y: base - 0.44, r: 0.48, c: "120,175,255" },
+      ];
     };
 
     const resize = () => {
@@ -79,28 +133,86 @@ export function HeroWorld() {
       seed();
     };
 
-    const waterline = () => h * 0.72;
+    const waterline = () => h * 0.7;
 
     const drawPortal = (cx: number, cy: number, r: number, alpha: number) => {
-      const g = ctx.createRadialGradient(cx, cy, r * 0.2, cx, cy, r * 2.4);
-      g.addColorStop(0, `rgba(190,215,255,${0.5 * alpha})`);
-      g.addColorStop(0.35, `rgba(120,150,255,${0.16 * alpha})`);
+      const g = ctx.createRadialGradient(cx, cy, r * 0.1, cx, cy, r * 3);
+      g.addColorStop(0, `rgba(228,240,255,${0.78 * alpha})`);
+      g.addColorStop(0.22, `rgba(150,190,255,${0.34 * alpha})`);
+      g.addColorStop(0.55, `rgba(110,130,255,${0.12 * alpha})`);
       g.addColorStop(1, "rgba(10,14,30,0)");
       ctx.fillStyle = g;
       ctx.beginPath();
-      ctx.arc(cx, cy, r * 2.4, 0, Math.PI * 2);
+      ctx.arc(cx, cy, r * 3, 0, Math.PI * 2);
       ctx.fill();
 
-      ctx.strokeStyle = `rgba(215,230,255,${0.75 * alpha})`;
-      ctx.lineWidth = 1.2;
+      ctx.strokeStyle = `rgba(240,248,255,${0.95 * alpha})`;
+      ctx.lineWidth = 1.6;
       ctx.beginPath();
       ctx.arc(cx, cy, r, 0, Math.PI * 2);
       ctx.stroke();
 
-      ctx.strokeStyle = `rgba(139,108,255,${0.35 * alpha})`;
+      ctx.strokeStyle = `rgba(160,130,255,${0.45 * alpha})`;
+      ctx.lineWidth = 0.9;
       ctx.beginPath();
-      ctx.arc(cx, cy, r * 1.28, 0, Math.PI * 2);
+      ctx.arc(cx, cy, r * 1.3, 0, Math.PI * 2);
       ctx.stroke();
+    };
+
+    const drawNodes = (alpha: number) => {
+      nodes.forEach((n, i) => {
+        const x = n.x * w + pointer.x * 10;
+        const y = n.y * h;
+        const pulse = 0.8 + Math.sin(t * 2 + i * 1.7) * 0.2;
+        const rad = Math.min(w, h) * 0.085 * n.r * pulse;
+        const g = ctx.createRadialGradient(x, y, 0, x, y, rad);
+        g.addColorStop(0, `rgba(${n.c},${0.72 * alpha})`);
+        g.addColorStop(0.3, `rgba(${n.c},${0.2 * alpha})`);
+        g.addColorStop(1, "rgba(6,10,24,0)");
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(x, y, rad, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    };
+
+    const drawFilaments = (alpha: number) => {
+      ctx.lineWidth = 0.7;
+      filaments.forEach((f, i) => {
+        ctx.beginPath();
+        f.pts.forEach(([bx, by], s) => {
+          const sway = Math.sin(t * 1.4 + i + s * 0.35) * (s * 0.6);
+          const x = bx * w + sway + pointer.x * 10;
+          const y = by * h;
+          if (s === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+        ctx.strokeStyle = `rgba(${f.hue},${f.alpha * alpha})`;
+        ctx.stroke();
+      });
+    };
+
+    const drawMotes = (wl: number, alpha: number, scale: number) => {
+      motes.forEach((m) => {
+        const drift = Math.sin(t * m.speed * 6 + m.phase) * 5;
+        const x = m.bx * w + drift + pointer.x * (m.core ? 14 : 22);
+        const y = m.by * h + Math.cos(t * m.speed * 5 + m.phase) * 4 + pointer.y * 8;
+        if (y > wl) return;
+        const a =
+          (0.24 + Math.abs(Math.sin(t * 3 + m.phase)) * 0.76 * m.twinkle) *
+          (m.core ? 1 : 0.55) *
+          alpha;
+        ctx.fillStyle = `rgba(${m.color[0]},${m.color[1]},${m.color[2]},${a})`;
+        ctx.beginPath();
+        ctx.arc(x, y, m.r * scale, 0, Math.PI * 2);
+        ctx.fill();
+        if (m.r > 1.6) {
+          ctx.fillStyle = `rgba(${m.color[0]},${m.color[1]},${m.color[2]},${a * 0.16})`;
+          ctx.beginPath();
+          ctx.arc(x, y, m.r * 3.6 * scale, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      });
     };
 
     const render = () => {
@@ -112,63 +224,81 @@ export function HeroWorld() {
 
       const wl = waterline();
       const small = w < 760;
-      const px = w * (small ? 0.5 : 0.62);
+      const px = w * centre();
       const py = wl - h * 0.06;
-      const pr = Math.min(w, h) * (small ? 0.085 : 0.07);
-      const breathe = 0.82 + Math.sin(t * 2.2) * 0.18;
+      const pr = Math.min(w, h) * (small ? 0.075 : 0.062);
+      const breathe = 0.85 + Math.sin(t * 2.2) * 0.15;
+
+      // --- mist band at the horizon ---
+      const mist = ctx.createLinearGradient(0, wl - h * 0.12, 0, wl + 4);
+      mist.addColorStop(0, "rgba(120,150,220,0)");
+      mist.addColorStop(0.65, "rgba(130,160,225,0.07)");
+      mist.addColorStop(1, "rgba(150,180,255,0.13)");
+      ctx.fillStyle = mist;
+      ctx.fillRect(0, wl - h * 0.12, w, h * 0.12 + 4);
 
       // --- reflection field (below the waterline) ---
       ctx.save();
       ctx.beginPath();
       ctx.rect(0, wl, w, h - wl);
       ctx.clip();
-      ctx.globalAlpha = 0.34;
       ctx.translate(0, wl * 2);
       ctx.scale(1, -1);
-      drawPortal(px, py, pr, breathe);
-      motes.forEach((m, i) => {
-        const drift = Math.sin(t * m.speed * 6 + m.phase) * 6;
-        const x = m.bx * w + drift + pointer.x * 12;
-        const y = m.by * h + Math.cos(t * m.speed * 5 + m.phase) * 5 + pointer.y * 8;
-        if (y > wl) return;
-        const a =
-          (0.25 + Math.abs(Math.sin(t * 3 + m.phase)) * 0.55 * m.twinkle) *
-          (i % 3 === 0 ? 1 : 0.7);
-        ctx.fillStyle = `rgba(${m.color[0]},${m.color[1]},${m.color[2]},${a})`;
-        ctx.beginPath();
-        ctx.arc(x + Math.sin(t * 3 + y * 0.02) * 3, y, m.r * 0.9, 0, Math.PI * 2);
-        ctx.fill();
-      });
+      drawPortal(px, py, pr, breathe * 0.55);
+      drawNodes(0.4);
+      drawFilaments(0.4);
+      drawMotes(wl, 0.4, 0.9);
       ctx.restore();
 
-      // --- waterline shimmer ---
-      const shim = ctx.createLinearGradient(0, wl - 8, 0, h);
-      shim.addColorStop(0, "rgba(150,180,255,0.16)");
-      shim.addColorStop(0.12, "rgba(90,120,220,0.06)");
-      shim.addColorStop(1, "rgba(2,4,9,0.9)");
-      ctx.fillStyle = shim;
-      ctx.fillRect(0, wl - 8, w, h - wl + 8);
+      // --- elongated vertical reflections under the portal ---
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(0, wl, w, h - wl);
+      ctx.clip();
+      const col = ctx.createLinearGradient(0, wl, 0, h);
+      col.addColorStop(0, "rgba(215,232,255,0.34)");
+      col.addColorStop(0.45, "rgba(150,180,255,0.1)");
+      col.addColorStop(1, "rgba(2,4,9,0)");
+      ctx.fillStyle = col;
+      const cw = pr * 1.6;
+      ctx.beginPath();
+      ctx.moveTo(px - cw * 0.5, wl);
+      ctx.lineTo(px + cw * 0.5, wl);
+      ctx.lineTo(px + cw * 1.5, h);
+      ctx.lineTo(px - cw * 1.5, h);
+      ctx.closePath();
+      ctx.fill();
 
-      // --- portal + motes ---
-      drawPortal(px, py, pr, breathe);
-
-      motes.forEach((m) => {
-        const drift = Math.sin(t * m.speed * 6 + m.phase) * 6;
-        const x = m.bx * w + drift + pointer.x * 16;
-        const y = m.by * h + Math.cos(t * m.speed * 5 + m.phase) * 5 + pointer.y * 10;
-        if (y > wl) return;
-        const a = 0.25 + Math.abs(Math.sin(t * 3 + m.phase)) * 0.7 * m.twinkle;
-        ctx.fillStyle = `rgba(${m.color[0]},${m.color[1]},${m.color[2]},${a})`;
+      // --- thin horizontal ripple lines ---
+      for (let i = 0; i < 26; i++) {
+        const u = i / 26;
+        const y = wl + Math.pow(u, 1.7) * (h - wl);
+        const phase = Math.sin(t * 1.6 + i * 0.7);
+        const halfW = (0.06 + u * 0.5) * w * (0.6 + Math.abs(phase) * 0.5);
+        const cxr = px + phase * (10 + u * 60);
+        const a = (0.2 - u * 0.16) * (0.6 + Math.abs(phase) * 0.4);
+        ctx.strokeStyle = `rgba(200,222,255,${Math.max(a, 0.02)})`;
+        ctx.lineWidth = 0.7;
         ctx.beginPath();
-        ctx.arc(x, y, m.r, 0, Math.PI * 2);
-        ctx.fill();
-        if (m.r > 1.8) {
-          ctx.fillStyle = `rgba(${m.color[0]},${m.color[1]},${m.color[2]},${a * 0.14})`;
-          ctx.beginPath();
-          ctx.arc(x, y, m.r * 3.4, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      });
+        ctx.moveTo(cxr - halfW, y);
+        ctx.lineTo(cxr + halfW, y);
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      // --- waterline glow ---
+      const shim = ctx.createLinearGradient(0, wl - 6, 0, h);
+      shim.addColorStop(0, "rgba(170,200,255,0.2)");
+      shim.addColorStop(0.1, "rgba(90,120,220,0.06)");
+      shim.addColorStop(1, "rgba(2,4,9,0.82)");
+      ctx.fillStyle = shim;
+      ctx.fillRect(0, wl - 6, w, h - wl + 6);
+
+      // --- the living form ---
+      drawFilaments(1);
+      drawNodes(1);
+      drawPortal(px, py, pr, breathe);
+      drawMotes(wl, 1, 1);
 
       // --- rocky silhouette at the right edge ---
       ctx.fillStyle = "rgba(1,2,6,0.96)";

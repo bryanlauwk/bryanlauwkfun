@@ -5,7 +5,7 @@ const STORAGE_KEY = "lp-first-key";
 
 function KeyObject({ awake }: { awake: boolean }) {
   return (
-    <svg viewBox="0 0 120 120" className="h-24 w-full" aria-hidden="true">
+    <svg viewBox="0 0 120 120" className="h-28 w-full" aria-hidden="true">
       <defs>
         <radialGradient id="lp-key-core" cx="50%" cy="45%" r="50%">
           <stop offset="0%" stopColor="hsl(var(--accent))" stopOpacity={awake ? "0.9" : "0.45"} />
@@ -42,7 +42,7 @@ function KeyObject({ awake }: { awake: boolean }) {
 
 function StoneObject() {
   return (
-    <svg viewBox="0 0 120 120" className="h-24 w-full" aria-hidden="true">
+    <svg viewBox="0 0 120 120" className="h-28 w-full" aria-hidden="true">
       <defs>
         <radialGradient id="lp-stone" cx="38%" cy="32%" r="70%">
           <stop offset="0%" stopColor="#8ea6ff" stopOpacity="0.55" />
@@ -67,7 +67,7 @@ function StoneObject() {
 
 function CardObject() {
   return (
-    <svg viewBox="0 0 120 120" className="h-24 w-full" aria-hidden="true">
+    <svg viewBox="0 0 120 120" className="h-28 w-full" aria-hidden="true">
       <rect x="38" y="26" width="44" height="68" rx="4" fill="#080c15" stroke="rgba(190,200,230,0.45)" strokeWidth="0.9" />
       <circle cx="60" cy="60" r="12" fill="none" stroke="rgba(200,212,245,0.7)" strokeWidth="1" />
       <circle cx="60" cy="60" r="18" fill="none" stroke="hsl(var(--lp-blue) / 0.35)" strokeWidth="0.6" strokeDasharray="2 6" />
@@ -77,7 +77,7 @@ function CardObject() {
 
 function CapsuleObject() {
   return (
-    <svg viewBox="0 0 120 120" className="h-24 w-full" aria-hidden="true">
+    <svg viewBox="0 0 120 120" className="h-28 w-full" aria-hidden="true">
       <path d="M40 42 L60 32 L80 42 L80 80 L60 90 L40 80 Z" fill="#070b13" stroke="rgba(190,200,230,0.35)" strokeWidth="0.9" />
       <path d="M40 42 L60 52 L80 42 M60 52 L60 90" stroke="rgba(150,165,205,0.35)" strokeWidth="0.7" fill="none" />
       <text x="60" y="70" textAnchor="middle" fill="rgba(210,220,250,0.6)" fontSize="16" fontWeight="200">
@@ -129,7 +129,7 @@ export function ArtifactsRow() {
   return (
     <section
       id="artifact"
-      className="relative px-6 py-20 md:px-14 md:py-28"
+      className="relative px-6 py-8 md:px-14 md:py-11"
       aria-labelledby="artifacts-heading"
     >
       <div className="mx-auto grid max-w-[110rem] gap-10 md:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] md:gap-14">

@@ -4,9 +4,9 @@ export function PlaygroundFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative z-10 border-t border-[hsl(var(--lp-hair)/0.14)] px-6 py-16 md:px-14 md:py-20">
-      <div className="mx-auto flex max-w-[110rem] flex-col items-center gap-8 text-center">
-        <p className="text-lg font-extralight tracking-[0.16em] text-foreground md:text-2xl">
+    <footer className="relative z-10 border-t border-[hsl(var(--lp-hair)/0.14)] px-6 py-7 md:px-14 md:py-8">
+      <div className="mx-auto flex max-w-[110rem] flex-col items-center gap-4 text-center">
+        <p className="text-[0.6rem] uppercase tracking-[0.3em] text-muted-foreground/80">
           Good luck, have fun, don&apos;t die.
         </p>
 

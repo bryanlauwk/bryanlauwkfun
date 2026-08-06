@@ -6,10 +6,8 @@ import { ArtifactsRow } from "@/components/playground/ArtifactsRow";
 import { UpcomingSeason } from "@/components/playground/UpcomingSeason";
 import { SeasonArchive } from "@/components/playground/SeasonArchive";
 import { Laboratory } from "@/components/playground/Laboratory";
-import { AboutSection } from "@/components/playground/AboutSection";
-import { QuietCompanion } from "@/components/playground/QuietCompanion";
+import { ExitStrip } from "@/components/playground/ExitStrip";
 import { PlaygroundFooter } from "@/components/playground/PlaygroundFooter";
-import { GuestBook } from "@/components/GuestBook";
 import { usePublicProjects } from "@/hooks/useProjects";
 import { useSEO } from "@/hooks/useSEO";
 
@@ -40,22 +38,14 @@ const Index = () => {
           <ArrivalSection />
           <CurrentSeason project={featured} isLoading={isLoading} />
           <ArtifactsRow />
+          <UpcomingSeason />
           <SeasonArchive projects={rest} isLoading={isLoading} />
           <Laboratory />
-          <UpcomingSeason />
-          <AboutSection />
-
-          <section id="signal" className="relative px-6 py-20 md:px-14 md:py-28">
-            <div className="mx-auto max-w-4xl">
-              <GuestBook />
-            </div>
-          </section>
+          <ExitStrip />
         </main>
 
         <PlaygroundFooter />
       </div>
-
-      <QuietCompanion />
     </div>
   );
 };

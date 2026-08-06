@@ -3,17 +3,18 @@ import { ArrowUpRight } from "lucide-react";
 const CONCEPTS = [
   {
     title: "Light That Remembers",
-    body: "A room-scale study where illumination keeps a record of everyone who passed through it.",
+    body: "Illumination that keeps a record of everyone who passed through.",
   },
   {
     title: "The Object Listens",
-    body: "Prototyping a small physical thing that reacts to voice, breath and the silence between them.",
+    body: "A small physical thing reacting to voice, breath and silence.",
   },
   {
     title: "A Door for Strangers",
-    body: "An entry point that behaves differently depending on whether it has met you before.",
+    body: "An entry point that behaves differently if it has met you.",
   },
 ];
+
 
 function Blueprint({ variant }: { variant: number }) {
   return (
@@ -60,7 +61,7 @@ export function Laboratory() {
   return (
     <section
       id="lab"
-      className="relative px-6 py-20 md:px-14 md:py-28"
+      className="relative px-6 py-8 md:px-14 md:py-11"
       aria-labelledby="lab-heading"
     >
       <div className="mx-auto grid max-w-[110rem] gap-10 md:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] md:gap-14">
@@ -87,7 +88,7 @@ export function Laboratory() {
           </a>
         </div>
 
-        <div className="lp-rail md:grid md:grid-cols-3 md:overflow-visible">
+        <div className="lp-rail md:grid md:grid-cols-4 md:overflow-visible">
           {CONCEPTS.map((c, i) => (
             <article key={c.title} className="lp-blueprint w-[17rem] md:w-auto">
               <Blueprint variant={i} />
@@ -100,7 +101,26 @@ export function Laboratory() {
               <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{c.body}</p>
             </article>
           ))}
+
+          <div className="lp-blueprint lp-blueprint--empty flex w-[17rem] flex-col items-center justify-center text-center md:w-auto">
+            <span
+              aria-hidden="true"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-dashed border-[hsl(var(--lp-hair)/0.4)] text-base font-extralight text-muted-foreground"
+            >
+              +
+            </span>
+            <span className="mt-5 block text-[0.6rem] uppercase tracking-[0.3em] text-muted-foreground">
+              Empty slot
+            </span>
+            <h3 className="mt-2 text-sm font-light tracking-[0.04em] text-foreground">
+              Suggest an idea
+            </h3>
+            <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+              This study has no shape yet. Ideas arrive by signal.
+            </p>
+          </div>
         </div>
+
       </div>
     </section>
   );
