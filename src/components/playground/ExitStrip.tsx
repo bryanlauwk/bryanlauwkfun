@@ -179,9 +179,10 @@ export function ExitStrip() {
                 aria-controls="signal"
                 className="lp-button"
               >
-                {signalOpen ? "Close signal" : "Leave a signal"}
+                {signalOpen ? "Close the sky" : "Leave a message in the sky"}
               </button>
             </div>
+
           </div>
 
           {/* contact icons */}
