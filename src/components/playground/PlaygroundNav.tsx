@@ -4,12 +4,13 @@ import { useVisitorCounter } from "@/hooks/useVisitorCounter";
 
 const LINKS = [
   { id: "now", label: "Current Drop" },
-  { id: "worlds", label: "Worlds" },
-  { id: "experiences", label: "Experiences" },
-  { id: "ideas", label: "Ideas Forest" },
-  { id: "archive", label: "Dream Archive" },
+  { id: "artifact", label: "Artifacts" },
+  { id: "next", label: "Next Season" },
+  { id: "archive", label: "Past Seasons" },
   { id: "about", label: "About" },
 ];
+
+
 
 
 export function PlaygroundNav() {
