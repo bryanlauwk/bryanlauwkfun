@@ -179,7 +179,7 @@ export function SeasonArchive({ projects, isLoading }: SeasonArchiveProps) {
           <div
             id="archive-index"
             hidden={!indexOpen}
-            className="mt-8 flex flex-col gap-5 border-t border-[hsl(var(--lp-hair)/0.14)] pt-6 md:flex-row md:items-center md:justify-between"
+            className={`mt-8 ${indexOpen ? "flex" : "hidden"} flex-col gap-5 border-t border-[hsl(var(--lp-hair)/0.14)] pt-6 md:flex-row md:items-center md:justify-between`}
           >
             <div className="relative w-full max-w-sm">
               <Search
