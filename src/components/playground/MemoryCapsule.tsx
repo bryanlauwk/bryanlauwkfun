@@ -21,7 +21,15 @@ export function MemoryCapsule({ project, index, isFocused = false }: MemoryCapsu
   const ref = useRef<HTMLAnchorElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
 
-  const spec = useMemo(() => worldFor(`${project.id}::${project.title}`), [project.id, project.title]);
+  const spec = useMemo(
+    () =>
+      worldFor(
+        `${project.id}::${project.title}`,
+        `${project.title} ${project.tag ?? ""} ${project.description ?? ""}`
+      ),
+    [project.id, project.title, project.tag, project.description]
+  );
+
   const uid = useMemo(() => `mw-${spec.seed.toString(36)}`, [spec.seed]);
 
   const onMove = (e: React.PointerEvent) => {
