@@ -3,17 +3,18 @@ import { ArrowUpRight } from "lucide-react";
 const CONCEPTS = [
   {
     title: "Light That Remembers",
-    body: "A room-scale study where illumination keeps a record of everyone who passed through it.",
+    body: "Illumination that keeps a record of everyone who passed through.",
   },
   {
     title: "The Object Listens",
-    body: "Prototyping a small physical thing that reacts to voice, breath and the silence between them.",
+    body: "A small physical thing reacting to voice, breath and silence.",
   },
   {
     title: "A Door for Strangers",
-    body: "An entry point that behaves differently depending on whether it has met you before.",
+    body: "An entry point that behaves differently if it has met you.",
   },
 ];
+
 
 function Blueprint({ variant }: { variant: number }) {
   return (
