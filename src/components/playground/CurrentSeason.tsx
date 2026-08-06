@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import type { Project } from "@/hooks/useProjects";
 import { slugFor } from "@/lib/slug";
-import { CosmicPanel } from "./CosmicPanel";
+import { SketchRealm } from "./SketchRealm";
 
 interface CurrentSeasonProps {
   project?: Project;
@@ -61,7 +61,7 @@ export function CurrentSeason({ project, isLoading }: CurrentSeasonProps) {
               </div>
             </div>
 
-            <div className="relative order-1 min-h-[200px] overflow-hidden md:order-2 md:min-h-[360px]">
+            <div className="relative order-1 min-h-[240px] overflow-hidden md:order-2 md:min-h-[400px]">
               {project.image_url && !imageFailed ? (
                 <img
                   src={project.image_url}
@@ -71,7 +71,7 @@ export function CurrentSeason({ project, isLoading }: CurrentSeasonProps) {
                   className="absolute inset-0 h-full w-full object-cover opacity-70 transition-transform duration-[1600ms] group-hover:scale-[1.04]"
                 />
               ) : (
-                <CosmicPanel />
+                <SketchRealm />
               )}
               <span
                 aria-hidden="true"
