@@ -47,7 +47,7 @@ export function MemoryCapsule({ project, index, isFocused = false }: MemoryCapsu
       to={`/drops/${slugFor(project)}`}
       onPointerMove={onMove}
       onPointerLeave={() => setTilt({ x: 0, y: 0 })}
-      className={`lp-world lp-world--${spec.archetype} group w-[10.5rem] md:w-[12.5rem] ${
+      className={`lp-world lp-world--${spec.archetype} lp-world--s${index % 3} group ${
         isFocused ? "is-focused" : ""
       }`}
       aria-label={`Open ${project.title}`}
@@ -57,10 +57,11 @@ export function MemoryCapsule({ project, index, isFocused = false }: MemoryCapsu
           ["--mw-y" as string]: tilt.y.toFixed(3),
           ["--mw-tilt" as string]: spec.tilt,
           ["--mw-tempo" as string]: `${(12 / spec.tempo).toFixed(1)}s`,
+          ["--mw-delay" as string]: `${(index % 5) * 0.09}s`,
         } as React.CSSProperties
       }
     >
-      <span className="lp-world-sphere h-[10.5rem] w-[10.5rem] md:h-[12.5rem] md:w-[12.5rem]">
+      <span className="lp-world-sphere">
         <MiniWorld spec={spec} uid={uid} />
         {/* glass: refraction, caustic sweep, rim, specular highlight */}
         <span aria-hidden="true" className="lp-glass-refract" />
