@@ -17,8 +17,8 @@ export function ArrivalSection() {
           className="lp-fade mt-8 font-tide text-[2.6rem] leading-[1.04] tracking-[-0.02em] text-foreground sm:text-6xl md:text-7xl"
           style={{ animationDelay: "260ms" }}
         >
-          A place that is
-          <span className="lp-breathe italic text-accent"> still growing</span>,
+          A place that is{" "}
+          <span className="lp-breathe italic text-accent">still growing</span>,
           <br className="hidden sm:block" /> and knows you are here.
         </h1>
 
