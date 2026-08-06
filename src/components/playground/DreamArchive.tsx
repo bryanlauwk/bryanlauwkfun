@@ -14,7 +14,7 @@ const WAVE =
 
 /** Dream Archive — every drop as a milestone node along a slow wave of time. */
 export function DreamArchive({ projects, isLoading }: DreamArchiveProps) {
-  const ref = useReveal<HTMLElement>();
+  const { ref, inView } = useReveal<HTMLElement>(0.12);
 
   const nodes = useMemo(() => {
     const dated = [...projects]
@@ -35,7 +35,7 @@ export function DreamArchive({ projects, isLoading }: DreamArchiveProps) {
     <section
       ref={ref}
       id="archive"
-      className="lp-scene lp-reveal relative px-6 py-16 md:px-14 md:py-24"
+      className={`lp-scene relative px-6 py-16 transition-all duration-1000 md:px-14 md:py-24 ${inView ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`}
       aria-labelledby="dream-archive-heading"
     >
       <div className="mx-auto max-w-[110rem]">

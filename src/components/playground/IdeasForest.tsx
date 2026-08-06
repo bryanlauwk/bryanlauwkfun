@@ -52,13 +52,13 @@ function Tree({ grow, delay }: { grow: number; delay: number }) {
 
 /** Ideas Forest — a growth timeline from raw idea to shipped world. */
 export function IdeasForest() {
-  const ref = useReveal<HTMLElement>();
+  const { ref, inView } = useReveal<HTMLElement>(0.12);
 
   return (
     <section
       ref={ref}
       id="ideas"
-      className="lp-scene lp-reveal relative px-6 py-16 md:px-14 md:py-24"
+      className={`lp-scene relative px-6 py-16 transition-all duration-1000 md:px-14 md:py-24 ${inView ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`}
       aria-labelledby="ideas-heading"
     >
       <div className="mx-auto max-w-[90rem]">
