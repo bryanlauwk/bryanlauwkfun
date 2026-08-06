@@ -57,7 +57,7 @@ export function DreamArchive({ projects, isLoading }: DreamArchiveProps) {
           <div className="mt-16 h-40 animate-pulse rounded-3xl border border-[hsl(var(--lp-hair)/0.14)] bg-card/40" />
         ) : (
           <div className="relative mt-16 overflow-x-auto pb-6">
-            <div className="relative mx-auto h-[19rem] min-w-[52rem]">
+            <div className="relative mx-auto h-[19rem] min-w-[78rem]">
               <svg
                 viewBox="0 0 1440 120"
                 preserveAspectRatio="none"
@@ -87,7 +87,7 @@ export function DreamArchive({ projects, isLoading }: DreamArchiveProps) {
                   key={project.id}
                   to={`/drops/${slugFor(project)}`}
                   className="group absolute top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center"
-                  style={{ left: `${4 + pct * 0.92}%` }}
+                  style={{ left: `${7 + pct * 0.86}%` }}
                 >
                   <span
                     className={`order-1 h-3 w-3 rounded-full border border-[hsl(var(--lp-hair)/0.5)] bg-accent/80 shadow-[0_0_18px_hsl(var(--accent)/0.8)] transition-transform duration-500 group-hover:scale-150`}
@@ -97,7 +97,7 @@ export function DreamArchive({ projects, isLoading }: DreamArchiveProps) {
                   <span
                     className={`${
                       up ? "order-0 mb-4" : "order-2 mt-4"
-                    } w-32 text-center`}
+                    } w-28 text-center`}
                   >
                     <span className="block text-[0.68rem] font-light leading-snug tracking-[0.08em] text-foreground/90 transition-colors group-hover:text-foreground">
                       {project.title}

@@ -15,39 +15,38 @@ export function ArrivalSection() {
         <HeroWorld />
       </div>
 
-      {/* centred orb + ripples */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-[16%] flex justify-center md:top-[14%]"
-      >
-        <div className="relative h-[22rem] w-[22rem] md:h-[30rem] md:w-[30rem]">
-          <span className="absolute left-1/2 top-[36%] h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_42%_36%,rgba(233,241,255,0.95),rgba(140,170,255,0.55)_38%,rgba(90,120,255,0.16)_62%,transparent_74%)] blur-[1px] md:h-56 md:w-56" />
-          <span className="lp-pulse absolute left-1/2 top-[36%] h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,hsl(var(--accent)/0.28),transparent_68%)] md:h-[26rem] md:w-[26rem]" />
-
-          {[0, 1, 2, 3].map((i) => (
-            <span
-              key={i}
-              className="absolute left-1/2 bottom-[16%] -translate-x-1/2 rounded-[50%] border border-[hsl(var(--lp-hair)/0.22)]"
-              style={{
-                width: `${28 + i * 22}%`,
-                height: `${6 + i * 3}%`,
-                opacity: 0.5 - i * 0.1,
-                animation: `lp-float ${7 + i * 2}s ease-in-out infinite`,
-              }}
-            />
-          ))}
-        </div>
-      </div>
-
       <div
         aria-hidden="true"
         className="absolute inset-x-0 bottom-0 h-64 bg-[linear-gradient(180deg,rgba(2,4,9,0)_0%,#020409_86%)]"
       />
 
-      <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-3xl flex-col items-center justify-end px-6 pb-28 text-center md:justify-center md:pb-0 md:pt-24">
+      <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-3xl flex-col items-center justify-center px-6 pb-24 pt-28 text-center md:pb-16 md:pt-32">
+        {/* centred orb rising above concentric ripples */}
+        <div
+          aria-hidden="true"
+          className="lp-fade relative mb-10 h-44 w-64 shrink-0 md:mb-14 md:h-60 md:w-96"
+          style={{ animationDelay: "60ms" }}
+        >
+          <span className="absolute left-1/2 top-[26%] h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_42%_36%,rgba(238,244,255,0.98),rgba(146,176,255,0.6)_38%,rgba(88,118,255,0.18)_62%,transparent_76%)] md:h-40 md:w-40" />
+          <span className="lp-pulse absolute left-1/2 top-[26%] h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,hsl(var(--accent)/0.3),transparent_68%)] md:h-80 md:w-80" />
+          {[0, 1, 2, 3].map((i) => (
+            <span
+              key={i}
+              className="absolute left-1/2 bottom-2 -translate-x-1/2 rounded-[50%] border border-[hsl(var(--lp-hair)/0.24)]"
+              style={{
+                width: `${26 + i * 22}%`,
+                height: `${10 + i * 7}%`,
+                opacity: 0.55 - i * 0.11,
+                animation: `lp-float ${7 + i * 2}s ease-in-out infinite`,
+              }}
+            />
+          ))}
+        </div>
+
         <p className="lp-fade lp-label lp-label--violet" style={{ animationDelay: "120ms" }}>
           Season 00 · Prologue
         </p>
+
 
         <h1
           id="arrival-heading"
