@@ -1039,8 +1039,9 @@
   .lp-mw-dust,
   .lp-world-sphere,
   .lp-card-tilt,
-  .lp-artifact-card::after,
+  .lp-artifact-card::after { transition: none !important; transform: none !important; }
 }
+
 
 /* ================================================================
    Living Playground — shelf, specimen table, forming signal (pass 2)
