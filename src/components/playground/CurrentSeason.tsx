@@ -9,14 +9,6 @@ interface CurrentSeasonProps {
 }
 
 export function CurrentSeason({ project, isLoading }: CurrentSeasonProps) {
-  const season = (() => {
-    const m = new Date().getMonth();
-    if (m <= 1 || m === 11) return "Winter";
-    if (m <= 4) return "Spring";
-    if (m <= 7) return "Summer";
-    return "Autumn";
-  })();
-
   return (
     <section
       id="now"
@@ -24,11 +16,11 @@ export function CurrentSeason({ project, isLoading }: CurrentSeasonProps) {
       aria-labelledby="now-heading"
     >
       <div className="mx-auto max-w-5xl">
-        <div className="mb-10 flex items-baseline justify-between gap-4">
-          <p className="lp-label">Season · {season} {new Date().getFullYear()}</p>
-          <p className="lp-label hidden items-center gap-2 md:inline-flex">
+        <div className="mb-10 flex flex-wrap items-baseline justify-between gap-4">
+          <p className="lp-label">Current Season · Featured Drop</p>
+          <p className="lp-label inline-flex items-center gap-2">
             <span className="h-1.5 w-1.5 rounded-full bg-accent lp-pulse" aria-hidden="true" />
-            open now
+            Limited transmission · currently open
           </p>
         </div>
 
@@ -48,7 +40,8 @@ export function CurrentSeason({ project, isLoading }: CurrentSeasonProps) {
               className="lp-panel lp-panel--feature group block p-8 md:p-14"
               aria-label={`Open ${project.title}`}
             >
-              <span className="lp-label text-accent">Currently playable</span>
+              <span className="lp-label text-accent">Currently open</span>
+
 
               <h3 className="mt-5 font-tide text-4xl leading-tight text-foreground transition-colors duration-500 group-hover:text-accent md:text-6xl">
                 {project.title}
