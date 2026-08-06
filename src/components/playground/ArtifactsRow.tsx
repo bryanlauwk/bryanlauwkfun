@@ -92,7 +92,7 @@ export function ArtifactsRow() {
           </div>
         </div>
 
-        <div className="relative mx-auto max-w-[110rem] px-6 pb-12 pt-[17rem] md:px-14 md:pb-16 md:pt-[23rem]">
+        <div className="relative mx-auto max-w-[110rem] px-6 pb-6 pt-[13rem] md:px-14 md:pb-10 md:pt-[19rem]">
           <div className="grid gap-8 md:grid-cols-[minmax(0,26rem)_minmax(0,26rem)] md:gap-20">
             <div>
               <p className="lp-label lp-label--violet">Interactive Artifact</p>
