@@ -34,27 +34,31 @@ export function UpcomingSeason() {
   return (
     <section
       id="next"
-      className="lp-scene relative px-6 py-14 md:px-14 md:py-20"
+      className="lp-scene lp-band relative overflow-hidden"
       aria-labelledby="next-heading"
     >
-      <div className="mx-auto max-w-[110rem]">
-        <div
-          ref={ref}
-          onPointerMove={onMove}
-          onPointerLeave={() => setPt({ x: 0, y: 0 })}
-          className={`lp-signal relative overflow-hidden px-6 py-8 md:px-10 md:py-9 ${
-            formed ? "is-formed" : ""
-          }`}
-          style={
-            {
-              ["--sg-x" as string]: pt.x.toFixed(3),
-              ["--sg-y" as string]: pt.y.toFixed(3),
-            } as React.CSSProperties
-          }
-        >
-          <span aria-hidden="true" className="lp-signal-field" />
+      <div
+        ref={ref}
+        onPointerMove={onMove}
+        onPointerLeave={() => setPt({ x: 0, y: 0 })}
+        className={`lp-signal relative overflow-hidden px-6 py-16 md:px-14 md:py-24 ${
+          formed ? "is-formed" : ""
+        }`}
+        style={
+          {
+            ["--sg-x" as string]: pt.x.toFixed(3),
+            ["--sg-y" as string]: pt.y.toFixed(3),
+          } as React.CSSProperties
+        }
+      >
+        <span aria-hidden="true" className="lp-signal-field" />
+        <span aria-hidden="true" className="lp-signal-haze" />
+        <span aria-hidden="true" className="lp-seam-top" />
+        <span aria-hidden="true" className="lp-seam-bottom" />
 
-          <div className="relative grid items-center gap-8 md:grid-cols-[minmax(0,32%)_minmax(0,1fr)] md:gap-14">
+        <div className="relative mx-auto max-w-[110rem]">
+          <div className="relative grid items-center gap-8 md:grid-cols-[minmax(0,34%)_minmax(0,1fr)] md:gap-14">
+
             {/* the living forming signal */}
             <span aria-hidden="true" className="lp-cocoon lp-cocoon--large">
               <svg viewBox="0 0 320 220" className="h-48 w-full md:h-64">
