@@ -34,7 +34,7 @@ export function UpcomingSeason() {
   return (
     <section
       id="next"
-      className="relative px-6 py-8 md:px-14 md:py-11"
+      className="lp-scene relative px-6 py-14 md:px-14 md:py-20"
       aria-labelledby="next-heading"
     >
       <div className="mx-auto max-w-[110rem]">
