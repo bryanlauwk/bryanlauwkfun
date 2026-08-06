@@ -333,6 +333,35 @@ export function HeroWorld() {
       });
       ctx.restore();
 
+      // --- drifting mist wisps above the water ---
+      for (let i = 0; i < 5; i++) {
+        const u = i / 5;
+        const my = wl - h * (0.02 + u * 0.13);
+        const mx = ((t * (8 + i * 5) + i * 400) % (w + 500)) - 250;
+        const mw = w * (0.2 + u * 0.22);
+        const mg = ctx.createLinearGradient(mx - mw, 0, mx + mw, 0);
+        mg.addColorStop(0, "rgba(150,180,240,0)");
+        mg.addColorStop(0.5, `rgba(160,190,245,${0.05 - u * 0.008})`);
+        mg.addColorStop(1, "rgba(150,180,240,0)");
+        ctx.fillStyle = mg;
+        ctx.beginPath();
+        ctx.ellipse(mx, my, mw, h * (0.012 + u * 0.012), 0, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // --- warm gold lantern light near the shore ---
+      const gx = w * (small ? 0.16 : 0.2);
+      const gy = wl - h * 0.03;
+      const gr = Math.min(w, h) * 0.16;
+      const gg = ctx.createRadialGradient(gx, gy, 0, gx, gy, gr);
+      gg.addColorStop(0, `rgba(240,196,110,${0.2 * breathe})`);
+      gg.addColorStop(0.35, "rgba(220,170,90,0.07)");
+      gg.addColorStop(1, "rgba(10,8,4,0)");
+      ctx.fillStyle = gg;
+      ctx.beginPath();
+      ctx.arc(gx, gy, gr, 0, Math.PI * 2);
+      ctx.fill();
+
       // --- rocky silhouette at the right edge ---
       ctx.fillStyle = "rgba(1,2,6,0.96)";
       ctx.beginPath();
@@ -341,6 +370,36 @@ export function HeroWorld() {
       ctx.quadraticCurveTo(w - w * 0.08, wl - h * 0.17, w - w * 0.11, wl + 4);
       ctx.closePath();
       ctx.fill();
+
+      // --- foreground shoreline + reeds (depth layer, parallaxed by pointer) ---
+      const fpx = pointer.x * 16;
+      ctx.fillStyle = "rgba(0,1,4,0.98)";
+      ctx.beginPath();
+      ctx.moveTo(-40 + fpx, h);
+      ctx.lineTo(-40 + fpx, h - h * 0.1);
+      ctx.quadraticCurveTo(w * 0.16 + fpx, h - h * 0.155, w * 0.34 + fpx, h);
+      ctx.closePath();
+      ctx.fill();
+
+      const reeds = small ? 6 : 11;
+      for (let i = 0; i < reeds; i++) {
+        const rx = (small ? 0.02 : 0.015) * w + i * (w * (small ? 0.05 : 0.032)) + fpx;
+        const rh = h * (0.11 + ((i * 37) % 11) / 100);
+        const bend = Math.sin(t * 0.9 + i) * (8 + (i % 3) * 4);
+        ctx.strokeStyle = "rgba(0,1,4,0.97)";
+        ctx.lineWidth = 2.4 + (i % 3);
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.moveTo(rx, h);
+        ctx.quadraticCurveTo(rx + bend * 0.4, h - rh * 0.6, rx + bend, h - rh);
+        ctx.stroke();
+        if (i % 3 === 0) {
+          ctx.fillStyle = `rgba(235,205,140,${0.35 + Math.sin(t * 2 + i) * 0.2})`;
+          ctx.beginPath();
+          ctx.arc(rx + bend, h - rh, 2.1, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
 
       if (!reduced) raf = requestAnimationFrame(render);
     };

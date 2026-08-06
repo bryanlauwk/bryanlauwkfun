@@ -92,7 +92,7 @@ export function ExitStrip() {
   return (
     <section
       id="about"
-      className="relative border-t border-[hsl(var(--lp-hair)/0.12)] px-6 py-12 md:px-14 md:py-16"
+      className="lp-scene relative px-6 py-16 md:px-14 md:py-24"
       aria-labelledby="exit-heading"
     >
       <div className="mx-auto max-w-[110rem]">
@@ -131,8 +131,8 @@ export function ExitStrip() {
                       <a href="#archive" className="text-[9px] uppercase tracking-[0.24em] text-accent hover:underline">
                         Past Seasons
                       </a>
-                      <a href="#lab" className="text-[9px] uppercase tracking-[0.24em] text-accent hover:underline">
-                        Laboratory
+                      <a href="#artifact" className="text-[9px] uppercase tracking-[0.24em] text-accent hover:underline">
+                        The First Key
                       </a>
                       <button
                         type="button"

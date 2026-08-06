@@ -8,9 +8,15 @@ export function useReveal<T extends HTMLElement = HTMLElement>(threshold = 0.18)
   const ref = useRef<T>(null);
   const [inView, setInView] = useState(false);
 
+  const [tick, setTick] = useState(0);
+
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    // The target may mount later (e.g. after a loading state) — retry shortly.
+    if (!el) {
+      const id = window.setTimeout(() => setTick((n) => n + 1), 120);
+      return () => window.clearTimeout(id);
+    }
 
     const reduced =
       typeof window.matchMedia === "function" &&
@@ -32,7 +38,7 @@ export function useReveal<T extends HTMLElement = HTMLElement>(threshold = 0.18)
     );
     io.observe(el);
     return () => io.disconnect();
-  }, [threshold]);
+  }, [threshold, tick]);
 
   return { ref, inView } as const;
 }

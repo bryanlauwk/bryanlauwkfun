@@ -80,7 +80,7 @@ export function SeasonArchive({ projects, isLoading }: SeasonArchiveProps) {
   return (
     <section
       id="archive"
-      className="relative px-6 py-8 md:px-14 md:py-11"
+      className="lp-scene relative px-6 py-14 md:px-14 md:py-20"
       aria-labelledby="archive-heading"
     >
       <div className="mx-auto grid max-w-[110rem] gap-10 md:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] md:gap-14">
@@ -144,7 +144,7 @@ export function SeasonArchive({ projects, isLoading }: SeasonArchiveProps) {
             </div>
           ) : (
             <>
-              <div ref={railRef} className="lp-rail gap-6 md:gap-10">
+              <div ref={railRef} className="lp-rail items-start gap-8 pb-8 md:gap-14">
                 {filtered.map((project, index) => (
                   <MemoryCapsule
                     key={project.id}
