@@ -26,7 +26,7 @@ export function ArrivalSection() {
       <div className="relative z-10 mx-auto flex min-h-[100svh] w-full max-w-[110rem] items-end px-6 pb-40 pt-32 md:min-h-[105vh] md:items-center md:px-14 md:pb-56 md:pt-0">
         <div className="w-full md:w-[40%] md:pt-10">
           <p className="lp-fade lp-label lp-label--violet" style={{ animationDelay: "100ms" }}>
-            Season 00 · Prologue
+            Welcome
           </p>
 
           <h1
@@ -39,21 +39,7 @@ export function ArrivalSection() {
             Playground
           </h1>
 
-          <p
-            className="lp-fade mt-8 text-lg font-extralight tracking-[0.04em] text-foreground/90 md:text-xl"
-            style={{ animationDelay: "320ms" }}
-          >
-            Welcome to this season.
-          </p>
-
-          <p
-            className="lp-fade mt-3 text-sm font-light text-muted-foreground"
-            style={{ animationDelay: "380ms" }}
-          >
-            An evolving world by Bryan Lau.
-          </p>
-
-          <p className="lp-fade lp-stack mt-8" style={{ animationDelay: "440ms" }}>
+          <p className="lp-fade lp-stack mt-8" style={{ animationDelay: "320ms" }}>
             Interactive experiences.
             <br />
             Collectible objects.
@@ -62,11 +48,19 @@ export function ArrivalSection() {
           </p>
 
           <p
-            className="lp-fade mt-6 max-w-xs text-xs font-light leading-relaxed text-muted-foreground/85"
-            style={{ animationDelay: "480ms" }}
+            className="lp-fade mt-7 text-[0.62rem] uppercase tracking-[0.34em] text-accent"
+            style={{ animationDelay: "400ms" }}
           >
-            A place that is still growing, and knows you are here.
+            Built one season at a time.
           </p>
+
+          <p
+            className="lp-fade mt-5 max-w-xs text-xs font-light leading-relaxed text-muted-foreground/85"
+            style={{ animationDelay: "460ms" }}
+          >
+            Season 00 · Prologue. An evolving world by Bryan Lau.
+          </p>
+
 
           <div
             className="lp-fade mt-10 flex items-center gap-5"
