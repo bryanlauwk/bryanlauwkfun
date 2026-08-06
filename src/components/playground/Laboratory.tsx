@@ -36,10 +36,6 @@ function Specimen({ variant }: { variant: number }) {
         <filter id={`lab-soft-${variant}`} x="-40%" y="-40%" width="180%" height="180%">
           <feGaussianBlur stdDeviation="5" />
         </filter>
-        <filter id={`lab-grain-${variant}`}>
-          <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed={variant + 3} />
-          <feColorMatrix type="saturate" values="0" />
-        </filter>
       </defs>
 
       {/* faint lab grid, kept as texture not as the subject */}
@@ -105,13 +101,6 @@ function Specimen({ variant }: { variant: number }) {
         </g>
       )}
 
-      <rect
-        width="220"
-        height="130"
-        filter={`url(#lab-grain-${variant})`}
-        opacity="0.08"
-        style={{ mixBlendMode: "overlay" }}
-      />
     </svg>
   );
 }

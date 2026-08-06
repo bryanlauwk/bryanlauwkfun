@@ -61,8 +61,8 @@ export function SketchRealm() {
       }));
       creatures = Array.from({ length: 3 }, (_, i) => ({
         x: 0.24 + i * 0.26,
-        y: rnd(0.4, 0.72),
-        s: rnd(0.7, 1.25),
+        y: rnd(0.34, 0.62),
+        s: rnd(0.85, 1.35),
         hue: INK[(i * 2) % INK.length],
         ph: Math.random() * 6.28,
         dir: i % 2 ? 1 : -1,
@@ -82,8 +82,8 @@ export function SketchRealm() {
       const cy = (b.y + Math.cos(t * b.sp * 0.8 + b.ph) * 0.02 * b.wob) * h;
       const r = b.r * Math.min(w, h) * (1 + Math.sin(t * 0.7 + b.ph) * 0.06);
       const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
-      g.addColorStop(0, `${b.hue}55`);
-      g.addColorStop(0.5, `${b.hue}1f`);
+      g.addColorStop(0, `${b.hue}77`);
+      g.addColorStop(0.5, `${b.hue}2e`);
       g.addColorStop(1, "rgba(2,4,9,0)");
       ctx.fillStyle = g;
       ctx.beginPath();
@@ -95,7 +95,7 @@ export function SketchRealm() {
       const bob = Math.sin(t * 1.1 + c.ph) * h * 0.014;
       const x = c.x * w + Math.sin(t * 0.35 + c.ph) * w * 0.03 * c.dir;
       const y = c.y * h + bob;
-      const s = Math.min(w, h) * 0.11 * c.s;
+      const s = Math.min(w, h) * 0.135 * c.s;
 
       // soft glow
       const g = ctx.createRadialGradient(x, y, 0, x, y, s * 2.2);
@@ -123,7 +123,7 @@ export function SketchRealm() {
       ctx.closePath();
       const bg = ctx.createLinearGradient(x - s, y - s, x + s, y + s);
       bg.addColorStop(0, `${c.hue}f0`);
-      bg.addColorStop(1, "rgba(8,10,24,0.95)");
+      bg.addColorStop(1, "rgba(18,20,44,0.95)");
       ctx.fillStyle = bg;
       ctx.fill();
 

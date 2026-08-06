@@ -35,18 +35,6 @@ function Defs({ id, warm }: { id: string; warm?: boolean }) {
   );
 }
 
-function Grain({ id }: { id: string }) {
-  return (
-    <rect
-      width="120"
-      height="120"
-      filter={`url(#${id}-grain)`}
-      opacity="0.09"
-      style={{ mixBlendMode: "overlay" }}
-    />
-  );
-}
-
 /** A dimensional cast key — machined metal with an internal charge. */
 function KeyObject({ awake }: { awake: boolean }) {
   return (
@@ -60,7 +48,6 @@ function KeyObject({ awake }: { awake: boolean }) {
       <path d="M60 44 L60 76 M50 60 L70 60 M54 70 L66 70" stroke="rgba(255,246,226,0.85)" strokeWidth="1.4" strokeLinecap="round" />
       <circle cx="60" cy="60" r="3.4" fill="hsl(var(--accent))" />
       <path d="M40 44 Q52 34 70 36" stroke="rgba(255,252,240,0.55)" strokeWidth="2" fill="none" strokeLinecap="round" className="lp-sheen" />
-      <Grain id="ak" />
     </svg>
   );
 }
@@ -82,7 +69,6 @@ function StoneObject() {
         <circle key={i} cx={x} cy={y} r={i % 2 ? 1.3 : 2} fill="#eef4ff" opacity="0.9" />
       ))}
       <path d="M38 48 Q52 38 70 40" stroke="rgba(240,246,255,0.5)" strokeWidth="2.4" fill="none" strokeLinecap="round" className="lp-sheen" />
-      <Grain id="as" />
     </svg>
   );
 }
@@ -101,7 +87,6 @@ function CardObject() {
         <circle cx="60" cy="59" r="19" fill="none" stroke="hsl(var(--lp-blue) / 0.4)" strokeWidth="0.6" strokeDasharray="2 6" className="lp-key-ring" />
         <path d="M42 30 L78 84" stroke="rgba(255,255,255,0.22)" strokeWidth="6" className="lp-sheen" />
       </g>
-      <Grain id="ac" />
     </svg>
   );
 }
@@ -119,7 +104,6 @@ function CapsuleObject() {
       <text x="60" y="74" textAnchor="middle" fill="rgba(226,234,255,0.7)" fontSize="16" fontWeight="200">
         ?
       </text>
-      <Grain id="ap" />
     </svg>
   );
 }
