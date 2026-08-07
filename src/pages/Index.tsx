@@ -64,7 +64,7 @@ const Index = () => {
 
         <main id="main-content" className="flex-1">
           <ArrivalSection />
-          <Room01 featured={featured} projects={rest} isLoading={isLoading} />
+          <Room01 featured={latest} projects={roomRest} isLoading={isLoading} />
           <FieldNotes />
           <SignalPath />
           <ArtifactsRow />
