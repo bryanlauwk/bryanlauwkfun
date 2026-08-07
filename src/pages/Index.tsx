@@ -56,12 +56,19 @@ const Index = () => {
 
         <main id="main-content" className="flex-1">
           <ArrivalSection />
-          <CurrentSeason project={featured} isLoading={isLoading} />
+          <Room01 featured={featured} projects={rest} isLoading={isLoading} />
+          <FieldNotes />
+          <SignalPath />
           <ArtifactsRow />
+          <div className="relative mt-28 md:mt-36">
+            <CurrentSeason project={featured} isLoading={isLoading} />
+          </div>
           <UpcomingSeason />
           <PastSeasons projects={rest} isLoading={isLoading} />
+          <CommissionNote />
           <ExitStrip />
         </main>
+
 
         <PlaygroundFooter />
       </div>
