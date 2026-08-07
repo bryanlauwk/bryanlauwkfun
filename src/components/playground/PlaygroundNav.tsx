@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { SoundToggle } from "@/components/SoundToggle";
 import { useVisitorCounter } from "@/hooks/useVisitorCounter";
+import { useSiteContent } from "@/hooks/useSiteSettings";
 
 const LINKS = [
   { id: "now", label: "Current Drop" },
@@ -15,6 +16,7 @@ const LINKS = [
 
 export function PlaygroundNav() {
   const { count, isLoading } = useVisitorCounter();
+  const { content } = useSiteContent();
   const [lifted, setLifted] = useState(false);
 
   useEffect(() => {
@@ -39,7 +41,7 @@ export function PlaygroundNav() {
       >
         <div className="mx-auto flex max-w-[110rem] items-center justify-between gap-4 px-6 py-5 md:px-14">
           <a href="#arrival" className="lp-script text-2xl text-foreground md:text-[1.7rem]">
-            bryanlauwk.fun
+            {content("nav.brand")}
           </a>
 
           <div className="flex items-center gap-5 md:gap-9">

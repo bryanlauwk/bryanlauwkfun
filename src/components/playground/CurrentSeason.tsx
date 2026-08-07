@@ -3,6 +3,8 @@ import { ArrowRight } from "lucide-react";
 import type { Project } from "@/hooks/useProjects";
 import { slugFor } from "@/lib/slug";
 import { useReveal } from "@/hooks/useReveal";
+import { useSiteContent } from "@/hooks/useSiteSettings";
+import { featuredImageFor } from "@/lib/featuredImage";
 import dropArt from "@/assets/current-drop-hua-la-cai-la-v3.jpg";
 
 interface CurrentSeasonProps {
@@ -16,6 +18,7 @@ interface CurrentSeasonProps {
  */
 export function CurrentSeason({ project, isLoading }: CurrentSeasonProps) {
   const { ref, inView } = useReveal<HTMLDivElement>(0.12);
+  const { content } = useSiteContent();
 
   if (isLoading) {
     return <section id="now" className="min-h-[24rem]" aria-hidden="true" />;
@@ -24,9 +27,9 @@ export function CurrentSeason({ project, isLoading }: CurrentSeasonProps) {
   if (!project) {
     return (
       <section id="now" className="mx-auto max-w-[110rem] px-6 py-20 text-center md:px-14">
-        <h2 className="lp-display text-2xl text-foreground">The season is between breaths</h2>
+        <h2 className="lp-display text-2xl text-foreground">{content("current.emptyTitle")}</h2>
         <p className="mt-3 text-sm text-muted-foreground">
-          Nothing is open yet. Something is being built in the dark.
+          {content("current.emptyBody")}
         </p>
       </section>
     );
@@ -37,7 +40,7 @@ export function CurrentSeason({ project, isLoading }: CurrentSeasonProps) {
       <div ref={ref} className={`lp-feature ${inView ? "is-live" : ""}`}>
         <div className="lp-feature-art" aria-hidden="true">
           <img
-            src={dropArt}
+            src={featuredImageFor(project) ?? dropArt}
             alt=""
             loading="lazy"
             decoding="async"
@@ -52,7 +55,7 @@ export function CurrentSeason({ project, isLoading }: CurrentSeasonProps) {
           <div className="lp-plate max-w-xl md:max-w-[34rem]">
             <p className="lp-label lp-label--violet">
               <span className="mr-2 inline-block h-1 w-1 rounded-full bg-accent lp-pulse align-middle" />
-              Current Drop · open now
+              {content("current.label")}
             </p>
 
             <h2
@@ -72,9 +75,9 @@ export function CurrentSeason({ project, isLoading }: CurrentSeasonProps) {
               <Link
                 to={`/drops/${slugFor(project)}`}
                 className="lp-cta group"
-                aria-label={`Enter the experience: ${project.title}`}
+                aria-label={`${content("current.cta")}: ${project.title}`}
               >
-                Enter the experience
+                {content("current.cta")}
                 <ArrowRight className="h-4 w-4 transition-transform duration-500 group-hover:translate-x-1.5" />
               </Link>
               {project.tag && (

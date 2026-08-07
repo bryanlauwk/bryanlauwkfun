@@ -8,8 +8,15 @@ import {
   useDeleteProject,
   useDuplicateProject,
   useReorderProjects,
+  uploadProjectImage,
   type Project,
 } from "@/hooks/useProjects";
+import { featuredImageFor, featuredImageSource } from "@/lib/featuredImage";
+import {
+  useAdminSiteSettings,
+  useSaveSiteSettings,
+} from "@/hooks/useSiteSettings";
+import { CONTENT_GROUPS, CONTENT_DEFAULTS } from "@/lib/siteContent";
 import { useAdminGuestBook, useDeleteGuestBookEntry, type GuestBookEntry } from "@/hooks/useGuestBook";
 import {
   useAdminSponsors,
@@ -22,8 +29,15 @@ import {
 } from "@/hooks/useSponsors";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -59,11 +73,16 @@ import {
   Copy,
   GripVertical,
   AlertCircle,
-  Gamepad2,
   MessageSquare,
   FolderKanban,
   Handshake,
   Upload,
+  ImageIcon,
+  X,
+  Sparkles,
+  FileText,
+  RotateCcw,
+  Save,
 } from "lucide-react";
 import {
   DndContext,
@@ -104,12 +123,141 @@ const emptyForm: ProjectFormData = {
   show_text_overlay: true,
 };
 
+const ACCEPTED_IMAGE_TYPES = "image/jpeg,image/png,image/gif,image/webp";
+
+interface FeaturedImageFieldProps {
+  /** Image currently shown (resolved: uploaded image, default artwork, or null). */
+  previewSrc: string | null;
+  /** Where the shown image comes from, drives the status label. */
+  source: "custom" | "default" | "none";
+  busy?: boolean;
+  compact?: boolean;
+  onFile: (file: File) => void;
+  /** Shown only when there is a custom uploaded image to remove. */
+  onRemove?: () => void;
+  label?: string;
+}
+
+/**
+ * Drag-and-drop featured-image control. Presentational only — the parent
+ * decides whether a picked file is staged (create/edit form) or applied
+ * immediately (inline card editing).
+ */
+function FeaturedImageField({
+  previewSrc,
+  source,
+  busy = false,
+  compact = false,
+  onFile,
+  onRemove,
+  label,
+}: FeaturedImageFieldProps) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [dragOver, setDragOver] = useState(false);
+
+  const handleFiles = (files: FileList | null) => {
+    const file = files?.[0];
+    if (file) onFile(file);
+  };
+
+  const statusText =
+    source === "custom" ? "Custom image" : source === "default" ? "Default artwork" : "No image yet";
+
+  return (
+    <div className="space-y-2">
+      {label && <Label>{label}</Label>}
+      <div
+        role="button"
+        tabIndex={0}
+        aria-label="Upload or replace featured image"
+        onClick={() => inputRef.current?.click()}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            inputRef.current?.click();
+          }
+        }}
+        onDragOver={(e) => {
+          e.preventDefault();
+          setDragOver(true);
+        }}
+        onDragLeave={() => setDragOver(false)}
+        onDrop={(e) => {
+          e.preventDefault();
+          setDragOver(false);
+          handleFiles(e.dataTransfer.files);
+        }}
+        className={`group relative flex ${compact ? "h-16 w-24" : "aspect-[16/9] w-full"} cursor-pointer items-center justify-center overflow-hidden rounded-lg border-2 border-dashed bg-muted/40 transition-colors ${
+          dragOver ? "border-primary bg-primary/10" : "border-border hover:border-primary/50"
+        }`}
+      >
+        {previewSrc ? (
+          <img src={previewSrc} alt="Featured preview" className="h-full w-full object-cover" />
+        ) : (
+          <div className="flex flex-col items-center justify-center gap-1 text-muted-foreground">
+            <ImageIcon className={compact ? "h-5 w-5" : "h-8 w-8"} />
+            {!compact && <span className="text-xs">Drop image or click</span>}
+          </div>
+        )}
+
+        {/* Hover / drag overlay */}
+        <div
+          className={`absolute inset-0 flex items-center justify-center gap-2 bg-background/70 text-xs font-medium text-foreground transition-opacity ${
+            dragOver ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+          }`}
+        >
+          {busy ? (
+            <Loader2 className="h-5 w-5 animate-spin" />
+          ) : (
+            <>
+              <Upload className="h-4 w-4" />
+              {!compact && <span>{previewSrc ? "Drop or click to replace" : "Drop or click to upload"}</span>}
+            </>
+          )}
+        </div>
+
+        <input
+          ref={inputRef}
+          type="file"
+          accept={ACCEPTED_IMAGE_TYPES}
+          className="hidden"
+          onChange={(e) => handleFiles(e.target.files)}
+        />
+      </div>
+
+      <div className="flex items-center justify-between gap-2">
+        <Badge variant="outline" className="text-[10px]">
+          {source === "default" && <Sparkles className="mr-1 h-3 w-3" />}
+          {statusText}
+        </Badge>
+        {onRemove && source === "custom" && (
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            className="h-7 text-xs text-destructive hover:text-destructive"
+            onClick={(e) => {
+              e.stopPropagation();
+              onRemove();
+            }}
+            disabled={busy}
+          >
+            <X className="mr-1 h-3 w-3" />
+            Remove
+          </Button>
+        )}
+      </div>
+    </div>
+  );
+}
+
 interface SortableProjectCardProps {
   project: Project;
   onEdit: (project: Project) => void;
   onDelete: (id: string) => void;
   onToggleVisibility: (project: Project) => void;
   onDuplicate: (project: Project) => void;
+  onImageChange: (project: Project, imageUrl: string | null) => Promise<void>;
 }
 
 function SortableProjectCard({
@@ -118,6 +266,7 @@ function SortableProjectCard({
   onDelete,
   onToggleVisibility,
   onDuplicate,
+  onImageChange,
 }: SortableProjectCardProps) {
   const {
     attributes,
@@ -127,11 +276,38 @@ function SortableProjectCard({
     transition,
     isDragging,
   } = useSortable({ id: project.id });
+  const { toast } = useToast();
+  const [imageBusy, setImageBusy] = useState(false);
 
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
     opacity: isDragging ? 0.5 : 1,
+  };
+
+  const handleInlineUpload = async (file: File) => {
+    setImageBusy(true);
+    try {
+      const url = await uploadProjectImage(file);
+      await onImageChange(project, url);
+      toast({ title: "Featured image updated" });
+    } catch (error: any) {
+      toast({ title: "Upload failed", description: error.message, variant: "destructive" });
+    } finally {
+      setImageBusy(false);
+    }
+  };
+
+  const handleInlineRemove = async () => {
+    setImageBusy(true);
+    try {
+      await onImageChange(project, null);
+      toast({ title: "Custom image removed" });
+    } catch (error: any) {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    } finally {
+      setImageBusy(false);
+    }
   };
 
   return (
@@ -150,21 +326,16 @@ function SortableProjectCard({
           <GripVertical className="h-5 w-5" />
         </button>
 
-        {/* Preview */}
-        <div
-          className={`h-16 w-24 flex-shrink-0 overflow-hidden rounded-lg ${project.color}`}
-        >
-          {project.image_url ? (
-            <img
-              src={project.image_url}
-              alt={project.title}
-              className="h-full w-full object-cover"
-            />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center">
-              <Gamepad2 className="h-6 w-6 opacity-30 text-primary-foreground" />
-            </div>
-          )}
+        {/* Featured image — drag & drop to replace, hover to remove */}
+        <div className="w-28 flex-shrink-0">
+          <FeaturedImageField
+            compact
+            previewSrc={featuredImageFor(project)}
+            source={featuredImageSource(project)}
+            busy={imageBusy}
+            onFile={handleInlineUpload}
+            onRemove={handleInlineRemove}
+          />
         </div>
 
         {/* Info */}
@@ -320,6 +491,153 @@ function SortableSponsorCard({ sponsor, onEdit, onDelete, onToggleVisibility }: 
 
 import { useSEO } from "@/hooks/useSEO";
 
+/**
+ * Content tab — edit every editable piece of front-end copy. Values are stored
+ * as overrides in `site_settings`; anything left at its default is not written,
+ * so the public site keeps using the code default until it's changed.
+ */
+function SiteContentEditor({ enabled }: { enabled: boolean }) {
+  const { data: saved, isLoading } = useAdminSiteSettings(enabled);
+  const saveSettings = useSaveSiteSettings();
+  const { toast } = useToast();
+
+  const [values, setValues] = useState<Record<string, string>>({});
+  const [baseline, setBaseline] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    if (!saved) return;
+    const initial: Record<string, string> = {};
+    for (const key of Object.keys(CONTENT_DEFAULTS)) {
+      initial[key] = saved[key] ?? CONTENT_DEFAULTS[key];
+    }
+    setValues(initial);
+    setBaseline(initial);
+  }, [saved]);
+
+  const dirtyKeys = Object.keys(values).filter((k) => values[k] !== baseline[k]);
+  const isDirty = dirtyKeys.length > 0;
+
+  const handleSave = async () => {
+    if (!isDirty) return;
+    const entries: Record<string, string> = {};
+    for (const key of dirtyKeys) entries[key] = values[key];
+    try {
+      await saveSettings.mutateAsync(entries);
+      setBaseline({ ...values });
+      toast({ title: "Content saved", description: `${dirtyKeys.length} field(s) updated.` });
+    } catch (error: any) {
+      toast({ title: "Error saving content", description: error.message, variant: "destructive" });
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="space-y-3">
+        {[...Array(4)].map((_, i) => (
+          <Skeleton key={i} className="h-14 w-full" />
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-sm text-muted-foreground">
+          Edit any text on the homepage. Blank fields fall back to the built-in default.
+        </p>
+        <Button onClick={handleSave} disabled={!isDirty || saveSettings.isPending}>
+          {saveSettings.isPending ? (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          ) : (
+            <Save className="mr-2 h-4 w-4" />
+          )}
+          {isDirty ? `Save ${dirtyKeys.length} change${dirtyKeys.length !== 1 ? "s" : ""}` : "Saved"}
+        </Button>
+      </div>
+
+      <Accordion type="multiple" defaultValue={[CONTENT_GROUPS[0].id]} className="space-y-3">
+        {CONTENT_GROUPS.map((group) => {
+          const groupDirty = group.fields.some((f) => values[f.key] !== baseline[f.key]);
+          return (
+            <AccordionItem
+              key={group.id}
+              value={group.id}
+              className="rounded-lg border border-border px-4"
+            >
+              <AccordionTrigger className="hover:no-underline">
+                <span className="flex items-center gap-2 text-left">
+                  <span className="font-display font-semibold text-foreground">{group.title}</span>
+                  {groupDirty && (
+                    <Badge variant="secondary" className="text-[10px]">
+                      Unsaved
+                    </Badge>
+                  )}
+                </span>
+              </AccordionTrigger>
+              <AccordionContent className="space-y-5 pb-4">
+                {group.description && (
+                  <p className="text-xs text-muted-foreground">{group.description}</p>
+                )}
+                {group.fields.map((field) => {
+                  const value = values[field.key] ?? "";
+                  const isFieldDirty = value !== baseline[field.key];
+                  const isDefault = value === CONTENT_DEFAULTS[field.key];
+                  return (
+                    <div key={field.key} className="space-y-1.5">
+                      <div className="flex items-center justify-between gap-2">
+                        <Label htmlFor={`content-${field.key}`} className="text-sm">
+                          {field.label}
+                          {isFieldDirty && <span className="ml-2 text-[10px] text-accent">• edited</span>}
+                        </Label>
+                        {!isDefault && (
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            className="h-6 px-2 text-[11px] text-muted-foreground"
+                            onClick={() =>
+                              setValues((prev) => ({ ...prev, [field.key]: CONTENT_DEFAULTS[field.key] }))
+                            }
+                            title="Reset to default"
+                          >
+                            <RotateCcw className="mr-1 h-3 w-3" />
+                            Reset
+                          </Button>
+                        )}
+                      </div>
+                      {field.type === "multiline" ? (
+                        <Textarea
+                          id={`content-${field.key}`}
+                          value={value}
+                          rows={field.key === "about.whispers" ? 5 : 3}
+                          onChange={(e) =>
+                            setValues((prev) => ({ ...prev, [field.key]: e.target.value }))
+                          }
+                        />
+                      ) : (
+                        <Input
+                          id={`content-${field.key}`}
+                          type={field.type === "url" ? "url" : "text"}
+                          value={value}
+                          onChange={(e) =>
+                            setValues((prev) => ({ ...prev, [field.key]: e.target.value }))
+                          }
+                        />
+                      )}
+                      {field.help && <p className="text-[11px] text-muted-foreground">{field.help}</p>}
+                    </div>
+                  );
+                })}
+              </AccordionContent>
+            </AccordionItem>
+          );
+        })}
+      </Accordion>
+    </div>
+  );
+}
+
 export default function Admin() {
   useSEO({
     title: "Admin — Bryan Lau",
@@ -355,6 +673,11 @@ export default function Admin() {
   const [formData, setFormData] = useState<ProjectFormData>(emptyForm);
   const [localProjects, setLocalProjects] = useState<Project[]>([]);
   const [deleteGuestEntryId, setDeleteGuestEntryId] = useState<string | null>(null);
+
+  // Featured image staging for the create/edit dialog
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageObjectUrl, setImageObjectUrl] = useState<string | null>(null);
+  const [imageRemoved, setImageRemoved] = useState(false);
 
   // Sponsor state
   const [sponsorDialogOpen, setSponsorDialogOpen] = useState(false);
@@ -417,7 +740,34 @@ export default function Admin() {
       setEditingProject(null);
       setFormData(emptyForm);
     }
+    // reset staged image state each time the dialog opens
+    setImageFile(null);
+    setImageObjectUrl(null);
+    setImageRemoved(false);
     setDialogOpen(true);
+  };
+
+  const handleStageImage = (file: File) => {
+    setImageFile(file);
+    setImageObjectUrl((prev) => {
+      if (prev) URL.revokeObjectURL(prev);
+      return URL.createObjectURL(file);
+    });
+    setImageRemoved(false);
+  };
+
+  const handleStageRemoveImage = () => {
+    setImageFile(null);
+    setImageObjectUrl((prev) => {
+      if (prev) URL.revokeObjectURL(prev);
+      return null;
+    });
+    setImageRemoved(true);
+  };
+
+  // Inline (per-card) image change — applies immediately.
+  const handleProjectImageChange = async (project: Project, imageUrl: string | null) => {
+    await updateProject.mutateAsync({ id: project.id, image_url: imageUrl });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -438,23 +788,36 @@ export default function Admin() {
         tag: formData.tag.trim() || null,
       };
 
+      // Resolve the featured image: new upload wins, then explicit removal,
+      // otherwise keep whatever the project already had.
+      let imageUrl: string | null = editingProject?.image_url ?? null;
+      if (imageFile) {
+        imageUrl = await uploadProjectImage(imageFile);
+      } else if (imageRemoved) {
+        imageUrl = null;
+      }
+
       if (editingProject) {
         await updateProject.mutateAsync({
           id: editingProject.id,
           ...submitData,
+          image_url: imageUrl,
         });
         toast({ title: "Project updated!" });
       } else {
         await createProject.mutateAsync({
           ...submitData,
           color: DEFAULT_GRADIENT,
-          image_url: null,
+          image_url: imageUrl,
         });
         toast({ title: "Project created!" });
       }
       setDialogOpen(false);
       setFormData(emptyForm);
       setEditingProject(null);
+      setImageFile(null);
+      setImageObjectUrl(null);
+      setImageRemoved(false);
     } catch (error: any) {
       toast({
         title: "Error",
@@ -671,6 +1034,15 @@ export default function Admin() {
   const guestBookCount = guestBookEntries?.length ?? 0;
   const sponsorCount = sponsors?.length ?? 0;
 
+  // Featured-image preview for the create/edit dialog
+  const dialogArtworkTitle = formData.title || editingProject?.title || "";
+  const dialogStoredUrl = imageRemoved ? null : editingProject?.image_url ?? null;
+  const dialogImagePreview =
+    imageObjectUrl ?? featuredImageFor({ title: dialogArtworkTitle, image_url: dialogStoredUrl });
+  const dialogImageSource = imageObjectUrl
+    ? "custom"
+    : featuredImageSource({ title: dialogArtworkTitle, image_url: dialogStoredUrl });
+
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b border-border">
@@ -694,10 +1066,14 @@ export default function Admin() {
 
       <main className="container mx-auto px-4 py-8">
         <Tabs defaultValue="projects" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 max-w-lg">
+          <TabsList className="grid w-full grid-cols-4 max-w-2xl">
             <TabsTrigger value="projects" className="flex items-center gap-2">
               <FolderKanban className="h-4 w-4" />
               Projects
+            </TabsTrigger>
+            <TabsTrigger value="content" className="flex items-center gap-2">
+              <FileText className="h-4 w-4" />
+              Content
             </TabsTrigger>
             <TabsTrigger value="guestbook" className="flex items-center gap-2">
               <MessageSquare className="h-4 w-4" />
@@ -793,6 +1169,20 @@ export default function Admin() {
                       </p>
                     </div>
 
+                    <div className="space-y-2">
+                      <FeaturedImageField
+                        label="Featured Image"
+                        previewSrc={dialogImagePreview}
+                        source={dialogImageSource}
+                        onFile={handleStageImage}
+                        onRemove={handleStageRemoveImage}
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        Shown in Past Seasons and on the drop page — this is exactly what visitors see.
+                        Drag &amp; drop or click to upload. JPEG, PNG, GIF, or WebP up to 5MB.
+                      </p>
+                    </div>
+
                     <div className="flex items-center justify-between rounded-lg border p-3">
                       <div className="space-y-0.5">
                         <Label htmlFor="visibility">Visible on homepage</Label>
@@ -878,12 +1268,21 @@ export default function Admin() {
                         onDelete={handleDelete}
                         onToggleVisibility={handleToggleVisibility}
                         onDuplicate={handleDuplicate}
+                        onImageChange={handleProjectImageChange}
                       />
                     ))}
                   </div>
                 </SortableContext>
               </DndContext>
             )}
+          </TabsContent>
+
+          {/* Content Tab */}
+          <TabsContent value="content" className="space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 className="font-display text-lg font-semibold text-foreground">Site Content</h2>
+            </div>
+            <SiteContentEditor enabled={shouldFetchData} />
           </TabsContent>
 
           {/* Guest Book Tab */}
