@@ -15,11 +15,8 @@
 import artoy from "@/assets/drops/artoy.jpg";
 import badminton from "@/assets/drops/badminton.jpg";
 import cartridge from "@/assets/drops/cartridge.jpg";
-import cny from "@/assets/drops/cny.jpg";
-import elemental from "@/assets/drops/elemental.jpg";
 import hualacaila from "@/assets/drops/hualacaila.jpg";
 import inflation from "@/assets/drops/inflation.jpg";
-import infiniteKitchen from "@/assets/drops/infinitekitchen.jpg";
 import kldex from "@/assets/drops/kldex.jpg";
 import zusrush from "@/assets/drops/zusrush.jpg";
 
@@ -37,9 +34,6 @@ const DEFAULT_ARTWORK: Array<{ match: RegExp; src: string }> = [
   { match: /artoy|art\s*toy/i, src: artoy },
   { match: /kldex|king of fruits|durian/i, src: kldex },
   { match: /画啦|猜啦|skribbl|hua.?la.?cai/i, src: hualacaila },
-  { match: /elemental|block\s*blast/i, src: elemental },
-  { match: /infinite\s*kitchen|kitchen/i, src: infiniteKitchen },
-  { match: /马年|新年歌|cny|year of the horse/i, src: cny },
 ];
 
 /** A non-empty, trimmed image_url or null. Treats "" as "no image". */
