@@ -36,8 +36,8 @@ export default function DropDetail() {
 
   if (!project) {
     const url = `${SITE}/drops/${slug ?? ""}`;
-    const title = "Drop not found — Bryan Lau";
-    const description = "This drop doesn't exist or has been retired. Browse the current collection of drops from Bryan Lau.";
+    const title = "Experience not found — Bryan Lau";
+    const description = "This playable experience doesn't exist or has been retired. Browse the current playable experiences from Bryan Lau.";
     return (
       <div className="playable min-h-screen flex flex-col">
         <span className="pw-backdrop" aria-hidden="true" />
