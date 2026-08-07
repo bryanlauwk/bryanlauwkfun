@@ -1,28 +1,27 @@
 import { useMemo } from "react";
-import { PlaygroundNav } from "@/components/playground/PlaygroundNav";
-import { ArrivalSection } from "@/components/playground/ArrivalSection";
-import { NowShowing } from "@/components/playground/NowShowing";
-import { Collection } from "@/components/playground/Collection";
-import { FieldNotes } from "@/components/playground/FieldNotes";
-import { SignalPath } from "@/components/playground/SignalPath";
-import { UpcomingSeason } from "@/components/playground/UpcomingSeason";
-import { ExitStrip } from "@/components/playground/ExitStrip";
-import { PlaygroundFooter } from "@/components/playground/PlaygroundFooter";
+import { PlayNav } from "@/components/playable/PlayNav";
+import { PlayHero } from "@/components/playable/PlayHero";
+import { PlayExperiences } from "@/components/playable/PlayExperiences";
+import { MediumPath } from "@/components/playable/MediumPath";
+import { PlayPrinciples } from "@/components/playable/PlayPrinciples";
+import { BuildTogether } from "@/components/playable/BuildTogether";
+import { ClosingAbout } from "@/components/playable/ClosingAbout";
+import { PlayFooter } from "@/components/playable/PlayFooter";
 import { usePublicProjects } from "@/hooks/useProjects";
 import { useSEO } from "@/hooks/useSEO";
 
 const Index = () => {
   useSEO({
-    title: "Bryan Lau — The Living Playground",
+    title: "Bryan Lau — Make the world playable",
     description:
-      "Interactive art, playful technology and AI experiences by Bryan Lau. A living playground of small playable worlds.",
+      "Interactive worlds by Bryan Lau that start in the browser, grow into shared spaces, and sometimes become objects you can keep.",
     canonical: "https://www.bryanlauwk.fun/",
   });
 
   const { data: projects, isLoading } = usePublicProjects();
 
-  // The newest public drop by created_at — the only thing shown in Room 01.
-  const latest = useMemo(() => {
+  // The newest real playable — featured once, and only once.
+  const featured = useMemo(() => {
     const list = projects ?? [];
     const dated = list
       .map((p) => ({ p, ts: p.created_at ? new Date(p.created_at).getTime() : NaN }))
@@ -31,30 +30,29 @@ const Index = () => {
     return dated[0]?.p ?? list[0];
   }, [projects]);
 
-  // Every other real drop, exactly once, in the permanent collection.
-  const collection = useMemo(
-    () => (projects ?? []).filter((p) => p.id !== latest?.id),
-    [projects, latest?.id]
+  // Every other real playable, exactly once.
+  const rest = useMemo(
+    () => (projects ?? []).filter((p) => p.id !== featured?.id),
+    [projects, featured?.id]
   );
 
   return (
-    <div className="living-playground relative min-h-screen overflow-x-clip bg-background text-foreground">
-      <div className="lp-depth" aria-hidden="true" />
+    <div className="playable relative min-h-screen overflow-x-clip bg-background text-foreground">
+      <div className="pw-backdrop" aria-hidden="true" />
 
       <div className="relative z-10 flex min-h-screen flex-col">
-        <PlaygroundNav />
+        <PlayNav />
 
         <main id="main-content" className="flex-1">
-          <ArrivalSection />
-          <NowShowing project={latest} isLoading={isLoading} />
-          <Collection projects={collection} isLoading={isLoading} />
-          <SignalPath />
-          <FieldNotes />
-          <UpcomingSeason />
-          <ExitStrip />
+          <PlayHero />
+          <PlayExperiences featured={featured} rest={rest} isLoading={isLoading} />
+          <MediumPath />
+          <PlayPrinciples />
+          <BuildTogether />
+          <ClosingAbout />
         </main>
 
-        <PlaygroundFooter />
+        <PlayFooter />
       </div>
     </div>
   );
