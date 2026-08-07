@@ -12,6 +12,7 @@ import {
   type Project,
 } from "@/hooks/useProjects";
 import { featuredImageFor, featuredImageSource } from "@/lib/featuredImage";
+import { objectImageFor, objectImageSource } from "@/lib/catalogueImages";
 import {
   useAdminSiteSettings,
   useSaveSiteSettings,
@@ -503,6 +504,20 @@ function SiteContentEditor({ enabled }: { enabled: boolean }) {
 
   const [values, setValues] = useState<Record<string, string>>({});
   const [baseline, setBaseline] = useState<Record<string, string>>({});
+  const [uploadingKey, setUploadingKey] = useState<string | null>(null);
+
+  const handleImageUpload = async (key: string, file: File) => {
+    setUploadingKey(key);
+    try {
+      const url = await uploadProjectImage(file);
+      setValues((prev) => ({ ...prev, [key]: url }));
+      toast({ title: "Image uploaded", description: "Remember to save your changes." });
+    } catch (error: any) {
+      toast({ title: "Upload failed", description: error.message, variant: "destructive" });
+    } finally {
+      setUploadingKey(null);
+    }
+  };
 
   useEffect(() => {
     if (!saved) return;
@@ -606,7 +621,21 @@ function SiteContentEditor({ enabled }: { enabled: boolean }) {
                           </Button>
                         )}
                       </div>
-                      {field.type === "toggle" ? (
+                      {field.type === "image" ? (
+                        (() => {
+                          const objId = field.key.split(".")[1];
+                          const override = values[field.key];
+                          return (
+                            <FeaturedImageField
+                              previewSrc={objectImageFor(objId, override)}
+                              source={objectImageSource(objId, override)}
+                              busy={uploadingKey === field.key}
+                              onFile={(file) => handleImageUpload(field.key, file)}
+                              onRemove={() => setValues((prev) => ({ ...prev, [field.key]: "" }))}
+                            />
+                          );
+                        })()
+                      ) : field.type === "toggle" ? (
                         <div className="flex items-center gap-3 rounded-lg border border-border p-3">
                           <Switch
                             id={`content-${field.key}`}
