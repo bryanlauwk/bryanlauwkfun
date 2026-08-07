@@ -12,7 +12,7 @@ export function BuildTogether() {
       <div className="mx-auto max-w-[100rem]">
         <div className="pw-build">
           <div className="max-w-xl">
-            <p className="pw-eyebrow pw-eyebrow--amber">{content("play.buildEyebrow")}</p>
+            <p className="pw-eyebrow pw-eyebrow--coral">{content("play.buildEyebrow")}</p>
             <h2 id="build-heading" className="pw-h2 mt-3">
               {content("play.buildHeading")}
             </h2>
@@ -32,7 +32,7 @@ export function BuildTogether() {
 
           <ul className="grid gap-3 sm:grid-cols-3 lg:max-w-xl">
             {TRACKS.map((t) => (
-              <li key={t} className="pw-mini-panel">
+              <li key={t} className="pw-mini-panel pw-clip">
                 <p className="pw-mini-title">{content(`play.track.${t}.title`)}</p>
                 <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
                   {content(`play.track.${t}.body`)}

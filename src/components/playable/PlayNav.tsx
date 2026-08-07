@@ -4,14 +4,14 @@ import { useSiteContent } from "@/hooks/useSiteSettings";
 
 const LINKS = [
   { id: "play", label: "Play" },
-  { id: "process", label: "Process" },
+  { id: "system", label: "How it works" },
+  { id: "bench", label: "On the bench" },
   { id: "about", label: "About" },
 ];
 
 /**
- * Product/studio navigation: three anchors plus one visible CTA.
- * Mobile keeps the same three labels in a non-scrolling row, with the CTA
- * beside the wordmark so nothing is ever clipped.
+ * Workshop navigation: four anchors plus one visible CTA. On mobile the same
+ * four labels sit in a non-overflowing second row.
  */
 export function PlayNav() {
   const { content } = useSiteContent();
@@ -43,7 +43,7 @@ export function PlayNav() {
             {content("nav.brand")}
           </a>
 
-          <nav aria-label="Sections" className="hidden items-center gap-8 md:flex">
+          <nav aria-label="Sections" className="hidden items-center gap-9 md:flex">
             {LINKS.map((l) => (
               <a key={l.id} href={`#${l.id}`} className="pw-navlink">
                 {l.label}
@@ -57,7 +57,7 @@ export function PlayNav() {
               href={content("about.studioUrl")}
               target="_blank"
               rel="noopener noreferrer"
-              className="pw-btn pw-btn--sm"
+              className="pw-btn pw-btn--sm pw-btn--primary"
             >
               {content("play.navCta")}
             </a>
@@ -66,7 +66,7 @@ export function PlayNav() {
 
         <nav
           aria-label="Sections, compact"
-          className="flex w-full items-center justify-between gap-1 overflow-hidden border-t border-[hsl(var(--pw-line)/0.14)] px-4 py-1.5 md:hidden"
+          className="flex w-full items-center justify-between gap-1 overflow-hidden border-t border-[hsl(var(--pw-line)/0.14)] px-3 py-1.5 md:hidden"
         >
           {LINKS.map((l) => (
             <a key={l.id} href={`#${l.id}`} className="pw-navlink pw-navlink--compact">
