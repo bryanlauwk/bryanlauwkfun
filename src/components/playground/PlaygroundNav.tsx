@@ -4,13 +4,14 @@ import { useVisitorCounter } from "@/hooks/useVisitorCounter";
 import { useSiteContent } from "@/hooks/useSiteSettings";
 
 const LINKS = [
-  { id: "room", label: "Room 01" },
-  { id: "notes", label: "Field Notes" },
-  { id: "travel", label: "Browser → Object" },
-  { id: "next", label: "Next" },
-  { id: "archive", label: "Archive" },
-  { id: "about", label: "About" },
+  { id: "room", label: "Room 01", compact: true },
+  { id: "notes", label: "Field Notes", compact: false },
+  { id: "travel", label: "Browser → Object", compact: false },
+  { id: "next", label: "Next", compact: true },
+  { id: "archive", label: "Archive", compact: true },
+  { id: "about", label: "About", compact: true },
 ];
+
 
 
 
@@ -70,14 +71,15 @@ export function PlaygroundNav() {
 
         <nav
           aria-label="Sections, compact"
-          className="lp-rail items-center gap-6 border-t border-[hsl(var(--lp-hair)/0.12)] px-6 py-2.5 md:hidden"
+          className="flex items-center justify-between gap-3 border-t border-[hsl(var(--lp-hair)/0.12)] px-6 py-2.5 md:hidden"
         >
-          {LINKS.map((l) => (
+          {LINKS.filter((l) => l.compact).map((l) => (
             <a key={l.id} href={`#${l.id}`} className="lp-navlink whitespace-nowrap">
               {l.label}
             </a>
           ))}
         </nav>
+
 
       </header>
     </>
