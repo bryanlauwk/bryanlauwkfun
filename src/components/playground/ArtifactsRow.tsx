@@ -19,11 +19,8 @@ const CATALOGUE: CatalogueEntry[] = [
   { id: "coin" },
   { id: "key" },
   { id: "stone" },
-  { id: "paper" },
-  { id: "ring", Icon: CircleDot },
-  { id: "mirror", Icon: SquareStack },
-  { id: "seed", Icon: Sprout },
 ];
+
 
 /**
  * Objects Catalogue — Bryan's kit of physical "building blocks". A painterly
