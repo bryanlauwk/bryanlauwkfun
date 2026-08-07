@@ -1,15 +1,20 @@
 import { useMemo } from "react";
 import { PlaygroundNav } from "@/components/playground/PlaygroundNav";
 import { ArrivalSection } from "@/components/playground/ArrivalSection";
+import { Room01 } from "@/components/playground/Room01";
 import { CurrentSeason } from "@/components/playground/CurrentSeason";
+import { FieldNotes } from "@/components/playground/FieldNotes";
+import { SignalPath } from "@/components/playground/SignalPath";
 import { ArtifactsRow } from "@/components/playground/ArtifactsRow";
 import { UpcomingSeason } from "@/components/playground/UpcomingSeason";
 import { PastSeasons } from "@/components/playground/PastSeasons";
+import { CommissionNote } from "@/components/playground/CommissionNote";
 import { ExitStrip } from "@/components/playground/ExitStrip";
 import { PlaygroundFooter } from "@/components/playground/PlaygroundFooter";
 import { usePublicProjects } from "@/hooks/useProjects";
 import { useSiteContent } from "@/hooks/useSiteSettings";
 import { useSEO } from "@/hooks/useSEO";
+
 
 const Index = () => {
   useSEO({
@@ -26,21 +31,29 @@ const Index = () => {
   // drop under Past Seasons. Switch to "live" to feature the newest drop.
   const brewing = content("current.mode").toLowerCase() !== "live";
 
-  // When live, Current Drop is the public project with the latest created_at.
-  const featured = useMemo(() => {
-    if (brewing) return undefined;
+  // The newest public drop by created_at — always the lead of Room 01.
+  const latest = useMemo(() => {
     const list = projects ?? [];
     const dated = list
       .map((p) => ({ p, ts: p.created_at ? new Date(p.created_at).getTime() : NaN }))
       .filter((x) => Number.isFinite(x.ts))
       .sort((a, b) => b.ts - a.ts);
     return dated[0]?.p ?? list[0];
-  }, [projects, brewing]);
+  }, [projects]);
+
+  // Current Season only features it when the season is switched to "live".
+  const featured = brewing ? undefined : latest;
+
+  const roomRest = useMemo(
+    () => (projects ?? []).filter((p) => p.id !== latest?.id),
+    [projects, latest?.id]
+  );
 
   const rest = useMemo(
     () => (projects ?? []).filter((p) => p.id !== featured?.id),
     [projects, featured?.id]
   );
+
 
   return (
     <div className="living-playground relative min-h-screen overflow-x-clip bg-background text-foreground">
@@ -51,12 +64,19 @@ const Index = () => {
 
         <main id="main-content" className="flex-1">
           <ArrivalSection />
-          <CurrentSeason project={featured} isLoading={isLoading} />
+          <Room01 featured={latest} projects={roomRest} isLoading={isLoading} />
+          <FieldNotes />
+          <SignalPath />
           <ArtifactsRow />
+          <div className="relative mt-28 md:mt-36">
+            <CurrentSeason project={featured} isLoading={isLoading} />
+          </div>
           <UpcomingSeason />
           <PastSeasons projects={rest} isLoading={isLoading} />
+          <CommissionNote />
           <ExitStrip />
         </main>
+
 
         <PlaygroundFooter />
       </div>

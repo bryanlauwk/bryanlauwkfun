@@ -1,6 +1,6 @@
 import { useReveal } from "@/hooks/useReveal";
 import { useSiteContent } from "@/hooks/useSiteSettings";
-import { CircleDot, SquareStack, Sprout, type LucideIcon } from "lucide-react";
+import { type LucideIcon } from "lucide-react";
 import artifactArt from "@/assets/interactive-artifacts-v3.jpg";
 import { objectImageFor } from "@/lib/catalogueImages";
 
@@ -19,11 +19,8 @@ const CATALOGUE: CatalogueEntry[] = [
   { id: "coin" },
   { id: "key" },
   { id: "stone" },
-  { id: "paper" },
-  { id: "ring", Icon: CircleDot },
-  { id: "mirror", Icon: SquareStack },
-  { id: "seed", Icon: Sprout },
 ];
+
 
 /**
  * Objects Catalogue — Bryan's kit of physical "building blocks". A painterly
@@ -62,7 +59,7 @@ export function ArtifactsRow() {
           </div>
 
           {/* Catalogue grid */}
-          <ul className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <ul className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {CATALOGUE.map((entry, i) => {
               const name = content(`artifacts.${entry.id}.name`);
               const format = content(`artifacts.${entry.id}.material`);
