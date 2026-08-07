@@ -2271,10 +2271,12 @@
   border-radius: 1.2rem;
   border: 1px solid hsl(var(--pw-line) / 0.16);
   min-height: 24rem;
+  align-self: start;
   display: flex;
   align-items: flex-end;
   transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
+@media (min-width: 1024px) { .pw-feature { min-height: 34rem; max-height: 40rem; } }
 .pw-feature:hover { border-color: hsl(var(--pw-cyan) / 0.4); box-shadow: 0 0 40px hsl(var(--pw-cyan) / 0.12); }
 .pw-feature-art { position: absolute; inset: 0; }
 .pw-feature-veil {
