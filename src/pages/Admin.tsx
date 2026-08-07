@@ -606,7 +606,20 @@ function SiteContentEditor({ enabled }: { enabled: boolean }) {
                           </Button>
                         )}
                       </div>
-                      {field.type === "multiline" ? (
+                      {field.type === "toggle" ? (
+                        <div className="flex items-center gap-3 rounded-lg border border-border p-3">
+                          <Switch
+                            id={`content-${field.key}`}
+                            checked={value === "live"}
+                            onCheckedChange={(checked) =>
+                              setValues((prev) => ({ ...prev, [field.key]: checked ? "live" : "brewing" }))
+                            }
+                          />
+                          <span className="text-sm text-muted-foreground">
+                            {value === "live" ? "Live — featuring the newest drop" : "Brewing — mysterious teaser"}
+                          </span>
+                        </div>
+                      ) : field.type === "multiline" ? (
                         <Textarea
                           id={`content-${field.key}`}
                           value={value}

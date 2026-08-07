@@ -1,52 +1,51 @@
-import { useState } from "react";
 import { useReveal } from "@/hooks/useReveal";
 import { useSiteContent } from "@/hooks/useSiteSettings";
+import { CircleDot, SquareStack, Sprout, type LucideIcon } from "lucide-react";
 import artifactArt from "@/assets/interactive-artifacts-v3.jpg";
+import coinImg from "@/assets/artifacts/coin.jpg";
+import keyImg from "@/assets/artifacts/key.jpg";
+import stoneImg from "@/assets/artifacts/stone.jpg";
+import chartImg from "@/assets/artifacts/chart.jpg";
 
-interface Piece {
+interface CatalogueEntry {
   id: string;
-  name: string;
-  material: string;
-  idea: string;
-  /** hotspot centre, in % of the painting */
-  x: number;
-  y: number;
+  /** bundled preview image, when one exists */
+  image?: string;
+  /** fallback icon for pieces that don't have artwork yet */
+  Icon?: LucideIcon;
 }
 
-/** Hotspot positions are fixed to the painting; copy is editable via the CMS. */
-const PIECE_POSITIONS = [
-  { id: "coin", x: 12.5, y: 58 },
-  { id: "key", x: 35, y: 55 },
-  { id: "stone", x: 59, y: 58 },
-  { id: "paper", x: 84, y: 52 },
-] as const;
+/**
+ * The catalogue's fixed line-up. Copy (name / format / concept) is editable via
+ * the CMS; the four original pieces carry real previews cropped from the still
+ * life, while newer concept pieces show an icon placeholder until art is added.
+ */
+const CATALOGUE: CatalogueEntry[] = [
+  { id: "coin", image: coinImg },
+  { id: "key", image: keyImg },
+  { id: "stone", image: stoneImg },
+  { id: "paper", image: chartImg },
+  { id: "ring", Icon: CircleDot },
+  { id: "mirror", Icon: SquareStack },
+  { id: "seed", Icon: Sprout },
+];
 
 /**
- * Interactive Artifact — a wide editorial still life. Hovering or focusing a
- * piece surfaces a short concept note. These are prototypes; nothing is sold.
+ * Objects Catalogue — Bryan's kit of physical "building blocks". A painterly
+ * hero still life sits above a catalogue grid; each card is one patentable,
+ * adaptable piece that can be recombined into a custom interactive experience.
  */
 export function ArtifactsRow() {
-  const [active, setActive] = useState<Piece | null>(null);
   const { ref, inView } = useReveal<HTMLDivElement>(0.15);
   const { content } = useSiteContent();
-
-  const PIECES: Piece[] = PIECE_POSITIONS.map((pos) => ({
-    id: pos.id,
-    x: pos.x,
-    y: pos.y,
-    name: content(`artifacts.${pos.id}.name`),
-    material: content(`artifacts.${pos.id}.material`),
-    idea: content(`artifacts.${pos.id}.idea`),
-  }));
 
   return (
     <section id="artifact" className="lp-band relative" aria-labelledby="artifact-heading">
       <div ref={ref} className={`lp-feature is-quiet ${inView ? "is-live" : ""}`}>
-
         <div className="lp-feature-art lp-feature-art--wide">
           <img
             src={artifactArt}
-            alt="Four concept objects resting on dark stone: a milled coin, a translucent key, a lit stone and a folded paper chart."
+            alt="A dark still life of four concept objects: a milled coin, a translucent key, a lit stone and a folded paper chart."
             loading="lazy"
             decoding="async"
             className="absolute inset-0 h-full w-full object-cover object-[50%_55%]"
@@ -54,81 +53,66 @@ export function ArtifactsRow() {
           <span className="lp-veil lp-veil--soft" />
           <span className="lp-seam-top" />
           <span className="lp-seam-bottom" />
-
-          <div className="absolute inset-0">
-            {PIECES.map((piece) => (
-              <button
-                key={piece.id}
-                type="button"
-                className={`lp-hotspot ${active?.id === piece.id ? "is-active" : ""}`}
-                style={{ left: `${piece.x}%`, top: `${piece.y}%` }}
-                onPointerEnter={() => setActive(piece)}
-                onPointerLeave={() => setActive((a) => (a?.id === piece.id ? null : a))}
-                onFocus={() => setActive(piece)}
-                onBlur={() => setActive((a) => (a?.id === piece.id ? null : a))}
-                onClick={() => setActive((a) => (a?.id === piece.id ? null : piece))}
-                aria-label={`${piece.name} — concept note`}
-                aria-expanded={active?.id === piece.id}
-              >
-                <span aria-hidden="true" />
-              </button>
-            ))}
-          </div>
         </div>
 
-        <div className="relative mx-auto max-w-[110rem] px-6 pb-6 pt-[13rem] md:px-14 md:pb-10 md:pt-[19rem]">
-          <div className="grid gap-8 md:grid-cols-[minmax(0,26rem)_minmax(0,26rem)] md:gap-20">
-            <div>
-              <p className="lp-label lp-label--violet">{content("artifacts.eyebrow")}</p>
-              <h2 id="artifact-heading" className="lp-display mt-5 text-3xl text-foreground md:text-[2.7rem]">
-                {content("artifacts.heading")}
-              </h2>
-              <p className="mt-5 max-w-md text-sm font-light leading-relaxed text-muted-foreground">
-                {content("artifacts.intro")}
-              </p>
-            </div>
-
-            <div className="lp-plate lp-plate--overlap min-h-[10rem]">
-              <div role="status" aria-live="polite">
-                {active ? (
-                  <>
-                    <p className="lp-mono text-accent">{active.material}</p>
-                    <h3 className="lp-display mt-3 text-xl text-foreground">{active.name}</h3>
-                    <p className="mt-3 text-sm font-light leading-relaxed text-muted-foreground">
-                      {active.idea}
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <p className="lp-mono text-muted-foreground/70">Four pieces</p>
-                    <p className="mt-3 text-sm font-light leading-relaxed text-muted-foreground">
-                      {content("artifacts.idlePrompt")}
-                    </p>
-                  </>
-                )}
-              </div>
-
-              <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 border-t border-[hsl(var(--lp-hair)/0.14)] pt-4">
-                {PIECES.map((piece) => (
-                  <li key={piece.id}>
-                    <button
-                      type="button"
-                      className={`lp-mono transition-colors ${
-                        active?.id === piece.id ? "text-accent" : "text-muted-foreground/70 hover:text-foreground"
-                      }`}
-                      onFocus={() => setActive(piece)}
-                      onPointerEnter={() => setActive(piece)}
-                      onClick={() => setActive(piece)}
-                    >
-                      {piece.name}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
+        <div className="relative mx-auto max-w-[110rem] px-6 pb-10 pt-[13rem] md:px-14 md:pb-16 md:pt-[19rem]">
+          <div className="max-w-2xl">
+            <p className="lp-label lp-label--violet">{content("artifacts.eyebrow")}</p>
+            <h2 id="artifact-heading" className="lp-display mt-5 text-3xl text-foreground md:text-[2.7rem]">
+              {content("artifacts.heading")}
+            </h2>
+            <p className="mt-5 text-sm font-light leading-relaxed text-muted-foreground">
+              {content("artifacts.intro")}
+            </p>
           </div>
-        </div>
 
+          {/* Catalogue grid */}
+          <ul className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {CATALOGUE.map((entry, i) => {
+              const name = content(`artifacts.${entry.id}.name`);
+              const format = content(`artifacts.${entry.id}.material`);
+              const concept = content(`artifacts.${entry.id}.idea`);
+              const Icon = entry.Icon;
+              return (
+                <li
+                  key={entry.id}
+                  className="lp-catalogue-card group flex flex-col overflow-hidden rounded-xl border border-[hsl(var(--lp-hair)/0.16)] bg-[hsl(var(--card)/0.5)] transition-colors hover:border-[hsl(var(--accent)/0.4)]"
+                  style={{ ["--i" as string]: String(i) } as React.CSSProperties}
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden bg-[#05070d]">
+                    {entry.image ? (
+                      <img
+                        src={entry.image}
+                        alt={name}
+                        loading="lazy"
+                        decoding="async"
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-[radial-gradient(120%_90%_at_50%_20%,hsl(var(--accent)/0.14),transparent_70%)]">
+                        {Icon && <Icon className="h-8 w-8 text-accent/70" aria-hidden="true" />}
+                        <span className="lp-mono text-[0.6rem] text-muted-foreground/70">Concept · art in progress</span>
+                      </div>
+                    )}
+                    <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#05070d] via-transparent to-transparent opacity-70" />
+                  </div>
+
+                  <div className="flex flex-1 flex-col p-4">
+                    <p className="lp-mono text-accent">{format}</p>
+                    <h3 className="lp-display mt-2 text-lg text-foreground">{name}</h3>
+                    <p className="mt-2 text-sm font-light leading-relaxed text-muted-foreground">
+                      {concept}
+                    </p>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+
+          <p className="mt-8 max-w-2xl text-xs font-light leading-relaxed text-muted-foreground/80">
+            {content("artifacts.closing")}
+          </p>
+        </div>
       </div>
     </section>
   );
