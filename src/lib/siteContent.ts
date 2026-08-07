@@ -57,10 +57,10 @@ export const CONTENT_GROUPS: ContentGroup[] = [
         label: "Description",
         type: "multiline",
         defaultValue:
-          "Browser-born experiments by Bryan Lau, shaped by curiosity, perception and play — and built so a world can grow into a space, and then into an object you can hold.",
+          "Browser-born experiments by Bryan Lau — worlds you can play in a tab, built so they can travel into a space, and then into an object you can hold.",
       },
-      { key: "hero.ctaPrimary", label: "Primary button", defaultValue: "Enter Room 01" },
-      { key: "hero.ctaSecondary", label: "Secondary link", defaultValue: "See how a world travels: Browser → Space → Object" },
+      { key: "hero.ctaPrimary", label: "Primary button", defaultValue: "See what's playing" },
+      { key: "hero.ctaSecondary", label: "Secondary link", defaultValue: "How a world travels: Browser → Space → Object" },
       { key: "hero.scrollHint", label: "Scroll hint", defaultValue: "Scroll to enter" },
     ],
   },
@@ -84,11 +84,39 @@ export const CONTENT_GROUPS: ContentGroup[] = [
     ],
   },
   {
+    id: "now",
+    title: "Now Showing (Room 01)",
+    description: "The single current experiment — the newest real drop. It appears nowhere else on the homepage.",
+    fields: [
+      { key: "now.eyebrow", label: "Status label", defaultValue: "Room 01 · Now showing" },
+      { key: "now.cta", label: "Play button", defaultValue: "Play it now" },
+      { key: "now.emptyBody", label: "Empty state", defaultValue: "The room is being re-hung. A new experiment opens shortly." },
+    ],
+  },
+  {
+    id: "collection",
+    title: "Permanent Collection",
+    description: "Every other real playable experiment, shown exactly once.",
+    fields: [
+      { key: "collection.eyebrow", label: "Eyebrow label", defaultValue: "02 · Permanent collection" },
+      { key: "collection.heading", label: "Heading", defaultValue: "Everything else you can play" },
+      {
+        key: "collection.intro",
+        label: "Intro paragraph",
+        type: "multiline",
+        defaultValue:
+          "Every experiment here still runs. Open one in a tab and go in.",
+      },
+      { key: "collection.cta", label: "Card call to action", defaultValue: "Play" },
+      { key: "collection.emptyBody", label: "Empty state", defaultValue: "More experiments are being installed." },
+    ],
+  },
+  {
     id: "notes",
     title: "Field Notes (Science of Play)",
     description: "Research directions behind future experiments — concepts, not finished work.",
     fields: [
-      { key: "notes.eyebrow", label: "Eyebrow label", defaultValue: "Field notes · Research directions" },
+      { key: "notes.eyebrow", label: "Eyebrow label", defaultValue: "04 · Field notes · research directions" },
       { key: "notes.heading", label: "Heading", defaultValue: "The science of play" },
       {
         key: "notes.intro",
@@ -128,8 +156,8 @@ export const CONTENT_GROUPS: ContentGroup[] = [
     title: "Browser → Space → Object",
     description: "The architecture: one idea changing medium.",
     fields: [
-      { key: "travel.eyebrow", label: "Eyebrow label", defaultValue: "The architecture" },
-      { key: "travel.heading", label: "Heading", defaultValue: "One signal, three mediums" },
+      { key: "travel.eyebrow", label: "Eyebrow label", defaultValue: "03 · How a world travels" },
+      { key: "travel.heading", label: "Heading", defaultValue: "One idea, changing medium" },
       {
         key: "travel.intro",
         label: "Intro paragraph",
@@ -156,7 +184,20 @@ export const CONTENT_GROUPS: ContentGroup[] = [
         key: "travel.object.body",
         label: "Stage 3 · body",
         type: "multiline",
-        defaultValue: "A tactile artifact, token or edition that carries the world beyond the screen.",
+        defaultValue: "A tactile artifact that could carry the world beyond the screen.",
+      },
+      { key: "travel.objects.toggle", label: "Object studies · toggle label", defaultValue: "Read three object studies" },
+      {
+        key: "travel.objects.label",
+        label: "Object studies · label",
+        defaultValue: "Object studies · exploratory concepts",
+      },
+      {
+        key: "travel.objects.note",
+        label: "Object studies · disclaimer",
+        type: "multiline",
+        defaultValue:
+          "These are thought experiments — not products, client work or currently available editions.",
       },
     ],
   },
