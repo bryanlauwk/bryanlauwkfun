@@ -17,7 +17,7 @@ const OBJECTS = ["coin", "key", "stone"] as const;
  * studies sit inside the Object panel as optional concept notes.
  */
 export function MediumPath() {
-  const { ref, inView } = useReveal<HTMLDivElement>(0.08);
+  const { ref, inView } = useReveal<HTMLOListElement>(0.08);
   const { content } = useSiteContent();
   const [open, setOpen] = useState(false);
 
