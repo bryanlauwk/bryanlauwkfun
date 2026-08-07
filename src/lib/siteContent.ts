@@ -12,7 +12,7 @@
  * read it in the component via `content("group.key")`.
  */
 
-export type ContentFieldType = "text" | "multiline" | "url" | "toggle";
+export type ContentFieldType = "text" | "multiline" | "url" | "toggle" | "image";
 
 export interface ContentField {
   key: string;
@@ -124,6 +124,7 @@ export const CONTENT_GROUPS: ContentGroup[] = [
         defaultValue:
           "A tactile save-point for a finished world. Adapts into a collectible token, a wayfinding key, or a proof-of-visit — its contours re-map to whatever world it joins.",
       },
+      { key: "artifacts.coin.image", label: "Object 1 · image", type: "image", defaultValue: "" },
       // 2 — Key
       { key: "artifacts.key.name", label: "Object 2 · name", defaultValue: "The Threshold Key" },
       { key: "artifacts.key.material", label: "Object 2 · format", defaultValue: "Cast acrylic · NFC core" },
@@ -134,6 +135,7 @@ export const CONTENT_GROUPS: ContentGroup[] = [
         defaultValue:
           "The bridge between a browser game and the room you're standing in. Tap it to open a door between the digital interface and the physical environment — one key, any threshold.",
       },
+      { key: "artifacts.key.image", label: "Object 2 · image", type: "image", defaultValue: "" },
       // 3 — Stone
       { key: "artifacts.stone.name", label: "Object 3 · name", defaultValue: "The Light Stone" },
       { key: "artifacts.stone.material", label: "Object 3 · format", defaultValue: "River stone · fibre veins" },
@@ -144,6 +146,7 @@ export const CONTENT_GROUPS: ContentGroup[] = [
         defaultValue:
           "A presence block. It warms when someone else steps into the same world. Drop it into a booth, a table or a pavilion to make remote company feel physically near.",
       },
+      { key: "artifacts.stone.image", label: "Object 3 · image", type: "image", defaultValue: "" },
       // 4 — Chart / Atlas
       { key: "artifacts.paper.name", label: "Object 4 · name", defaultValue: "The Folded Atlas" },
       { key: "artifacts.paper.material", label: "Object 4 · format", defaultValue: "Coated paper · gold ink" },
@@ -154,6 +157,7 @@ export const CONTENT_GROUPS: ContentGroup[] = [
         defaultValue:
           "A pocket index of every world, folded flat. Reprints as a map, a program, or a treasure key for any curation.",
       },
+      { key: "artifacts.paper.image", label: "Object 4 · image", type: "image", defaultValue: "" },
       // 5 — Pulse Ring (Expo 2025 — Grand Ring / Connecting Lives)
       { key: "artifacts.ring.name", label: "Object 5 · name", defaultValue: "The Pulse Ring" },
       { key: "artifacts.ring.material", label: "Object 5 · format", defaultValue: "Anodised alloy · haptic core" },
@@ -164,6 +168,7 @@ export const CONTENT_GROUPS: ContentGroup[] = [
         defaultValue:
           "A handheld ring that beats in time with a world — or with everyone inside it. One connective loop binding many at once; drop it into a crowd to make a shared moment you can feel in your palm.",
       },
+      { key: "artifacts.ring.image", label: "Object 5 · image", type: "image", defaultValue: "" },
       // 6 — Mirror Tile (Expo 2025 — mirror pavilion)
       { key: "artifacts.mirror.name", label: "Object 6 · name", defaultValue: "The Mirror Tile" },
       { key: "artifacts.mirror.material", label: "Object 6 · format", defaultValue: "Optical glass · edge-lit" },
@@ -174,6 +179,7 @@ export const CONTENT_GROUPS: ContentGroup[] = [
         defaultValue:
           "A reflective module that turns any wall or table into a responsive surface. Tessellate a few into a mirror room, or set one as a portal — the world reflects and reacts to whoever leans in.",
       },
+      { key: "artifacts.mirror.image", label: "Object 6 · image", type: "image", defaultValue: "" },
       // 7 — Living Seed (Expo 2025 — Saving / Empowering Lives, sustainability)
       { key: "artifacts.seed.name", label: "Object 7 · name", defaultValue: "The Living Seed" },
       { key: "artifacts.seed.material", label: "Object 7 · format", defaultValue: "Bio-resin · sensor node" },
@@ -184,6 +190,7 @@ export const CONTENT_GROUPS: ContentGroup[] = [
         defaultValue:
           "A palm-sized token that carries a world's state into a space and quietly senses it back. Plant it in a room to let an installation grow, remember and respond over time.",
       },
+      { key: "artifacts.seed.image", label: "Object 7 · image", type: "image", defaultValue: "" },
     ],
   },
   {

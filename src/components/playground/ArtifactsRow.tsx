@@ -2,29 +2,24 @@ import { useReveal } from "@/hooks/useReveal";
 import { useSiteContent } from "@/hooks/useSiteSettings";
 import { CircleDot, SquareStack, Sprout, type LucideIcon } from "lucide-react";
 import artifactArt from "@/assets/interactive-artifacts-v3.jpg";
-import coinImg from "@/assets/artifacts/coin.jpg";
-import keyImg from "@/assets/artifacts/key.jpg";
-import stoneImg from "@/assets/artifacts/stone.jpg";
-import chartImg from "@/assets/artifacts/chart.jpg";
+import { objectImageFor } from "@/lib/catalogueImages";
 
 interface CatalogueEntry {
   id: string;
-  /** bundled preview image, when one exists */
-  image?: string;
   /** fallback icon for pieces that don't have artwork yet */
   Icon?: LucideIcon;
 }
 
 /**
- * The catalogue's fixed line-up. Copy (name / format / concept) is editable via
- * the CMS; the four original pieces carry real previews cropped from the still
- * life, while newer concept pieces show an icon placeholder until art is added.
+ * The catalogue's fixed line-up. Copy (name / format / concept) and the preview
+ * image are editable via the CMS; images resolve through objectImageFor()
+ * (uploaded override → bundled default → icon placeholder).
  */
 const CATALOGUE: CatalogueEntry[] = [
-  { id: "coin", image: coinImg },
-  { id: "key", image: keyImg },
-  { id: "stone", image: stoneImg },
-  { id: "paper", image: chartImg },
+  { id: "coin" },
+  { id: "key" },
+  { id: "stone" },
+  { id: "paper" },
   { id: "ring", Icon: CircleDot },
   { id: "mirror", Icon: SquareStack },
   { id: "seed", Icon: Sprout },
@@ -72,6 +67,7 @@ export function ArtifactsRow() {
               const name = content(`artifacts.${entry.id}.name`);
               const format = content(`artifacts.${entry.id}.material`);
               const concept = content(`artifacts.${entry.id}.idea`);
+              const image = objectImageFor(entry.id, content(`artifacts.${entry.id}.image`));
               const Icon = entry.Icon;
               return (
                 <li
@@ -80,9 +76,9 @@ export function ArtifactsRow() {
                   style={{ ["--i" as string]: String(i) } as React.CSSProperties}
                 >
                   <div className="relative aspect-[4/3] overflow-hidden bg-[#05070d]">
-                    {entry.image ? (
+                    {image ? (
                       <img
-                        src={entry.image}
+                        src={image}
                         alt={name}
                         loading="lazy"
                         decoding="async"

@@ -12,21 +12,13 @@ import {
   type Project,
 } from "@/hooks/useProjects";
 import { featuredImageFor, featuredImageSource } from "@/lib/featuredImage";
+import { objectImageFor, objectImageSource } from "@/lib/catalogueImages";
 import {
   useAdminSiteSettings,
   useSaveSiteSettings,
 } from "@/hooks/useSiteSettings";
 import { CONTENT_GROUPS, CONTENT_DEFAULTS } from "@/lib/siteContent";
 import { useAdminGuestBook, useDeleteGuestBookEntry, type GuestBookEntry } from "@/hooks/useGuestBook";
-import {
-  useAdminSponsors,
-  useCreateSponsor,
-  useUpdateSponsor,
-  useDeleteSponsor,
-  useReorderSponsors,
-  uploadSponsorLogo,
-  type Sponsor,
-} from "@/hooks/useSponsors";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -75,7 +67,7 @@ import {
   AlertCircle,
   MessageSquare,
   FolderKanban,
-  Handshake,
+  Boxes,
   Upload,
   ImageIcon,
   X,
@@ -446,49 +438,6 @@ function GuestBookEntryCard({
   );
 }
 
-interface SortableSponsorCardProps {
-  sponsor: Sponsor;
-  onEdit: (sponsor: Sponsor) => void;
-  onDelete: (id: string) => void;
-  onToggleVisibility: (sponsor: Sponsor) => void;
-}
-
-function SortableSponsorCard({ sponsor, onEdit, onDelete, onToggleVisibility }: SortableSponsorCardProps) {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: sponsor.id });
-  const style = { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.5 : 1 };
-
-  return (
-    <Card ref={setNodeRef} style={style} className={`${!sponsor.is_visible ? "opacity-60" : ""} ${isDragging ? "shadow-lg" : ""}`}>
-      <CardContent className="flex items-center gap-4 p-4">
-        <button {...attributes} {...listeners} className="cursor-grab touch-none text-muted-foreground hover:text-foreground active:cursor-grabbing">
-          <GripVertical className="h-5 w-5" />
-        </button>
-        <div className="h-12 w-20 flex-shrink-0 overflow-hidden rounded border border-border bg-background p-1 flex items-center justify-center">
-          {sponsor.logo_url ? (
-            <img src={sponsor.logo_url} alt={sponsor.name} className="h-full w-full object-contain" />
-          ) : (
-            <span className="text-[10px] text-muted-foreground font-mono text-center leading-tight">Ad Space</span>
-          )}
-        </div>
-        <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-foreground truncate">{sponsor.name}</h3>
-          <p className="text-xs text-muted-foreground truncate">{sponsor.website_url || "No URL"}</p>
-        </div>
-        <div className="flex items-center gap-2">
-          <Switch checked={sponsor.is_visible} onCheckedChange={() => onToggleVisibility(sponsor)} />
-          {sponsor.website_url && (
-            <Button variant="ghost" size="icon" asChild>
-              <a href={sponsor.website_url} target="_blank" rel="noopener noreferrer"><ExternalLink className="h-4 w-4" /></a>
-            </Button>
-          )}
-          <Button variant="ghost" size="icon" onClick={() => onEdit(sponsor)}><Pencil className="h-4 w-4" /></Button>
-          <Button variant="ghost" size="icon" onClick={() => onDelete(sponsor.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
-        </div>
-      </CardContent>
-    </Card>
-  );
-}
-
 import { useSEO } from "@/hooks/useSEO";
 
 /**
@@ -496,13 +445,33 @@ import { useSEO } from "@/hooks/useSEO";
  * as overrides in `site_settings`; anything left at its default is not written,
  * so the public site keeps using the code default until it's changed.
  */
-function SiteContentEditor({ enabled }: { enabled: boolean }) {
+function SiteContentEditor({
+  enabled,
+  groups = CONTENT_GROUPS,
+}: {
+  enabled: boolean;
+  groups?: typeof CONTENT_GROUPS;
+}) {
   const { data: saved, isLoading } = useAdminSiteSettings(enabled);
   const saveSettings = useSaveSiteSettings();
   const { toast } = useToast();
 
   const [values, setValues] = useState<Record<string, string>>({});
   const [baseline, setBaseline] = useState<Record<string, string>>({});
+  const [uploadingKey, setUploadingKey] = useState<string | null>(null);
+
+  const handleImageUpload = async (key: string, file: File) => {
+    setUploadingKey(key);
+    try {
+      const url = await uploadProjectImage(file);
+      setValues((prev) => ({ ...prev, [key]: url }));
+      toast({ title: "Image uploaded", description: "Remember to save your changes." });
+    } catch (error: any) {
+      toast({ title: "Upload failed", description: error.message, variant: "destructive" });
+    } finally {
+      setUploadingKey(null);
+    }
+  };
 
   useEffect(() => {
     if (!saved) return;
@@ -556,8 +525,8 @@ function SiteContentEditor({ enabled }: { enabled: boolean }) {
         </Button>
       </div>
 
-      <Accordion type="multiple" defaultValue={[CONTENT_GROUPS[0].id]} className="space-y-3">
-        {CONTENT_GROUPS.map((group) => {
+      <Accordion type="multiple" defaultValue={[groups[0]?.id]} className="space-y-3">
+        {groups.map((group) => {
           const groupDirty = group.fields.some((f) => values[f.key] !== baseline[f.key]);
           return (
             <AccordionItem
@@ -606,7 +575,21 @@ function SiteContentEditor({ enabled }: { enabled: boolean }) {
                           </Button>
                         )}
                       </div>
-                      {field.type === "toggle" ? (
+                      {field.type === "image" ? (
+                        (() => {
+                          const objId = field.key.split(".")[1];
+                          const override = values[field.key];
+                          return (
+                            <FeaturedImageField
+                              previewSrc={objectImageFor(objId, override)}
+                              source={objectImageSource(objId, override)}
+                              busy={uploadingKey === field.key}
+                              onFile={(file) => handleImageUpload(field.key, file)}
+                              onRemove={() => setValues((prev) => ({ ...prev, [field.key]: "" }))}
+                            />
+                          );
+                        })()
+                      ) : field.type === "toggle" ? (
                         <div className="flex items-center gap-3 rounded-lg border border-border p-3">
                           <Switch
                             id={`content-${field.key}`}
@@ -651,10 +634,167 @@ function SiteContentEditor({ enabled }: { enabled: boolean }) {
   );
 }
 
+/** Object ids for the catalogue, in display order (must match ArtifactsRow). */
+const OBJECT_IDS = ["coin", "key", "stone", "paper", "ring", "mirror", "seed"] as const;
+
+/**
+ * Objects tab — a dedicated, card-per-object editor for "Objects from the
+ * playground". Each card manages that piece's preview image (upload / replace /
+ * remove) and its copy. Everything saves to site_settings, in sync with the
+ * public catalogue.
+ */
+function ObjectsEditor({ enabled }: { enabled: boolean }) {
+  const { data: saved, isLoading } = useAdminSiteSettings(enabled);
+  const saveSettings = useSaveSiteSettings();
+  const { toast } = useToast();
+
+  const group = CONTENT_GROUPS.find((g) => g.id === "artifacts")!;
+  const sectionFields = group.fields.filter((f) => f.key.split(".").length === 2);
+
+  const [values, setValues] = useState<Record<string, string>>({});
+  const [baseline, setBaseline] = useState<Record<string, string>>({});
+  const [uploadingKey, setUploadingKey] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!saved) return;
+    const initial: Record<string, string> = {};
+    for (const f of group.fields) initial[f.key] = saved[f.key] ?? CONTENT_DEFAULTS[f.key];
+    setValues(initial);
+    setBaseline(initial);
+  }, [saved, group.fields]);
+
+  const dirtyKeys = group.fields.map((f) => f.key).filter((k) => values[k] !== baseline[k]);
+  const isDirty = dirtyKeys.length > 0;
+
+  const setVal = (key: string, v: string) => setValues((prev) => ({ ...prev, [key]: v }));
+
+  const handleImageUpload = async (key: string, file: File) => {
+    setUploadingKey(key);
+    try {
+      const url = await uploadProjectImage(file);
+      setVal(key, url);
+      toast({ title: "Image uploaded", description: "Remember to save your changes." });
+    } catch (error: any) {
+      toast({ title: "Upload failed", description: error.message, variant: "destructive" });
+    } finally {
+      setUploadingKey(null);
+    }
+  };
+
+  const handleSave = async () => {
+    if (!isDirty) return;
+    const entries: Record<string, string> = {};
+    for (const key of dirtyKeys) entries[key] = values[key];
+    try {
+      await saveSettings.mutateAsync(entries);
+      setBaseline({ ...values });
+      toast({ title: "Objects saved", description: `${dirtyKeys.length} field(s) updated.` });
+    } catch (error: any) {
+      toast({ title: "Error saving", description: error.message, variant: "destructive" });
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {[...Array(6)].map((_, i) => (
+          <Skeleton key={i} className="h-72 w-full" />
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-sm text-muted-foreground">
+          Manage each building block's image and copy. Drag &amp; drop an image onto a card to upload or replace it.
+        </p>
+        <Button onClick={handleSave} disabled={!isDirty || saveSettings.isPending}>
+          {saveSettings.isPending ? (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          ) : (
+            <Save className="mr-2 h-4 w-4" />
+          )}
+          {isDirty ? `Save ${dirtyKeys.length} change${dirtyKeys.length !== 1 ? "s" : ""}` : "Saved"}
+        </Button>
+      </div>
+
+      {/* Section heading copy */}
+      <Card>
+        <CardContent className="grid gap-4 p-4 sm:grid-cols-2">
+          {sectionFields.map((field) => (
+            <div key={field.key} className={`space-y-1.5 ${field.type === "multiline" ? "sm:col-span-2" : ""}`}>
+              <Label htmlFor={`obj-${field.key}`} className="text-xs">
+                {field.label}
+              </Label>
+              {field.type === "multiline" ? (
+                <Textarea
+                  id={`obj-${field.key}`}
+                  rows={2}
+                  value={values[field.key] ?? ""}
+                  onChange={(e) => setVal(field.key, e.target.value)}
+                />
+              ) : (
+                <Input
+                  id={`obj-${field.key}`}
+                  value={values[field.key] ?? ""}
+                  onChange={(e) => setVal(field.key, e.target.value)}
+                />
+              )}
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+
+      {/* One card per object */}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {OBJECT_IDS.map((id, idx) => {
+          const nameKey = `artifacts.${id}.name`;
+          const formatKey = `artifacts.${id}.material`;
+          const conceptKey = `artifacts.${id}.idea`;
+          const imageKey = `artifacts.${id}.image`;
+          const override = values[imageKey];
+          return (
+            <Card key={id}>
+              <CardContent className="space-y-3 p-4">
+                <div className="flex items-center justify-between">
+                  <span className="lp-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+                    Object {idx + 1}
+                  </span>
+                </div>
+                <FeaturedImageField
+                  previewSrc={objectImageFor(id, override)}
+                  source={objectImageSource(id, override)}
+                  busy={uploadingKey === imageKey}
+                  onFile={(file) => handleImageUpload(imageKey, file)}
+                  onRemove={() => setVal(imageKey, "")}
+                />
+                <div className="space-y-1.5">
+                  <Label htmlFor={`obj-${nameKey}`} className="text-xs">Name</Label>
+                  <Input id={`obj-${nameKey}`} value={values[nameKey] ?? ""} onChange={(e) => setVal(nameKey, e.target.value)} />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor={`obj-${formatKey}`} className="text-xs">Format</Label>
+                  <Input id={`obj-${formatKey}`} value={values[formatKey] ?? ""} onChange={(e) => setVal(formatKey, e.target.value)} />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor={`obj-${conceptKey}`} className="text-xs">Concept</Label>
+                  <Textarea id={`obj-${conceptKey}`} rows={3} value={values[conceptKey] ?? ""} onChange={(e) => setVal(conceptKey, e.target.value)} />
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 export default function Admin() {
   useSEO({
     title: "Admin — Bryan Lau",
-    description: "Internal control room for managing drops, guest book and sponsors on bryanlauwk.fun.",
+    description: "Internal control room for managing drops, objects and the guest book on bryanlauwk.fun.",
     canonical: "https://www.bryanlauwk.fun/admin",
     noindex: true,
   });
@@ -667,13 +807,6 @@ export default function Admin() {
   const { data: guestBookEntries, isLoading: guestBookLoading } = useAdminGuestBook(shouldFetchData);
   const deleteGuestBookEntry = useDeleteGuestBookEntry();
   
-  // Sponsor hooks
-  const { data: sponsors, isLoading: sponsorsLoading } = useAdminSponsors(shouldFetchData);
-  const createSponsor = useCreateSponsor();
-  const updateSponsor = useUpdateSponsor();
-  const deleteSponsor = useDeleteSponsor();
-  const reorderSponsors = useReorderSponsors();
-
   const createProject = useCreateProject();
   const updateProject = useUpdateProject();
   const deleteProject = useDeleteProject();
@@ -692,15 +825,6 @@ export default function Admin() {
   const [imageObjectUrl, setImageObjectUrl] = useState<string | null>(null);
   const [imageRemoved, setImageRemoved] = useState(false);
 
-  // Sponsor state
-  const [sponsorDialogOpen, setSponsorDialogOpen] = useState(false);
-  const [editingSponsor, setEditingSponsor] = useState<Sponsor | null>(null);
-  const [sponsorForm, setSponsorForm] = useState({ name: "", website_url: "", balloon_text: "Your Brand Here", is_visible: true });
-  const [sponsorLogoFile, setSponsorLogoFile] = useState<File | null>(null);
-  const [sponsorLogoPreview, setSponsorLogoPreview] = useState<string | null>(null);
-  const [localSponsors, setLocalSponsors] = useState<Sponsor[]>([]);
-  const [deleteSponsorId, setDeleteSponsorId] = useState<string | null>(null);
-  const sponsorFileRef = useRef<HTMLInputElement>(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -714,12 +838,6 @@ export default function Admin() {
       setLocalProjects(projects);
     }
   }, [projects]);
-
-  useEffect(() => {
-    if (sponsors) {
-      setLocalSponsors(sponsors);
-    }
-  }, [sponsors]);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -933,92 +1051,6 @@ export default function Admin() {
     }
   };
 
-  // Sponsor handlers
-  const handleOpenSponsorDialog = (sponsor?: Sponsor) => {
-    if (sponsor) {
-      setEditingSponsor(sponsor);
-      setSponsorForm({ name: sponsor.name, website_url: sponsor.website_url || "", balloon_text: sponsor.balloon_text || "Your Brand Here", is_visible: sponsor.is_visible });
-      setSponsorLogoPreview(sponsor.logo_url);
-    } else {
-      setEditingSponsor(null);
-      setSponsorForm({ name: "", website_url: "", balloon_text: "Your Brand Here", is_visible: true });
-      setSponsorLogoPreview(null);
-    }
-    setSponsorLogoFile(null);
-    setSponsorDialogOpen(true);
-  };
-
-  const handleSponsorLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setSponsorLogoFile(file);
-      setSponsorLogoPreview(URL.createObjectURL(file));
-    }
-  };
-
-  const handleSponsorSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!sponsorForm.name.trim()) {
-      toast({ title: "Name required", variant: "destructive" });
-      return;
-    }
-
-    try {
-      let logoUrl: string | null = editingSponsor?.logo_url || null;
-
-      if (sponsorLogoFile) {
-        logoUrl = await uploadSponsorLogo(sponsorLogoFile);
-      }
-
-      const data = {
-        name: sponsorForm.name.trim(),
-        logo_url: logoUrl,
-        website_url: sponsorForm.website_url.trim() || null,
-        balloon_text: sponsorForm.balloon_text.trim() || "Your Brand Here",
-        is_visible: sponsorForm.is_visible,
-      };
-
-      if (editingSponsor) {
-        await updateSponsor.mutateAsync({ id: editingSponsor.id, ...data });
-        toast({ title: "Sponsor updated!" });
-      } else {
-        await createSponsor.mutateAsync(data);
-        toast({ title: "Sponsor added!" });
-      }
-      setSponsorDialogOpen(false);
-    } catch (error: any) {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
-    }
-  };
-
-  const handleDeleteSponsor = async () => {
-    if (!deleteSponsorId) return;
-    try {
-      await deleteSponsor.mutateAsync(deleteSponsorId);
-      toast({ title: "Sponsor deleted!" });
-    } catch (error: any) {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
-    } finally {
-      setDeleteSponsorId(null);
-    }
-  };
-
-  const handleSponsorDragEnd = async (event: DragEndEvent) => {
-    const { active, over } = event;
-    if (over && active.id !== over.id) {
-      const oldIndex = localSponsors.findIndex((s) => s.id === active.id);
-      const newIndex = localSponsors.findIndex((s) => s.id === over.id);
-      const newOrder = arrayMove(localSponsors, oldIndex, newIndex);
-      setLocalSponsors(newOrder);
-      try {
-        await reorderSponsors.mutateAsync(newOrder.map((s, i) => ({ id: s.id, display_order: i })));
-      } catch (error: any) {
-        setLocalSponsors(sponsors || []);
-        toast({ title: "Error reordering", description: error.message, variant: "destructive" });
-      }
-    }
-  };
-
   // Loading state with specific messages
   if (authLoading) {
     return (
@@ -1045,7 +1077,6 @@ export default function Admin() {
 
   const projectCount = projects?.length ?? 0;
   const guestBookCount = guestBookEntries?.length ?? 0;
-  const sponsorCount = sponsors?.length ?? 0;
 
   // Featured-image preview for the create/edit dialog
   const dialogArtworkTitle = formData.title || editingProject?.title || "";
@@ -1067,7 +1098,7 @@ export default function Admin() {
             <div>
               <h1 className="font-display text-xl font-bold text-foreground">Admin Dashboard</h1>
               <p className="text-sm text-muted-foreground">
-                {projectCount} project{projectCount !== 1 ? "s" : ""} · {sponsorCount} sponsor{sponsorCount !== 1 ? "s" : ""} · {guestBookCount} guest book entr{guestBookCount !== 1 ? "ies" : "y"}
+                {projectCount} project{projectCount !== 1 ? "s" : ""} · {guestBookCount} guest book entr{guestBookCount !== 1 ? "ies" : "y"}
               </p>
             </div>
           </div>
@@ -1084,6 +1115,10 @@ export default function Admin() {
               <FolderKanban className="h-4 w-4" />
               Projects
             </TabsTrigger>
+            <TabsTrigger value="objects" className="flex items-center gap-2">
+              <Boxes className="h-4 w-4" />
+              Objects
+            </TabsTrigger>
             <TabsTrigger value="content" className="flex items-center gap-2">
               <FileText className="h-4 w-4" />
               Content
@@ -1094,15 +1129,6 @@ export default function Admin() {
               {guestBookCount > 0 && (
                 <Badge variant="secondary" className="ml-1">
                   {guestBookCount}
-                </Badge>
-              )}
-            </TabsTrigger>
-            <TabsTrigger value="sponsors" className="flex items-center gap-2">
-              <Handshake className="h-4 w-4" />
-              Sponsors
-              {sponsorCount > 0 && (
-                <Badge variant="secondary" className="ml-1">
-                  {sponsorCount}
                 </Badge>
               )}
             </TabsTrigger>
@@ -1290,12 +1316,23 @@ export default function Admin() {
             )}
           </TabsContent>
 
+          {/* Objects Tab */}
+          <TabsContent value="objects" className="space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 className="font-display text-lg font-semibold text-foreground">Objects from the playground</h2>
+            </div>
+            <ObjectsEditor enabled={shouldFetchData} />
+          </TabsContent>
+
           {/* Content Tab */}
           <TabsContent value="content" className="space-y-6">
             <div className="flex items-center justify-between">
               <h2 className="font-display text-lg font-semibold text-foreground">Site Content</h2>
             </div>
-            <SiteContentEditor enabled={shouldFetchData} />
+            <SiteContentEditor
+              enabled={shouldFetchData}
+              groups={CONTENT_GROUPS.filter((g) => g.id !== "artifacts")}
+            />
           </TabsContent>
 
           {/* Guest Book Tab */}
@@ -1382,162 +1419,8 @@ export default function Admin() {
             )}
           </TabsContent>
 
-          {/* Sponsors Tab */}
-          <TabsContent value="sponsors" className="space-y-6">
-            <div className="flex items-center justify-between">
-              <h2 className="font-display text-lg font-semibold text-foreground">Manage Sponsors</h2>
-              <Dialog open={sponsorDialogOpen} onOpenChange={setSponsorDialogOpen}>
-                <DialogTrigger asChild>
-                  <Button onClick={() => handleOpenSponsorDialog()}>
-                    <Plus className="mr-2 h-4 w-4" />
-                    Add Sponsor
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-lg">
-                  <DialogHeader>
-                    <DialogTitle className="font-display">
-                      {editingSponsor ? "Edit Sponsor" : "Add Sponsor"}
-                    </DialogTitle>
-                    <DialogDescription>
-                      Upload a brand logo and configure the sponsor.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <form onSubmit={handleSponsorSubmit} className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="sponsor-name">Name *</Label>
-                      <Input
-                        id="sponsor-name"
-                        placeholder="Brand name"
-                        value={sponsorForm.name}
-                        onChange={(e) => setSponsorForm((p) => ({ ...p, name: e.target.value }))}
-                        required
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label>Logo (optional)</Label>
-                      <div className="flex items-center gap-4">
-                        {sponsorLogoPreview && (
-                          <img src={sponsorLogoPreview} alt="Preview" className="h-12 w-auto max-w-[100px] object-contain rounded border border-border bg-background p-1" />
-                        )}
-                        <Button type="button" variant="outline" onClick={() => sponsorFileRef.current?.click()}>
-                          <Upload className="mr-2 h-4 w-4" />
-                          {sponsorLogoPreview ? "Change" : "Upload"}
-                        </Button>
-                        <input ref={sponsorFileRef} type="file" accept="image/jpeg,image/png,image/gif,image/webp" className="hidden" onChange={handleSponsorLogoChange} />
-                      </div>
-                      <p className="text-xs text-muted-foreground">JPEG, PNG, GIF, or WebP. Max 5MB.</p>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="sponsor-url">Website URL</Label>
-                      <Input
-                        id="sponsor-url"
-                        type="url"
-                        placeholder="https://..."
-                        value={sponsorForm.website_url}
-                        onChange={(e) => setSponsorForm((p) => ({ ...p, website_url: e.target.value }))}
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="sponsor-balloon-text">Balloon Display Text</Label>
-                      <Input
-                        id="sponsor-balloon-text"
-                        placeholder="Your Brand Here"
-                        value={sponsorForm.balloon_text}
-                        onChange={(e) => setSponsorForm((p) => ({ ...p, balloon_text: e.target.value }))}
-                      />
-                      <p className="text-xs text-muted-foreground">Text shown on the floating balloon ad placeholder.</p>
-                    </div>
-
-                    <div className="flex items-center justify-between rounded-lg border p-3">
-                      <div className="space-y-0.5">
-                        <Label htmlFor="sponsor-visibility">Visible on homepage</Label>
-                        <p className="text-xs text-muted-foreground">Hidden sponsors won't appear publicly</p>
-                      </div>
-                      <Switch
-                        id="sponsor-visibility"
-                        checked={sponsorForm.is_visible}
-                        onCheckedChange={(checked) => setSponsorForm((p) => ({ ...p, is_visible: checked }))}
-                      />
-                    </div>
-
-                    <Button type="submit" className="w-full" disabled={createSponsor.isPending || updateSponsor.isPending}>
-                      {(createSponsor.isPending || updateSponsor.isPending) && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                      {editingSponsor ? "Update Sponsor" : "Add Sponsor"}
-                    </Button>
-                  </form>
-                </DialogContent>
-              </Dialog>
-            </div>
-
-            {sponsorsLoading ? (
-              <div className="space-y-3">
-                {[...Array(3)].map((_, i) => (
-                  <Skeleton key={i} className="h-20 w-full" />
-                ))}
-              </div>
-            ) : localSponsors.length === 0 ? (
-              <Card className="border-dashed">
-                <CardContent className="flex flex-col items-center justify-center py-12">
-                  <Handshake className="h-12 w-12 text-muted-foreground/50 mb-4" />
-                  <p className="mb-4 text-muted-foreground">No sponsors yet</p>
-                  <Button onClick={() => handleOpenSponsorDialog()}>
-                    <Plus className="mr-2 h-4 w-4" />
-                    Add your first sponsor
-                  </Button>
-                </CardContent>
-              </Card>
-            ) : (
-              <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleSponsorDragEnd}>
-                <SortableContext items={localSponsors.map((s) => s.id)} strategy={verticalListSortingStrategy}>
-                  <div className="space-y-3">
-                    {localSponsors.map((sponsor) => (
-                      <SortableSponsorCard
-                        key={sponsor.id}
-                        sponsor={sponsor}
-                        onEdit={handleOpenSponsorDialog}
-                        onDelete={(id) => setDeleteSponsorId(id)}
-                        onToggleVisibility={async (s) => {
-                          try {
-                            await updateSponsor.mutateAsync({ id: s.id, is_visible: !s.is_visible });
-                            toast({ title: s.is_visible ? "Sponsor hidden" : "Sponsor visible" });
-                          } catch (error: any) {
-                            toast({ title: "Error", description: error.message, variant: "destructive" });
-                          }
-                        }}
-                      />
-                    ))}
-                  </div>
-                </SortableContext>
-              </DndContext>
-            )}
-          </TabsContent>
         </Tabs>
       </main>
-
-      {/* Delete Sponsor Confirmation */}
-      <AlertDialog open={!!deleteSponsorId} onOpenChange={() => setDeleteSponsorId(null)}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Delete Sponsor?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the sponsor.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleDeleteSponsor}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-            >
-              {deleteSponsor.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
 
       {/* Delete Guest Book Entry Confirmation */}
       <AlertDialog open={!!deleteGuestEntryId} onOpenChange={() => setDeleteGuestEntryId(null)}>
