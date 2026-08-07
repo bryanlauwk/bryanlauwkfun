@@ -81,49 +81,53 @@ export function ArrivalSection() {
       </div>
 
       <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-3xl flex-col items-center justify-end px-6 pb-28 pt-32 text-center md:justify-center md:pb-24">
-        <p className="lp-fade lp-label lp-label--violet" style={{ animationDelay: "80ms" }}>
+        <p className="lp-fade lp-label lp-label--violet" style={{ animationDelay: "0ms" }}>
           {content("hero.eyebrow")}
         </p>
 
         <h1
           id="arrival-heading"
           className="lp-fade lp-display mt-6 text-[2.7rem] leading-[1.04] text-foreground sm:text-6xl md:text-[4.4rem]"
-          style={{ animationDelay: "200ms" }}
+          style={{ animationDelay: "80ms" }}
         >
           {content("hero.title")}
         </h1>
 
         <p
-          className="lp-fade mt-6 text-[0.62rem] uppercase tracking-[0.34em] text-foreground/80 md:text-[0.7rem]"
-          style={{ animationDelay: "300ms" }}
+          className="lp-fade mt-6 text-[0.68rem] uppercase tracking-[0.34em] text-foreground/90 md:text-[0.78rem]"
+          style={{ animationDelay: "140ms" }}
         >
           {content("hero.subtitle")}
         </p>
 
         <p
-          className="lp-fade mt-6 max-w-md text-sm font-light leading-relaxed text-muted-foreground"
-          style={{ animationDelay: "380ms" }}
+          className="lp-fade mt-6 max-w-lg text-sm font-light leading-relaxed text-foreground/70 md:text-[0.95rem]"
+          style={{ animationDelay: "200ms" }}
         >
           {content("hero.description")}
         </p>
 
-        <div className="lp-fade mt-9 flex flex-wrap items-center justify-center gap-3" style={{ animationDelay: "460ms" }}>
-          <a href="#now" className="lp-button">
+        <div className="lp-fade mt-9 flex flex-col items-center gap-5" style={{ animationDelay: "260ms" }}>
+          <a href="#room" className="lp-cta">
             {content("hero.ctaPrimary")}
           </a>
-          <a href="#archive" className="lp-button">
+          <a
+            href="#travel"
+            className="lp-mono text-muted-foreground underline-offset-8 transition-colors hover:text-foreground hover:underline"
+          >
             {content("hero.ctaSecondary")}
           </a>
         </div>
       </div>
 
       <a
-        href="#now"
+        href="#room"
         className="absolute bottom-7 left-1/2 z-10 -translate-x-1/2 text-center text-[0.55rem] uppercase tracking-[0.34em] text-muted-foreground transition-colors hover:text-foreground"
       >
         <span className="mx-auto mb-2 block h-8 w-px bg-[hsl(var(--lp-hair)/0.35)]" aria-hidden="true" />
         {content("hero.scrollHint")}
       </a>
+
     </section>
   );
 }
