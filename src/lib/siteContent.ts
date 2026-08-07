@@ -31,6 +31,159 @@ export interface ContentGroup {
 
 export const CONTENT_GROUPS: ContentGroup[] = [
   {
+    id: "play",
+    title: "Homepage — Make the world playable",
+    description: "Every piece of copy on the current homepage: hero, playable experiences, Browser → Space → Object, principles, collaboration and about.",
+    fields: [
+      // Nav
+      { key: "play.navCta", label: "Nav button", defaultValue: "Let's build" },
+
+      // Hero
+      { key: "play.heroEyebrow", label: "Hero · eyebrow", defaultValue: "Interactive worlds · Bryan Lau" },
+      { key: "play.heroTitle", label: "Hero · headline", defaultValue: "Make the world playable." },
+      {
+        key: "play.heroBody",
+        label: "Hero · body",
+        type: "multiline",
+        defaultValue:
+          "Interactive worlds that start in the browser, grow into shared spaces, and sometimes become objects you can keep.",
+      },
+      { key: "play.heroCta", label: "Hero · primary button", defaultValue: "Play something" },
+      { key: "play.heroCtaSecondary", label: "Hero · secondary button", defaultValue: "Build something together" },
+      { key: "play.heroReassurance", label: "Hero · reassurance", defaultValue: "No install. Opens in your browser." },
+      { key: "play.heroBadgeLabel", label: "Hero · badge label", defaultValue: "How it works" },
+      {
+        key: "play.heroBadgeBody",
+        label: "Hero · badge body",
+        type: "multiline",
+        defaultValue: "Everything here is a real, playable thing you can open in a tab right now — then share with a link.",
+      },
+      { key: "play.chain.browser", label: "Hero chain · 1", defaultValue: "Browser" },
+      { key: "play.chain.space", label: "Hero chain · 2", defaultValue: "Space" },
+      { key: "play.chain.object", label: "Hero chain · 3", defaultValue: "Object" },
+
+      // Playable experiences
+      { key: "play.sectionEyebrow", label: "Play · eyebrow", defaultValue: "Playable experiences" },
+      { key: "play.sectionHeading", label: "Play · heading", defaultValue: "Pick one and go." },
+      {
+        key: "play.sectionIntro",
+        label: "Play · intro",
+        type: "multiline",
+        defaultValue: "Small interactive worlds, all playable in a browser. Some are finished, some are still moving.",
+      },
+      { key: "play.featuredLabel", label: "Play · featured label", defaultValue: "Newest" },
+      { key: "play.cardCta", label: "Play · card button", defaultValue: "Play" },
+      { key: "play.emptyBody", label: "Play · empty state", defaultValue: "New things are being built. Check back soon." },
+
+      // Browser → Space → Object
+      { key: "play.pathEyebrow", label: "Path · eyebrow", defaultValue: "Browser → Space → Object" },
+      { key: "play.pathHeading", label: "Path · heading", defaultValue: "Where this is going." },
+      {
+        key: "play.pathIntro",
+        label: "Path · intro",
+        type: "multiline",
+        defaultValue:
+          "One idea, three mediums. The browser work is real and playable today. Space and object are directions I'm actively exploring — not finished installations or products.",
+      },
+      { key: "play.statusNow", label: "Path · status (shipped)", defaultValue: "Playable now" },
+      { key: "play.statusExploring", label: "Path · status (future)", defaultValue: "Exploring" },
+      { key: "play.path.browser.title", label: "Path · 1 title", defaultValue: "Browser" },
+      {
+        key: "play.path.browser.body",
+        label: "Path · 1 body",
+        type: "multiline",
+        defaultValue: "A real, shareable prototype. Nothing to install — a link is the whole thing, and anyone can open it.",
+      },
+      { key: "play.path.space.title", label: "Path · 2 title", defaultValue: "Space" },
+      {
+        key: "play.path.space.body",
+        label: "Path · 2 body",
+        type: "multiline",
+        defaultValue:
+          "A direction: the same mechanic scaled into a responsive installation, a pop-up or a brand activation people move through together.",
+      },
+      { key: "play.path.object.title", label: "Path · 3 title", defaultValue: "Object" },
+      {
+        key: "play.path.object.body",
+        label: "Path · 3 body",
+        type: "multiline",
+        defaultValue:
+          "A direction: what a world might leave behind — a tactile keepsake that carries a bit of the experience off the screen.",
+      },
+      { key: "play.objectsToggle", label: "Path · object studies toggle", defaultValue: "Three concept sketches" },
+      {
+        key: "play.objectsNote",
+        label: "Path · object studies note",
+        type: "multiline",
+        defaultValue: "Speculative studies only — not products, client work or available editions.",
+      },
+
+      // Principles
+      { key: "play.principlesEyebrow", label: "Principles · eyebrow", defaultValue: "What makes it playable" },
+      { key: "play.principlesHeading", label: "Principles · heading", defaultValue: "Three things I build for." },
+      { key: "play.principle.curiosity.title", label: "Principle 1 · title", defaultValue: "Curiosity" },
+      {
+        key: "play.principle.curiosity.body",
+        label: "Principle 1 · body",
+        type: "multiline",
+        defaultValue: "An obvious invitation to touch it, try it, or wonder what happens next.",
+      },
+      { key: "play.principle.participation.title", label: "Principle 2 · title", defaultValue: "Participation" },
+      {
+        key: "play.principle.participation.body",
+        label: "Principle 2 · body",
+        type: "multiline",
+        defaultValue: "What you do changes what happens. Nobody just watches.",
+      },
+      { key: "play.principle.transformation.title", label: "Principle 3 · title", defaultValue: "Transformation" },
+      {
+        key: "play.principle.transformation.body",
+        label: "Principle 3 · body",
+        type: "multiline",
+        defaultValue: "A good idea can move — from a screen, into a place, and maybe into something you hold.",
+      },
+
+      // Collaboration
+      { key: "play.buildEyebrow", label: "Build · eyebrow", defaultValue: "Collaboration" },
+      { key: "play.buildHeading", label: "Build · heading", defaultValue: "Let's build a playable world." },
+      {
+        key: "play.buildBody",
+        label: "Build · body",
+        type: "multiline",
+        defaultValue:
+          "Bring a mechanic, a story or a half-formed idea. I can shape it into a browser experience, sketch how it might work as a shared space, or explore what object it could leave behind.",
+      },
+      { key: "play.buildCta", label: "Build · button", defaultValue: "Start a conversation" },
+      { key: "play.track.browser.title", label: "Track 1 · title", defaultValue: "Browser build" },
+      { key: "play.track.browser.body", label: "Track 1 · body", type: "multiline", defaultValue: "A playable prototype you can share with a link." },
+      { key: "play.track.space.title", label: "Track 2 · title", defaultValue: "Spatial concept" },
+      { key: "play.track.space.body", label: "Track 2 · body", type: "multiline", defaultValue: "A concept for how the same idea could work in a room." },
+      { key: "play.track.object.title", label: "Track 3 · title", defaultValue: "Object direction" },
+      { key: "play.track.object.body", label: "Track 3 · body", type: "multiline", defaultValue: "An exploration of the thing people might take home." },
+
+      // About / exploring
+      { key: "play.aboutEyebrow", label: "About · eyebrow", defaultValue: "About" },
+      { key: "play.aboutHeading", label: "About · heading", defaultValue: "I make playable things." },
+      {
+        key: "play.aboutBody",
+        label: "About · body",
+        type: "multiline",
+        defaultValue:
+          "I'm Bryan Lau — a creative technologist and growth-minded builder. I make small interactive worlds, ship them fast, and keep the ones people actually want to play with.",
+      },
+      { key: "play.exploringEyebrow", label: "Exploring · eyebrow", defaultValue: "Currently exploring" },
+      { key: "play.exploringHeading", label: "Exploring · heading", defaultValue: "Something that notices you." },
+      {
+        key: "play.exploringBody",
+        label: "Exploring · body",
+        type: "multiline",
+        defaultValue: "A world that reacts to how people move through it. Still unfinished — no date, no promises.",
+      },
+      { key: "play.guestbookLabel", label: "Guest book · label", defaultValue: "Leave a message" },
+    ],
+  },
+
+  {
     id: "nav",
     title: "Navigation & Footer",
     description: "The top bar brand and the footer lines.",
