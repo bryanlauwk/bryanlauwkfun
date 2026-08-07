@@ -1,15 +1,20 @@
 import { useMemo } from "react";
 import { PlaygroundNav } from "@/components/playground/PlaygroundNav";
 import { ArrivalSection } from "@/components/playground/ArrivalSection";
+import { Room01 } from "@/components/playground/Room01";
 import { CurrentSeason } from "@/components/playground/CurrentSeason";
+import { FieldNotes } from "@/components/playground/FieldNotes";
+import { SignalPath } from "@/components/playground/SignalPath";
 import { ArtifactsRow } from "@/components/playground/ArtifactsRow";
 import { UpcomingSeason } from "@/components/playground/UpcomingSeason";
 import { PastSeasons } from "@/components/playground/PastSeasons";
+import { CommissionNote } from "@/components/playground/CommissionNote";
 import { ExitStrip } from "@/components/playground/ExitStrip";
 import { PlaygroundFooter } from "@/components/playground/PlaygroundFooter";
 import { usePublicProjects } from "@/hooks/useProjects";
 import { useSiteContent } from "@/hooks/useSiteSettings";
 import { useSEO } from "@/hooks/useSEO";
+
 
 const Index = () => {
   useSEO({
