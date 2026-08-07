@@ -4,12 +4,14 @@ import { useVisitorCounter } from "@/hooks/useVisitorCounter";
 import { useSiteContent } from "@/hooks/useSiteSettings";
 
 const LINKS = [
-  { id: "now", label: "Current Drop" },
-  { id: "artifact", label: "Artifacts" },
-  { id: "next", label: "Next Season" },
-  { id: "archive", label: "Past Seasons" },
+  { id: "room", label: "Room 01" },
+  { id: "notes", label: "Field Notes" },
+  { id: "travel", label: "Browser → Object" },
+  { id: "next", label: "Next" },
+  { id: "archive", label: "Archive" },
   { id: "about", label: "About" },
 ];
+
 
 
 
