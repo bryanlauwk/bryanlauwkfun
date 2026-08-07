@@ -2,8 +2,9 @@ import { useMemo } from "react";
 import { PlayNav } from "@/components/playable/PlayNav";
 import { PlayHero } from "@/components/playable/PlayHero";
 import { PlayExperiences } from "@/components/playable/PlayExperiences";
-import { MediumPath } from "@/components/playable/MediumPath";
-import { PlayPrinciples } from "@/components/playable/PlayPrinciples";
+import { IdeaSystem } from "@/components/playable/IdeaSystem";
+import { CreativeMoves } from "@/components/playable/CreativeMoves";
+import { OnTheBench } from "@/components/playable/OnTheBench";
 import { BuildTogether } from "@/components/playable/BuildTogether";
 import { ClosingAbout } from "@/components/playable/ClosingAbout";
 import { PlayFooter } from "@/components/playable/PlayFooter";
@@ -12,9 +13,9 @@ import { useSEO } from "@/hooks/useSEO";
 
 const Index = () => {
   useSEO({
-    title: "Bryan Lau — Make the world playable",
+    title: "Bryan Lau — Curiosity, made playable",
     description:
-      "Interactive worlds by Bryan Lau that start in the browser, grow into shared spaces, and sometimes become objects you can keep.",
+      "Browser simulations, shared experiences and interactive objects by Bryan Lau. Play the idea on screen, then see what it could become in the real world.",
     canonical: "https://www.bryanlauwk.fun/",
   });
 
@@ -39,6 +40,7 @@ const Index = () => {
   return (
     <div className="playable relative min-h-screen overflow-x-clip bg-background text-foreground">
       <div className="pw-backdrop" aria-hidden="true" />
+      <div className="pw-grid" aria-hidden="true" />
 
       <div className="relative z-10 flex min-h-screen flex-col">
         <PlayNav />
@@ -46,8 +48,9 @@ const Index = () => {
         <main id="main-content" className="flex-1">
           <PlayHero />
           <PlayExperiences featured={featured} rest={rest} isLoading={isLoading} />
-          <MediumPath />
-          <PlayPrinciples />
+          <IdeaSystem />
+          <CreativeMoves />
+          <OnTheBench />
           <BuildTogether />
           <ClosingAbout />
         </main>
