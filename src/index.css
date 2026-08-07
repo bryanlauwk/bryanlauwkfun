@@ -1903,6 +1903,18 @@
 
 .lp-navrail { scrollbar-width: none; -ms-overflow-style: none; }
 .lp-navrail::-webkit-scrollbar { display: none; }
+.lp-navrail .lp-navlink {
+  font-size: 0.5625rem;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+  padding: 0.35rem 0;
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+}
+@media (max-width: 359px) {
+  .lp-navrail .lp-navlink { font-size: 0.5rem; letter-spacing: 0.06em; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .lp-note-row { opacity: 1 !important; transform: none !important; transition: none !important; }

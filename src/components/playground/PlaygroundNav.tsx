@@ -65,10 +65,10 @@ export function PlaygroundNav() {
 
         <nav
           aria-label="Sections, compact"
-          className="lp-navrail flex items-center gap-5 overflow-x-auto border-t border-[hsl(var(--lp-hair)/0.12)] px-6 py-2.5 md:hidden"
+          className="lp-navrail flex w-full items-center justify-between gap-1 overflow-hidden border-t border-[hsl(var(--lp-hair)/0.12)] px-3 py-1.5 md:hidden"
         >
           {LINKS.map((l) => (
-            <a key={l.id} href={`#${l.id}`} className="lp-navlink whitespace-nowrap">
+            <a key={l.id} href={`#${l.id}`} className="lp-navlink">
               {l.label}
             </a>
           ))}
