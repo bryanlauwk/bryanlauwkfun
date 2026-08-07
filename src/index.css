@@ -2276,7 +2276,7 @@
   align-items: flex-end;
   transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
-@media (min-width: 1024px) { .pw-feature { min-height: 34rem; max-height: 40rem; } }
+@media (min-width: 1024px) { .pw-feature { min-height: 30rem; } }
 .pw-feature:hover { border-color: hsl(var(--pw-cyan) / 0.4); box-shadow: 0 0 40px hsl(var(--pw-cyan) / 0.12); }
 .pw-feature-art { position: absolute; inset: 0; }
 .pw-feature-veil {

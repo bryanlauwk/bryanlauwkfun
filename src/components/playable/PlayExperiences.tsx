@@ -44,7 +44,7 @@ export function PlayExperiences({ featured, rest, isLoading }: PlayExperiencesPr
         ) : !featured ? (
           <p className="mt-8 text-sm text-muted-foreground">{content("play.emptyBody")}</p>
         ) : (
-          <div ref={ref} className={`mt-10 grid gap-4 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] ${inView ? "pw-in" : ""}`}>
+          <div ref={ref} className={`mt-10 space-y-4 ${inView ? "pw-in" : ""}`}>
             {/* Newest experiment — featured once, never repeated below */}
             <article className="pw-feature pw-tilt">
               <div className="pw-feature-art">
@@ -88,7 +88,7 @@ export function PlayExperiences({ featured, rest, isLoading }: PlayExperiencesPr
             </article>
 
             {/* Every other real playable, exactly once */}
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {rest.map((p, i) => {
                 const art = featuredImageFor(p);
                 return (
