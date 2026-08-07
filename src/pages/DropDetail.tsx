@@ -2,8 +2,7 @@ import { useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
-import { CinematicHeader } from "@/components/CinematicHeader";
-import { CinematicFooter } from "@/components/CinematicFooter";
+import { DropShellHeader, DropShellFooter } from "@/components/playable/DropShell";
 import { usePublicProjects } from "@/hooks/useProjects";
 import { slugFor } from "@/lib/slug";
 import { featuredImageFor } from "@/lib/featuredImage";
@@ -21,14 +20,16 @@ export default function DropDetail() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex flex-col bg-background">
-        <CinematicHeader />
-        <main className="flex-1 flex items-center justify-center">
-          <p className="exhibit-label animate-electrical-flicker">
-            Installing exhibit…
+      <div className="playable min-h-screen flex flex-col">
+        <span className="pw-backdrop" aria-hidden="true" />
+        <DropShellHeader />
+        <main className="relative z-10 flex-1 flex items-center justify-center">
+          <p className="pw-eyebrow pw-eyebrow--cyan">
+            <span className="pw-dot" aria-hidden="true" />
+            Loading experience…
           </p>
         </main>
-        <CinematicFooter />
+        <DropShellFooter />
       </div>
     );
   }
@@ -38,7 +39,8 @@ export default function DropDetail() {
     const title = "Drop not found — Bryan Lau";
     const description = "This drop doesn't exist or has been retired. Browse the current collection of drops from Bryan Lau.";
     return (
-      <div className="min-h-screen flex flex-col bg-background">
+      <div className="playable min-h-screen flex flex-col">
+        <span className="pw-backdrop" aria-hidden="true" />
         <Helmet>
           <title>{title}</title>
           <meta name="description" content={description} />
@@ -58,27 +60,21 @@ export default function DropDetail() {
           <meta name="twitter:description" content={description} />
           <meta name="twitter:image" content={`${SITE}/og-image.png`} />
         </Helmet>
-        <CinematicHeader />
-        <main className="flex-1 flex items-center justify-center px-4">
+        <DropShellHeader />
+        <main id="main-content" className="relative z-10 flex-1 flex items-center justify-center px-4 py-20">
           <div className="text-center">
-            <p className="exhibit-label mb-3">
-              Exhibit missing from collection
+            <p className="pw-eyebrow pw-eyebrow--amber mb-3">Experience not found</p>
+            <h1 className="pw-h1 mb-4">Nothing to play here.</h1>
+            <p className="mx-auto mb-7 max-w-md text-sm leading-relaxed text-muted-foreground">
+              <span className="text-foreground">/drops/{slug}</span> isn't one of the current
+              playable experiences.
             </p>
-            <h1 className="font-display text-4xl font-black uppercase text-foreground mb-4">
-              Drop not found
-            </h1>
-            <p className="text-muted-foreground max-w-md mx-auto mb-6 font-mono text-sm">
-              The slug <span className="text-primary">/drops/{slug}</span> isn't in the collection.
-            </p>
-            <Link
-              to="/"
-              className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.25em] text-primary"
-            >
-              <ArrowLeft className="w-4 h-4" /> Back to drops
+            <Link to="/#play" className="pw-btn pw-btn--primary">
+              <ArrowLeft className="h-4 w-4" aria-hidden="true" /> Back to play
             </Link>
           </div>
         </main>
-        <CinematicFooter />
+        <DropShellFooter />
       </div>
     );
   }
@@ -90,9 +86,12 @@ export default function DropDetail() {
       ? rawDesc.length > 155
         ? `${rawDesc.slice(0, 152).trimEnd()}…`
         : rawDesc
-      : `A drop from Bryan Lau — ${project.title}. Click to play.`;
-  const title = `${project.title} — Bryan Lau drops`;
+      : `A playable experience by Bryan Lau — ${project.title}. Open it in your browser.`;
+  const title = `${project.title} — playable experience by Bryan Lau`;
   const resolvedImage = featuredImageFor(project);
+  const launchYear = project.created_at
+    ? new Date(project.created_at).getFullYear()
+    : undefined;
   const ogImage = resolvedImage
     ? resolvedImage.startsWith("http")
       ? resolvedImage
@@ -116,13 +115,14 @@ export default function DropDetail() {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Drops", item: `${SITE}/` },
+      { "@type": "ListItem", position: 1, name: "Playable experiences", item: `${SITE}/` },
       { "@type": "ListItem", position: 2, name: project.title, item: canonical },
     ],
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="playable min-h-screen flex flex-col">
+      <span className="pw-backdrop" aria-hidden="true" />
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
@@ -143,66 +143,82 @@ export default function DropDetail() {
         <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
       </Helmet>
 
-      <CinematicHeader />
+      <DropShellHeader />
 
-      <main className="flex-1 relative z-10 px-4 md:px-12 py-8 md:py-16">
-        <div className="max-w-4xl mx-auto">
+      <main
+        id="main-content"
+        className="relative z-10 flex-1 px-4 py-10 md:px-10 md:py-16"
+      >
+        <div className="mx-auto max-w-5xl">
           <Link
-            to="/"
-            className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground hover:text-foreground transition-colors mb-8"
+            to="/#play"
+            className="pw-navlink inline-flex items-center gap-2"
           >
-            <ArrowLeft className="w-3.5 h-3.5" /> All drops
+            <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" /> All experiences
           </Link>
 
-          <article className="relative bg-card border border-foreground/15 overflow-hidden">
-            <div className="h-0.5 w-full bg-primary" aria-hidden="true" />
+          <article className="pw-panel mt-6 overflow-hidden !p-0">
+            {resolvedImage && (
+              <div className="relative h-52 w-full overflow-hidden md:h-80">
+                <img
+                  src={resolvedImage}
+                  alt={`Artwork for ${project.title}`}
+                  loading="eager"
+                  decoding="async"
+                  className="h-full w-full object-cover"
+                />
+                <span className="pw-feature-veil" aria-hidden="true" />
+              </div>
+            )}
 
-            <div className="px-6 pt-5 pb-3 flex items-center justify-between border-b border-foreground/10">
-              <span className="exhibit-label">
-                Exhibit file · Drop
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[hsl(var(--pw-line)/0.14)] px-5 py-3 md:px-8">
+              <span className="pw-eyebrow pw-eyebrow--cyan">
+                <span className="pw-dot" aria-hidden="true" />
+                Playable file
               </span>
-              {project.tag && (
-                <span className="inline-flex items-center border border-primary/60 text-primary px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-widest font-bold">
-                  {project.tag}
-                </span>
-              )}
+              <div className="flex flex-wrap items-center gap-2">
+                {project.tag && <span className="pw-tag">{project.tag}</span>}
+                {launchYear && <span className="pw-tag">Launched · {launchYear}</span>}
+              </div>
             </div>
 
-            <div className="p-6 md:p-10 space-y-6">
-              <h1 className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight text-foreground leading-[0.95]">
-                {project.title}
-              </h1>
-              <div className="h-1 w-24 bg-primary" />
+            <div className="space-y-6 p-5 md:p-10">
+              <h1 className="pw-h1">{project.title}</h1>
+
               {project.description && (
-                <p className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-2xl">
+                <p className="max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
                   {project.description}
                 </p>
               )}
 
-              <a
-                href={project.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground border border-primary font-mono text-sm uppercase tracking-widest font-bold hover:bg-transparent hover:text-primary transition-colors"
-              >
-                Enter the exhibit
-                <ArrowUpRight className="w-4 h-4" />
-              </a>
+              <div className="flex flex-wrap items-center gap-3">
+                <a
+                  href={project.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="pw-btn pw-btn--primary"
+                >
+                  Play now
+                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                </a>
+                <Link to="/#play" className="pw-btn">
+                  Back to play
+                </Link>
+              </div>
 
-              <p className="exhibit-label pt-2">
-                Opens {new URL(project.href).hostname} in a new tab
+              <p className="text-xs text-muted-foreground">
+                Opens {new URL(project.href).hostname} in a new tab.
               </p>
             </div>
 
-            <div className="px-6 py-2.5 border-t border-foreground/10 flex items-center justify-between exhibit-label !text-[9px]">
-              <span>Please touch the art</span>
-              <span className="barcode h-3 w-16 inline-block" aria-hidden="true" />
+            <div className="border-t border-[hsl(var(--pw-line)/0.14)] px-5 py-3 md:px-8">
+              <span className="pw-eyebrow pw-eyebrow--green">Made to be played</span>
             </div>
           </article>
         </div>
       </main>
 
-      <CinematicFooter />
+      <DropShellFooter />
     </div>
   );
 }
