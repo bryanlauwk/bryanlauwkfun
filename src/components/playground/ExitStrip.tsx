@@ -2,21 +2,8 @@ import { useState } from "react";
 import { Github, Twitter, Linkedin, ArrowUpRight, Sparkles } from "lucide-react";
 import { GuestBook } from "@/components/GuestBook";
 import { useReveal } from "@/hooks/useReveal";
+import { useSiteContent } from "@/hooks/useSiteSettings";
 import closingArt from "@/assets/bryans-mind-closing-v3.jpg";
-
-const WHISPERS = [
-  "The older worlds are still awake.",
-  "Some objects remember being touched.",
-  "There is more below the surface.",
-  "Nothing here is finished.",
-  "Scroll slower.",
-];
-
-const SOCIALS = [
-  { href: "https://github.com/bryanlauwk", Icon: Github, label: "GitHub" },
-  { href: "https://twitter.com/bryanlauwk", Icon: Twitter, label: "Twitter" },
-  { href: "https://linkedin.com/in/bryanlauwk", Icon: Linkedin, label: "LinkedIn" },
-];
 
 /**
  * Bryan's Mind + the guest book, held inside the closing landscape. The copy
@@ -26,9 +13,22 @@ export function ExitStrip() {
   const [whisper, setWhisper] = useState<string | null>(null);
   const [idx, setIdx] = useState(0);
   const { ref, inView } = useReveal<HTMLDivElement>(0.1);
+  const { content } = useSiteContent();
+
+  const whispers = content("about.whispers")
+    .split("\n")
+    .map((w) => w.trim())
+    .filter(Boolean);
+
+  const socials = [
+    { href: content("about.githubUrl"), Icon: Github, label: "GitHub" },
+    { href: content("about.twitterUrl"), Icon: Twitter, label: "Twitter" },
+    { href: content("about.linkedinUrl"), Icon: Linkedin, label: "LinkedIn" },
+  ];
 
   const hint = () => {
-    setWhisper(WHISPERS[idx % WHISPERS.length]);
+    if (whispers.length === 0) return;
+    setWhisper(whispers[idx % whispers.length]);
     setIdx((n) => n + 1);
   };
 
@@ -60,10 +60,9 @@ export function ExitStrip() {
                   <span aria-hidden="true" />
                 </button>
                 <div>
-                  <p className="lp-label lp-label--violet">Bryan&apos;s Mind</p>
+                  <p className="lp-label lp-label--violet">{content("about.mindLabel")}</p>
                   <p className="mt-3 max-w-[18rem] text-sm font-light leading-relaxed text-muted-foreground">
-                    A quiet guide that lives at the edge of the water. It does not answer
-                    questions — it points.
+                    {content("about.mindBody")}
                   </p>
                   <button
                     type="button"
@@ -71,7 +70,7 @@ export function ExitStrip() {
                     className="lp-mono mt-4 inline-flex items-center gap-2 text-accent transition-colors hover:text-foreground"
                   >
                     <Sparkles className="h-3 w-3" aria-hidden="true" />
-                    Ask for a hint
+                    {content("about.mindCta")}
                   </button>
                 </div>
               </div>
@@ -102,26 +101,30 @@ export function ExitStrip() {
               </div>
 
               <h2 id="exit-heading" className="lp-display mt-12 text-2xl text-foreground md:text-[2rem]">
-                Nothing here is permanent.
-                <br />
-                See you next season.
+                {content("about.heading")
+                  .split("\n")
+                  .map((line, i, arr) => (
+                    <span key={i}>
+                      {line}
+                      {i < arr.length - 1 && <br />}
+                    </span>
+                  ))}
               </h2>
               <p className="mt-5 max-w-md text-sm font-light leading-relaxed text-muted-foreground">
-                Built by Bryan Lau — a creative growth marketer making things people want
-                to play with. Creativity is the interface. Growth is the outcome.
+                {content("about.body")}
               </p>
 
               <div className="mt-7 flex flex-wrap items-center gap-3">
                 <a
-                  href="https://ideas.bryanlauwk.fun"
+                  href={content("about.studioUrl")}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="lp-button"
                 >
-                  The Studio
+                  {content("about.studioLabel")}
                   <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
                 </a>
-                {SOCIALS.map(({ href, Icon, label }) => (
+                {socials.map(({ href, Icon, label }) => (
                   <a
                     key={label}
                     href={href}
@@ -137,7 +140,7 @@ export function ExitStrip() {
             </div>
 
             <div id="signal" className="lp-plate scroll-mt-24">
-              <p className="lp-label lp-label--violet">Leave a message in the sky</p>
+              <p className="lp-label lp-label--violet">{content("about.guestbookLabel")}</p>
               <div className="mt-5">
                 <GuestBook />
               </div>

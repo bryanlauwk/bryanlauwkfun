@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useReveal } from "@/hooks/useReveal";
+import { useSiteContent } from "@/hooks/useSiteSettings";
 import artifactArt from "@/assets/interactive-artifacts-v3.jpg";
 
 interface Piece {
@@ -12,40 +13,13 @@ interface Piece {
   y: number;
 }
 
-const PIECES: Piece[] = [
-  {
-    id: "coin",
-    name: "The Topographic Coin",
-    material: "Milled brass · patina",
-    idea: "A physical bookmark for a world you finished. Contours are the map you walked.",
-    x: 12.5,
-    y: 58,
-  },
-  {
-    id: "key",
-    name: "The First Key",
-    material: "Cast acrylic · short-range chip",
-    idea: "Tap it and a private door opens somewhere in the playground. Prototype only.",
-    x: 35,
-    y: 55,
-  },
-  {
-    id: "stone",
-    name: "The Light Stone",
-    material: "River stone · fibre veins",
-    idea: "It glows when someone else is inside the same world. Studio experiment.",
-    x: 59,
-    y: 58,
-  },
-  {
-    id: "paper",
-    name: "The Folded Chart",
-    material: "Coated paper · gold ink",
-    idea: "One printed constellation of every drop released. Folds down to a pocket.",
-    x: 84,
-    y: 52,
-  },
-];
+/** Hotspot positions are fixed to the painting; copy is editable via the CMS. */
+const PIECE_POSITIONS = [
+  { id: "coin", x: 12.5, y: 58 },
+  { id: "key", x: 35, y: 55 },
+  { id: "stone", x: 59, y: 58 },
+  { id: "paper", x: 84, y: 52 },
+] as const;
 
 /**
  * Interactive Artifact — a wide editorial still life. Hovering or focusing a
@@ -54,6 +28,16 @@ const PIECES: Piece[] = [
 export function ArtifactsRow() {
   const [active, setActive] = useState<Piece | null>(null);
   const { ref, inView } = useReveal<HTMLDivElement>(0.15);
+  const { content } = useSiteContent();
+
+  const PIECES: Piece[] = PIECE_POSITIONS.map((pos) => ({
+    id: pos.id,
+    x: pos.x,
+    y: pos.y,
+    name: content(`artifacts.${pos.id}.name`),
+    material: content(`artifacts.${pos.id}.material`),
+    idea: content(`artifacts.${pos.id}.idea`),
+  }));
 
   return (
     <section id="artifact" className="lp-band relative" aria-labelledby="artifact-heading">
@@ -95,14 +79,12 @@ export function ArtifactsRow() {
         <div className="relative mx-auto max-w-[110rem] px-6 pb-6 pt-[13rem] md:px-14 md:pb-10 md:pt-[19rem]">
           <div className="grid gap-8 md:grid-cols-[minmax(0,26rem)_minmax(0,26rem)] md:gap-20">
             <div>
-              <p className="lp-label lp-label--violet">Interactive Artifact</p>
+              <p className="lp-label lp-label--violet">{content("artifacts.eyebrow")}</p>
               <h2 id="artifact-heading" className="lp-display mt-5 text-3xl text-foreground md:text-[2.7rem]">
-                Objects from the playground
+                {content("artifacts.heading")}
               </h2>
               <p className="mt-5 max-w-md text-sm font-light leading-relaxed text-muted-foreground">
-                Four concept prototypes made while building the worlds. None of them are
-                manufactured, priced or for sale — they exist to test how a digital world
-                might feel in the hand.
+                {content("artifacts.intro")}
               </p>
             </div>
 
@@ -120,8 +102,7 @@ export function ArtifactsRow() {
                   <>
                     <p className="lp-mono text-muted-foreground/70">Four pieces</p>
                     <p className="mt-3 text-sm font-light leading-relaxed text-muted-foreground">
-                      Hover or focus a marker on the still life to read the idea behind
-                      each object.
+                      {content("artifacts.idlePrompt")}
                     </p>
                   </>
                 )}

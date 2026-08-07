@@ -6,6 +6,7 @@ import { CinematicHeader } from "@/components/CinematicHeader";
 import { CinematicFooter } from "@/components/CinematicFooter";
 import { usePublicProjects } from "@/hooks/useProjects";
 import { slugFor } from "@/lib/slug";
+import { featuredImageFor } from "@/lib/featuredImage";
 
 const SITE = "https://www.bryanlauwk.fun";
 
@@ -91,7 +92,12 @@ export default function DropDetail() {
         : rawDesc
       : `A drop from Bryan Lau — ${project.title}. Click to play.`;
   const title = `${project.title} — Bryan Lau drops`;
-  const ogImage = project.image_url ?? undefined;
+  const resolvedImage = featuredImageFor(project);
+  const ogImage = resolvedImage
+    ? resolvedImage.startsWith("http")
+      ? resolvedImage
+      : `${SITE}${resolvedImage}`
+    : undefined;
 
   const jsonLd = {
     "@context": "https://schema.org",

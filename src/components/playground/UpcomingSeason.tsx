@@ -1,4 +1,5 @@
 import { useReveal } from "@/hooks/useReveal";
+import { useSiteContent } from "@/hooks/useSiteSettings";
 import signalArt from "@/assets/next-transmission-v3.jpg";
 
 /**
@@ -8,6 +9,7 @@ import signalArt from "@/assets/next-transmission-v3.jpg";
  */
 export function UpcomingSeason() {
   const { ref, inView } = useReveal<HTMLDivElement>(0.15);
+  const { content } = useSiteContent();
 
   return (
     <section id="next" className="lp-band relative" aria-labelledby="next-heading">
@@ -33,20 +35,19 @@ export function UpcomingSeason() {
             <div className="lp-signal-copy max-w-xl">
               <p className="lp-label lp-label--violet">
                 <span className="mr-2 inline-block h-1 w-1 rounded-full bg-accent lp-pulse align-middle" />
-                Next transmission · forming
+                {content("next.label")}
               </p>
               <h2
                 id="next-heading"
                 className="lp-display mt-5 text-2xl leading-snug text-foreground md:text-[2.4rem]"
               >
-                Something is learning how to notice you.
+                {content("next.heading")}
               </h2>
               <p className="mt-5 text-sm font-light leading-relaxed text-muted-foreground">
-                Fragments are still arriving. When enough of them agree on a shape, the next
-                season opens.
+                {content("next.body")}
               </p>
               <p className="mt-7 text-[0.6rem] uppercase tracking-[0.3em] text-muted-foreground">
-                Opens · Date unknown.
+                {content("next.opens")}
               </p>
             </div>
           </div>
