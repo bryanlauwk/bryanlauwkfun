@@ -1907,3 +1907,7 @@
 @media (prefers-reduced-motion: reduce) {
   .lp-note-row { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
+
+.lp-room-card--compact .lp-room-body { display: flex; flex-direction: column; height: 100%; }
+.lp-room-card--compact .lp-room-body > :last-child { margin-top: auto; padding-top: 1rem; }
+.lp-room-card--compact { display: flex; flex-direction: column; }
