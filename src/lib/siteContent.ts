@@ -46,7 +46,7 @@ export const CONTENT_GROUPS: ContentGroup[] = [
         label: "Hero · body",
         type: "multiline",
         defaultValue:
-          "I turn surprising ideas into browser simulations, shared experiences, and interactive things you can touch.",
+          "I build browser simulations and explore how surprising ideas could become shared experiences and interactive things you can touch.",
       },
       { key: "play.heroLine", label: "Hero · relationship line", defaultValue: "Play the idea on screen. Then see what it could become in the real world." },
       { key: "play.heroCta", label: "Hero · primary button", defaultValue: "Try an experiment" },
