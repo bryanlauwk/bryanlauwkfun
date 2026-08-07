@@ -11,6 +11,9 @@ import coin from "@/assets/artifacts/coin.jpg";
 import key from "@/assets/artifacts/key.jpg";
 import stone from "@/assets/artifacts/stone.jpg";
 import chart from "@/assets/artifacts/chart.jpg";
+import ring from "@/assets/artifacts/ring.jpg";
+import mirror from "@/assets/artifacts/mirror.jpg";
+import seed from "@/assets/artifacts/seed.jpg";
 
 /** Bundled default preview per object id (ids match the CMS content keys). */
 export const OBJECT_DEFAULT_IMAGES: Record<string, string> = {
@@ -18,6 +21,9 @@ export const OBJECT_DEFAULT_IMAGES: Record<string, string> = {
   key,
   stone,
   paper: chart,
+  ring,
+  mirror,
+  seed,
 };
 
 /** The image to show for a catalogue object, or null (→ icon placeholder). */
