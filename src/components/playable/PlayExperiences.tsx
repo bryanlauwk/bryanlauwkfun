@@ -13,9 +13,9 @@ interface PlayExperiencesProps {
 }
 
 /**
- * One unified play section. The newest real experiment leads the section, and
- * every other real playable follows exactly once — no duplicates, no archive
- * or exhibition framing.
+ * Browser experiments. The newest real experiment leads, and every other real
+ * playable follows exactly once. Bench-style affordances (input/output cues,
+ * variable ticks) are decorative annotations only — never fake controls.
  */
 export function PlayExperiences({ featured, rest, isLoading }: PlayExperiencesProps) {
   const { ref, inView } = useReveal<HTMLDivElement>(0.06);
@@ -60,6 +60,9 @@ export function PlayExperiences({ featured, rest, isLoading }: PlayExperiencesPr
                   <div className="h-full w-full" style={{ background: featured.color }} aria-hidden="true" />
                 )}
                 <span className="pw-feature-veil" aria-hidden="true" />
+                <span className="pw-ticks" aria-hidden="true">
+                  <i /><i /><i /><i /><i /><i />
+                </span>
               </div>
 
               <div className="pw-feature-body">
@@ -106,6 +109,7 @@ export function PlayExperiences({ featured, rest, isLoading }: PlayExperiencesPr
                         ) : (
                           <div className="h-full w-full" style={{ background: p.color }} aria-hidden="true" />
                         )}
+                        <span className="pw-card-scan" aria-hidden="true" />
                       </div>
                       <div className="pw-card-body">
                         <div className="flex items-start justify-between gap-3">
@@ -113,6 +117,11 @@ export function PlayExperiences({ featured, rest, isLoading }: PlayExperiencesPr
                           <ArrowUpRight className="pw-card-arrow h-4 w-4 shrink-0" aria-hidden="true" />
                         </div>
                         {p.description && <p className="pw-card-hook">{p.description}</p>}
+                        <p className="pw-card-io" aria-hidden="true">
+                          {content("play.inputLabel")}
+                          <span className="pw-card-io-line" />
+                          {content("play.outputLabel")}
+                        </p>
                         <div className="mt-3 flex items-center justify-between gap-2">
                           {p.tag ? <span className="pw-tag">{p.tag}</span> : <span />}
                           <span className="pw-card-cta">{content("play.cardCta")}</span>
