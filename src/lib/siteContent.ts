@@ -45,25 +45,139 @@ export const CONTENT_GROUPS: ContentGroup[] = [
     title: "Arrival (Hero)",
     description: "The full-screen opening section.",
     fields: [
-      { key: "hero.eyebrow", label: "Eyebrow label", defaultValue: "Season 00 · Prologue" },
-      { key: "hero.title", label: "Headline", defaultValue: "The Living Playground" },
+      { key: "hero.eyebrow", label: "Eyebrow label", defaultValue: "Ongoing exhibition · Room 01" },
+      { key: "hero.title", label: "Headline", defaultValue: "Playable Experiments" },
       {
         key: "hero.subtitle",
         label: "Sub-line (uppercase)",
-        defaultValue: "Interactive art × playful technology × AI experiences",
+        defaultValue: "For the curious. A stranger kind of internet.",
       },
       {
         key: "hero.description",
         label: "Description",
         type: "multiline",
         defaultValue:
-          "An evolving world by Bryan Lau. Everything here is playable, half-finished on purpose, and still growing.",
+          "Browser-born experiments by Bryan Lau, shaped by curiosity, perception and play — and built so a world can grow into a space, and then into an object you can hold.",
       },
-      { key: "hero.ctaPrimary", label: "Primary button", defaultValue: "Enter the playground" },
-      { key: "hero.ctaSecondary", label: "Secondary button", defaultValue: "Browse past seasons" },
+      { key: "hero.ctaPrimary", label: "Primary button", defaultValue: "Enter Room 01" },
+      { key: "hero.ctaSecondary", label: "Secondary link", defaultValue: "See how a world travels: Browser → Space → Object" },
       { key: "hero.scrollHint", label: "Scroll hint", defaultValue: "Scroll to enter" },
     ],
   },
+  {
+    id: "room",
+    title: "Room 01 (Playable Experiments)",
+    description: "The homepage lead magnet — the grid of real, playable drops.",
+    fields: [
+      { key: "room.eyebrow", label: "Eyebrow label", defaultValue: "Room 01 · Permanent collection" },
+      { key: "room.heading", label: "Heading", defaultValue: "Things you can actually play" },
+      {
+        key: "room.intro",
+        label: "Intro paragraph",
+        type: "multiline",
+        defaultValue:
+          "Every experiment below opens in the browser. Some are finished, some are still moving. Pick one and go in.",
+      },
+      { key: "room.currentLabel", label: "Featured status label", defaultValue: "Open now" },
+      { key: "room.cta", label: "Card call to action", defaultValue: "Play" },
+      { key: "room.emptyBody", label: "Empty state", defaultValue: "The room is being re-hung. New experiments are on the way." },
+    ],
+  },
+  {
+    id: "notes",
+    title: "Field Notes (Science of Play)",
+    description: "Research directions behind future experiments — concepts, not finished work.",
+    fields: [
+      { key: "notes.eyebrow", label: "Eyebrow label", defaultValue: "Field notes · Research directions" },
+      { key: "notes.heading", label: "Heading", defaultValue: "The science of play" },
+      {
+        key: "notes.intro",
+        label: "Intro paragraph",
+        type: "multiline",
+        defaultValue:
+          "Reading notes that feed the next experiments. These are concepts and directions — not finished pieces.",
+      },
+      { key: "notes.one.title", label: "Note 1 · title", defaultValue: "Perception & attention" },
+      { key: "notes.one.science", label: "Note 1 · idea", defaultValue: "Change blindness" },
+      {
+        key: "notes.one.premise",
+        label: "Note 1 · premise",
+        type: "multiline",
+        defaultValue: "A world that quietly alters itself while you look away — and dares you to notice what moved.",
+      },
+      { key: "notes.two.title", label: "Note 2 · title", defaultValue: "Emergence & collective behavior" },
+      { key: "notes.two.science", label: "Note 2 · idea", defaultValue: "Swarms & simple local rules" },
+      {
+        key: "notes.two.premise",
+        label: "Note 2 · premise",
+        type: "multiline",
+        defaultValue: "Many visitors, each making one small move, collectively growing a system nobody designed alone.",
+      },
+      { key: "notes.three.title", label: "Note 3 · title", defaultValue: "Memory, prediction & choice" },
+      { key: "notes.three.science", label: "Note 3 · idea", defaultValue: "Prediction error" },
+      {
+        key: "notes.three.premise",
+        label: "Note 3 · premise",
+        type: "multiline",
+        defaultValue: "An object that learns your habit, then breaks it — so the surprise becomes the interface.",
+      },
+    ],
+  },
+  {
+    id: "travel",
+    title: "Browser → Space → Object",
+    description: "The architecture: one idea changing medium.",
+    fields: [
+      { key: "travel.eyebrow", label: "Eyebrow label", defaultValue: "The architecture" },
+      { key: "travel.heading", label: "Heading", defaultValue: "One signal, three mediums" },
+      {
+        key: "travel.intro",
+        label: "Intro paragraph",
+        type: "multiline",
+        defaultValue:
+          "A world starts as something you can play in a tab. If it holds, it grows a room. If it still holds, it leaves something behind you can hold.",
+      },
+      { key: "travel.browser.title", label: "Stage 1 · title", defaultValue: "Browser" },
+      {
+        key: "travel.browser.body",
+        label: "Stage 1 · body",
+        type: "multiline",
+        defaultValue: "A playable prototype — a shareable world that needs nothing but a link.",
+      },
+      { key: "travel.space.title", label: "Stage 2 · title", defaultValue: "Space" },
+      {
+        key: "travel.space.body",
+        label: "Stage 2 · body",
+        type: "multiline",
+        defaultValue: "The same world given a room: a responsive space, a pop-up, an installation you walk into.",
+      },
+      { key: "travel.object.title", label: "Stage 3 · title", defaultValue: "Object" },
+      {
+        key: "travel.object.body",
+        label: "Stage 3 · body",
+        type: "multiline",
+        defaultValue: "A tactile artifact, token or edition that carries the world beyond the screen.",
+      },
+    ],
+  },
+  {
+    id: "commission",
+    title: "Quiet collaboration",
+    description: "The restrained invitation near the end of the page.",
+    fields: [
+      { key: "commission.eyebrow", label: "Eyebrow label", defaultValue: "For unusual briefs" },
+      { key: "commission.heading", label: "Heading", defaultValue: "A world can be commissioned." },
+      {
+        key: "commission.body",
+        label: "Body",
+        type: "multiline",
+        defaultValue:
+          "Selected experiments can be adapted for a brand, a place or a story — kept playable, kept strange. If you have an unusual brief, the studio door is open.",
+      },
+      { key: "commission.cta", label: "Link label", defaultValue: "Open the studio" },
+    ],
+  },
+
   {
     id: "current",
     title: "Current Drop",
