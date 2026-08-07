@@ -12,7 +12,7 @@
  * read it in the component via `content("group.key")`.
  */
 
-export type ContentFieldType = "text" | "multiline" | "url";
+export type ContentFieldType = "text" | "multiline" | "url" | "toggle";
 
 export interface ContentField {
   key: string;
@@ -67,75 +67,122 @@ export const CONTENT_GROUPS: ContentGroup[] = [
   {
     id: "current",
     title: "Current Drop",
-    description: "Labels around the featured current drop. The title and description come from the drop itself.",
+    description:
+      "The featured slot at the top of the page. In Brewing mode it shows a mysterious teaser and every drop moves to Past Seasons; switch it Live to feature the newest drop.",
     fields: [
-      { key: "current.label", label: "Status label", defaultValue: "Current Drop · open now" },
-      { key: "current.cta", label: "Call to action", defaultValue: "Enter the experience" },
       {
-        key: "current.emptyTitle",
-        label: "Empty-state title",
-        defaultValue: "The season is between breaths",
-        help: "Shown when there is no current drop.",
+        key: "current.mode",
+        label: "Feature the newest drop (off = Brewing / mysterious)",
+        type: "toggle",
+        defaultValue: "brewing",
+        help: "Off keeps the slot mysterious and lists every drop under Past Seasons. On features the most recent drop here.",
       },
+      // Brewing (mysterious) state
+      { key: "current.brewingLabel", label: "Brewing · label", defaultValue: "Next drop · brewing" },
+      { key: "current.brewingTitle", label: "Brewing · title", defaultValue: "Something is brewing" },
       {
-        key: "current.emptyBody",
-        label: "Empty-state body",
+        key: "current.brewingBody",
+        label: "Brewing · body",
         type: "multiline",
-        defaultValue: "Nothing is open yet. Something is being built in the dark.",
+        defaultValue:
+          "The next world is still taking shape beneath the surface. No doors yet — only the sound of something waking up.",
       },
+      // Live state (when a drop is featured)
+      { key: "current.label", label: "Live · status label", defaultValue: "Current Drop · open now" },
+      { key: "current.cta", label: "Live · call to action", defaultValue: "Enter the experience" },
     ],
   },
   {
     id: "artifacts",
-    title: "Interactive Artifact",
-    description: "The still-life section and its four concept objects.",
+    title: "Objects Catalogue",
+    description:
+      "The building-block catalogue. Each object is a reusable 'piece' Bryan mixes, matches and adapts into custom interactive experiences. Material line = format; Concept = how the piece adapts.",
     fields: [
-      { key: "artifacts.eyebrow", label: "Eyebrow label", defaultValue: "Interactive Artifact" },
+      { key: "artifacts.eyebrow", label: "Eyebrow label", defaultValue: "Building Blocks" },
       { key: "artifacts.heading", label: "Heading", defaultValue: "Objects from the playground" },
       {
         key: "artifacts.intro",
         label: "Intro paragraph",
         type: "multiline",
         defaultValue:
-          "Four concept prototypes made while building the worlds. None of them are manufactured, priced or for sale — they exist to test how a digital world might feel in the hand.",
+          "A working catalogue of the physical pieces behind the worlds. Each one is a patentable building block — LEGO for interactive art — that Bryan mixes, matches and adapts into a custom curation for any space, brand or story. Modular, recombinable, and built to bridge screen and environment.",
       },
       {
-        key: "artifacts.idlePrompt",
-        label: "Idle prompt",
+        key: "artifacts.closing",
+        label: "Closing line",
         type: "multiline",
-        defaultValue: "Hover or focus a marker on the still life to read the idea behind each object.",
+        defaultValue:
+          "Every piece is designed to be patented, produced and recombined — the same block, curated differently for each use case.",
       },
+      // 1 — Coin
       { key: "artifacts.coin.name", label: "Object 1 · name", defaultValue: "The Topographic Coin" },
-      { key: "artifacts.coin.material", label: "Object 1 · material", defaultValue: "Milled brass · patina" },
+      { key: "artifacts.coin.material", label: "Object 1 · format", defaultValue: "Milled brass · patina" },
       {
         key: "artifacts.coin.idea",
-        label: "Object 1 · idea",
+        label: "Object 1 · concept",
         type: "multiline",
-        defaultValue: "A physical bookmark for a world you finished. Contours are the map you walked.",
+        defaultValue:
+          "A tactile save-point for a finished world. Adapts into a collectible token, a wayfinding key, or a proof-of-visit — its contours re-map to whatever world it joins.",
       },
-      { key: "artifacts.key.name", label: "Object 2 · name", defaultValue: "The First Key" },
-      { key: "artifacts.key.material", label: "Object 2 · material", defaultValue: "Cast acrylic · short-range chip" },
+      // 2 — Key
+      { key: "artifacts.key.name", label: "Object 2 · name", defaultValue: "The Threshold Key" },
+      { key: "artifacts.key.material", label: "Object 2 · format", defaultValue: "Cast acrylic · NFC core" },
       {
         key: "artifacts.key.idea",
-        label: "Object 2 · idea",
+        label: "Object 2 · concept",
         type: "multiline",
-        defaultValue: "Tap it and a private door opens somewhere in the playground. Prototype only.",
+        defaultValue:
+          "The bridge between a browser game and the room you're standing in. Tap it to open a door between the digital interface and the physical environment — one key, any threshold.",
       },
+      // 3 — Stone
       { key: "artifacts.stone.name", label: "Object 3 · name", defaultValue: "The Light Stone" },
-      { key: "artifacts.stone.material", label: "Object 3 · material", defaultValue: "River stone · fibre veins" },
+      { key: "artifacts.stone.material", label: "Object 3 · format", defaultValue: "River stone · fibre veins" },
       {
         key: "artifacts.stone.idea",
-        label: "Object 3 · idea",
+        label: "Object 3 · concept",
         type: "multiline",
-        defaultValue: "It glows when someone else is inside the same world. Studio experiment.",
+        defaultValue:
+          "A presence block. It warms when someone else steps into the same world. Drop it into a booth, a table or a pavilion to make remote company feel physically near.",
       },
-      { key: "artifacts.paper.name", label: "Object 4 · name", defaultValue: "The Folded Chart" },
-      { key: "artifacts.paper.material", label: "Object 4 · material", defaultValue: "Coated paper · gold ink" },
+      // 4 — Chart / Atlas
+      { key: "artifacts.paper.name", label: "Object 4 · name", defaultValue: "The Folded Atlas" },
+      { key: "artifacts.paper.material", label: "Object 4 · format", defaultValue: "Coated paper · gold ink" },
       {
         key: "artifacts.paper.idea",
-        label: "Object 4 · idea",
+        label: "Object 4 · concept",
         type: "multiline",
-        defaultValue: "One printed constellation of every drop released. Folds down to a pocket.",
+        defaultValue:
+          "A pocket index of every world, folded flat. Reprints as a map, a program, or a treasure key for any curation.",
+      },
+      // 5 — Pulse Ring (Expo 2025 — Grand Ring / Connecting Lives)
+      { key: "artifacts.ring.name", label: "Object 5 · name", defaultValue: "The Pulse Ring" },
+      { key: "artifacts.ring.material", label: "Object 5 · format", defaultValue: "Anodised alloy · haptic core" },
+      {
+        key: "artifacts.ring.idea",
+        label: "Object 5 · concept",
+        type: "multiline",
+        defaultValue:
+          "A handheld ring that beats in time with a world — or with everyone inside it. One connective loop binding many at once; drop it into a crowd to make a shared moment you can feel in your palm.",
+      },
+      // 6 — Mirror Tile (Expo 2025 — mirror pavilion)
+      { key: "artifacts.mirror.name", label: "Object 6 · name", defaultValue: "The Mirror Tile" },
+      { key: "artifacts.mirror.material", label: "Object 6 · format", defaultValue: "Optical glass · edge-lit" },
+      {
+        key: "artifacts.mirror.idea",
+        label: "Object 6 · concept",
+        type: "multiline",
+        defaultValue:
+          "A reflective module that turns any wall or table into a responsive surface. Tessellate a few into a mirror room, or set one as a portal — the world reflects and reacts to whoever leans in.",
+      },
+      // 7 — Living Seed (Expo 2025 — Saving / Empowering Lives, sustainability)
+      { key: "artifacts.seed.name", label: "Object 7 · name", defaultValue: "The Living Seed" },
+      { key: "artifacts.seed.material", label: "Object 7 · format", defaultValue: "Bio-resin · sensor node" },
+      {
+        key: "artifacts.seed.idea",
+        label: "Object 7 · concept",
+        type: "multiline",
+        defaultValue:
+          "A palm-sized token that carries a world's state into a space and quietly senses it back. Plant it in a room to let an installation grow, remember and respond over time.",
       },
     ],
   },

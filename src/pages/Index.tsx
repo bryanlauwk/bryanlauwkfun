@@ -8,6 +8,7 @@ import { PastSeasons } from "@/components/playground/PastSeasons";
 import { ExitStrip } from "@/components/playground/ExitStrip";
 import { PlaygroundFooter } from "@/components/playground/PlaygroundFooter";
 import { usePublicProjects } from "@/hooks/useProjects";
+import { useSiteContent } from "@/hooks/useSiteSettings";
 import { useSEO } from "@/hooks/useSEO";
 
 const Index = () => {
@@ -19,16 +20,22 @@ const Index = () => {
   });
 
   const { data: projects, isLoading } = usePublicProjects();
+  const { content } = useSiteContent();
 
-  // Current Drop is always the public project with the latest valid created_at.
+  // "Brewing" (default) keeps the Current Drop slot mysterious and lists every
+  // drop under Past Seasons. Switch to "live" to feature the newest drop.
+  const brewing = content("current.mode").toLowerCase() !== "live";
+
+  // When live, Current Drop is the public project with the latest created_at.
   const featured = useMemo(() => {
+    if (brewing) return undefined;
     const list = projects ?? [];
     const dated = list
       .map((p) => ({ p, ts: p.created_at ? new Date(p.created_at).getTime() : NaN }))
       .filter((x) => Number.isFinite(x.ts))
       .sort((a, b) => b.ts - a.ts);
     return dated[0]?.p ?? list[0];
-  }, [projects]);
+  }, [projects, brewing]);
 
   const rest = useMemo(
     () => (projects ?? []).filter((p) => p.id !== featured?.id),
