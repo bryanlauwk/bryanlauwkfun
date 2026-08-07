@@ -4,18 +4,12 @@ import { useVisitorCounter } from "@/hooks/useVisitorCounter";
 import { useSiteContent } from "@/hooks/useSiteSettings";
 
 const LINKS = [
-  { id: "room", label: "Room 01", compact: true },
-  { id: "notes", label: "Field Notes", compact: false },
-  { id: "travel", label: "Browser → Object", compact: false },
-  { id: "next", label: "Next", compact: true },
-  { id: "archive", label: "Archive", compact: true },
-  { id: "about", label: "About", compact: true },
+  { id: "play", label: "Play" },
+  { id: "process", label: "Process" },
+  { id: "notes", label: "Field Notes" },
+  { id: "next", label: "Next" },
+  { id: "about", label: "About" },
 ];
-
-
-
-
-
 
 export function PlaygroundNav() {
   const { count, isLoading } = useVisitorCounter();
@@ -71,16 +65,14 @@ export function PlaygroundNav() {
 
         <nav
           aria-label="Sections, compact"
-          className="flex items-center justify-between gap-3 border-t border-[hsl(var(--lp-hair)/0.12)] px-6 py-2.5 md:hidden"
+          className="lp-navrail flex items-center gap-5 overflow-x-auto border-t border-[hsl(var(--lp-hair)/0.12)] px-6 py-2.5 md:hidden"
         >
-          {LINKS.filter((l) => l.compact).map((l) => (
+          {LINKS.map((l) => (
             <a key={l.id} href={`#${l.id}`} className="lp-navlink whitespace-nowrap">
               {l.label}
             </a>
           ))}
         </nav>
-
-
       </header>
     </>
   );

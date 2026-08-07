@@ -108,11 +108,11 @@ export function ArrivalSection() {
         </p>
 
         <div className="lp-fade mt-9 flex flex-col items-center gap-5" style={{ animationDelay: "260ms" }}>
-          <a href="#room" className="lp-cta">
+          <a href="#play" className="lp-cta">
             {content("hero.ctaPrimary")}
           </a>
           <a
-            href="#travel"
+            href="#process"
             className="lp-mono text-muted-foreground underline-offset-8 transition-colors hover:text-foreground hover:underline"
           >
             {content("hero.ctaSecondary")}
@@ -121,7 +121,7 @@ export function ArrivalSection() {
       </div>
 
       <a
-        href="#room"
+        href="#play"
         className="absolute bottom-7 left-1/2 z-10 -translate-x-1/2 text-center text-[0.55rem] uppercase tracking-[0.34em] text-muted-foreground transition-colors hover:text-foreground"
       >
         <span className="mx-auto mb-2 block h-8 w-px bg-[hsl(var(--lp-hair)/0.35)]" aria-hidden="true" />

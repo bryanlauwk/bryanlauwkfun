@@ -33,7 +33,7 @@ export function ExitStrip() {
   };
 
   return (
-    <section id="about" className="lp-band relative" aria-labelledby="exit-heading">
+    <section id="about" className="lp-band relative scroll-mt-24" aria-labelledby="exit-heading">
       <div ref={ref} className={`lp-feature is-quiet ${inView ? "is-live" : ""}`}>
         <div className="lp-feature-art lp-feature-art--tall">
           <img
@@ -82,11 +82,11 @@ export function ExitStrip() {
                       {whisper}
                     </p>
                     <div className="mt-4 flex flex-wrap items-center gap-4">
-                      <a href="#archive" className="lp-mono text-accent hover:underline">
-                        Past Seasons
+                      <a href="#collection" className="lp-mono text-accent hover:underline">
+                        The collection
                       </a>
-                      <a href="#artifact" className="lp-mono text-accent hover:underline">
-                        Artifacts
+                      <a href="#process" className="lp-mono text-accent hover:underline">
+                        How a world travels
                       </a>
                       <button
                         type="button"
@@ -139,11 +139,30 @@ export function ExitStrip() {
               </div>
             </div>
 
+            <div className="flex flex-col gap-6">
+            <div className="lp-plate">
+              <p className="lp-label lp-label--violet">{content("commission.eyebrow")}</p>
+              <h3 className="lp-display mt-3 text-xl text-foreground">{content("commission.heading")}</h3>
+              <p className="mt-3 text-sm font-light leading-relaxed text-muted-foreground">
+                {content("commission.body")}
+              </p>
+              <a
+                href={content("about.studioUrl")}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="lp-mono mt-4 inline-flex items-center gap-2 text-accent transition-colors hover:text-foreground"
+              >
+                {content("commission.cta")}
+                <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+              </a>
+            </div>
+
             <div id="signal" className="lp-plate scroll-mt-24">
               <p className="lp-label lp-label--violet">{content("about.guestbookLabel")}</p>
               <div className="mt-5">
                 <GuestBook />
               </div>
+            </div>
             </div>
           </div>
         </div>

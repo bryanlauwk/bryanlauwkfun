@@ -9,48 +9,54 @@ const NOTES = [
 ] as const;
 
 /**
- * Field Notes — the intellectual foundations behind future experiments.
- * Explicitly labelled as research directions, never as finished work.
+ * Field Notes — a quiet editorial register (an index list, not a card grid) so
+ * research directions never read as finished projects.
  */
 export function FieldNotes() {
-  const { ref, inView } = useReveal<HTMLUListElement>(0.12);
+  const { ref, inView } = useReveal<HTMLDListElement>(0.12);
   const { content } = useSiteContent();
 
   return (
-    <section id="notes" className="lp-band relative px-6 py-16 md:px-14 md:py-24" aria-labelledby="notes-heading">
-      <div className="mx-auto max-w-[110rem]">
-        <div className="max-w-2xl">
+    <section
+      id="notes"
+      className="lp-band relative scroll-mt-24 px-6 py-14 md:px-14 md:py-20"
+      aria-labelledby="notes-heading"
+    >
+      <div className="mx-auto grid max-w-[110rem] gap-10 md:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] md:gap-16">
+        <div>
           <p className="lp-label lp-label--violet">{content("notes.eyebrow")}</p>
-          <h2 id="notes-heading" className="lp-display mt-5 text-3xl text-foreground md:text-[2.7rem]">
+          <h2 id="notes-heading" className="lp-display mt-4 text-2xl text-foreground md:text-[2rem]">
             {content("notes.heading")}
           </h2>
-          <p className="mt-5 text-sm font-light leading-relaxed text-muted-foreground">
+          <p className="mt-4 text-sm font-light leading-relaxed text-muted-foreground">
             {content("notes.intro")}
           </p>
         </div>
 
-        <ul
+        <dl
           ref={ref}
-          className={`lp-room-grid mt-12 grid grid-cols-1 gap-px overflow-hidden md:grid-cols-3 ${inView ? "is-live" : ""}`}
+          className={`lp-notes-index ${inView ? "is-live" : ""}`}
         >
           {NOTES.map(({ id, Icon }, i) => (
-            <li
+            <div
               key={id}
-              className="lp-note"
+              className="lp-note-row"
               style={{ ["--i" as string]: String(i) } as React.CSSProperties}
             >
-              <Icon className="h-5 w-5 text-accent" aria-hidden="true" />
-              <p className="lp-mono mt-6 text-muted-foreground/80">
-                Direction {String(i + 1).padStart(2, "0")}
-              </p>
-              <h3 className="lp-display mt-2 text-xl text-foreground">{content(`notes.${id}.title`)}</h3>
-              <p className="lp-mono mt-4 text-accent">{content(`notes.${id}.science`)}</p>
-              <p className="mt-3 text-sm font-light leading-relaxed text-muted-foreground">
-                {content(`notes.${id}.premise`)}
-              </p>
-            </li>
+              <dt className="flex items-baseline gap-4">
+                <span className="lp-mono text-muted-foreground/60">{String(i + 1).padStart(2, "0")}</span>
+                <span className="lp-display text-lg text-foreground">{content(`notes.${id}.title`)}</span>
+                <Icon className="ml-auto h-4 w-4 shrink-0 text-accent/70" aria-hidden="true" />
+              </dt>
+              <dd className="mt-2 pl-10">
+                <span className="lp-mono text-accent">{content(`notes.${id}.science`)}</span>
+                <p className="mt-2 max-w-xl text-sm font-light leading-relaxed text-muted-foreground">
+                  {content(`notes.${id}.premise`)}
+                </p>
+              </dd>
+            </div>
           ))}
-        </ul>
+        </dl>
       </div>
     </section>
   );

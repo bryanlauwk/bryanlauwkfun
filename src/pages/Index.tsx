@@ -1,20 +1,15 @@
 import { useMemo } from "react";
 import { PlaygroundNav } from "@/components/playground/PlaygroundNav";
 import { ArrivalSection } from "@/components/playground/ArrivalSection";
-import { Room01 } from "@/components/playground/Room01";
-import { CurrentSeason } from "@/components/playground/CurrentSeason";
+import { NowShowing } from "@/components/playground/NowShowing";
+import { Collection } from "@/components/playground/Collection";
 import { FieldNotes } from "@/components/playground/FieldNotes";
 import { SignalPath } from "@/components/playground/SignalPath";
-import { ArtifactsRow } from "@/components/playground/ArtifactsRow";
 import { UpcomingSeason } from "@/components/playground/UpcomingSeason";
-import { PastSeasons } from "@/components/playground/PastSeasons";
-import { CommissionNote } from "@/components/playground/CommissionNote";
 import { ExitStrip } from "@/components/playground/ExitStrip";
 import { PlaygroundFooter } from "@/components/playground/PlaygroundFooter";
 import { usePublicProjects } from "@/hooks/useProjects";
-import { useSiteContent } from "@/hooks/useSiteSettings";
 import { useSEO } from "@/hooks/useSEO";
-
 
 const Index = () => {
   useSEO({
@@ -25,13 +20,8 @@ const Index = () => {
   });
 
   const { data: projects, isLoading } = usePublicProjects();
-  const { content } = useSiteContent();
 
-  // "Brewing" (default) keeps the Current Drop slot mysterious and lists every
-  // drop under Past Seasons. Switch to "live" to feature the newest drop.
-  const brewing = content("current.mode").toLowerCase() !== "live";
-
-  // The newest public drop by created_at — always the lead of Room 01.
+  // The newest public drop by created_at — the only thing shown in Room 01.
   const latest = useMemo(() => {
     const list = projects ?? [];
     const dated = list
@@ -41,19 +31,11 @@ const Index = () => {
     return dated[0]?.p ?? list[0];
   }, [projects]);
 
-  // Current Season only features it when the season is switched to "live".
-  const featured = brewing ? undefined : latest;
-
-  const roomRest = useMemo(
+  // Every other real drop, exactly once, in the permanent collection.
+  const collection = useMemo(
     () => (projects ?? []).filter((p) => p.id !== latest?.id),
     [projects, latest?.id]
   );
-
-  const rest = useMemo(
-    () => (projects ?? []).filter((p) => p.id !== featured?.id),
-    [projects, featured?.id]
-  );
-
 
   return (
     <div className="living-playground relative min-h-screen overflow-x-clip bg-background text-foreground">
@@ -64,19 +46,13 @@ const Index = () => {
 
         <main id="main-content" className="flex-1">
           <ArrivalSection />
-          <Room01 featured={latest} projects={roomRest} isLoading={isLoading} />
-          <FieldNotes />
+          <NowShowing project={latest} isLoading={isLoading} />
+          <Collection projects={collection} isLoading={isLoading} />
           <SignalPath />
-          <ArtifactsRow />
-          <div className="relative mt-28 md:mt-36">
-            <CurrentSeason project={featured} isLoading={isLoading} />
-          </div>
+          <FieldNotes />
           <UpcomingSeason />
-          <PastSeasons projects={rest} isLoading={isLoading} />
-          <CommissionNote />
           <ExitStrip />
         </main>
-
 
         <PlaygroundFooter />
       </div>
