@@ -71,14 +71,15 @@ export function PlaygroundNav() {
 
         <nav
           aria-label="Sections, compact"
-          className="lp-rail items-center gap-6 border-t border-[hsl(var(--lp-hair)/0.12)] px-6 py-2.5 md:hidden"
+          className="flex items-center justify-between gap-3 border-t border-[hsl(var(--lp-hair)/0.12)] px-6 py-2.5 md:hidden"
         >
-          {LINKS.map((l) => (
+          {LINKS.filter((l) => l.compact).map((l) => (
             <a key={l.id} href={`#${l.id}`} className="lp-navlink whitespace-nowrap">
               {l.label}
             </a>
           ))}
         </nav>
+
 
       </header>
     </>
