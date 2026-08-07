@@ -210,23 +210,23 @@ export const CONTENT_GROUPS: ContentGroup[] = [
     id: "artifacts",
     title: "Objects Catalogue",
     description:
-      "The building-block catalogue. Each object is a reusable 'piece' Bryan mixes, matches and adapts into custom interactive experiences. Material line = format; Concept = how the piece adapts.",
+      "The three-object concept catalogue. These are exploratory physical studies, not products or available editions.",
     fields: [
-      { key: "artifacts.eyebrow", label: "Eyebrow label", defaultValue: "Building Blocks" },
+      { key: "artifacts.eyebrow", label: "Eyebrow label", defaultValue: "Object studies · concept catalogue" },
       { key: "artifacts.heading", label: "Heading", defaultValue: "Objects from the playground" },
       {
         key: "artifacts.intro",
         label: "Intro paragraph",
         type: "multiline",
         defaultValue:
-          "A working catalogue of the physical pieces behind the worlds. Each one is a patentable building block — LEGO for interactive art — that Bryan mixes, matches and adapts into a custom curation for any space, brand or story. Modular, recombinable, and built to bridge screen and environment.",
+          "Three speculative physical studies for exploring how a browser-born world might carry touch, presence and memory beyond the screen. These are exploratory concepts — not products, client work or currently available editions.",
       },
       {
         key: "artifacts.closing",
         label: "Closing line",
         type: "multiline",
         defaultValue:
-          "Every piece is designed to be patented, produced and recombined — the same block, curated differently for each use case.",
+          "All three are thought experiments — starting points for objects, not finished pieces or commissioned work.",
       },
       // 1 — Coin
       { key: "artifacts.coin.name", label: "Object 1 · name", defaultValue: "The Topographic Coin" },
@@ -236,7 +236,7 @@ export const CONTENT_GROUPS: ContentGroup[] = [
         label: "Object 1 · concept",
         type: "multiline",
         defaultValue:
-          "A tactile save-point for a finished world. Adapts into a collectible token, a wayfinding key, or a proof-of-visit — its contours re-map to whatever world it joins.",
+          "A tactile save-point a world might carry. Its contours could be re-mapped into a collectible token, a wayfinding key, or a proof-of-visit for whatever world it joins.",
       },
       { key: "artifacts.coin.image", label: "Object 1 · image", type: "image", defaultValue: "" },
       // 2 — Key
@@ -247,7 +247,7 @@ export const CONTENT_GROUPS: ContentGroup[] = [
         label: "Object 2 · concept",
         type: "multiline",
         defaultValue:
-          "The bridge between a browser game and the room you're standing in. Tap it to open a door between the digital interface and the physical environment — one key, any threshold.",
+          "A bridge between a browser game and the room you're standing in. Tapped, it could open a door between a digital interface and a physical threshold — one key imagined for any threshold.",
       },
       { key: "artifacts.key.image", label: "Object 2 · image", type: "image", defaultValue: "" },
       // 3 — Stone
@@ -258,10 +258,11 @@ export const CONTENT_GROUPS: ContentGroup[] = [
         label: "Object 3 · concept",
         type: "multiline",
         defaultValue:
-          "A presence block. It warms when someone else steps into the same world. Drop it into a booth, a table or a pavilion to make remote company feel physically near.",
+          "A presence study. It might warm when someone else steps into the same world, turning a booth, table or pavilion into a place where remote company could feel physically near.",
       },
       { key: "artifacts.stone.image", label: "Object 3 · image", type: "image", defaultValue: "" },
       // 4 — Chart / Atlas
+
       { key: "artifacts.paper.name", label: "Object 4 · name", defaultValue: "The Folded Atlas" },
       { key: "artifacts.paper.material", label: "Object 4 · format", defaultValue: "Coated paper · gold ink" },
       {
