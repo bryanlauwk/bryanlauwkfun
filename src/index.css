@@ -2357,21 +2357,6 @@
 @media (min-width: 900px) { .pw-path-arrow { display: block; } }
 @keyframes pw-drift { 0%, 100% { transform: translateX(-3px); opacity: 0.5; } 50% { transform: translateX(3px); opacity: 1; } }
 
-/* ---- collaboration ---- */
-.pw-build {
-  display: grid;
-  gap: 2rem;
-  border-radius: 1.4rem;
-  border: 1px solid hsl(var(--pw-line) / 0.16);
-  background:
-    radial-gradient(60% 100% at 100% 0%, hsl(var(--pw-amber) / 0.1), transparent 70%),
-    linear-gradient(160deg, hsl(235 26% 8% / 0.9), hsl(238 30% 5% / 0.92));
-  padding: 1.6rem;
-}
-@media (min-width: 1024px) {
-  .pw-build { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; padding: 2.6rem; gap: 3rem; }
-}
-
 /* ---- motion ---- */
 .pw-tilt:hover { transform: translateY(-3px); }
 .pw-in .pw-card,
