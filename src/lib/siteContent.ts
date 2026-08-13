@@ -32,23 +32,23 @@ export interface ContentGroup {
 export const CONTENT_GROUPS: ContentGroup[] = [
   {
     id: "play",
-    title: "Homepage — Curiosity, made playable",
-    description: "Hero, browser experiments, the one-idea-many-forms loop, creative moves, the bench, collaboration and about.",
+    title: "Homepage — Making curiosity playable",
+    description: "Hero, the 2.0 teaser, browser experiments, and the combined collaboration / about / message section.",
     fields: [
       // Nav
       { key: "play.navCta", label: "Nav button", defaultValue: "Build one" },
 
       // Hero
-      { key: "play.heroEyebrow", label: "Hero · eyebrow", defaultValue: "Bryan Lau · playful inventor" },
-      { key: "play.heroTitle", label: "Hero · headline", defaultValue: "Curiosity, made playable." },
+      { key: "play.heroEyebrow", label: "Hero · eyebrow", defaultValue: "Bryan Lau · creative technologist" },
+      { key: "play.heroTitle", label: "Hero · headline", defaultValue: "Making curiosity playable." },
       {
         key: "play.heroBody",
         label: "Hero · body",
         type: "multiline",
         defaultValue:
-          "I build browser simulations and explore how surprising ideas could become shared experiences and interactive things you can touch.",
+          "I build interactive experiments across screens, spaces and the physical world — mixing AI, science, art and creative technology.",
       },
-      { key: "play.heroLine", label: "Hero · relationship line", defaultValue: "Play the idea on screen. Then see what it could become in the real world." },
+      { key: "play.heroLine", label: "Hero · closing line", defaultValue: "Made to touch. Made to try. Made to wonder." },
       { key: "play.heroCta", label: "Hero · primary button", defaultValue: "Try an experiment" },
       { key: "play.heroCtaSecondary", label: "Hero · secondary button", defaultValue: "Build a curious thing" },
       { key: "play.heroReassurance", label: "Hero · reassurance", defaultValue: "No install. Opens in your browser." },
@@ -59,16 +59,34 @@ export const CONTENT_GROUPS: ContentGroup[] = [
         type: "multiline",
         defaultValue: "Move your cursor across the frame. Everything here reacts to something you did — that's the whole idea.",
       },
-      { key: "play.output.simulation", label: "Hero output · 1", defaultValue: "Simulation" },
-      { key: "play.output.experience", label: "Hero output · 2", defaultValue: "Experience" },
-      { key: "play.output.object", label: "Hero output · 3", defaultValue: "Object" },
+      { key: "play.output.simulation", label: "Hero output · 1", defaultValue: "Screen" },
+      { key: "play.output.experience", label: "Hero output · 2", defaultValue: "Space" },
+      { key: "play.output.object", label: "Hero output · 3", defaultValue: "Stuff" },
       { key: "play.output.simulation.note", label: "Hero output 1 · note", defaultValue: "Playable now" },
       { key: "play.output.experience.note", label: "Hero output 2 · note", defaultValue: "Exploring" },
       { key: "play.output.object.note", label: "Hero output 3 · note", defaultValue: "Exploring" },
 
+      // Something is brewing (2.0)
+      { key: "play.brewEyebrow", label: "Brewing · eyebrow", defaultValue: "Something is brewing · bryanlauwk.fun 2.0" },
+      { key: "play.brewHeading", label: "Brewing · headline", defaultValue: "Creative Interactive Stuff." },
+      {
+        key: "play.brewBody",
+        label: "Brewing · sub-line",
+        type: "multiline",
+        defaultValue:
+          "Objects, machines and experiments that respond to humans — sometimes usefully, usually unnecessarily.",
+      },
+      { key: "play.brew.screen", label: "Brewing · step 1", defaultValue: "Screen" },
+      { key: "play.brew.screen.note", label: "Brewing · step 1 note", defaultValue: "Browser toys, games, simulations" },
+      { key: "play.brew.space", label: "Brewing · step 2", defaultValue: "Space" },
+      { key: "play.brew.space.note", label: "Brewing · step 2 note", defaultValue: "Rooms and installations people move through" },
+      { key: "play.brew.stuff", label: "Brewing · step 3", defaultValue: "Stuff" },
+      { key: "play.brew.stuff.note", label: "Brewing · step 3 note", defaultValue: "Sensors, machines and things you can handle" },
+
       // Browser experiments
       { key: "play.sectionEyebrow", label: "Play · eyebrow", defaultValue: "Browser experiments" },
       { key: "play.sectionHeading", label: "Play · heading", defaultValue: "What you can play now." },
+      { key: "play.sectionSub", label: "Play · subheadline", defaultValue: "Web games · simulations · experiments" },
       {
         key: "play.sectionIntro",
         label: "Play · intro",
@@ -81,84 +99,17 @@ export const CONTENT_GROUPS: ContentGroup[] = [
       { key: "play.outputLabel", label: "Play · card output cue", defaultValue: "You" },
       { key: "play.emptyBody", label: "Play · empty state", defaultValue: "New things are being built. Check back soon." },
 
-      // One idea, more than one form
-      { key: "play.loopEyebrow", label: "Loop · eyebrow", defaultValue: "The system" },
-      { key: "play.loopHeading", label: "Loop · heading", defaultValue: "One idea, more than one form." },
-      {
-        key: "play.loopIntro",
-        label: "Loop · intro",
-        type: "multiline",
-        defaultValue:
-          "A phenomenon worth playing with can live in several places at once. The browser work is real today; the spatial and physical forms are directions I'm exploring, not finished things.",
-      },
-      { key: "play.statusNow", label: "Loop · status (real)", defaultValue: "Playable now" },
-      { key: "play.statusExploring", label: "Loop · status (future)", defaultValue: "Exploring" },
-      { key: "play.node.phenomenon.title", label: "Node 1 · title", defaultValue: "Phenomenon" },
-      { key: "play.node.phenomenon.body", label: "Node 1 · body", type: "multiline", defaultValue: "It starts with a behavior that makes you say “wait, why does it do that?”" },
-      { key: "play.node.simulation.title", label: "Node 2 · title", defaultValue: "Simulation" },
-      { key: "play.node.simulation.body", label: "Node 2 · body", type: "multiline", defaultValue: "A browser piece where you change a variable and watch the system answer back." },
-      { key: "play.node.experience.title", label: "Node 3 · title", defaultValue: "Experience" },
-      { key: "play.node.experience.body", label: "Node 3 · body", type: "multiline", defaultValue: "The same behavior could scale into a responsive place people activate together." },
-      { key: "play.node.object.title", label: "Node 4 · title", defaultValue: "Object" },
-      { key: "play.node.object.body", label: "Node 4 · body", type: "multiline", defaultValue: "The idea could condense into a tactile mechanism — something you turn, press or keep." },
-      { key: "play.loopBackTitle", label: "Loop · companion title", defaultValue: "Companion loop" },
-      {
-        key: "play.loopBackBody",
-        label: "Loop · companion body",
-        type: "multiline",
-        defaultValue: "The browser could keep going after the physical part: explain the mechanism, let you test variables, or remix what you just touched.",
-      },
-      { key: "play.objectsToggle", label: "Loop · form studies toggle", defaultValue: "Three form studies" },
-      {
-        key: "play.objectsNote",
-        label: "Loop · form studies note",
-        type: "multiline",
-        defaultValue: "Speculative sketches only — not products, client work or available editions.",
-      },
-
-      // Creative moves
-      { key: "play.movesEyebrow", label: "Moves · eyebrow", defaultValue: "How I make wonder" },
-      { key: "play.movesHeading", label: "Moves · heading", defaultValue: "Four moves, over and over." },
-      { key: "play.move.notice.title", label: "Move 1 · title", defaultValue: "Notice" },
-      { key: "play.move.notice.body", label: "Move 1 · body", type: "multiline", defaultValue: "Find a behavior that makes you ask “wait, why?” and refuse to let it go." },
-      { key: "play.move.tinker.title", label: "Move 2 · title", defaultValue: "Tinker" },
-      { key: "play.move.tinker.body", label: "Move 2 · body", type: "multiline", defaultValue: "Change one variable. Watch the system answer. Change it again." },
-      { key: "play.move.amplify.title", label: "Move 3 · title", defaultValue: "Amplify" },
-      { key: "play.move.amplify.body", label: "Move 3 · body", type: "multiline", defaultValue: "Make the effect bigger, louder, more visible — or shared with someone standing next to you." },
-      { key: "play.move.extend.title", label: "Move 4 · title", defaultValue: "Extend" },
-      { key: "play.move.extend.body", label: "Move 4 · body", type: "multiline", defaultValue: "Let the screen and the real-world piece continue each other instead of competing." },
-
-      // On the bench
-      { key: "play.benchEyebrow", label: "Bench · eyebrow", defaultValue: "On the bench" },
-      { key: "play.benchHeading", label: "Bench · heading", defaultValue: "Questions I'm currently chewing on." },
-      {
-        key: "play.benchIntro",
-        label: "Bench · intro",
-        type: "multiline",
-        defaultValue: "Open directions, not projects. Nothing here is built, promised or dated.",
-      },
-      { key: "play.bench.q1", label: "Bench · question 1", type: "multiline", defaultValue: "How can motion make an invisible system visible?" },
-      { key: "play.bench.q2", label: "Bench · question 2", type: "multiline", defaultValue: "What changes when a screen-based mechanic becomes room-sized?" },
-      { key: "play.bench.q3", label: "Bench · question 3", type: "multiline", defaultValue: "What could a browser reveal about an object after you take it home?" },
-      { key: "play.benchLabel", label: "Bench · item label", defaultValue: "Open question" },
-
-      // Collaboration
-      { key: "play.buildEyebrow", label: "Build · eyebrow", defaultValue: "Collaboration" },
-      { key: "play.buildHeading", label: "Build · heading", defaultValue: "Build a curious thing." },
+      // Closing — collaboration + about + message
+      { key: "play.buildEyebrow", label: "Closing · eyebrow", defaultValue: "Let's build" },
+      { key: "play.buildHeading", label: "Closing · heading", defaultValue: "Let's make something curious." },
       {
         key: "play.buildBody",
-        label: "Build · body",
+        label: "Closing · collaboration body",
         type: "multiline",
         defaultValue:
-          "Bring a strange question, a mechanic or a half-formed hunch. I'm best on briefs that need a playful browser mechanic, an interactive spatial concept, a tangible mechanism direction, or a browser companion that connects the two.",
+          "Bring a strange question, a mechanic or a half-formed hunch. I'm best on briefs that need a playful browser mechanic, an interactive spatial concept, or a tangible thing that reacts to people.",
       },
-      { key: "play.buildCta", label: "Build · button", defaultValue: "Start with a weird question" },
-      { key: "play.track.browser.title", label: "Track 1 · title", defaultValue: "Browser mechanic" },
-      { key: "play.track.browser.body", label: "Track 1 · body", type: "multiline", defaultValue: "A playable prototype that lives at a link and explains itself by being used." },
-      { key: "play.track.space.title", label: "Track 2 · title", defaultValue: "Spatial concept" },
-      { key: "play.track.space.body", label: "Track 2 · body", type: "multiline", defaultValue: "A concept for how the same behavior could work at room scale, for more than one person." },
-      { key: "play.track.object.title", label: "Track 3 · title", defaultValue: "Mechanism direction" },
-      { key: "play.track.object.body", label: "Track 3 · body", type: "multiline", defaultValue: "An exploration of the tactile thing — plus the browser companion that extends it." },
+      { key: "play.buildCta", label: "Closing · button", defaultValue: "Start with a weird question" },
 
       // About
       { key: "play.aboutEyebrow", label: "About · eyebrow", defaultValue: "About" },
@@ -168,7 +119,7 @@ export const CONTENT_GROUPS: ContentGroup[] = [
         label: "About · body",
         type: "multiline",
         defaultValue:
-          "I'm Bryan Lau — a playful inventor and creative technologist. I build fast, test what people actually reach for, and keep the ideas that still feel surprising on the tenth try. Right now that work lives in the browser, and it's moving toward responsive spaces and things you can hold.",
+          "I'm Bryan Lau — a creative technologist who builds playful experiments. I make things fast, test what people actually reach for, and keep the ideas that still feel surprising on the tenth try. Today that work lives in the browser, and it's moving toward responsive spaces and things you can hold.",
       },
       { key: "play.guestbookLabel", label: "Guest book · label", defaultValue: "Leave a message" },
     ],

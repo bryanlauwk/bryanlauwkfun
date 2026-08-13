@@ -1,9 +1,8 @@
 import { useSiteContent } from "@/hooks/useSiteSettings";
 
 const LINKS = [
+  { href: "#next", label: "What's next" },
   { href: "#play", label: "Play" },
-  { href: "#system", label: "How it works" },
-  { href: "#bench", label: "On the bench" },
   { href: "#about", label: "About" },
 ];
 

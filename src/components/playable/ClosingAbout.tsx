@@ -3,7 +3,7 @@ import { Github, Twitter, Linkedin, ArrowUpRight, MessageSquare, ChevronDown } f
 import { GuestBook } from "@/components/GuestBook";
 import { useSiteContent } from "@/hooks/useSiteSettings";
 
-/** About the maker, real links, and a collapsed secondary guest book. */
+/** One closing section: collaboration, about the maker, and a collapsed guest book. */
 export function ClosingAbout() {
   const { content } = useSiteContent();
   const [openBook, setOpenBook] = useState(false);
@@ -19,15 +19,33 @@ export function ClosingAbout() {
       <div className="mx-auto max-w-[100rem]">
         <div className="grid gap-4 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
           <div className="pw-panel pw-clip">
-            <p className="pw-eyebrow pw-eyebrow--cyan">{content("play.aboutEyebrow")}</p>
-            <h2 id="about-heading" className="pw-h2 mt-3 text-2xl md:text-3xl">
-              {content("play.aboutHeading")}
+            <p className="pw-eyebrow pw-eyebrow--coral">{content("play.buildEyebrow")}</p>
+            <h2 id="about-heading" className="pw-h2 mt-3">
+              {content("play.buildHeading")}
             </h2>
+            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+              {content("play.buildBody")}
+            </p>
+
+            <a
+              href={content("about.studioUrl")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="pw-btn pw-btn--primary mt-6"
+            >
+              {content("play.buildCta")}
+              <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+            </a>
+
+            <hr className="mt-8 border-[hsl(var(--pw-line)/0.16)]" />
+
+            <p className="pw-eyebrow pw-eyebrow--cyan mt-8">{content("play.aboutEyebrow")}</p>
+            <h3 className="pw-h3 mt-3">{content("play.aboutHeading")}</h3>
             <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground">
               {content("play.aboutBody")}
             </p>
 
-            <div className="mt-7 flex flex-wrap items-center gap-3">
+            <div className="mt-6 flex flex-wrap items-center gap-3">
               <a
                 href={content("about.studioUrl")}
                 target="_blank"

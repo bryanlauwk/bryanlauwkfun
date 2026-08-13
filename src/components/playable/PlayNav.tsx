@@ -3,15 +3,14 @@ import { SoundToggle } from "@/components/SoundToggle";
 import { useSiteContent } from "@/hooks/useSiteSettings";
 
 const LINKS = [
+  { id: "next", label: "What's next" },
   { id: "play", label: "Play" },
-  { id: "system", label: "How it works" },
-  { id: "bench", label: "On the bench" },
   { id: "about", label: "About" },
 ];
 
 /**
- * Workshop navigation: four anchors plus one visible CTA. On mobile the same
- * four labels sit in a non-overflowing second row.
+ * Workshop navigation: three anchors plus one visible CTA. On mobile the same
+ * labels sit in a non-overflowing second row.
  */
 export function PlayNav() {
   const { content } = useSiteContent();
