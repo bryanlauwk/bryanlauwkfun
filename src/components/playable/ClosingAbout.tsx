@@ -1,13 +1,8 @@
-import { useState } from "react";
-import { Github, Twitter, Linkedin, ArrowUpRight, MessageSquare, ChevronDown } from "lucide-react";
-import { GuestBook } from "@/components/GuestBook";
+import { ArrowUpRight, Github, Linkedin, Twitter } from "lucide-react";
 import { useSiteContent } from "@/hooks/useSiteSettings";
 
-/** One closing section: collaboration, about the maker, and a collapsed guest book. */
 export function ClosingAbout() {
   const { content } = useSiteContent();
-  const [openBook, setOpenBook] = useState(false);
-
   const socials = [
     { href: content("about.githubUrl"), Icon: Github, label: "GitHub" },
     { href: content("about.twitterUrl"), Icon: Twitter, label: "Twitter / X" },
@@ -15,83 +10,37 @@ export function ClosingAbout() {
   ];
 
   return (
-    <section id="about" className="pw-section scroll-mt-28 px-4 md:px-10" aria-labelledby="about-heading">
-      <div className="mx-auto max-w-[100rem]">
-        <div className="grid gap-4 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
-          <div className="pw-panel pw-clip">
-            <p className="pw-eyebrow pw-eyebrow--coral">{content("play.buildEyebrow")}</p>
-            <h2 id="about-heading" className="pw-h2 mt-3">
-              {content("play.buildHeading")}
-            </h2>
-            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-              {content("play.buildBody")}
-            </p>
-
-            <a
-              href={content("about.studioUrl")}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="pw-btn pw-btn--primary mt-6"
-            >
-              {content("play.buildCta")}
-              <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-            </a>
-
-            <hr className="mt-8 border-[hsl(var(--pw-line)/0.16)]" />
-
-            <p className="pw-eyebrow pw-eyebrow--cyan mt-8">{content("play.aboutEyebrow")}</p>
-            <h3 className="pw-h3 mt-3">{content("play.aboutHeading")}</h3>
-            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-              {content("play.aboutBody")}
-            </p>
-
-            <div className="mt-6 flex flex-wrap items-center gap-3">
-              <a
-                href={content("about.studioUrl")}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="pw-btn"
-              >
-                {content("about.studioLabel")}
-                <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
-              </a>
-              {socials.map(({ href, Icon, label }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className="pw-icon-link"
-                >
-                  <Icon className="h-4 w-4" aria-hidden="true" />
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <div className="pw-panel pw-clip">
-            <button
-              type="button"
-              onClick={() => setOpenBook((v) => !v)}
-              aria-expanded={openBook}
-              aria-controls="guest-book-panel"
-              className="flex w-full items-center justify-between gap-3 text-left"
-            >
-              <span className="inline-flex items-center gap-2 text-sm text-foreground/90">
-                <MessageSquare className="h-4 w-4 text-accent" aria-hidden="true" />
-                {content("play.guestbookLabel")}
-              </span>
-              <ChevronDown
-                className={`h-4 w-4 text-muted-foreground transition-transform ${openBook ? "rotate-180" : ""}`}
-                aria-hidden="true"
-              />
-            </button>
-            <div id="guest-book-panel" hidden={!openBook} className="mt-5">
-              <GuestBook />
-            </div>
-          </div>
+    <section id="about" className="cp-section cp-about" aria-labelledby="about-heading">
+      <div className="cp-shell cp-about-grid">
+        <div className="cp-about-main">
+          <p className="cp-kicker">GOT AN OBJECT WITH NO PERSONALITY?</p>
+          <h2 id="about-heading">LET&apos;S GIVE IT<br />BAD IDEAS.</h2>
+          <p>
+            Bring a strange question, an ordinary object or a brief that feels a little too sensible. I prototype playful interactions across browser, physical computing and real-world experiences.
+          </p>
+          <a
+            href={content("about.studioUrl")}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cp-button cp-button--ink"
+          >
+            START WITH A WEIRD QUESTION <ArrowUpRight aria-hidden="true" />
+          </a>
         </div>
+
+        <aside className="cp-about-note">
+          <p className="cp-about-note-label">ABOUT THE PERSON ENCOURAGING THE BAD BEHAVIOUR</p>
+          <h3>HI, I&apos;M BRYAN.</h3>
+          <p>I&apos;m a creative technologist making curiosity playable. I build fast, test in public and keep the ideas that still make people reach for them on the tenth try.</p>
+          <p className="cp-about-small">CURRENTLY: browser toys → sensors → playful machines → whatever behaves badly next.</p>
+          <div className="cp-socials">
+            {socials.map(({ href, Icon, label }) => (
+              <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}>
+                <Icon aria-hidden="true" /> {label}
+              </a>
+            ))}
+          </div>
+        </aside>
       </div>
     </section>
   );
