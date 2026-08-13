@@ -1,11 +1,8 @@
 import { useMemo } from "react";
 import { PlayNav } from "@/components/playable/PlayNav";
 import { PlayHero } from "@/components/playable/PlayHero";
+import { Brewing } from "@/components/playable/Brewing";
 import { PlayExperiences } from "@/components/playable/PlayExperiences";
-import { IdeaSystem } from "@/components/playable/IdeaSystem";
-import { CreativeMoves } from "@/components/playable/CreativeMoves";
-import { OnTheBench } from "@/components/playable/OnTheBench";
-import { BuildTogether } from "@/components/playable/BuildTogether";
 import { ClosingAbout } from "@/components/playable/ClosingAbout";
 import { PlayFooter } from "@/components/playable/PlayFooter";
 import { usePublicProjects } from "@/hooks/useProjects";
@@ -13,9 +10,9 @@ import { useSEO } from "@/hooks/useSEO";
 
 const Index = () => {
   useSEO({
-    title: "Bryan Lau — Curiosity, made playable",
+    title: "Bryan Lau — Making curiosity playable",
     description:
-      "Browser simulations, shared experiences and interactive objects by Bryan Lau. Play the idea on screen, then see what it could become in the real world.",
+      "Interactive experiments by Bryan Lau across screens, spaces and the physical world — browser games, simulations and creative technology.",
     canonical: "https://www.bryanlauwk.fun/",
   });
 
@@ -47,11 +44,8 @@ const Index = () => {
 
         <main id="main-content" className="flex-1">
           <PlayHero />
+          <Brewing />
           <PlayExperiences featured={featured} rest={rest} isLoading={isLoading} />
-          <IdeaSystem />
-          <CreativeMoves />
-          <OnTheBench />
-          <BuildTogether />
           <ClosingAbout />
         </main>
 
