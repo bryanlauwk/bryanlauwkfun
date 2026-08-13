@@ -32,8 +32,9 @@ export interface ContentGroup {
 export const CONTENT_GROUPS: ContentGroup[] = [
   {
     id: "play",
-    title: "Homepage — Curiosity, made playable",
-    description: "Hero, browser experiments, the one-idea-many-forms loop, creative moves, the bench, collaboration and about.",
+    title: "Homepage — Making curiosity playable",
+    description: "Hero, the 2.0 teaser, browser experiments, and the combined collaboration / about / message section.",
+    fields: [
       // Nav
       { key: "play.navCta", label: "Nav button", defaultValue: "Build one" },
 
