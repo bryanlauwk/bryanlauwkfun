@@ -30,6 +30,7 @@ export function PlayExperiences({ featured, rest, isLoading }: PlayExperiencesPr
             <h2 id="play-heading" className="pw-h2 mt-3">
               {content("play.sectionHeading")}
             </h2>
+            <p className="pw-section-sub mt-3">{content("play.sectionSub")}</p>
           </div>
           <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
             {content("play.sectionIntro")}
