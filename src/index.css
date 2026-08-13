@@ -2517,96 +2517,43 @@
 }
 .pw-card:hover .pw-card-io-line { background: repeating-linear-gradient(90deg, hsl(var(--pw-cyan) / 0.7) 0 4px, transparent 4px 8px); }
 
-/* the system loop */
-.pw-loop { display: grid; gap: 1rem; position: relative; }
-@media (min-width: 700px) { .pw-loop { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.2rem; } }
-@media (min-width: 1100px) { .pw-loop { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2rem; } }
-.pw-loop-node { position: relative; }
-.pw-loop-arrow {
-  display: none;
-  position: absolute;
-  right: -1.4rem;
-  top: 2.2rem;
-  color: hsl(var(--pw-line) / 0.6);
-  animation: pw-drift 2.6s ease-in-out infinite;
+/* section subheadline */
+.pw-section-sub {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: hsl(var(--pw-cyan) / 0.75);
 }
-@media (min-width: 1100px) { .pw-loop-arrow { display: block; } }
 
-.pw-loopback {
+/* the 2.0 teaser strip */
+.pw-brew-strip { display: grid; gap: 0.9rem; }
+@media (min-width: 900px) {
+  .pw-brew-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.4rem; }
+}
+.pw-brew-step {
   position: relative;
   display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  border-radius: 1.1rem;
-  border: 1px dashed hsl(var(--pw-cyan) / 0.35);
-  background: hsl(var(--pw-cyan) / 0.04);
-  padding: 1.2rem 1.4rem;
-}
-.pw-loopback-line {
-  position: absolute;
-  left: 1.4rem;
-  right: 1.4rem;
-  top: 0;
-  height: 1px;
-  background: repeating-linear-gradient(90deg, hsl(var(--pw-cyan) / 0.5) 0 6px, transparent 6px 12px);
-}
-
-/* creative moves */
-.pw-move { position: relative; overflow: hidden; }
-.pw-move-index {
-  position: absolute;
-  right: 1rem;
-  top: 0.75rem;
-  font-family: "Archivo", sans-serif;
-  font-size: 1.6rem;
-  font-weight: 800;
-  color: hsl(var(--pw-line) / 0.14);
-}
-.pw-move-trace {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 2px;
-  width: 100%;
-  transform: scaleX(0.14);
-  transform-origin: left;
-  background: hsl(var(--pw-edge, var(--pw-cyan)) / 0.8);
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.pw-move:hover .pw-move-trace { transform: scaleX(1); }
-
-/* the bench */
-.pw-bench {
-  display: grid;
-  gap: 1.6rem;
-  border-radius: 1.4rem;
-  border: 1px solid hsl(var(--pw-line) / 0.16);
-  background:
-    radial-gradient(60% 100% at 0% 0%, hsl(var(--pw-cream) / 0.06), transparent 70%),
-    linear-gradient(160deg, hsl(235 26% 8% / 0.9), hsl(238 30% 5% / 0.92));
-  padding: 1.6rem;
-}
-@media (min-width: 1024px) {
-  .pw-bench { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 3rem; padding: 2.6rem; align-items: center; }
-}
-.pw-bench-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.9rem;
+  align-items: center;
+  gap: 0.85rem;
   border-radius: 0.9rem;
-  border: 1px dashed hsl(var(--pw-line) / 0.2);
-  background: hsl(235 26% 8% / 0.5);
-  padding: 1rem 1.1rem;
-  transition: border-color 0.3s ease, background 0.3s ease;
+  border: 1px solid hsl(var(--pw-line) / 0.18);
+  background: hsl(235 26% 8% / 0.55);
+  padding: 0.95rem 1.05rem;
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
 }
-.pw-bench-item:hover { border-color: hsl(var(--pw-cream) / 0.4); background: hsl(235 26% 10% / 0.6); }
-.pw-bench-label {
-  font-size: 0.55rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: hsl(var(--pw-cream) / 0.75);
+.pw-brew-step:hover {
+  border-color: hsl(var(--pw-edge, var(--pw-cyan)) / 0.45);
+  background: hsl(235 26% 10% / 0.7);
+  transform: translateY(-2px);
+}
+.pw-brew-label { display: block; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.06em; color: hsl(var(--foreground)); }
+.pw-brew-note { display: block; margin-top: 0.15rem; font-size: 0.72rem; line-height: 1.4; color: hsl(var(--muted-foreground)); }
+.pw-brew-arrow {
+  margin-left: auto;
+  color: hsl(var(--pw-line) / 0.55);
+  animation: pw-drift 2.6s ease-in-out infinite;
 }
 
-.pw-in .pw-loop-node,
-.pw-in .pw-bench-item { animation: pw-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards; animation-delay: calc(var(--i, 0) * 70ms); }
+.pw-in .pw-brew-step { animation: pw-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards; animation-delay: calc(var(--i, 0) * 70ms); }
+
