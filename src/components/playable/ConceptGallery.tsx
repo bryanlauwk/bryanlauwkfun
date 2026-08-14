@@ -184,6 +184,7 @@ export function ConceptGallery() {
           {CONCEPTS.map((concept) => {
             const isOpen = openId === concept.id;
             return (
+              <>
               <article
                 key={concept.id}
                 className={`cp-concept-card cp-color-${concept.color} ${concept.featured ? "is-featured" : ""} ${isOpen ? "is-open" : ""}`}
@@ -222,6 +223,11 @@ export function ConceptGallery() {
                   </dl>
                 </div>
               </article>
+              {concept.id === "applause-microwave" && (<div className="cp-concept-interstitial" aria-hidden="true">
+              <strong>NO BORING BUTTONS. BUILD THE PUNCHLINE.</strong>
+              <span>TWO MORE OBJECTS BELOW</span>
+              </div>)}
+      </>
             );
           })}
         </div>
