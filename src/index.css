@@ -3221,6 +3221,40 @@
 
 .cp-rule-card p { font: 700 0.6rem/1 "DM Mono", monospace; }
 .cp-rule-card strong { display: block; margin-top: 0.5rem; font-family: "Archivo Black", sans-serif; font-size: clamp(1.25rem, 2.3vw, 2rem); line-height: 1.05; letter-spacing: -0.035em; }
+.cp-concept-interstitial {
+   grid-column: 1 / -1;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 0.9rem;
+   flex-wrap: wrap;
+   margin: 0.5rem 0;
+   padding: 1.35rem 1.75rem;
+   border: 2px solid var(--cp-ink);
+   background: var(--cp-red);
+   color: var(--cp-paper-bright);
+   box-shadow: 0.5rem 0.5rem 0 var(--cp-ink);
+   transform: rotate(0.6deg);
+   text-align: center;
+}
+
+.cp-concept-interstitial strong {
+   font-family: "Archivo Black", sans-serif;
+   font-size: clamp(1.35rem, 3vw, 2.4rem);
+   line-height: 1;
+   letter-spacing: -0.03em;
+}
+
+.cp-concept-interstitial span {
+   font: 700 0.62rem/1 "DM Mono", monospace;
+   letter-spacing: 0.08em;
+   opacity: 0.85;
+}
+
+@media (max-width: 640px) {
+   .cp-concept-interstitial { transform: none; padding: 1.1rem 1.25rem; }
+}
+
 
 .cp-archive {
   background:
