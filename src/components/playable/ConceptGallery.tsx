@@ -37,7 +37,7 @@ const CONCEPTS: Concept[] = [
     behaviour: "Leans into anyone nearby. Flashes when you leave. Keeps score of your attention.",
     surprise: "Ignore it long enough and it dramatically waters the plant next door instead.",
     image: needyPlant,
-    imageAlt: "A giant needy plant leaning toward a surprised person while dramatically watering its neighbour.",
+    imageAlt: "A Malaysian Chinese woman recoiling as a giant red servo-mounted planter leans at her and waters the plant beside it.",
     color: "green",
     featured: true,
   },
@@ -51,7 +51,7 @@ const CONCEPTS: Concept[] = [
     behaviour: "Inspects each item, hesitates theatrically, then rates the decision on an analog meter.",
     surprise: "Bad recycling gets rejected with a tiny passive-aggressive receipt.",
     image: judgementalBin,
-    imageAlt: "A polished green recycling bin judging a takeaway cup with a giant meter and absurd receipt.",
+    imageAlt: "A Malaysian Chinese man holding a takeaway cup while a huge green motorised bin swings its judgement meter and prints a receipt.",
     color: "yellow",
     featured: true,
   },
@@ -65,7 +65,7 @@ const CONCEPTS: Concept[] = [
     behaviour: "Looks harmless when pressed. Waits one suspicious beat.",
     surprise: "Then the whole bench performs a twelve-second victory parade for you.",
     image: overreactingBell,
-    imageAlt: "A tiny red desk bell triggering an enormous colourful celebration machine and confetti blast.",
+    imageAlt: "A Malaysian Chinese teenager pressing a tiny red desk bell as a huge horn-and-confetti rig erupts behind it.",
     color: "red",
   },
   {
@@ -78,7 +78,7 @@ const CONCEPTS: Concept[] = [
     behaviour: "Turns its handle away whenever a confident hand reaches for it.",
     surprise: "Whisper ‘please’ and it slowly offers the handle to the quietest person in the room.",
     image: shyCup,
-    imageAlt: "A blue ceramic cup spinning its handle away from a baffled person's reaching hand.",
+    imageAlt: "A Malaysian Chinese woman reaching for a blue cup that has spun its handle away on a motorised coaster.",
     color: "blue",
   },
   {
@@ -91,7 +91,7 @@ const CONCEPTS: Concept[] = [
     behaviour: "Stirs when late-night scrolling crosses the limit, then gently tugs the cable away.",
     surprise: "Put the phone face-down and it purrs, returns the cable and tucks itself back in.",
     image: sleepMonster,
-    imageAlt: "A soft charcoal sleep monster tugging a charging cable away from a surprised late-night scroller.",
+    imageAlt: "A soft robotic creature under the bed tugging the charging cable from a Malaysian Chinese man scrolling at night.",
     color: "blue",
   },
   {
@@ -104,7 +104,7 @@ const CONCEPTS: Concept[] = [
     behaviour: "Serves one snack politely. Dodges the same hand when it comes back too soon.",
     surprise: "The stolen second snack gets launched safely into somebody else’s bowl.",
     image: snackSniper,
-    imageAlt: "A polished red and yellow snack machine redirecting a cheese puff away from a greedy second hand.",
+    imageAlt: "A Malaysian Chinese woman reaching for a second snack as a red swivelling chute flicks it into a friend's bowl.",
     color: "yellow",
   },
   {
@@ -117,7 +117,7 @@ const CONCEPTS: Concept[] = [
     behaviour: "Prints a tiny excuse every time you flee the task tab.",
     surprise: "At ten minutes it presents an itemised invoice for the time you owe yourself.",
     image: procrastinationPrinter,
-    imageAlt: "A polished red printer firing a huge paper trail around a guilty laptop user.",
+    imageAlt: "A Malaysian Chinese man at a laptop as an oversized red printer unspools a huge trail of tiny receipts.",
     color: "red",
   },
   {
@@ -130,7 +130,7 @@ const CONCEPTS: Concept[] = [
     behaviour: "Pauses at 00:01 and refuses to unlock until the room claps.",
     surprise: "A good ovation earns one completely unnecessary victory lap.",
     image: applauseMicrowave,
-    imageAlt: "Three friends applauding a colourful microwave that refuses to finish without praise.",
+    imageAlt: "Three Malaysian Chinese friends applauding a blue microwave rigged with microphones that refuses to finish.",
     color: "blue",
   },
   {
@@ -143,7 +143,7 @@ const CONCEPTS: Concept[] = [
     behaviour: "Accepts carefully hung coats and slowly dumps lazy ones back on the floor.",
     surprise: "Say ‘please’ and it rotates the sleeve toward you like a tiny valet.",
     image: pettyCoatHook,
-    imageAlt: "A yellow rotating coat hook dropping a red coat toward a surprised person.",
+    imageAlt: "A Malaysian Chinese woman watching a yellow motorised wall hook slowly drop her red coat.",
     color: "green",
   },
   {
@@ -156,7 +156,7 @@ const CONCEPTS: Concept[] = [
     behaviour: "Tracks you with a hard spotlight whenever you press ‘snooze’ on the task.",
     surprise: "The moment you begin, it warms, lowers the beam and becomes your biggest fan.",
     image: alibiLamp,
-    imageAlt: "An oversized red desk lamp interrogating a person caught holding a phone.",
+    imageAlt: "A Malaysian Chinese man caught with his phone under the hard spotlight of a giant red motorised task lamp.",
     color: "yellow",
   },
 ];
@@ -175,7 +175,7 @@ export function ConceptGallery() {
             </h2>
           </div>
           <div className="cp-intro-note">
-            <p>Start with something ordinary. Give it a point of view. Make that point of view physical. Save one rude little twist for last.</p>
+            <p>Take something ordinary, give it a point of view, then build that point of view as real hardware people can walk up to. Made for live rooms, launches and brand activations — one rude little twist each.</p>
             <p className="cp-concept-disclaimer">CONCEPT STUDIES / VISUALISED, NOT YET BUILT</p>
           </div>
         </div>
