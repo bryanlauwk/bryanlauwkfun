@@ -4,7 +4,7 @@ import { useSiteContent } from "@/hooks/useSiteSettings";
 
 const LINKS = [
   { id: "experiments", label: "EXPERIMENTS" },
-  { id: "method", label: "HOW IT ESCAPES" },
+  { id: "method", label: "THE METHOD" },
   { id: "archive", label: "SEASON 01" },
   { id: "about", label: "ABOUT" },
 ];
