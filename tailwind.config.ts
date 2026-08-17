@@ -16,7 +16,6 @@ export default {
       fontFamily: {
         serif: ["Archivo", "Inter", "sans-serif"],
         display: ["Archivo", "Inter", "sans-serif"],
-        tide: ["Fraunces", "Georgia", "serif"],
         sans: ["Inter", "Segoe UI", "sans-serif"],
         mono: ["JetBrains Mono", "Fira Code", "monospace"],
       },
