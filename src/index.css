@@ -242,32 +242,56 @@
               0 4px 10px hsl(0 0% 0% / 0.35);
 }
 
-/* Mystery crate — 3D neon cube, slow rotation, stencil cutout question mark */
+/* Mystery crate — 3D neon box, slow isometric rotation, stencil question marks */
 .crate-stage {
-  perspective: 900px;
+  perspective: 1100px;
+  perspective-origin: 50% 40%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2.5rem 0;
+  padding: 3rem 0 4rem;
+  position: relative;
 }
 
 .neon-crate {
-  --crate-size: 170px;
+  --crate-size: 150px;
   position: relative;
   width: var(--crate-size);
   height: var(--crate-size);
   transform-style: preserve-3d;
-  animation: crate-spin 24s linear infinite;
-  filter: drop-shadow(0 0 26px hsl(var(--primary) / 0.4));
+  animation: crate-spin 28s linear infinite;
 }
 
 @media (min-width: 768px) {
-  .neon-crate { --crate-size: 220px; }
+  .neon-crate { --crate-size: 200px; }
 }
 
 @keyframes crate-spin {
-  from { transform: rotateX(-14deg) rotateY(0deg); }
-  to { transform: rotateX(-14deg) rotateY(360deg); }
+  from { transform: rotateX(-20deg) rotateZ(2deg) rotateY(0deg); }
+  to { transform: rotateX(-20deg) rotateZ(2deg) rotateY(360deg); }
+}
+
+/* Contact shadow / ground glow so the box sits on a surface */
+.crate-shadow {
+  position: absolute;
+  left: 50%;
+  bottom: 1.75rem;
+  width: 210px;
+  height: 34px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    hsl(var(--primary) / 0.35) 0%,
+    hsl(var(--primary) / 0.12) 45%,
+    transparent 72%
+  );
+  filter: blur(6px);
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .crate-shadow { width: 280px; height: 44px; bottom: 2.25rem; }
 }
 
 .neon-crate-face {
@@ -276,24 +300,75 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(160deg, hsl(240 6% 8% / 0.96), hsl(240 6% 3% / 0.96));
-  border: 1px solid hsl(var(--primary) / 0.75);
+  backface-visibility: hidden;
+  border: 1px solid hsl(var(--primary) / 0.7);
   box-shadow:
-    inset 0 0 22px hsl(var(--primary) / 0.18),
-    0 0 12px hsl(var(--primary) / 0.45);
+    inset 0 0 26px hsl(var(--primary) / 0.16),
+    0 0 14px hsl(var(--primary) / 0.4);
 }
 
-.crate-front  { transform: translateZ(calc(var(--crate-size) / 2)); }
-.crate-back   { transform: rotateY(180deg) translateZ(calc(var(--crate-size) / 2)); }
-.crate-right  { transform: rotateY(90deg) translateZ(calc(var(--crate-size) / 2)); }
-.crate-left   { transform: rotateY(-90deg) translateZ(calc(var(--crate-size) / 2)); }
-.crate-top    { transform: rotateX(90deg) translateZ(calc(var(--crate-size) / 2)); }
-.crate-bottom { transform: rotateX(-90deg) translateZ(calc(var(--crate-size) / 2)); opacity: 0.6; }
+/* Per-face shading — single light source from upper left */
+.crate-front {
+  transform: translateZ(calc(var(--crate-size) / 2));
+  background: linear-gradient(150deg, hsl(240 6% 11%), hsl(240 7% 4%));
+}
+.crate-back {
+  transform: rotateY(180deg) translateZ(calc(var(--crate-size) / 2));
+  background: linear-gradient(150deg, hsl(240 6% 6%), hsl(240 8% 2%));
+}
+.crate-right {
+  transform: rotateY(90deg) translateZ(calc(var(--crate-size) / 2));
+  background: linear-gradient(150deg, hsl(240 6% 7%), hsl(240 8% 3%));
+}
+.crate-left {
+  transform: rotateY(-90deg) translateZ(calc(var(--crate-size) / 2));
+  background: linear-gradient(150deg, hsl(240 6% 9%), hsl(240 7% 4%));
+}
+.crate-top {
+  transform: rotateX(90deg) translateZ(calc(var(--crate-size) / 2));
+  background: linear-gradient(150deg, hsl(240 6% 16%), hsl(240 6% 9%));
+  border-color: hsl(var(--primary) / 0.85);
+  box-shadow:
+    inset 0 0 30px hsl(var(--primary) / 0.22),
+    0 0 18px hsl(var(--primary) / 0.5);
+}
+.crate-bottom {
+  transform: rotateX(-90deg) translateZ(calc(var(--crate-size) / 2));
+  background: hsl(240 8% 2%);
+  border-color: hsl(var(--primary) / 0.35);
+  box-shadow: none;
+}
+
+/* Glowing seams along the vertical edges */
+.crate-edges {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+.crate-edges span {
+  position: absolute;
+  top: -2%;
+  height: 104%;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    hsl(var(--primary) / 0.95) 12%,
+    hsl(var(--primary) / 0.95) 88%,
+    transparent
+  );
+  box-shadow: 0 0 8px hsl(var(--primary) / 0.85);
+}
+.crate-edges span:nth-child(1) { left: 0; transform: translateZ(calc(var(--crate-size) / 2)); }
+.crate-edges span:nth-child(2) { right: 0; transform: translateZ(calc(var(--crate-size) / 2)); }
+.crate-edges span:nth-child(3) { left: 0; transform: rotateY(90deg) translateZ(calc(var(--crate-size) / 2)); }
+.crate-edges span:nth-child(4) { right: 0; transform: rotateY(90deg) translateZ(calc(var(--crate-size) / 2)); }
 
 .stencil-glyph {
   font-family: "Archivo", sans-serif;
   font-weight: 900;
-  font-size: 4.5rem;
+  font-size: 4rem;
   line-height: 1;
   color: hsl(var(--primary));
   text-shadow:
@@ -301,16 +376,22 @@
     0 0 22px hsl(var(--primary) / 0.55),
     0 0 60px hsl(var(--primary) / 0.35);
   -webkit-text-stroke: 1px hsl(var(--primary) / 0.9);
-  opacity: 0.95;
+  opacity: 0.92;
 }
 
+.crate-top .stencil-glyph { font-size: 2.75rem; opacity: 0.75; }
+.crate-back .stencil-glyph,
+.crate-right .stencil-glyph { opacity: 0.7; }
+
 @media (min-width: 768px) {
-  .stencil-glyph { font-size: 6rem; }
+  .stencil-glyph { font-size: 5.5rem; }
+  .crate-top .stencil-glyph { font-size: 3.5rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .neon-crate { animation: none; transform: rotateX(-14deg) rotateY(-24deg); }
+  .neon-crate { animation: none; transform: rotateX(-20deg) rotateZ(2deg) rotateY(-28deg); }
 }
+
 
 
 /* Visitor counter — gallery attendance meter */
