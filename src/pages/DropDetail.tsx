@@ -35,7 +35,7 @@ export default function DropDetail() {
   if (!project) {
     const url = `${SITE}/drops/${slug ?? ""}`;
     const title = "Drop not found — Bryan Lau";
-    const description = "This drop doesn't exist or has been retired. Browse the current collection of drops from Bryan Lau.";
+    const description = "This experiment doesn't exist or has been retired. Browse the current collection of browser experiments from Bryan Lau.";
     return (
       <div className="min-h-screen flex flex-col bg-background">
         <Helmet>
@@ -73,7 +73,7 @@ export default function DropDetail() {
               to="/"
               className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.25em] text-primary"
             >
-              <ArrowLeft className="w-4 h-4" /> Back to drops
+              <ArrowLeft className="w-4 h-4" /> Back to experiments
             </Link>
           </div>
         </main>
@@ -90,7 +90,7 @@ export default function DropDetail() {
         ? `${rawDesc.slice(0, 152).trimEnd()}…`
         : rawDesc
       : `A drop from Bryan Lau — ${project.title}. Click to play.`;
-  const title = `${project.title} — Bryan Lau drops`;
+  const title = `${project.title} — Bryan Lau browser experiments`;
   const ogImage = project.image_url ?? undefined;
 
   const jsonLd = {
@@ -110,7 +110,7 @@ export default function DropDetail() {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Drops", item: `${SITE}/` },
+      { "@type": "ListItem", position: 1, name: "Browser Experiments", item: `${SITE}/` },
       { "@type": "ListItem", position: 2, name: project.title, item: canonical },
     ],
   };
@@ -145,7 +145,7 @@ export default function DropDetail() {
             to="/"
             className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground hover:text-foreground transition-colors mb-8"
           >
-            <ArrowLeft className="w-3.5 h-3.5" /> All drops
+            <ArrowLeft className="w-3.5 h-3.5" /> All experiments
           </Link>
 
           <article className="relative bg-card border border-foreground/15 overflow-hidden">

@@ -2,6 +2,7 @@ import { CinematicHeader } from "@/components/CinematicHeader";
 import { CinematicFooter } from "@/components/CinematicFooter";
 import { ProjectGrid } from "@/components/ProjectGrid";
 import { ScrollSection } from "@/components/ScrollSection";
+import { BrewingTeaser } from "@/components/BrewingTeaser";
 import { MarkerUnderline, RedactionReveal } from "@/components/RedactionReveal";
 import { useSEO } from "@/hooks/useSEO";
 import heroPortrait from "@/assets/hero-portrait-photo.png";
@@ -9,7 +10,7 @@ import heroPortrait from "@/assets/hero-portrait-photo.png";
 const Index = () => {
   useSEO({
     title: "Bryan Lau — For the curious",
-    description: "Bryan Lau makes small playable art, browser-born experiments, and interactive things for the curious. A stranger kind of internet.",
+    description: "Browser experiments by Bryan Lau — playable games, simulations, charts and small interactive art for the curious. A stranger kind of internet.",
     canonical: "https://www.bryanlauwk.fun/",
   });
   return (
@@ -159,15 +160,20 @@ const Index = () => {
 
             <div className="mb-8 md:mb-12">
               <h2 className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight text-foreground">
-                Drops
+                Browser Experiments
               </h2>
               <div className="h-1 w-24 bg-primary mt-4" />
               <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-wider mt-4">
-                Small playable things. Please touch the art. Break it.{" "}
-                <RedactionReveal>Tell me what happened</RedactionReveal>.
+                Games, simulations, charts, and small toys you can play with right here. Please
+                touch the art. Break it. <RedactionReveal>Tell me what happened</RedactionReveal>.
               </p>
             </div>
             <ProjectGrid />
+          </ScrollSection>
+
+          {/* 2.0 teaser — Room 03 */}
+          <ScrollSection animation="fade-up">
+            <BrewingTeaser />
           </ScrollSection>
         </div>
       </main>
