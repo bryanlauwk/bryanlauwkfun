@@ -9,8 +9,8 @@ import heroPortrait from "@/assets/hero-portrait-photo.png";
 
 const Index = () => {
   useSEO({
-    title: "Bryan Lau — For the curious",
-    description: "Browser experiments by Bryan Lau — playable games, simulations, charts and small interactive art for the curious. A stranger kind of internet.",
+    title: "Bryan Lau Create — For the curious",
+    description: "Browser experiments by Bryan Lau Create — playable games, simulations, charts and small interactive art for the curious. A stranger kind of internet.",
     canonical: "https://www.bryanlauwk.fun/",
   });
   return (
@@ -56,7 +56,7 @@ const Index = () => {
                     <div className="relative torn-edge overflow-hidden">
                       <img
                         src={heroPortrait}
-                        alt="Bryan Lau portrait — evidence exhibit A"
+                        alt="Bryan Lau Create portrait — evidence exhibit A"
                         className="w-full h-auto object-cover grayscale contrast-125 brightness-95"
                         loading="eager"
                       />
