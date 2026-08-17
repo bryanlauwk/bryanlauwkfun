@@ -348,8 +348,8 @@
 }
 .crate-edges span {
   position: absolute;
-  top: -2%;
-  height: 104%;
+  top: 0;
+  height: 100%;
   width: 1px;
   background: linear-gradient(
     180deg,
