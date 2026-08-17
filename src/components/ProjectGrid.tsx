@@ -35,6 +35,22 @@ function ExhibitSkeleton({ delay = 0, index = 0 }: { delay?: number; index?: num
 
 const NEW_WINDOW_DAYS = 45;
 
+const TAG_LABELS: Record<string, string> = {
+  game: "Game",
+  games: "Games",
+  simulation: "Simulation",
+  sim: "Simulation",
+  chart: "Chart",
+  data: "Data",
+  toy: "Toy",
+  experiment: "Experiment",
+  art: "Playable art",
+};
+
+function prettyTag(tag: string) {
+  return TAG_LABELS[tag] ?? tag.charAt(0).toUpperCase() + tag.slice(1);
+}
+
 export function ProjectGrid() {
   const { data: projects, isLoading } = usePublicProjects();
   const navigate = useNavigate();
@@ -52,7 +68,7 @@ export function ProjectGrid() {
     });
     const tagChips = Array.from(tagCounts.entries())
       .sort((a, b) => b[1] - a[1])
-      .map(([label]) => ({ id: label, label }));
+      .map(([label]) => ({ id: label, label: prettyTag(label) }));
 
     const now = Date.now();
     const newCount = (projects ?? []).filter(
@@ -123,8 +139,8 @@ export function ProjectGrid() {
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search the collection…"
-              aria-label="Search drops"
+              placeholder="Search experiments…"
+              aria-label="Search browser experiments"
               className="w-full bg-card border border-foreground/20 pl-9 pr-9 py-2.5 font-mono text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
             />
             {query && (
@@ -140,7 +156,7 @@ export function ProjectGrid() {
           </div>
 
           {/* Filter chips */}
-          <div className="flex flex-wrap gap-2" role="tablist" aria-label="Filter drops">
+          <div className="flex flex-wrap gap-2" role="tablist" aria-label="Filter browser experiments">
             {filters.map((f) => {
               const isActive = activeFilter === f.id;
               return (
@@ -179,7 +195,7 @@ export function ProjectGrid() {
               {hasProjects ? "No matches" : "Nothing here yet"}
             </p>
             <p className="text-muted-foreground font-mono text-xs uppercase tracking-widest">
-              {hasProjects ? "Try another filter or query" : "New works incoming…"}
+              {hasProjects ? "Try another filter or query" : "New experiments incoming…"}
             </p>
             {hasProjects && (query || activeFilter !== "all") && (
               <button
