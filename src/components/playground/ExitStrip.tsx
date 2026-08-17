@@ -2,8 +2,21 @@ import { useState } from "react";
 import { Github, Twitter, Linkedin, ArrowUpRight, Sparkles } from "lucide-react";
 import { GuestBook } from "@/components/GuestBook";
 import { useReveal } from "@/hooks/useReveal";
-import { useSiteContent } from "@/hooks/useSiteSettings";
 import closingArt from "@/assets/bryans-mind-closing-v3.jpg";
+
+const WHISPERS = [
+  "The older worlds are still awake.",
+  "Some objects remember being touched.",
+  "There is more below the surface.",
+  "Nothing here is finished.",
+  "Scroll slower.",
+];
+
+const SOCIALS = [
+  { href: "https://github.com/bryanlauwk", Icon: Github, label: "GitHub" },
+  { href: "https://twitter.com/bryanlauwk", Icon: Twitter, label: "Twitter" },
+  { href: "https://linkedin.com/in/bryanlauwk", Icon: Linkedin, label: "LinkedIn" },
+];
 
 /**
  * Bryan's Mind + the guest book, held inside the closing landscape. The copy
@@ -13,27 +26,14 @@ export function ExitStrip() {
   const [whisper, setWhisper] = useState<string | null>(null);
   const [idx, setIdx] = useState(0);
   const { ref, inView } = useReveal<HTMLDivElement>(0.1);
-  const { content } = useSiteContent();
-
-  const whispers = content("about.whispers")
-    .split("\n")
-    .map((w) => w.trim())
-    .filter(Boolean);
-
-  const socials = [
-    { href: content("about.githubUrl"), Icon: Github, label: "GitHub" },
-    { href: content("about.twitterUrl"), Icon: Twitter, label: "Twitter" },
-    { href: content("about.linkedinUrl"), Icon: Linkedin, label: "LinkedIn" },
-  ];
 
   const hint = () => {
-    if (whispers.length === 0) return;
-    setWhisper(whispers[idx % whispers.length]);
+    setWhisper(WHISPERS[idx % WHISPERS.length]);
     setIdx((n) => n + 1);
   };
 
   return (
-    <section id="about" className="lp-band relative scroll-mt-24" aria-labelledby="exit-heading">
+    <section id="about" className="lp-band relative" aria-labelledby="exit-heading">
       <div ref={ref} className={`lp-feature is-quiet ${inView ? "is-live" : ""}`}>
         <div className="lp-feature-art lp-feature-art--tall">
           <img
@@ -60,9 +60,10 @@ export function ExitStrip() {
                   <span aria-hidden="true" />
                 </button>
                 <div>
-                  <p className="lp-label lp-label--violet">{content("about.mindLabel")}</p>
+                  <p className="lp-label lp-label--violet">Bryan&apos;s Mind</p>
                   <p className="mt-3 max-w-[18rem] text-sm font-light leading-relaxed text-muted-foreground">
-                    {content("about.mindBody")}
+                    A quiet guide that lives at the edge of the water. It does not answer
+                    questions — it points.
                   </p>
                   <button
                     type="button"
@@ -70,7 +71,7 @@ export function ExitStrip() {
                     className="lp-mono mt-4 inline-flex items-center gap-2 text-accent transition-colors hover:text-foreground"
                   >
                     <Sparkles className="h-3 w-3" aria-hidden="true" />
-                    {content("about.mindCta")}
+                    Ask for a hint
                   </button>
                 </div>
               </div>
@@ -82,11 +83,11 @@ export function ExitStrip() {
                       {whisper}
                     </p>
                     <div className="mt-4 flex flex-wrap items-center gap-4">
-                      <a href="#collection" className="lp-mono text-accent hover:underline">
-                        The collection
+                      <a href="#archive" className="lp-mono text-accent hover:underline">
+                        Past Seasons
                       </a>
-                      <a href="#process" className="lp-mono text-accent hover:underline">
-                        How a world travels
+                      <a href="#artifact" className="lp-mono text-accent hover:underline">
+                        Artifacts
                       </a>
                       <button
                         type="button"
@@ -101,30 +102,26 @@ export function ExitStrip() {
               </div>
 
               <h2 id="exit-heading" className="lp-display mt-12 text-2xl text-foreground md:text-[2rem]">
-                {content("about.heading")
-                  .split("\n")
-                  .map((line, i, arr) => (
-                    <span key={i}>
-                      {line}
-                      {i < arr.length - 1 && <br />}
-                    </span>
-                  ))}
+                Nothing here is permanent.
+                <br />
+                See you next season.
               </h2>
               <p className="mt-5 max-w-md text-sm font-light leading-relaxed text-muted-foreground">
-                {content("about.body")}
+                Built by Bryan Lau — a creative growth marketer making things people want
+                to play with. Creativity is the interface. Growth is the outcome.
               </p>
 
               <div className="mt-7 flex flex-wrap items-center gap-3">
                 <a
-                  href={content("about.studioUrl")}
+                  href="https://ideas.bryanlauwk.fun"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="lp-button"
                 >
-                  {content("about.studioLabel")}
+                  The Studio
                   <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
                 </a>
-                {socials.map(({ href, Icon, label }) => (
+                {SOCIALS.map(({ href, Icon, label }) => (
                   <a
                     key={label}
                     href={href}
@@ -139,30 +136,11 @@ export function ExitStrip() {
               </div>
             </div>
 
-            <div className="flex flex-col gap-6">
-            <div className="lp-plate">
-              <p className="lp-label lp-label--violet">{content("commission.eyebrow")}</p>
-              <h3 className="lp-display mt-3 text-xl text-foreground">{content("commission.heading")}</h3>
-              <p className="mt-3 text-sm font-light leading-relaxed text-muted-foreground">
-                {content("commission.body")}
-              </p>
-              <a
-                href={content("about.studioUrl")}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="lp-mono mt-4 inline-flex items-center gap-2 text-accent transition-colors hover:text-foreground"
-              >
-                {content("commission.cta")}
-                <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
-              </a>
-            </div>
-
             <div id="signal" className="lp-plate scroll-mt-24">
-              <p className="lp-label lp-label--violet">{content("about.guestbookLabel")}</p>
+              <p className="lp-label lp-label--violet">Leave a message in the sky</p>
               <div className="mt-5">
                 <GuestBook />
               </div>
-            </div>
             </div>
           </div>
         </div>

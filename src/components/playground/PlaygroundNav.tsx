@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import { SoundToggle } from "@/components/SoundToggle";
 import { useVisitorCounter } from "@/hooks/useVisitorCounter";
-import { useSiteContent } from "@/hooks/useSiteSettings";
 
 const LINKS = [
-  { id: "play", label: "Play" },
-  { id: "process", label: "Process" },
-  { id: "notes", label: "Field Notes" },
-  { id: "next", label: "Next" },
+  { id: "now", label: "Current Drop" },
+  { id: "artifact", label: "Artifacts" },
+  { id: "next", label: "Next Season" },
+  { id: "archive", label: "Past Seasons" },
   { id: "about", label: "About" },
 ];
 
+
+
+
 export function PlaygroundNav() {
   const { count, isLoading } = useVisitorCounter();
-  const { content } = useSiteContent();
   const [lifted, setLifted] = useState(false);
 
   useEffect(() => {
@@ -38,7 +39,7 @@ export function PlaygroundNav() {
       >
         <div className="mx-auto flex max-w-[110rem] items-center justify-between gap-4 px-6 py-5 md:px-14">
           <a href="#arrival" className="lp-script text-2xl text-foreground md:text-[1.7rem]">
-            {content("nav.brand")}
+            bryanlauwk.fun
           </a>
 
           <div className="flex items-center gap-5 md:gap-9">
@@ -65,14 +66,15 @@ export function PlaygroundNav() {
 
         <nav
           aria-label="Sections, compact"
-          className="lp-navrail flex w-full items-center justify-between gap-1 overflow-hidden border-t border-[hsl(var(--lp-hair)/0.12)] px-3 py-1.5 md:hidden"
+          className="lp-rail items-center gap-6 border-t border-[hsl(var(--lp-hair)/0.12)] px-6 py-2.5 md:hidden"
         >
           {LINKS.map((l) => (
-            <a key={l.id} href={`#${l.id}`} className="lp-navlink">
+            <a key={l.id} href={`#${l.id}`} className="lp-navlink whitespace-nowrap">
               {l.label}
             </a>
           ))}
         </nav>
+
       </header>
     </>
   );

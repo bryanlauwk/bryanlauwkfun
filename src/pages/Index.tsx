@@ -1,49 +1,58 @@
 import { useMemo } from "react";
-import { PlayNav } from "@/components/playable/PlayNav";
-import { PlayHero } from "@/components/playable/PlayHero";
-import { ConceptGallery } from "@/components/playable/ConceptGallery";
-import { BuildMethod } from "@/components/playable/BuildMethod";
-import { BrowserArchive } from "@/components/playable/BrowserArchive";
-import { ClosingAbout } from "@/components/playable/ClosingAbout";
-import { PlayFooter } from "@/components/playable/PlayFooter";
+import { PlaygroundNav } from "@/components/playground/PlaygroundNav";
+import { ArrivalSection } from "@/components/playground/ArrivalSection";
+import { CurrentSeason } from "@/components/playground/CurrentSeason";
+import { ArtifactsRow } from "@/components/playground/ArtifactsRow";
+import { UpcomingSeason } from "@/components/playground/UpcomingSeason";
+import { PastSeasons } from "@/components/playground/PastSeasons";
+import { ExitStrip } from "@/components/playground/ExitStrip";
+import { PlaygroundFooter } from "@/components/playground/PlaygroundFooter";
 import { usePublicProjects } from "@/hooks/useProjects";
 import { useSEO } from "@/hooks/useSEO";
 
 const Index = () => {
   useSEO({
-    title: "Bryan Lau — Making Curiosity Playable",
+    title: "Bryan Lau — The Living Playground",
     description:
-      "Weird creative-tech experiments by Bryan Lau across screen, space and stuff—browser toys, playful machines and badly behaved objects.",
+      "Interactive art, playful technology and AI experiences by Bryan Lau. A living playground of small playable worlds.",
     canonical: "https://www.bryanlauwk.fun/",
   });
 
   const { data: projects, isLoading } = usePublicProjects();
 
+  // Current Drop is always the public project with the latest valid created_at.
   const featured = useMemo(() => {
     const list = projects ?? [];
     const dated = list
-      .map((project) => ({ project, timestamp: project.created_at ? new Date(project.created_at).getTime() : NaN }))
-      .filter((item) => Number.isFinite(item.timestamp))
-      .sort((a, b) => b.timestamp - a.timestamp);
-    return dated[0]?.project ?? list[0];
+      .map((p) => ({ p, ts: p.created_at ? new Date(p.created_at).getTime() : NaN }))
+      .filter((x) => Number.isFinite(x.ts))
+      .sort((a, b) => b.ts - a.ts);
+    return dated[0]?.p ?? list[0];
   }, [projects]);
 
   const rest = useMemo(
-    () => (projects ?? []).filter((project) => project.id !== featured?.id),
-    [projects, featured?.id],
+    () => (projects ?? []).filter((p) => p.id !== featured?.id),
+    [projects, featured?.id]
   );
 
   return (
-    <div className="curiosity min-h-screen overflow-x-clip">
-      <PlayNav />
-      <main id="main-content">
-        <PlayHero />
-        <ConceptGallery />
-        <BuildMethod />
-        <BrowserArchive featured={featured} rest={rest} isLoading={isLoading} />
-        <ClosingAbout />
-      </main>
-      <PlayFooter />
+    <div className="living-playground relative min-h-screen overflow-x-clip bg-background text-foreground">
+      <div className="lp-depth" aria-hidden="true" />
+
+      <div className="relative z-10 flex min-h-screen flex-col">
+        <PlaygroundNav />
+
+        <main id="main-content" className="flex-1">
+          <ArrivalSection />
+          <CurrentSeason project={featured} isLoading={isLoading} />
+          <ArtifactsRow />
+          <UpcomingSeason />
+          <PastSeasons projects={rest} isLoading={isLoading} />
+          <ExitStrip />
+        </main>
+
+        <PlaygroundFooter />
+      </div>
     </div>
   );
 };
