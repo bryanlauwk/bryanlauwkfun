@@ -2,6 +2,7 @@ import { CinematicHeader } from "@/components/CinematicHeader";
 import { CinematicFooter } from "@/components/CinematicFooter";
 import { ProjectGrid } from "@/components/ProjectGrid";
 import { ScrollSection } from "@/components/ScrollSection";
+import { BrewingTeaser } from "@/components/BrewingTeaser";
 import { MarkerUnderline, RedactionReveal } from "@/components/RedactionReveal";
 import { useSEO } from "@/hooks/useSEO";
 import heroPortrait from "@/assets/hero-portrait-photo.png";
@@ -9,7 +10,7 @@ import heroPortrait from "@/assets/hero-portrait-photo.png";
 const Index = () => {
   useSEO({
     title: "Bryan Lau — For the curious",
-    description: "Bryan Lau makes small playable art, browser-born experiments, and interactive things for the curious. A stranger kind of internet.",
+    description: "Browser experiments by Bryan Lau — playable games, simulations, charts and small interactive art for the curious. A stranger kind of internet.",
     canonical: "https://www.bryanlauwk.fun/",
   });
   return (
