@@ -159,15 +159,20 @@ const Index = () => {
 
             <div className="mb-8 md:mb-12">
               <h2 className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight text-foreground">
-                Drops
+                Browser Experiments
               </h2>
               <div className="h-1 w-24 bg-primary mt-4" />
               <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-wider mt-4">
-                Small playable things. Please touch the art. Break it.{" "}
-                <RedactionReveal>Tell me what happened</RedactionReveal>.
+                Games, simulations, charts, and small toys you can play with right here. Please
+                touch the art. Break it. <RedactionReveal>Tell me what happened</RedactionReveal>.
               </p>
             </div>
             <ProjectGrid />
+          </ScrollSection>
+
+          {/* 2.0 teaser — Room 03 */}
+          <ScrollSection animation="fade-up">
+            <BrewingTeaser />
           </ScrollSection>
         </div>
       </main>
