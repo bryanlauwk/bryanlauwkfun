@@ -19,10 +19,9 @@ const Index = () => {
 
       <main id="main-content" className="flex-1 relative z-10 px-4 md:px-12 py-10 md:py-20">
         <div className="max-w-7xl mx-auto">
-          {/* Hero — Room 01 */}
+          {/* Hero */}
           <section className="mb-20 md:mb-32 animate-fade-in-up relative">
             <div className="flex items-center justify-between mb-8 md:mb-12 exhibit-label">
-              <span>Room 01 · Permanent collection</span>
               <span className="hidden md:inline">1.3521°N 103.8198°E</span>
             </div>
 
@@ -148,15 +147,15 @@ const Index = () => {
             </div>
           </section>
 
-          {/* 2.0 teaser — Room 02 */}
+          {/* 2.0 teaser */}
           <ScrollSection animation="fade-up">
             <BrewingTeaser />
           </ScrollSection>
 
-          {/* Drops — Room 03 */}
+          {/* Browser experiments */}
           <ScrollSection animation="fade-up" className="mt-20 md:mt-32 relative">
             <div className="flex items-center justify-between mb-4 exhibit-label">
-              <span>Room 03 · Interactive works</span>
+              <span>1.0 · In the browser</span>
               <span className="hidden md:inline-flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
                 Live
@@ -165,7 +164,7 @@ const Index = () => {
 
             <div className="mb-8 md:mb-12">
               <h2 className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight text-foreground">
-                Browser Experiments
+                1.0 — Browser Experiments
               </h2>
               <div className="h-1 w-24 bg-primary mt-4" />
               <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-wider mt-4">
