@@ -20,7 +20,7 @@ export function BrewingTeaser() {
       <div className="relative border border-foreground/15 bg-card px-5 py-10 md:px-12 md:py-14 overflow-hidden">
         {/* Embargo tape across the corner */}
         <div
-          className="evidence-tape absolute -top-3 -right-10 h-6 w-48 rotate-[28deg] origin-center flex items-center justify-center font-mono text-[9px] uppercase tracking-[0.3em] font-bold text-background"
+          className="evidence-tape absolute top-5 -right-12 h-6 w-52 rotate-[35deg] origin-center flex items-center justify-center font-mono text-[9px] uppercase tracking-[0.3em] font-bold text-background"
           aria-hidden="true"
         >
           Embargoed
