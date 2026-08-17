@@ -1,13 +1,23 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
+import { useSEO } from "@/hooks/useSEO";
 
 const NotFound = () => {
   const location = useLocation();
 
+  useSEO({
+    title: "Page Not Found (404) — Bryan Lau",
+    description:
+      "This page doesn't exist. Head back to browse Bryan Lau's browser experiments — playable games, simulations and interactive toys.",
+    canonical: "https://www.bryanlauwk.fun/404",
+    noindex: true,
+  });
+
   useEffect(() => {
     console.error("404 Error: User attempted to access non-existent route:", location.pathname);
   }, [location.pathname]);
+
 
   return (
     <div className="relative flex min-h-screen items-center justify-center bg-background overflow-hidden film-grain vignette">
