@@ -37,7 +37,7 @@ export function CinematicHeader() {
             <img
               src={faviconImage}
               alt=""
-              className="w-9 h-9 md:w-10 md:h-10 object-cover grayscale contrast-125 border border-foreground/25"
+              className="w-9 h-9 md:w-10 md:h-10 object-cover border border-foreground/25"
             />
             <div className="flex flex-col leading-tight">
               <span className="font-display text-base md:text-xl font-black uppercase tracking-tight text-foreground">
