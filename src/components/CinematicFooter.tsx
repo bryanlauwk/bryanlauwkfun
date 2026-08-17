@@ -1,4 +1,4 @@
-import { Github, Twitter, Linkedin, Sprout } from "lucide-react";
+import { Github, Twitter, Linkedin } from "lucide-react";
 
 export function CinematicFooter() {
   const currentYear = new Date().getFullYear();
@@ -16,16 +16,8 @@ export function CinematicFooter() {
           </span>
         </div>
 
-        <div className="flex flex-col items-center gap-8">
-          <a
-            href="https://ideas.bryanlauwk.fun"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center gap-3 px-6 py-3 border border-foreground/20 text-muted-foreground hover:text-primary-foreground hover:bg-primary hover:border-primary transition-colors duration-200 font-mono text-xs md:text-sm uppercase tracking-[0.3em]"
-          >
-            <Sprout className="w-4 h-4 transition-transform duration-200 group-hover:-rotate-12" />
-            The Studio · my idea engine
-          </a>
+        <div className="flex flex-col items-center gap-7">
+
 
           <div className="flex items-center gap-3">
             {[
