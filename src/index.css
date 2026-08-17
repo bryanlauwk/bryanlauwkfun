@@ -242,6 +242,81 @@
               0 4px 10px hsl(0 0% 0% / 0.35);
 }
 
+/* Mystery crate — neon outline + stencil cutout question mark */
+.neon-crate {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  transition: transform 300ms ease, filter 300ms ease;
+  filter: drop-shadow(0 0 18px hsl(var(--primary) / 0.35));
+}
+
+@media (min-width: 768px) {
+  .neon-crate { width: 170px; height: 170px; }
+}
+
+.neon-crate:hover {
+  transform: translateY(-6px);
+  filter: drop-shadow(0 0 30px hsl(var(--primary) / 0.6));
+}
+
+.neon-crate-face,
+.neon-crate-top,
+.neon-crate-side {
+  position: absolute;
+  background: linear-gradient(160deg, hsl(240 6% 7%), hsl(240 6% 3%));
+  border: 1px solid hsl(var(--primary) / 0.75);
+  box-shadow:
+    inset 0 0 18px hsl(var(--primary) / 0.18),
+    0 0 10px hsl(var(--primary) / 0.45);
+}
+
+.neon-crate-face {
+  inset: 22% 0 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.neon-crate-top {
+  left: 0;
+  right: 14%;
+  top: 6%;
+  height: 18%;
+  transform: skewX(-38deg);
+  transform-origin: bottom left;
+  opacity: 0.85;
+}
+
+.neon-crate-side {
+  right: 0;
+  top: 6%;
+  bottom: 14%;
+  width: 16%;
+  transform: skewY(-38deg);
+  transform-origin: top right;
+  opacity: 0.7;
+}
+
+.stencil-glyph {
+  font-family: "Archivo", sans-serif;
+  font-weight: 900;
+  font-size: 4.5rem;
+  line-height: 1;
+  color: hsl(var(--primary));
+  text-shadow:
+    0 0 6px hsl(var(--primary) / 0.9),
+    0 0 22px hsl(var(--primary) / 0.55),
+    0 0 60px hsl(var(--primary) / 0.35);
+  -webkit-text-stroke: 1px hsl(var(--primary) / 0.9);
+  opacity: 0.95;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .neon-crate { transition: none; }
+  .neon-crate:hover { transform: none; }
+}
+
 /* Visitor counter — gallery attendance meter */
 .visitor-counter {
   background: transparent;

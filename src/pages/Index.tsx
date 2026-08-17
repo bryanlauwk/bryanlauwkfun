@@ -148,10 +148,15 @@ const Index = () => {
             </div>
           </section>
 
-          {/* Drops — Room 02 */}
-          <ScrollSection animation="fade-up" className="mt-16 md:mt-24 relative">
+          {/* 2.0 teaser — Room 02 */}
+          <ScrollSection animation="fade-up">
+            <BrewingTeaser />
+          </ScrollSection>
+
+          {/* Drops — Room 03 */}
+          <ScrollSection animation="fade-up" className="mt-20 md:mt-32 relative">
             <div className="flex items-center justify-between mb-4 exhibit-label">
-              <span>Room 02 · Interactive works</span>
+              <span>Room 03 · Interactive works</span>
               <span className="hidden md:inline-flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
                 Live
@@ -169,11 +174,6 @@ const Index = () => {
               </p>
             </div>
             <ProjectGrid />
-          </ScrollSection>
-
-          {/* 2.0 teaser — Room 03 */}
-          <ScrollSection animation="fade-up">
-            <BrewingTeaser />
           </ScrollSection>
         </div>
       </main>
