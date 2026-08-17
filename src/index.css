@@ -242,61 +242,53 @@
               0 4px 10px hsl(0 0% 0% / 0.35);
 }
 
-/* Mystery crate — neon outline + stencil cutout question mark */
-.neon-crate {
-  position: relative;
-  width: 150px;
-  height: 150px;
-  transition: transform 300ms ease, filter 300ms ease;
-  filter: drop-shadow(0 0 18px hsl(var(--primary) / 0.35));
-}
-
-@media (min-width: 768px) {
-  .neon-crate { width: 170px; height: 170px; }
-}
-
-.neon-crate:hover {
-  transform: translateY(-6px);
-  filter: drop-shadow(0 0 30px hsl(var(--primary) / 0.6));
-}
-
-.neon-crate-face,
-.neon-crate-top,
-.neon-crate-side {
-  position: absolute;
-  background: linear-gradient(160deg, hsl(240 6% 7%), hsl(240 6% 3%));
-  border: 1px solid hsl(var(--primary) / 0.75);
-  box-shadow:
-    inset 0 0 18px hsl(var(--primary) / 0.18),
-    0 0 10px hsl(var(--primary) / 0.45);
-}
-
-.neon-crate-face {
-  inset: 22% 0 0 0;
+/* Mystery crate — 3D neon cube, slow rotation, stencil cutout question mark */
+.crate-stage {
+  perspective: 900px;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 2.5rem 0;
 }
 
-.neon-crate-top {
-  left: 0;
-  right: 14%;
-  top: 6%;
-  height: 18%;
-  transform: skewX(-38deg);
-  transform-origin: bottom left;
-  opacity: 0.85;
+.neon-crate {
+  --crate-size: 170px;
+  position: relative;
+  width: var(--crate-size);
+  height: var(--crate-size);
+  transform-style: preserve-3d;
+  animation: crate-spin 24s linear infinite;
+  filter: drop-shadow(0 0 26px hsl(var(--primary) / 0.4));
 }
 
-.neon-crate-side {
-  right: 0;
-  top: 6%;
-  bottom: 14%;
-  width: 16%;
-  transform: skewY(-38deg);
-  transform-origin: top right;
-  opacity: 0.7;
+@media (min-width: 768px) {
+  .neon-crate { --crate-size: 220px; }
 }
+
+@keyframes crate-spin {
+  from { transform: rotateX(-14deg) rotateY(0deg); }
+  to { transform: rotateX(-14deg) rotateY(360deg); }
+}
+
+.neon-crate-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, hsl(240 6% 8% / 0.96), hsl(240 6% 3% / 0.96));
+  border: 1px solid hsl(var(--primary) / 0.75);
+  box-shadow:
+    inset 0 0 22px hsl(var(--primary) / 0.18),
+    0 0 12px hsl(var(--primary) / 0.45);
+}
+
+.crate-front  { transform: translateZ(calc(var(--crate-size) / 2)); }
+.crate-back   { transform: rotateY(180deg) translateZ(calc(var(--crate-size) / 2)); }
+.crate-right  { transform: rotateY(90deg) translateZ(calc(var(--crate-size) / 2)); }
+.crate-left   { transform: rotateY(-90deg) translateZ(calc(var(--crate-size) / 2)); }
+.crate-top    { transform: rotateX(90deg) translateZ(calc(var(--crate-size) / 2)); }
+.crate-bottom { transform: rotateX(-90deg) translateZ(calc(var(--crate-size) / 2)); opacity: 0.6; }
 
 .stencil-glyph {
   font-family: "Archivo", sans-serif;
@@ -312,10 +304,14 @@
   opacity: 0.95;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .neon-crate { transition: none; }
-  .neon-crate:hover { transform: none; }
+@media (min-width: 768px) {
+  .stencil-glyph { font-size: 6rem; }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .neon-crate { animation: none; transform: rotateX(-14deg) rotateY(-24deg); }
+}
+
 
 /* Visitor counter — gallery attendance meter */
 .visitor-counter {
