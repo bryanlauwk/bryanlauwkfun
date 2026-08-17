@@ -1,5 +1,15 @@
 // Mystery teaser for the 2.0 direction (interactive installations).
 // Deliberately discloses nothing: no names, no dates, no links.
+
+const SPEC_ROWS: [string, string][] = [
+  ["Case no.", "BL-2.0-████"],
+  ["Contents", "[REDACTED]"],
+  ["Dimensions", "?? × ?? × ?? cm"],
+  ["Mass", "heavier than a browser tab"],
+  ["Handling", "two people. probably."],
+  ["Qty", "1 of ?"],
+];
+
 export function BrewingTeaser() {
   return (
     <section className="mt-16 md:mt-24 relative" aria-labelledby="brewing-heading">
@@ -11,7 +21,25 @@ export function BrewingTeaser() {
         </span>
       </div>
 
-      <div className="relative border border-foreground/15 bg-card px-5 py-10 md:px-12 md:py-14">
+      <div className="relative border border-foreground/15 bg-card bg-grid-paper px-5 py-10 md:px-12 md:py-14 overflow-hidden">
+        {/* Tape pinning the corners */}
+        <span
+          aria-hidden="true"
+          className="absolute -top-3 -left-8 w-32 h-7 bg-foreground/85 rotate-[-38deg] opacity-80"
+        />
+        <span
+          aria-hidden="true"
+          className="absolute -bottom-3 -right-8 w-32 h-7 bg-foreground/85 rotate-[-38deg] opacity-80"
+        />
+
+        {/* Stamp */}
+        <span
+          aria-hidden="true"
+          className="dossier-stamp absolute top-6 right-6 md:top-8 md:right-10 rotate-[8deg] text-[0.6rem] md:text-xs"
+        >
+          Do not open
+        </span>
+
         <h2
           id="brewing-heading"
           className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight text-foreground"
@@ -24,21 +52,76 @@ export function BrewingTeaser() {
           playable tech you can walk into.
         </p>
 
-        <div className="crate-stage mt-10" aria-hidden="true">
-          <div className="neon-crate">
-            <span className="neon-crate-face crate-front"><span className="stencil-glyph">?</span></span>
-            <span className="neon-crate-face crate-back"><span className="stencil-glyph">?</span></span>
-            <span className="neon-crate-face crate-right"><span className="stencil-glyph">?</span></span>
-            <span className="neon-crate-face crate-left"><span className="stencil-glyph">?</span></span>
-            <span className="neon-crate-face crate-top"><span className="stencil-glyph">?</span></span>
-            <span className="neon-crate-face crate-bottom" />
+        <div className="grid md:grid-cols-[1.1fr_1fr] gap-6 md:gap-12 items-center mt-6">
+          {/* The crate */}
+          <div className="relative">
+            <div className="crate-stage" aria-hidden="true">
+              <span className="crate-shadow" />
+              <div className="neon-crate">
+                <span className="neon-crate-face crate-front">
+                  <span className="stencil-glyph">?</span>
+                </span>
+                <span className="neon-crate-face crate-back">
+                  <span className="stencil-glyph">?</span>
+                </span>
+                <span className="neon-crate-face crate-right">
+                  <span className="stencil-glyph">?</span>
+                </span>
+                <span className="neon-crate-face crate-left">
+                  <span className="stencil-glyph">?</span>
+                </span>
+                <span className="neon-crate-face crate-top">
+                  <span className="stencil-glyph">?</span>
+                </span>
+                <span className="neon-crate-face crate-bottom" />
+                <span className="crate-edges">
+                  <span />
+                  <span />
+                  <span />
+                  <span />
+                </span>
+              </div>
+            </div>
+            <span
+              aria-hidden="true"
+              className="handwritten absolute bottom-2 right-2 md:right-6 rotate-[-6deg] text-foreground/80 text-lg md:text-xl pointer-events-none"
+            >
+              don't ask
+            </span>
           </div>
+
+          {/* Spec sheet */}
+          <dl className="font-mono text-[0.7rem] md:text-xs border border-foreground/15 divide-y divide-foreground/10">
+            {SPEC_ROWS.map(([k, v]) => (
+              <div key={k} className="flex items-baseline justify-between gap-4 px-3 py-2.5">
+                <dt className="uppercase tracking-[0.2em] text-muted-foreground">{k}</dt>
+                <dd className="text-right text-foreground">{v}</dd>
+              </div>
+            ))}
+            <div className="px-3 py-3">
+              <div className="flex items-center gap-2 uppercase tracking-[0.2em] text-muted-foreground">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                Status: sealed
+              </div>
+              <div className="mt-2 h-1.5 w-full bg-foreground/10">
+                <div className="h-full w-[62%] bg-primary" />
+              </div>
+            </div>
+          </dl>
         </div>
+
         <span className="sr-only">One sealed crate. Contents withheld.</span>
 
-        <p className="exhibit-label mt-10 text-center !tracking-[0.3em]">
-          No launch date. No details. It'll be obvious when it lands.
-        </p>
+        {/* Barcode footer */}
+        <div className="mt-10 flex items-end justify-between gap-6" aria-hidden="true">
+          <div className="flex-1">
+            <div className="barcode h-8 w-full max-w-xs" />
+            <p className="exhibit-label mt-2">BL-2.0-████ · crate 01</p>
+          </div>
+          <p className="exhibit-label text-right !tracking-[0.3em] max-w-xs">
+            No launch date. No details.
+          </p>
+        </div>
       </div>
     </section>
   );
