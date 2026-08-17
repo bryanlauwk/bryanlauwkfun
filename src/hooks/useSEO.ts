@@ -47,6 +47,17 @@ export function useSEO({ title, description, canonical, noindex }: SEOOptions) {
       m.setAttribute("property", "og:url");
       return m;
     });
+    setMeta('meta[name="twitter:title"]', "content", title, () => {
+      const m = document.createElement("meta");
+      m.setAttribute("name", "twitter:title");
+      return m;
+    });
+    setMeta('meta[name="twitter:description"]', "content", description, () => {
+      const m = document.createElement("meta");
+      m.setAttribute("name", "twitter:description");
+      return m;
+    });
+
 
     // robots
     const robotsSelector = 'meta[name="robots"]';
