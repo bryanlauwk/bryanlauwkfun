@@ -21,9 +21,10 @@ const Index = () => {
         <div className="max-w-7xl mx-auto">
           {/* Hero */}
           <section className="mb-20 md:mb-32 animate-fade-in-up relative">
-            <div className="flex items-center justify-between mb-8 md:mb-12 exhibit-label">
+            <div className="flex items-center justify-end mb-8 md:mb-12 exhibit-label">
               <span className="hidden md:inline">1.3521°N 103.8198°E</span>
             </div>
+
 
             <div className="mb-6 md:mb-8">
               <span className="dossier-stamp text-xs md:text-sm rotate-[-2deg]">
