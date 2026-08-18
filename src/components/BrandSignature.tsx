@@ -8,22 +8,21 @@ interface BrandSignatureProps {
 
 export function BrandSignature({ compact = false, className }: BrandSignatureProps) {
   const dotStyle = {
-    "--brand-dot-from": compact ? "-14px" : "-133px",
+    "--brand-dot-from": compact ? "-14px" : "-113px",
     "--brand-dot-duration": compact ? "850ms" : "1050ms",
   } as CSSProperties;
 
   return (
     <span
       className={cn(
-        "brand-portal-mark relative inline-flex shrink-0 select-none items-center text-foreground",
-        compact ? "gap-0" : "gap-2",
+        "brand-portal-mark relative inline-flex shrink-0 select-none items-center gap-0 text-foreground",
         className
       )}
     >
       <span className={cn("inline-block shrink-0", compact ? "h-10 w-10" : "h-20 w-20")} aria-hidden="true">
         <svg className="h-full w-full" viewBox="0 0 80 80" fill="none">
           <path
-            d="M24 59C15 53 10 45 10 35C10 19 22 7 38 7C51 7 61 15 64 27M64 40C62 49 57 54 51 58V64H25V58"
+            d="M24 59C15 53 10 45 10 35C10 19 22 7 38 7C51 7 61 15 64 27M64 44C62 51 57 55 51 58V64H25V58"
             stroke="currentColor"
             strokeWidth="5"
             strokeLinecap="round"
@@ -48,20 +47,21 @@ export function BrandSignature({ compact = false, className }: BrandSignaturePro
       </span>
 
       {!compact && (
-        <span className="inline-flex min-w-0 flex-col" aria-hidden="true">
-          <span className="whitespace-nowrap font-display text-lg font-black uppercase leading-none tracking-[-0.045em] text-foreground md:text-xl">
+        <span className="relative -ml-1 h-11 w-[6.5rem] shrink-0" aria-hidden="true">
+          <span className="absolute left-0 top-0 whitespace-nowrap font-display text-xl font-extrabold leading-none tracking-[-0.035em] text-foreground">
             <span>Bryan</span>
-            <span className="ml-1.5">Lau</span>
+            <span className="ml-1">Lau</span>
           </span>
-          <span className="mt-2 font-mono text-[7px] font-bold uppercase tracking-[0.3em] text-primary">
-            Create
+          <span className="absolute left-0 top-[1.625rem] h-px w-full bg-primary/80" />
+          <span className="absolute left-0 top-[2.125rem] font-mono text-[8px] font-medium lowercase leading-none tracking-[0.2em] text-primary">
+            create
           </span>
         </span>
       )}
 
       {!compact && (
         <span
-          className="pointer-events-none absolute left-[3.75rem] top-10 h-px w-[8.5rem] bg-primary/80"
+          className="pointer-events-none absolute left-[3.75rem] top-11 h-px w-4 bg-primary/80"
           aria-hidden="true"
         />
       )}
@@ -69,7 +69,7 @@ export function BrandSignature({ compact = false, className }: BrandSignaturePro
       <span
         className={cn(
           "brand-portal-dot pointer-events-none absolute z-10 rounded-full bg-primary",
-          compact ? "left-[2.35rem] top-4 h-2 w-2" : "left-[11.75rem] top-[2.2rem] h-2.5 w-2.5"
+          compact ? "left-[2.35rem] top-[1.125rem] h-2 w-2" : "left-[10.7rem] top-[2.45rem] h-2.5 w-2.5"
         )}
         style={dotStyle}
         aria-hidden="true"
