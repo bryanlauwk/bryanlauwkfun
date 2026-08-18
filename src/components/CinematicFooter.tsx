@@ -1,4 +1,4 @@
-import { Github, Twitter, Linkedin } from "lucide-react";
+import { ArrowUpRight, Github, Linkedin, MessageCircle } from "lucide-react";
 
 export function CinematicFooter() {
   const currentYear = new Date().getFullYear();
@@ -17,12 +17,39 @@ export function CinematicFooter() {
         </div>
 
         <div className="flex flex-col items-center gap-7">
+          <div className="max-w-2xl text-center">
+            <p className="font-display text-3xl md:text-5xl font-black uppercase tracking-tight text-foreground">
+              Something strange should exist.
+            </p>
+            <p className="mt-4 font-mono text-xs md:text-sm text-muted-foreground tracking-wider leading-relaxed">
+              Collaborations, unfinished experiments, and strange propositions are welcome.
+            </p>
+          </div>
 
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
+            <a
+              href="https://wa.me/60149303546"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 border border-primary bg-primary px-5 py-3 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-primary-foreground transition-colors hover:bg-transparent hover:text-primary"
+            >
+              <MessageCircle className="h-4 w-4" aria-hidden="true" />
+              Discuss a strange idea
+            </a>
+            <a
+              href="https://x.com/bryanlauwk"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 border border-foreground/25 px-5 py-3 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-foreground transition-colors hover:border-primary hover:text-primary"
+            >
+              Follow the build on X
+              <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+            </a>
+          </div>
 
           <div className="flex items-center gap-3">
             {[
               { href: "https://github.com/bryanlauwk", Icon: Github, label: "GitHub" },
-              { href: "https://twitter.com/bryanlauwk", Icon: Twitter, label: "Twitter" },
               { href: "https://linkedin.com/in/bryanlauwk", Icon: Linkedin, label: "LinkedIn" },
             ].map(({ href, Icon, label }) => (
               <a
@@ -43,7 +70,7 @@ export function CinematicFooter() {
           </p>
 
           <p className="exhibit-label text-center">
-            © {currentYear} Bryan LauWK — Create · you were here
+            © {currentYear} Bryan LauWK · you were here
           </p>
         </div>
       </div>
