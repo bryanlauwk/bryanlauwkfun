@@ -535,6 +535,12 @@
 
 /* ===== UPSIDE DOWN MODE (Konami easter egg) ===== */
 
+/* The artist mark should feel drawn, not typeset. A slight doubled edge gives the
+   handwritten font a denser, ink-on-paper character at both signature sizes. */
+.raw-signature-ink {
+  text-shadow: 0.45px 0 currentColor, 0 0.45px currentColor;
+}
+
 /* Upside Down spore floating animation */
 @keyframes spore-float {
   0% {
