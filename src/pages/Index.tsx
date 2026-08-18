@@ -9,8 +9,8 @@ import heroPortrait from "@/assets/hero-portrait-photo.png";
 
 const Index = () => {
   useSEO({
-    title: "Bryan Lau Create — For the curious",
-    description: "Browser experiments by Bryan Lau Create — playable games, simulations, charts and small interactive art for the curious. A stranger kind of internet.",
+    title: "Bryan LauWK — Create — For the curious",
+    description: "Browser experiments by Bryan LauWK — Create — playable games, simulations, charts and small interactive art for the curious. A stranger kind of internet.",
     canonical: "https://www.bryanlauwk.fun/",
   });
   return (
@@ -45,6 +45,21 @@ const Index = () => {
                 <p className="exhibit-label mt-8 md:mt-10 !tracking-[0.3em]">
                   playable art · small experiments · things I had to make
                 </p>
+
+                <div className="mt-8 md:mt-10 flex items-center gap-3 md:gap-4">
+                  <div className="relative w-11 h-11 md:w-14 md:h-14 border border-foreground/35 flex items-center justify-center shrink-0">
+                    <span className="font-display font-black text-2xl md:text-3xl text-foreground">B</span>
+                    <span className="absolute bottom-1.5 left-2 right-2 h-[3px] bg-primary" aria-hidden="true" />
+                  </div>
+                  <div className="leading-tight">
+                    <span className="font-display text-xl md:text-2xl font-black tracking-tight text-foreground block">
+                      Bryan LauWK
+                    </span>
+                    <span className="font-mono text-[10px] md:text-xs text-primary uppercase tracking-[0.35em]">
+                      Create
+                    </span>
+                  </div>
+                </div>
               </div>
 
               {/* The artist — investigative exposé collage */}
@@ -56,7 +71,7 @@ const Index = () => {
                     <div className="relative torn-edge overflow-hidden">
                       <img
                         src={heroPortrait}
-                        alt="Bryan Lau Create portrait — evidence exhibit A"
+                        alt="Bryan LauWK portrait — evidence exhibit A"
                         className="w-full h-auto object-cover grayscale contrast-125 brightness-95"
                         loading="eager"
                       />

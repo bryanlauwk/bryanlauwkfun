@@ -43,7 +43,7 @@ export function CinematicFooter() {
           </p>
 
           <p className="exhibit-label text-center">
-            © {currentYear} bryanlauwk · you were here
+            © {currentYear} Bryan LauWK — Create · you were here
           </p>
         </div>
       </div>

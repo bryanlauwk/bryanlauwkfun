@@ -22,7 +22,7 @@ function safeNext(raw: string | null): string | null {
 
 export default function Auth() {
   useSEO({
-    title: "Sign in — Bryan Lau",
+    title: "Sign in — Bryan LauWK",
     description: "Sign in to manage drops, guest book messages and sponsors on bryanlauwk.fun.",
     canonical: "https://www.bryanlauwk.fun/auth",
     noindex: true,

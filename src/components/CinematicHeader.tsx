@@ -41,10 +41,10 @@ export function CinematicHeader() {
             />
             <div className="flex flex-col leading-tight">
               <span className="font-display text-base md:text-xl font-black uppercase tracking-tight text-foreground">
-                Bryan Lau Create
+                Bryan LauWK
               </span>
-              <span className="exhibit-label text-[9px] md:text-[10px]">
-                Playable art · Ongoing exhibition
+              <span className="exhibit-label text-[9px] md:text-[10px] text-primary">
+                Create
               </span>
             </div>
           </div>
