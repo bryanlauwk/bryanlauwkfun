@@ -34,8 +34,8 @@ export default function DropDetail() {
 
   if (!project) {
     const url = `${SITE}/drops/${slug ?? ""}`;
-    const title = "Drop not found — Bryan Lau";
-    const description = "This experiment doesn't exist or has been retired. Browse the current collection of browser experiments from Bryan Lau.";
+    const title = "Drop not found — Bryan LauWK";
+    const description = "This experiment doesn't exist or has been retired. Browse the current collection of browser experiments from Bryan LauWK.";
     return (
       <div className="min-h-screen flex flex-col bg-background">
         <Helmet>
@@ -89,8 +89,8 @@ export default function DropDetail() {
       ? rawDesc.length > 155
         ? `${rawDesc.slice(0, 152).trimEnd()}…`
         : rawDesc
-      : `A drop from Bryan Lau — ${project.title}. Click to play.`;
-  const title = `${project.title} — Bryan Lau browser experiments`;
+      : `A drop from Bryan LauWK — ${project.title}. Click to play.`;
+  const title = `${project.title} — Bryan LauWK browser experiments`;
   const ogImage = project.image_url ?? undefined;
 
   const jsonLd = {
@@ -99,7 +99,7 @@ export default function DropDetail() {
     name: project.title,
     description,
     url: canonical,
-    creator: { "@type": "Person", name: "Bryan Lau" },
+    creator: { "@type": "Person", name: "Bryan Lau Wai Kit", alternateName: "Bryan LauWK" },
     dateCreated: project.created_at,
     ...(project.tag ? { genre: project.tag } : {}),
     ...(ogImage ? { image: ogImage } : {}),

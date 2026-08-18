@@ -322,7 +322,7 @@ import { useSEO } from "@/hooks/useSEO";
 
 export default function Admin() {
   useSEO({
-    title: "Admin — Bryan Lau",
+    title: "Admin — Bryan LauWK",
     description: "Internal control room for managing drops, guest book and sponsors on bryanlauwk.fun.",
     canonical: "https://www.bryanlauwk.fun/admin",
     noindex: true,

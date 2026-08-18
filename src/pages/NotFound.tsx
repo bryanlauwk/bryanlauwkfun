@@ -7,9 +7,9 @@ const NotFound = () => {
   const location = useLocation();
 
   useSEO({
-    title: "Page Not Found (404) — Bryan Lau Create",
+    title: "Page Not Found (404) — Bryan LauWK — Create",
     description:
-      "This page doesn't exist. Head back to browse Bryan Lau Create's browser experiments — playable games, simulations and interactive toys.",
+      "This page doesn't exist. Head back to browse Bryan LauWK's browser experiments — playable games, simulations and interactive toys.",
     canonical: "https://www.bryanlauwk.fun/404",
     noindex: true,
   });

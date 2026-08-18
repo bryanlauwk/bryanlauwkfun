@@ -30,7 +30,7 @@ const authOAuth = (supabase.auth as unknown as { oauth: AuthOAuthApi }).oauth;
 
 export default function OAuthConsent() {
   useSEO({
-    title: "Authorize app — Bryan Lau",
+    title: "Authorize app — Bryan LauWK",
     description: "Authorize an application to access your bryanlauwk.fun account.",
     canonical: "https://www.bryanlauwk.fun/.lovable/oauth/consent",
     noindex: true,
