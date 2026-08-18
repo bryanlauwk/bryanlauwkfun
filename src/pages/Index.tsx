@@ -9,8 +9,8 @@ import heroPortrait from "@/assets/hero-portrait-photo.png";
 
 const Index = () => {
   useSEO({
-    title: "Bryan LauWK — Create — For the curious",
-    description: "Browser experiments by Bryan LauWK — Create — playable games, simulations, charts and small interactive art for the curious. A stranger kind of internet.",
+    title: "Bryan LauWK — A stranger kind of play",
+    description: "Playable experiments by Bryan LauWK — browser-born games, strange systems, physical toys, and interactive works for people and pets.",
     canonical: "https://www.bryanlauwk.fun/",
   });
   return (
@@ -39,11 +39,12 @@ const Index = () => {
                   <span className="block">A stranger</span>
                   <span className="block">kind of</span>
                   <span className="block">
-                    <MarkerUnderline>internet.</MarkerUnderline>
+                    <MarkerUnderline>play.</MarkerUnderline>
                   </span>
                 </h1>
-                <p className="exhibit-label mt-8 md:mt-10 !tracking-[0.3em]">
-                  playable art · small experiments · things I had to make
+                <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-wider mt-8 md:mt-10 max-w-2xl leading-relaxed">
+                  Playable experiments by Bryan Lau — made for browsers now, and physical spaces
+                  next.
                 </p>
 
                 <div className="mt-8 md:mt-10 flex items-center gap-3 md:gap-4">
