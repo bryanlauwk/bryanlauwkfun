@@ -8,7 +8,8 @@ interface BrandSignatureProps {
 
 export function BrandSignature({ compact = false, className }: BrandSignatureProps) {
   const dotStyle = {
-    "--brand-dot-from": compact ? "-14px" : "-22px",
+    "--brand-dot-from": compact ? "-14px" : "-133px",
+    "--brand-dot-duration": compact ? "850ms" : "1050ms",
   } as CSSProperties;
 
   return (
@@ -60,7 +61,7 @@ export function BrandSignature({ compact = false, className }: BrandSignaturePro
 
       {!compact && (
         <span
-          className="pointer-events-none absolute left-[3.75rem] top-10 h-px w-7 bg-primary/80"
+          className="pointer-events-none absolute left-[3.75rem] top-10 h-px w-[8.5rem] bg-primary/80"
           aria-hidden="true"
         />
       )}
@@ -68,7 +69,7 @@ export function BrandSignature({ compact = false, className }: BrandSignaturePro
       <span
         className={cn(
           "brand-portal-dot pointer-events-none absolute z-10 rounded-full bg-primary",
-          compact ? "left-[2.35rem] top-4 h-2 w-2" : "left-[4.95rem] top-[2.2rem] h-2.5 w-2.5"
+          compact ? "left-[2.35rem] top-4 h-2 w-2" : "left-[11.75rem] top-[2.2rem] h-2.5 w-2.5"
         )}
         style={dotStyle}
         aria-hidden="true"

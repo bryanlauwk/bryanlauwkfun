@@ -568,14 +568,14 @@
 }
 
 .brand-portal-dot {
-  animation: portal-dot-arrive 850ms cubic-bezier(0.22, 1, 0.36, 1) 250ms both;
+  animation: portal-dot-arrive var(--brand-dot-duration, 850ms) cubic-bezier(0.22, 1, 0.36, 1) 250ms both;
   transform-box: fill-box;
   transform-origin: center;
 }
 
 .brand-portal-mark:hover .brand-portal-dot,
 a:focus-visible .brand-portal-dot {
-  animation: portal-dot-replay 650ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: portal-dot-replay var(--brand-dot-duration, 650ms) cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 /* Upside Down spore floating animation */
