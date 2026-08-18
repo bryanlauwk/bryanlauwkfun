@@ -540,7 +540,7 @@
 @keyframes portal-dot-arrive {
   0% {
     opacity: 0.25;
-    transform: translateX(-17px) scale(0.65);
+    transform: translateX(var(--brand-dot-from)) scale(0.65);
   }
   72% {
     opacity: 1;
@@ -555,7 +555,7 @@
 @keyframes portal-dot-replay {
   0% {
     opacity: 0.3;
-    transform: translateX(-17px) scale(0.65);
+    transform: translateX(var(--brand-dot-from)) scale(0.65);
   }
   72% {
     opacity: 1;
