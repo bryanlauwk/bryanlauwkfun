@@ -9,82 +9,49 @@ export function BrandSignature({ compact = false, className }: BrandSignaturePro
   return (
     <span
       className={cn(
-        "relative inline-block shrink-0 select-none",
-        compact ? "h-10 w-[9.75rem]" : "h-[4.75rem] w-[17.5rem]",
+        "brand-portal-mark inline-flex shrink-0 select-none items-center text-foreground",
+        compact ? "gap-0" : "gap-3.5",
         className
       )}
     >
-      <span className="absolute inset-0" aria-hidden="true">
-        <span
-          className={cn(
-            "handwritten raw-signature-ink absolute left-0 top-0 whitespace-nowrap font-bold leading-none text-foreground",
-            compact
-              ? "text-[2.05rem] tracking-[-0.075em]"
-              : "text-[3.75rem] tracking-[-0.085em]"
-          )}
-        >
-          Bryan
-        </span>
-
-        <span
-          className={cn(
-            "handwritten raw-signature-ink absolute whitespace-nowrap font-bold leading-none text-foreground",
-            compact
-              ? "left-[4.15rem] top-[0.16rem] text-[2rem] tracking-[-0.09em]"
-              : "left-[7.5rem] top-[0.28rem] text-[3.65rem] tracking-[-0.1em]"
-          )}
-        >
-          Lau
-        </span>
-
-        <span
-          className={cn(
-            "handwritten raw-signature-ink absolute -rotate-[8deg] whitespace-nowrap font-bold leading-none text-primary",
-            compact
-              ? "left-[7.15rem] top-0 text-[1.6rem] tracking-[-0.12em]"
-              : "left-[13.05rem] top-[0.1rem] text-[2.85rem] tracking-[-0.13em]"
-          )}
-        >
-          WK
-        </span>
-
-        <span
-          className={cn(
-            "handwritten absolute -rotate-[5deg] whitespace-nowrap font-bold leading-none text-primary",
-            compact
-              ? "bottom-[0.05rem] right-[0.2rem] text-[0.8rem] tracking-[-0.03em]"
-              : "bottom-0 right-[0.5rem] text-[1.35rem] tracking-[-0.04em]"
-          )}
-        >
-          create
-        </span>
-
-        <svg
-          className="absolute inset-0 h-full w-full overflow-visible"
-          viewBox="0 0 280 76"
-          fill="none"
-          preserveAspectRatio="none"
-        >
+      <span className={cn("inline-block shrink-0", compact ? "h-9 w-10" : "h-20 w-[5.5rem]")} aria-hidden="true">
+        <svg className="h-full w-full" viewBox="0 0 80 72" fill="none">
           <path
-            d="M7 56C49 63 100 61 141 55C167 51 188 48 209 50C225 52 226 61 215 65C202 70 182 65 188 58C194 50 228 50 270 55"
+            d="M52 7H16C11 7 7 11 7 16V56C7 61 11 65 16 65H52C57 65 61 61 61 56V47M61 25V16C61 11 57 7 52 7Z"
             stroke="currentColor"
-            strokeWidth={compact ? 1.45 : 1.65}
+            strokeWidth="5"
             strokeLinecap="round"
-            className="text-foreground/75"
-            vectorEffect="non-scaling-stroke"
+            strokeLinejoin="round"
           />
+
           <path
-            d="M223 35C235 28 250 29 258 37C264 44 254 49 246 45C239 41 244 34 260 31"
+            d="M18 22V49H27M29 22L33 49L38 35L43 49L47 22M49 22V49M49 35L57 23M49 35L57 48"
             stroke="currentColor"
-            strokeWidth={compact ? 1.25 : 1.5}
+            strokeWidth="3.25"
             strokeLinecap="round"
-            className="text-primary"
-            vectorEffect="non-scaling-stroke"
+            strokeLinejoin="round"
           />
+
+          <circle cx="70" cy="36" r="4.5" className="brand-portal-dot fill-primary" />
         </svg>
       </span>
 
-      <span className="sr-only">Bryan LauWK — Create</span>
+      {!compact && (
+        <span className="inline-flex min-w-0 flex-col" aria-hidden="true">
+          <span className="whitespace-nowrap font-display text-lg font-black uppercase leading-none tracking-[-0.045em] text-foreground md:text-xl">
+            <span>Bryan</span>
+            <span className="ml-1.5">LWK</span>
+          </span>
+          <span className="mt-2 flex items-center gap-2">
+            <span className="h-px w-5 bg-primary" />
+            <span className="font-mono text-[7px] font-bold uppercase tracking-[0.3em] text-primary">
+              Create
+            </span>
+          </span>
+        </span>
+      )}
+
+      <span className="sr-only">Bryan LWK Create</span>
     </span>
   );
 }
