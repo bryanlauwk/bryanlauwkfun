@@ -8,14 +8,14 @@ interface BrandSignatureProps {
 
 export function BrandSignature({ compact = false, className }: BrandSignatureProps) {
   const dotStyle = {
-    "--brand-dot-from": compact ? "-14px" : "-32px",
+    "--brand-dot-from": compact ? "-14px" : "-22px",
   } as CSSProperties;
 
   return (
     <span
       className={cn(
         "brand-portal-mark relative inline-flex shrink-0 select-none items-center text-foreground",
-        compact ? "gap-0" : "gap-3.5",
+        compact ? "gap-0" : "gap-2",
         className
       )}
     >
@@ -52,19 +52,23 @@ export function BrandSignature({ compact = false, className }: BrandSignaturePro
             <span>Bryan</span>
             <span className="ml-1.5">Lau</span>
           </span>
-          <span className="mt-2 flex items-center gap-2">
-            <span className="h-px w-5 bg-primary" />
-            <span className="font-mono text-[7px] font-bold uppercase tracking-[0.3em] text-primary">
-              Create
-            </span>
+          <span className="mt-2 font-mono text-[7px] font-bold uppercase tracking-[0.3em] text-primary">
+            Create
           </span>
         </span>
+      )}
+
+      {!compact && (
+        <span
+          className="pointer-events-none absolute left-[3.75rem] top-10 h-px w-7 bg-primary/80"
+          aria-hidden="true"
+        />
       )}
 
       <span
         className={cn(
           "brand-portal-dot pointer-events-none absolute z-10 rounded-full bg-primary",
-          compact ? "left-[2.35rem] top-4 h-2 w-2" : "left-[5.75rem] top-[2.2rem] h-2.5 w-2.5"
+          compact ? "left-[2.35rem] top-4 h-2 w-2" : "left-[4.95rem] top-[2.2rem] h-2.5 w-2.5"
         )}
         style={dotStyle}
         aria-hidden="true"
