@@ -13,7 +13,7 @@ const SPEC_ROWS: [string, string][] = [
 
 export function BrewingTeaser() {
   return (
-    <section className="mt-16 md:mt-24 relative" aria-labelledby="brewing-heading">
+    <section id="physical-work" className="mt-16 md:mt-24 relative scroll-mt-24" aria-labelledby="brewing-heading">
       <div className="flex items-center justify-between mb-4 exhibit-label">
         <span>Under construction</span>
         <span className="inline-flex items-center gap-1.5">
