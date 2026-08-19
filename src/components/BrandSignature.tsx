@@ -8,7 +8,7 @@ interface BrandSignatureProps {
 
 export function BrandSignature({ compact = false, className }: BrandSignatureProps) {
   const dotStyle = {
-    "--brand-dot-from": compact ? "-14px" : "-113px",
+    "--brand-dot-from": compact ? "-14px" : "-101px",
     "--brand-dot-duration": compact ? "850ms" : "1050ms",
   } as CSSProperties;
 
@@ -47,13 +47,12 @@ export function BrandSignature({ compact = false, className }: BrandSignaturePro
       </span>
 
       {!compact && (
-        <span className="relative -ml-1 h-11 w-[6.5rem] shrink-0" aria-hidden="true">
-          <span className="absolute left-0 top-0 whitespace-nowrap font-display text-xl font-extrabold leading-none tracking-[-0.035em] text-foreground">
-            <span>Bryan</span>
-            <span className="ml-1">Lau</span>
+        <span className="relative -ml-1 h-11 w-[5.5rem] shrink-0" aria-hidden="true">
+          <span className="absolute -top-1 left-0 whitespace-nowrap font-sans text-[1.8rem] font-semibold leading-none tracking-[-0.045em] text-foreground">
+            Bryan
           </span>
           <span className="absolute left-0 top-[1.625rem] h-px w-full bg-primary/80" />
-          <span className="absolute left-0 top-[2.125rem] font-mono text-[8px] font-medium lowercase leading-none tracking-[0.2em] text-primary">
+          <span className="absolute left-1 top-[1.95rem] whitespace-nowrap font-sans text-[0.72rem] font-medium lowercase leading-none tracking-[0.42em] text-primary">
             create
           </span>
         </span>
@@ -69,13 +68,13 @@ export function BrandSignature({ compact = false, className }: BrandSignaturePro
       <span
         className={cn(
           "brand-portal-dot pointer-events-none absolute z-10 rounded-full bg-primary",
-          compact ? "left-[2.35rem] top-[1.125rem] h-2 w-2" : "left-[10.7rem] top-[2.45rem] h-2.5 w-2.5"
+          compact ? "left-[2.35rem] top-[1.125rem] h-2 w-2" : "left-[9.95rem] top-[2.45rem] h-2.5 w-2.5"
         )}
         style={dotStyle}
         aria-hidden="true"
       />
 
-      <span className="sr-only">Bryan Lau Create</span>
+      <span className="sr-only">Bryan LWK Create</span>
     </span>
   );
 }
