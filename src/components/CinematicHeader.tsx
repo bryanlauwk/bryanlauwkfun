@@ -35,10 +35,12 @@ export function CinematicHeader() {
         <div className="max-w-7xl mx-auto px-4 py-3 md:px-8 flex items-center justify-between">
           <a
             href="#main-content"
-            aria-label="Bryan LauWK — back to the top"
+            aria-label="Bryan LWK Create — back to the top"
             className="transition-opacity hover:opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-background"
           >
-            <BrandSignature compact />
+            <span className="relative block h-10 w-[5.125rem]">
+              <BrandSignature className="absolute left-0 top-0 origin-top-left scale-50" />
+            </span>
           </a>
 
           <nav className="hidden lg:flex items-center gap-7 ml-auto mr-8" aria-label="Primary navigation">
