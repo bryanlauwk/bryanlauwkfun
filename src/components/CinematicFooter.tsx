@@ -1,4 +1,5 @@
 import { ArrowUpRight, Github, Linkedin, MessageCircle } from "lucide-react";
+import { BrandSignature } from "./BrandSignature";
 
 export function CinematicFooter() {
   const currentYear = new Date().getFullYear();
@@ -77,6 +78,12 @@ export function CinematicFooter() {
                 <Icon className="w-4 h-4" />
               </a>
             ))}
+          </div>
+
+          <div className="mt-2 flex w-full max-w-2xl flex-col items-center border-t border-foreground/15 pt-8">
+            <span className="relative block h-24 w-48 md:h-28 md:w-[13.5rem]">
+              <BrandSignature className="absolute left-1/2 top-1/2 origin-center -translate-x-1/2 -translate-y-1/2 scale-110 md:scale-125" />
+            </span>
           </div>
 
           <p className="font-mono text-xs md:text-sm text-primary uppercase tracking-[0.3em] text-center">

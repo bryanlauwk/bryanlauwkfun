@@ -38,8 +38,8 @@ export function CinematicHeader() {
             aria-label="Bryan LWK Create — back to the top"
             className="transition-opacity hover:opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-background"
           >
-            <span className="relative block h-10 w-[5.125rem]">
-              <BrandSignature className="absolute left-0 top-0 origin-top-left scale-50" />
+            <span className="relative block h-12 w-[6.4rem] md:h-14 md:w-[7.25rem]">
+              <BrandSignature className="absolute left-0 top-0 origin-top-left scale-[0.6] md:scale-[0.68]" />
             </span>
           </a>
 
