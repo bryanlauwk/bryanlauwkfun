@@ -1,5 +1,4 @@
 import { ArrowUpRight, Github, Linkedin, MessageCircle } from "lucide-react";
-import { BrandSignature } from "./BrandSignature";
 
 export function CinematicFooter() {
   const currentYear = new Date().getFullYear();
@@ -23,7 +22,7 @@ export function CinematicFooter() {
               Something strange should exist.
             </p>
             <p className="mt-4 font-mono text-xs md:text-sm text-muted-foreground tracking-wider leading-relaxed">
-              Collaborations, commissions, exhibitions, and strange propositions are welcome.
+              Strange propositions are welcome.
             </p>
           </div>
 
@@ -84,12 +83,9 @@ export function CinematicFooter() {
             Good luck, have fun, don't die.
           </p>
 
-          <div className="flex flex-col items-center gap-3">
-            <BrandSignature compact />
-            <p className="exhibit-label text-center">
-              © {currentYear} · you were here
-            </p>
-          </div>
+          <p className="exhibit-label text-center">
+            © {currentYear} · you were here
+          </p>
         </div>
       </div>
     </footer>
