@@ -535,6 +535,49 @@
 
 /* ===== UPSIDE DOWN MODE (Konami easter egg) ===== */
 
+/* The single red pixel leaves the frame once, then only repeats when someone
+   deliberately engages with the mark. */
+@keyframes portal-dot-arrive {
+  0% {
+    opacity: 0.25;
+    transform: translateX(var(--brand-dot-from)) scale(0.65);
+  }
+  72% {
+    opacity: 1;
+    transform: translateX(2px) scale(1.12);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes portal-dot-replay {
+  0% {
+    opacity: 0.3;
+    transform: translateX(var(--brand-dot-from)) scale(0.65);
+  }
+  72% {
+    opacity: 1;
+    transform: translateX(2px) scale(1.12);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.brand-portal-dot {
+  animation: portal-dot-arrive var(--brand-dot-duration, 850ms) cubic-bezier(0.22, 1, 0.36, 1) 250ms both;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.brand-portal-mark:hover .brand-portal-dot,
+a:focus-visible .brand-portal-dot {
+  animation: portal-dot-replay var(--brand-dot-duration, 650ms) cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 /* Upside Down spore floating animation */
 @keyframes spore-float {
   0% {

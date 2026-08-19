@@ -8,14 +8,13 @@ const SPEC_ROWS: [string, string][] = [
   ["Mechanism", "play · feed · reward"],
   ["Purpose", "make feeding playable"],
   ["Handling", "paws encouraged"],
-  ["Status", "prototype in development"],
 ];
 
 export function BrewingTeaser() {
   return (
-    <section className="mt-16 md:mt-24 relative" aria-labelledby="brewing-heading">
+    <section id="physical-work" className="mt-16 md:mt-24 relative scroll-mt-24" aria-labelledby="brewing-heading">
       <div className="flex items-center justify-between mb-4 exhibit-label">
-        <span>Under construction</span>
+        <span>Physical work</span>
         <span className="inline-flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
           In development
@@ -33,14 +32,6 @@ export function BrewingTeaser() {
           className="absolute -bottom-3 -right-8 w-32 h-7 bg-foreground/85 rotate-[-38deg] opacity-80"
         />
 
-        {/* Stamp */}
-        <span
-          aria-hidden="true"
-          className="dossier-stamp absolute top-6 right-6 md:top-8 md:right-10 rotate-[8deg] text-[0.6rem] md:text-xs"
-        >
-          Prototype 01
-        </span>
-
         <h2
           id="brewing-heading"
           className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight text-foreground"
@@ -54,7 +45,7 @@ export function BrewingTeaser() {
         </p>
 
         <div className="mt-7 max-w-2xl border-l-2 border-primary pl-4 md:pl-5">
-          <p className="exhibit-label text-primary">First experiment · Play for pets</p>
+          <p className="exhibit-label text-primary">Play for pets</p>
           <p className="font-mono text-xs md:text-sm text-foreground/85 tracking-wider mt-2 leading-relaxed">
             The first experiment reimagines a food feeder as a playable machine for pets — part
             toy, part reward, part investigation into how animals play with technology.
@@ -119,7 +110,7 @@ export function BrewingTeaser() {
             <div className="px-3 py-3">
               <div className="flex items-center gap-2 uppercase tracking-[0.2em] text-muted-foreground">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                Status: in development
+                Build progress
               </div>
               <div className="mt-2 h-1.5 w-full bg-foreground/10">
                 <div className="h-full w-[62%] bg-primary" />
@@ -134,7 +125,6 @@ export function BrewingTeaser() {
         <div className="mt-10 flex items-end justify-between gap-6" aria-hidden="true">
           <div className="flex-1">
             <div className="barcode h-8 w-full max-w-xs" />
-            <p className="exhibit-label mt-2">BL-2.0-001 · play for pets</p>
           </div>
           <p className="exhibit-label text-right !tracking-[0.3em] max-w-xs">
             Build notes released on X.

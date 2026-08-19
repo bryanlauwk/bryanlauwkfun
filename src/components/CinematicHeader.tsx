@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useVisitorCounter } from "@/hooks/useVisitorCounter";
 import { SoundToggle } from "./SoundToggle";
-import faviconImage from "/favicon.png";
+import { BrandSignature } from "./BrandSignature";
 
 export function CinematicHeader() {
   const { count, isLoading } = useVisitorCounter();
@@ -32,22 +32,32 @@ export function CinematicHeader() {
         {/* signal strip */}
         <div className="h-0.5 w-full bg-primary" aria-hidden="true" />
 
-        <div className="max-w-7xl mx-auto px-4 py-3 md:px-8 md:py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3 md:gap-4">
-            <img
-              src={faviconImage}
-              alt=""
-              className="w-9 h-9 md:w-10 md:h-10 object-cover border border-foreground/25"
-            />
-            <div className="flex flex-col leading-tight">
-              <span className="font-display text-base md:text-xl font-black uppercase tracking-tight text-foreground">
-                Bryan LauWK
-              </span>
-              <span className="exhibit-label text-[9px] md:text-[10px] text-primary">
-                Create
-              </span>
-            </div>
-          </div>
+        <div className="max-w-7xl mx-auto px-4 py-3 md:px-8 flex items-center justify-between">
+          <a
+            href="#main-content"
+            aria-label="Bryan LWK Create — back to the top"
+            className="transition-opacity hover:opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+          >
+            <span className="relative block h-10 w-[5.125rem]">
+              <BrandSignature className="absolute left-0 top-0 origin-top-left scale-50" />
+            </span>
+          </a>
+
+          <nav className="hidden lg:flex items-center gap-7 ml-auto mr-8" aria-label="Primary navigation">
+            {[
+              { href: "#physical-work", label: "Physical" },
+              { href: "#browser-work", label: "Browser" },
+              { href: "#contact", label: "Collaborate" },
+            ].map(({ href, label }) => (
+              <a
+                key={href}
+                href={href}
+                className="font-mono text-[9px] uppercase tracking-[0.25em] text-muted-foreground transition-colors hover:text-primary focus:outline-none focus-visible:text-primary"
+              >
+                {label}
+              </a>
+            ))}
+          </nav>
 
           <div className="flex items-center gap-3 md:gap-5">
             <SoundToggle />

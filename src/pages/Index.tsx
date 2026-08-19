@@ -47,20 +47,21 @@ const Index = () => {
                   next.
                 </p>
 
-                <div className="mt-8 md:mt-10 flex items-center gap-3 md:gap-4">
-                  <div className="relative w-11 h-11 md:w-14 md:h-14 border border-foreground/35 flex items-center justify-center shrink-0">
-                    <span className="font-display font-black text-2xl md:text-3xl text-foreground">B</span>
-                    <span className="absolute bottom-1.5 left-2 right-2 h-[3px] bg-primary" aria-hidden="true" />
-                  </div>
-                  <div className="leading-tight">
-                    <span className="font-display text-xl md:text-2xl font-black tracking-tight text-foreground block">
-                      Bryan LauWK
-                    </span>
-                    <span className="font-mono text-[10px] md:text-xs text-primary uppercase tracking-[0.35em]">
-                      Create
-                    </span>
-                  </div>
+                <div className="mt-6 flex flex-wrap items-center gap-3">
+                  <a
+                    href="#physical-work"
+                    className="border border-primary bg-primary px-4 py-2.5 font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-primary-foreground transition-colors hover:bg-transparent hover:text-primary"
+                  >
+                    See what’s being built
+                  </a>
+                  <a
+                    href="#contact"
+                    className="border border-foreground/25 px-4 py-2.5 font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-foreground transition-colors hover:border-primary hover:text-primary"
+                  >
+                    Collaborate
+                  </a>
                 </div>
+
               </div>
 
               {/* The artist — investigative exposé collage */}
@@ -104,7 +105,7 @@ const Index = () => {
                     {/* Case number strip */}
                     <div className="flex items-center justify-between mt-3 gap-3">
                       <span className="exhibit-label !text-[8px] md:!text-[9px] text-[hsl(20_15%_20%)]">
-                        No. 01 · Fig. A · Lau, B.
+                        Record · 2026
                       </span>
                       <span className="barcode h-3 w-16 inline-block" aria-hidden="true" />
                     </div>
@@ -171,25 +172,27 @@ const Index = () => {
 
           {/* Browser experiments */}
           <ScrollSection animation="fade-up" className="mt-20 md:mt-32 relative">
-            <div className="flex items-center justify-between mb-4 exhibit-label">
-              <span>1.0 · In the browser</span>
-              <span className="hidden md:inline-flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                Live
-              </span>
-            </div>
+            <section id="browser-work" className="scroll-mt-24" aria-labelledby="browser-work-heading">
+              <div className="flex items-center justify-between mb-4 exhibit-label">
+                <span>In the browser</span>
+                <span className="hidden md:inline-flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                  Live
+                </span>
+              </div>
 
-            <div className="mb-8 md:mb-12">
-              <h2 className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight text-foreground">
-                1.0 — Browser Experiments
-              </h2>
-              <div className="h-1 w-24 bg-primary mt-4" />
-              <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-wider mt-4">
-                Games, simulations, charts, and small toys you can play with right here. Please
-                touch the art. Break it. <RedactionReveal>Tell me what happened</RedactionReveal>.
-              </p>
-            </div>
-            <ProjectGrid />
+              <div className="mb-8 md:mb-12">
+                <h2 id="browser-work-heading" className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight text-foreground">
+                  1.0 — Browser Experiments
+                </h2>
+                <div className="h-1 w-24 bg-primary mt-4" />
+                <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-wider mt-4">
+                  Games, simulations, charts, and small toys you can play with right here. Please
+                  touch the art. Break it. <RedactionReveal>Tell me what happened</RedactionReveal>.
+                </p>
+              </div>
+              <ProjectGrid />
+            </section>
           </ScrollSection>
         </div>
       </main>

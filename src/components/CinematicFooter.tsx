@@ -4,7 +4,7 @@ export function CinematicFooter() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative z-20 py-16 md:py-24 px-4 md:px-12 border-t border-foreground/15 overflow-hidden">
+    <footer id="contact" className="relative z-20 py-16 md:py-24 px-4 md:px-12 border-t border-foreground/15 overflow-hidden scroll-mt-24">
       <div className="signal-hairline absolute top-0 left-0 right-0" aria-hidden="true" />
 
       <div className="max-w-7xl mx-auto relative">
@@ -22,28 +22,42 @@ export function CinematicFooter() {
               Something strange should exist.
             </p>
             <p className="mt-4 font-mono text-xs md:text-sm text-muted-foreground tracking-wider leading-relaxed">
-              Collaborations, unfinished experiments, and strange propositions are welcome.
+              Strange propositions are welcome.
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-2xl">
             <a
               href="https://wa.me/60149303546"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 border border-primary bg-primary px-5 py-3 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-primary-foreground transition-colors hover:bg-transparent hover:text-primary"
+              className="group flex min-h-24 flex-col justify-between border border-primary bg-primary px-5 py-4 text-primary-foreground transition-colors hover:bg-transparent hover:text-primary"
             >
-              <MessageCircle className="h-4 w-4" aria-hidden="true" />
-              Discuss a strange idea
+              <span className="flex w-full items-center justify-between gap-4">
+                <span className="font-mono text-[8px] font-bold uppercase tracking-[0.22em]">
+                  Collaborations & commissions
+                </span>
+                <MessageCircle className="h-4 w-4 shrink-0" aria-hidden="true" />
+              </span>
+              <span className="mt-4 font-display text-lg font-black uppercase tracking-tight">
+                Discuss a project
+              </span>
             </a>
             <a
               href="https://x.com/bryanlauwk"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 border border-foreground/25 px-5 py-3 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-foreground transition-colors hover:border-primary hover:text-primary"
+              className="group flex min-h-24 flex-col justify-between border border-foreground/25 px-5 py-4 text-foreground transition-colors hover:border-primary hover:text-primary"
             >
-              Follow the build on X
-              <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+              <span className="flex w-full items-center justify-between gap-4">
+                <span className="font-mono text-[8px] font-bold uppercase tracking-[0.22em]">
+                  Studio notes & progress
+                </span>
+                <ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+              </span>
+              <span className="mt-4 font-display text-lg font-black uppercase tracking-tight">
+                Follow the build on X
+              </span>
             </a>
           </div>
 
@@ -70,7 +84,7 @@ export function CinematicFooter() {
           </p>
 
           <p className="exhibit-label text-center">
-            © {currentYear} Bryan LauWK · you were here
+            © {currentYear} · you were here
           </p>
         </div>
       </div>
