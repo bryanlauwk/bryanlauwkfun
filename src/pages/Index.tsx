@@ -3,7 +3,6 @@ import { CinematicFooter } from "@/components/CinematicFooter";
 import { ProjectGrid } from "@/components/ProjectGrid";
 import { ScrollSection } from "@/components/ScrollSection";
 import { BrewingTeaser } from "@/components/BrewingTeaser";
-import { BrandSignature } from "@/components/BrandSignature";
 import { MarkerUnderline, RedactionReveal } from "@/components/RedactionReveal";
 import { useSEO } from "@/hooks/useSEO";
 import heroPortrait from "@/assets/hero-portrait-photo.png";
@@ -63,9 +62,6 @@ const Index = () => {
                   </a>
                 </div>
 
-                <div className="mt-8 md:mt-10">
-                  <BrandSignature />
-                </div>
               </div>
 
               {/* The artist — investigative exposé collage */}
@@ -109,7 +105,7 @@ const Index = () => {
                     {/* Case number strip */}
                     <div className="flex items-center justify-between mt-3 gap-3">
                       <span className="exhibit-label !text-[8px] md:!text-[9px] text-[hsl(20_15%_20%)]">
-                        No. 01 · Fig. A · Lau, B.
+                        Record · 2026
                       </span>
                       <span className="barcode h-3 w-16 inline-block" aria-hidden="true" />
                     </div>
@@ -178,7 +174,7 @@ const Index = () => {
           <ScrollSection animation="fade-up" className="mt-20 md:mt-32 relative">
             <section id="browser-work" className="scroll-mt-24" aria-labelledby="browser-work-heading">
               <div className="flex items-center justify-between mb-4 exhibit-label">
-                <span>1.0 · In the browser</span>
+                <span>In the browser</span>
                 <span className="hidden md:inline-flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
                   Live
