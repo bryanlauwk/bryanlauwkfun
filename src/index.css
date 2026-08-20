@@ -436,12 +436,24 @@
 .schematic-sticker {
   width: 180px;
   height: 100px;
-  color: hsl(var(--foreground) / 0.75);
-  border: 1px solid hsl(var(--foreground) / 0.15);
-  background: hsl(var(--card) / 0.6);
+  color: hsl(var(--foreground) / 0.95);
+  border: 1px solid hsl(var(--foreground) / 0.2);
+  background: hsl(var(--card) / 0.85);
   padding: 0.5rem;
   transform: rotate(-2deg);
   box-shadow: 0 6px 18px hsl(0 0% 0% / 0.25);
+}
+.schematic-sticker text {
+  fill: hsl(var(--primary));
+  font-size: 7px;
+}
+.schematic-sticker rect[fill="currentColor"][opacity="0.85"] {
+  fill: hsl(var(--foreground));
+  opacity: 0.95;
+}
+.schematic-sticker line[stroke="hsl(var(--background))"] {
+  stroke: hsl(var(--card));
+  stroke-width: 1.5;
 }
 
 /* Animated status bar fill — subtle creeping progress */
