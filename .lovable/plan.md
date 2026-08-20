@@ -1,32 +1,42 @@
-# Make the "2.0 — off the screen" section actually playable
+# Add playable-tech design elements to "2.0 — off the screen"
 
-Right now the section is a static dossier: a slowly spinning crate plus a spec sheet. Since the whole positioning is playable technology, the section itself should be touchable — a small piece of playable tech, not a picture of one.
+The actual 2.0 object is still taking shape — likely a slot-machine-style food feeder for cats — so the section should stay a teaser, not an interactive prototype. The goal is to make the section *look and read* like playable technology without requiring the real object to be finished.
 
-## What changes
+## Copy direction
 
-**1. The crate becomes a toy, not a decoration**
-- Drag anywhere on the crate to spin it in 3D (pointer/touch), with momentum that eases back into the slow idle rotation when released.
-- Click/tap the crate to "knock" it: a short jolt animation, the neon seams flare, and one deadpan line cycles under it ("still sealed.", "you heard something.", "nope."). Nothing is disclosed.
-- Keyboard accessible: the crate is focusable, arrow keys nudge rotation, Enter/Space knocks. Visible focus ring.
-- Reduced-motion: idle spin stays off, drag and knock still work but without the jolt.
+Keep the section mysterious and playful, but drop the "engineering lab / maker lab / science lab" posture. Avoid words like *lab*, *prototype*, *mechanism*, *sensor*, *engineering*, *invention*, *build notes*, *telemetry*. The tone should be closer to "I made a strange toy for my cat" than "I am running a hardware startup."
 
-**2. A tiny playable element beside it — "reward mechanism" demo**
-Tied to the actual first physical experiment (playable pet feeder). A small mono-styled panel with a paw/trigger button: press it and a pellet drops down a short track into a bowl, with a click tick and a counter incrementing (`TREATS DISPENSED: 007`). Purely CSS/JS animation, no data, no sound by default (respects the site's global mute state if trivial — otherwise silent).
-This turns the abstract "play · feed · reward" spec row into something the visitor performs with their own hand.
-
-**3. Live signal, not static bar**
-The "Build progress" bar becomes a subtle animated telemetry line (pulsing sealed status + a bar that creeps a pixel or two) so the panel reads as running hardware.
-
-**4. Copy refresh for the new positioning**
 - Section label: `Physical work` → `Playable tech · in development`
 - Heading stays `2.0 — off the screen.`
-- Body: shift from "escaping the browser" toward "things you press, feed, and provoke" — one tight line about building playable machines for people and pets.
-- The "Play for pets" block gets an instruction line inviting interaction: e.g. `Press the button. That's the whole idea.`
-- Spec sheet rows retuned to mechanism-first language; add `Interaction: press · drop · repeat`.
-- Handwritten scribble near the crate changes from "don't ask" to something that invites poking, e.g. `try shaking it`.
+- Body: one tight line about the work moving into physical things you can touch, press, and watch a cat figure out. Emphasize *play* and *curiosity*, not fabrication.
+- The "Play for pets" block: keep it vague but human. Mention the object is for cats and still being tested, e.g. `The first one is for cats. It involves a button, a snack, and a small betrayal of trust.`
+- Spec sheet rows: reframe the data to feel like a product card or shipping label, not a parts list. Use plain language: `Purpose: make snack time weird`, `Status: not ready`, `Behavior: button · snack · repeat`.
+- Handwritten scribble: keep inviting, e.g. `try shaking it` or `not for public paws yet`.
+- Remove any line that says "build notes released on X" or "follow the progress" — the object is still a secret.
+
+## Visual design elements
+
+Since the section shouldn't be fully interactive, add static/atmospheric tech details that make it feel like a real product-in-progress:
+
+**1. Crate remains the hero, but with more product-like detail**
+- Keep the single slow-spinning 3D neon crate as-is.
+- Add a small status pill beneath it: `STATUS: SEALED` with a pulsing dot, and a deadpan one-liner that rotates slowly (`still under wraps`, `cat has not approved`, `do not open`).
+
+**2. Spec sheet styled like a printed product card**
+- Keep the existing grid-paper panel, tape corners, and red "DO NOT OPEN" stamp.
+- Replace the current rows with friendlier, object-first labels and add a fake barcode + serial number (`BL-2.0-001`).
+- Add a thin progress line that reads as a manufacturing status bar, but keep it subtle and non-interactive.
+
+**3. One extra "hardware detail" to sell the physical idea**
+Beside or below the crate, add a small schematic-style sticker that hints at the slot machine / feeder concept without showing it: a minimal line drawing of a button, a chute, and a bowl, with a redacted part in the middle. This is visual world-building only, not an interactive demo.
+
+**4. Keep accessibility**
+- The crate stays a decorative element (no drag/knock). It remains a single `aria-hidden` visual, with a `sr-only` summary.
+- No keyboard interaction required beyond normal scrolling.
+- Reduced-motion remains respected: the idle spin is paused for those users.
 
 ## Technical notes
 
-- `src/components/BrewingTeaser.tsx`: add pointer-drag state (rotation X/Y refs applied via CSS custom properties on `.neon-crate`), knock state, message cycling, and the new dispenser sub-component. All local `useState`/`useRef`, no data layer.
-- `src/index.css`: switch `.neon-crate` idle rotation to read `--crate-rx` / `--crate-ry` custom properties so JS drag can drive it while the idle animation still runs when untouched; add `.crate-knock` keyframes, focus-visible ring, and `.pellet-drop` track/pellet animation. Existing `prefers-reduced-motion` block extended.
-- No routing, schema, SEO, or backend changes. Copy edits stay inside this section (homepage hero and `index.html` shell untouched).
+- `src/components/BrewingTeaser.tsx`: update the copy, swap the spec sheet rows, add a status pill with a rotating message, and add the schematic sticker as an inline SVG.
+- `src/index.css`: add a `.status-pill` utility and a gentle rotation keyframe for the deadpan line (unless reduced motion is on). Keep the existing crate and dossier styles; no drag or dispenser code needed.
+- No routing, schema, SEO, backend, or new data dependencies.
