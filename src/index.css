@@ -390,6 +390,91 @@
 
 @media (prefers-reduced-motion: reduce) {
   .neon-crate { animation: none; transform: rotateX(-20deg) rotateZ(2deg) rotateY(-28deg); }
+  .status-bar-fill { animation: none; width: 62% !important; }
+}
+
+/* Status pill beneath the mystery crate */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid hsl(var(--primary) / 0.6);
+  background: hsl(var(--background) / 0.85);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: hsl(var(--foreground));
+  box-shadow: 0 0 14px hsl(var(--primary) / 0.18);
+}
+
+.status-pill-dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: hsl(var(--primary));
+  box-shadow: 0 0 8px hsl(var(--primary) / 0.85);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+.status-pill-divider {
+  width: 1px;
+  height: 0.8rem;
+  background: hsl(var(--foreground) / 0.25);
+}
+
+.status-pill-message {
+  color: hsl(var(--primary));
+  min-width: 8.5rem;
+  text-align: center;
+  animation: fade-line 0.5s ease-out;
+}
+
+/* Schematic sticker — line drawing hint at the physical object */
+.schematic-sticker {
+  width: 180px;
+  height: 100px;
+  color: hsl(var(--foreground) / 0.95);
+  border: 1px solid hsl(var(--foreground) / 0.2);
+  background: hsl(var(--card) / 0.85);
+  padding: 0.5rem;
+  transform: rotate(-2deg);
+  box-shadow: 0 6px 18px hsl(0 0% 0% / 0.25);
+}
+.schematic-sticker text {
+  fill: hsl(var(--primary));
+  font-size: 7px;
+}
+.schematic-sticker rect[fill="currentColor"][opacity="0.85"] {
+  fill: hsl(var(--foreground));
+  opacity: 0.95;
+}
+.schematic-sticker line[stroke="hsl(var(--background))"] {
+  stroke: hsl(var(--card));
+  stroke-width: 1.5;
+}
+
+/* Animated status bar fill — subtle creeping progress */
+.status-bar-fill {
+  width: 62%;
+  animation: creep-bar 8s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+@keyframes fade-line {
+  from { opacity: 0; transform: translateY(2px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes creep-bar {
+  from { width: 62%; }
+  to { width: 67%; }
 }
 
 
