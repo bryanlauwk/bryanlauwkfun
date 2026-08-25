@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useVisitorCounter } from "@/hooks/useVisitorCounter";
 import { SoundToggle } from "./SoundToggle";
 import { BrandSignature } from "./BrandSignature";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function CinematicHeader() {
   const { count, isLoading } = useVisitorCounter();
