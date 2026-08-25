@@ -71,16 +71,17 @@ export function BrewingTeaser() {
         </h2>
         <div className="h-1 w-24 bg-primary mt-4" />
         <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-wider mt-4 max-w-2xl">
-          The next experiments are physical. Things you can press, feed, and watch a cat
-          figure out. Playable technology for real paws.
+          2.0 is playable tech you can hold. Small interactive objects you take with you,
+          hand to a stranger, and film in one take.
         </p>
 
         <div className="mt-7 max-w-2xl border-l-2 border-primary pl-4 md:pl-5">
-          <p className="exhibit-label text-primary">Play for pets</p>
+          <p className="exhibit-label text-primary">Play on the go</p>
           <p className="font-mono text-xs md:text-sm text-foreground/85 tracking-wider mt-2 leading-relaxed">
-            The first one is for cats. It involves a button, a snack, and a small
-            betrayal of trust.
+            Pocket-sized, battery-powered, mildly chaotic. Press something, it reacts,
+            everyone reaches for their phone.
           </p>
+
           <a
             href="https://wa.me/60149303546"
             target="_blank"
