@@ -162,37 +162,40 @@ export function BrewingTeaser() {
           </dl>
         </div>
 
-        {/* Schematic sticker — hints at the slot-machine feeder concept without showing it */}
+        {/* Schematic sticker — hints at a handheld, filmable device without showing it */}
         <div className="mt-8 md:mt-10 flex items-center justify-center md:justify-start">
           <div className="schematic-sticker" aria-hidden="true">
             <svg viewBox="0 0 180 100" className="w-full h-full" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-              {/* Button / trigger */}
-              <rect x="12" y="62" width="36" height="28" rx="4" />
-              <circle cx="30" cy="76" r="7" />
-              <line x1="48" y1="76" x2="72" y2="76" />
-              {/* Chute with redacted middle */}
-              <path d="M72 64 L104 64 L104 88 L72 88 Z" />
-              <rect x="78" y="68" width="20" height="16" fill="currentColor" opacity="0.85" />
-              <line x1="84" y1="72" x2="92" y2="72" stroke="hsl(var(--background))" />
-              <line x1="84" y1="80" x2="92" y2="80" stroke="hsl(var(--background))" />
-              {/* Bowl / reward tray */}
-              <path d="M108 84 Q126 96 144 84" />
-              <path d="M108 84 L108 70" />
-              <path d="M144 84 L144 70" />
-              <ellipse cx="126" cy="70" rx="18" ry="6" />
+              {/* Handheld unit body */}
+              <rect x="46" y="52" width="66" height="40" rx="6" />
+              {/* Redacted face plate */}
+              <rect x="54" y="60" width="30" height="24" fill="currentColor" opacity="0.85" />
+              <line x1="60" y1="66" x2="78" y2="66" stroke="hsl(var(--background))" />
+              <line x1="60" y1="72" x2="72" y2="72" stroke="hsl(var(--background))" />
+              {/* Big play button */}
+              <circle cx="98" cy="72" r="8" />
+              <path d="M95 68 L103 72 L95 76 Z" fill="currentColor" />
+              {/* Wrist strap / carry loop */}
+              <path d="M46 60 Q28 66 30 84" strokeDasharray="3 3" />
+              {/* Camera framing brackets — filmable */}
+              <path d="M126 52 L146 52 L146 60" />
+              <path d="M146 84 L146 92 L126 92" />
+              <circle cx="136" cy="72" r="7" />
+              <circle cx="136" cy="72" r="2.5" fill="currentColor" />
               {/* Label tape */}
               <rect x="20" y="12" width="140" height="22" rx="2" fill="currentColor" opacity="0.1" />
-              <text x="90" y="27" textAnchor="middle" fill="currentColor" fontSize="8" fontFamily="JetBrains Mono, monospace" letterSpacing="0.12em">CONCEPT · 2026</text>
+              <text x="90" y="27" textAnchor="middle" fill="currentColor" fontSize="8" fontFamily="JetBrains Mono, monospace" letterSpacing="0.12em">CONCEPT · ON THE GO</text>
               {/* Dotted connection lines */}
-              <line x1="30" y1="62" x2="30" y2="52" strokeDasharray="2 3" />
-              <line x1="126" y1="64" x2="126" y2="52" strokeDasharray="2 3" />
+              <line x1="98" y1="52" x2="98" y2="42" strokeDasharray="2 3" />
+              <line x1="136" y1="52" x2="136" y2="42" strokeDasharray="2 3" />
             </svg>
           </div>
         </div>
 
         <span className="sr-only">
-          One physical playable object in development, designed for cats.
+          One portable playable object in development, made to be carried, played with, and filmed.
         </span>
+
 
         {/* Barcode footer */}
         <div className="mt-10 flex items-end justify-between gap-6" aria-hidden="true">
