@@ -10,50 +10,52 @@
 */
 
 @layer base {
-  /* LIGHT — gallery daylight: paper white, ink black, one signal red */
+  /* LIGHT — warm paper gallery: soft cream stock, ink (not pure black), one signal red */
   :root {
-    --background: 40 20% 96%;
-    --foreground: 240 6% 10%;
+    --background: 38 30% 96%;
+    --foreground: 240 10% 14%;
 
-    --card: 40 25% 98%;
-    --card-foreground: 240 6% 10%;
+    --card: 40 40% 99%;
+    --card-foreground: 240 10% 14%;
 
-    --popover: 40 25% 98%;
-    --popover-foreground: 240 6% 10%;
+    --popover: 40 40% 99%;
+    --popover-foreground: 240 10% 14%;
 
-    --primary: 4 85% 48%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 4 76% 45%;
+    --primary-foreground: 40 40% 99%;
 
-    --secondary: 40 12% 90%;
-    --secondary-foreground: 240 6% 10%;
+    --secondary: 38 22% 91%;
+    --secondary-foreground: 240 10% 14%;
 
-    --muted: 40 12% 90%;
-    --muted-foreground: 240 5% 38%;
+    --muted: 38 22% 91%;
+    --muted-foreground: 240 6% 40%;
 
-    --accent: 4 85% 48%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 4 76% 45%;
+    --accent-foreground: 40 40% 99%;
 
-    --destructive: 0 78% 45%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 70% 44%;
+    --destructive-foreground: 40 40% 99%;
 
-    --border: 240 6% 80%;
-    --input: 240 6% 84%;
-    --ring: 4 85% 48%;
+    --border: 36 16% 82%;
+    --input: 36 16% 84%;
+    --ring: 4 76% 45%;
 
     /* Sharp corners — industrial, gallery plinth */
     --radius: 0.25rem;
 
-    --sidebar-background: 40 20% 96%;
-    --sidebar-foreground: 240 6% 10%;
-    --sidebar-primary: 4 85% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 4 85% 48%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 240 6% 80%;
-    --sidebar-ring: 4 85% 48%;
+    --sidebar-background: 38 30% 96%;
+    --sidebar-foreground: 240 10% 14%;
+    --sidebar-primary: 4 76% 45%;
+    --sidebar-primary-foreground: 40 40% 99%;
+    --sidebar-accent: 4 76% 45%;
+    --sidebar-accent-foreground: 40 40% 99%;
+    --sidebar-border: 36 16% 82%;
+    --sidebar-ring: 4 76% 45%;
 
-    --room-glow: 240 6% 88%;
-    --room-vignette: 240 8% 55% / 0.18;
+    --room-glow: 40 45% 100%;
+    --room-vignette: 34 18% 62% / 0.16;
+    --paper-lift: 0 1px 2px hsl(30 12% 40% / 0.06), 0 10px 30px -14px hsl(30 14% 30% / 0.22);
+
   }
 
   /* DARK — the original exhibition room */
@@ -88,8 +90,66 @@
 
     --room-glow: 240 6% 9%;
     --room-vignette: 240 5% 2% / 0.55;
+    --paper-lift: none;
   }
 }
+
+/* ===== LIGHT MODE COMFORT LAYER =====
+   The dark room leans on glow and hairlines; paper needs softer ink,
+   gentle elevation and less texture noise to stay comfortable. */
+@layer base {
+  :root:not(.dark) body {
+    background-image:
+      radial-gradient(1400px 700px at 50% -25%, hsl(var(--room-glow) / 0.95), transparent 70%),
+      radial-gradient(900px 520px at 100% 108%, hsl(var(--primary) / 0.045), transparent 62%),
+      linear-gradient(180deg, hsl(38 34% 97%), hsl(36 24% 94%));
+  }
+
+  /* Softer grain on paper — full-strength noise reads as dirt in light mode */
+  :root:not(.dark) .film-grain::before {
+    opacity: 0.45;
+    mix-blend-mode: multiply;
+  }
+
+  /* Panels lift off the page instead of relying on a hard hairline */
+  :root:not(.dark) .bg-grid-paper {
+    box-shadow: var(--paper-lift);
+  }
+
+  :root:not(.dark) .bg-grid-paper,
+  :root:not(.dark) .bg-card {
+    background-color: hsl(var(--card));
+  }
+
+  /* Ink weight: display type stays strong, body copy relaxes */
+  :root:not(.dark) p,
+  :root:not(.dark) dd,
+  :root:not(.dark) li {
+    color: hsl(var(--foreground) / 0.86);
+  }
+
+  :root:not(.dark) .barcode {
+    opacity: 0.5;
+  }
+
+  :root:not(.dark) .dossier-stamp {
+    background: hsl(var(--primary) / 0.06);
+  }
+
+  :root:not(.dark) .halftone-overlay {
+    background-image: radial-gradient(hsl(240 12% 18% / 0.42) 1px, transparent 1.4px);
+  }
+
+  :root:not(.dark) header {
+    box-shadow: 0 1px 0 hsl(36 16% 82% / 0.9), 0 8px 24px -18px hsl(30 14% 30% / 0.4);
+  }
+
+  /* Neon glows are for the dark room; on paper keep the red flat and legible */
+  :root:not(.dark) .stranger-glow {
+    text-shadow: none;
+  }
+}
+
 
 @layer base {
   * {
