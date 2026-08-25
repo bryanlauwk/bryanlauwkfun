@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useVisitorCounter } from "@/hooks/useVisitorCounter";
 import { SoundToggle } from "./SoundToggle";
 import { BrandSignature } from "./BrandSignature";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function CinematicHeader() {
   const { count, isLoading } = useVisitorCounter();
@@ -60,6 +61,7 @@ export function CinematicHeader() {
           </nav>
 
           <div className="flex items-center gap-3 md:gap-5">
+            <ThemeToggle />
             <SoundToggle />
             <div className="hidden sm:flex flex-col items-end leading-tight">
               <span className="exhibit-label text-[8px] md:text-[9px]">Attendance</span>

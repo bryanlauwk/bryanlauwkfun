@@ -10,51 +10,53 @@
 */
 
 @layer base {
+  /* LIGHT — gallery daylight: paper white, ink black, one signal red */
   :root {
-    /* Gallery black + bone white + signal red */
-    --background: 240 5% 4.5%;
-    --foreground: 40 8% 92%;
+    --background: 40 20% 96%;
+    --foreground: 240 6% 10%;
 
-    --card: 240 4% 6.5%;
-    --card-foreground: 40 8% 92%;
+    --card: 40 25% 98%;
+    --card-foreground: 240 6% 10%;
 
-    --popover: 240 4% 7%;
-    --popover-foreground: 40 8% 92%;
+    --popover: 40 25% 98%;
+    --popover-foreground: 240 6% 10%;
 
-    /* Primary: Signal Red */
-    --primary: 4 90% 55%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 4 85% 48%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 240 3% 12%;
-    --secondary-foreground: 40 8% 92%;
+    --secondary: 40 12% 90%;
+    --secondary-foreground: 240 6% 10%;
 
-    --muted: 240 3% 11%;
-    --muted-foreground: 40 4% 60%;
+    --muted: 40 12% 90%;
+    --muted-foreground: 240 5% 38%;
 
-    --accent: 4 90% 55%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 4 85% 48%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 78% 52%;
+    --destructive: 0 78% 45%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 240 3% 16%;
-    --input: 240 3% 14%;
-    --ring: 4 90% 55%;
+    --border: 240 6% 80%;
+    --input: 240 6% 84%;
+    --ring: 4 85% 48%;
 
     /* Sharp corners — industrial, gallery plinth */
     --radius: 0.25rem;
 
-    --sidebar-background: 240 5% 4.5%;
-    --sidebar-foreground: 40 8% 92%;
-    --sidebar-primary: 4 90% 55%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 4 90% 55%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 240 3% 16%;
-    --sidebar-ring: 4 90% 55%;
+    --sidebar-background: 40 20% 96%;
+    --sidebar-foreground: 240 6% 10%;
+    --sidebar-primary: 4 85% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 4 85% 48%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 240 6% 80%;
+    --sidebar-ring: 4 85% 48%;
+
+    --room-glow: 240 6% 88%;
+    --room-vignette: 240 8% 55% / 0.18;
   }
 
-  /* Site is dark-only; .dark mirrors :root so ThemeProvider can't strand us */
+  /* DARK — the original exhibition room */
   .dark {
     --background: 240 5% 4.5%;
     --foreground: 40 8% 92%;
@@ -83,6 +85,9 @@
     --sidebar-accent-foreground: 0 0% 98%;
     --sidebar-border: 240 3% 16%;
     --sidebar-ring: 4 90% 55%;
+
+    --room-glow: 240 6% 9%;
+    --room-vignette: 240 5% 2% / 0.55;
   }
 }
 
@@ -95,10 +100,12 @@
     @apply bg-background text-foreground;
     font-family: "Inter", "Segoe UI", sans-serif;
     background-image:
-      radial-gradient(1200px 600px at 50% -20%, hsl(240 6% 9% / 0.9), transparent 70%),
+      radial-gradient(1200px 600px at 50% -20%, hsl(var(--room-glow) / 0.9), transparent 70%),
       radial-gradient(900px 500px at 100% 110%, hsl(var(--primary) / 0.05), transparent 60%);
     background-attachment: fixed;
+    transition: background-color 300ms ease, color 300ms ease;
   }
+
 
   h1, h2, h3, h4, h5, h6 {
     font-family: "Archivo", "Inter", sans-serif;
@@ -128,7 +135,7 @@
     ellipse at center,
     transparent 0%,
     transparent 55%,
-    hsl(240 5% 2% / 0.55) 100%
+    hsl(var(--room-vignette)) 100%
   );
   pointer-events: none;
   z-index: 55;
