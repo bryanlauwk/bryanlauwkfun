@@ -1,21 +1,22 @@
 import { MessageCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 
-// Work-in-progress teaser for the 2.0 direction (physical playable technology).
+// Work-in-progress teaser for the 2.0 direction (playable interactive tech you can carry and film).
 
 const SPEC_ROWS: [string, string][] = [
   ["Case no.", "BL-2.0-001"],
-  ["Object", "something for cats"],
-  ["Behavior", "button · snack · repeat"],
-  ["Purpose", "make snack time weird"],
-  ["Status", "not ready"],
+  ["Format", "pocket-sized, no install"],
+  ["Play", "press · react · repeat"],
+  ["Made for", "hands, streets, cameras"],
+  ["Status", "in the works"],
 ];
 
 const DEADPAN_LINES = [
   "still under wraps.",
-  "cat has not approved.",
+  "great on camera.",
   "do not open.",
 ];
+
 
 function useReducedMotion() {
   const [reduced, setReduced] = useState(false);
