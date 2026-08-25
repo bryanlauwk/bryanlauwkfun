@@ -203,7 +203,7 @@ export function BrewingTeaser() {
             <div className="barcode h-8 w-full max-w-xs" />
           </div>
           <p className="exhibit-label text-right !tracking-[0.3em] max-w-xs">
-            Not for public paws yet.
+            Not for public hands yet.
           </p>
         </div>
       </div>
