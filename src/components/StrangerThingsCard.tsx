@@ -29,7 +29,7 @@ export function StrangerThingsCard({ project, index, isFocused = false }: Strang
         className={`relative h-full border overflow-hidden transition-colors duration-200 ${
           isActive
             ? "bg-primary border-primary"
-            : "bg-card border-foreground/15"
+            : "bg-card border-foreground/15 shadow-[var(--card-lift)]"
         }`}
       >
         {/* ghost numeral */}

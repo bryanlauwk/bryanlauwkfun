@@ -54,7 +54,8 @@
 
     --room-glow: 40 45% 100%;
     --room-vignette: 34 18% 62% / 0.16;
-    --paper-lift: 0 1px 2px hsl(30 12% 40% / 0.06), 0 10px 30px -14px hsl(30 14% 30% / 0.22);
+    --paper-lift: 0 1px 2px hsl(30 12% 40% / 0.07), 0 16px 40px -16px hsl(30 14% 30% / 0.26);
+    --card-lift: 0 1px 2px hsl(30 12% 40% / 0.05), 0 8px 20px -10px hsl(30 14% 30% / 0.16);
 
   }
 
@@ -91,6 +92,7 @@
     --room-glow: 240 6% 9%;
     --room-vignette: 240 5% 2% / 0.55;
     --paper-lift: none;
+    --card-lift: none;
   }
 }
 
