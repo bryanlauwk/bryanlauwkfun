@@ -17,10 +17,10 @@ const Index = () => {
     <div className="min-h-screen flex flex-col bg-background relative overflow-x-clip film-grain vignette">
       <CinematicHeader />
 
-      <main id="main-content" className="flex-1 relative z-10 px-4 md:px-12 py-10 md:py-20">
-        <div className="max-w-7xl mx-auto">
-          {/* Hero */}
-          <section className="mb-20 md:mb-32 animate-fade-in-up relative">
+      <main id="main-content" className="flex-1 relative z-10">
+        {/* Hero */}
+        <section className="section-band-odd py-16 md:py-24 animate-fade-in-up relative">
+          <div className="max-w-7xl mx-auto px-4 md:px-12">
             <div className="flex items-center justify-end mb-8 md:mb-12 exhibit-label">
               <span className="hidden md:inline">1.3521°N 103.8198°E</span>
             </div>
@@ -163,15 +163,19 @@ const Index = () => {
                 </figure>
               </div>
             </div>
-          </section>
+          </div>
+        </section>
 
-          {/* 2.0 teaser */}
-          <ScrollSection animation="fade-up">
+        {/* 2.0 teaser */}
+        <ScrollSection animation="fade-up" className="section-band-even py-16 md:py-24">
+          <div className="max-w-7xl mx-auto px-4 md:px-12">
             <BrewingTeaser />
-          </ScrollSection>
+          </div>
+        </ScrollSection>
 
-          {/* Browser experiments */}
-          <ScrollSection animation="fade-up" className="mt-20 md:mt-32 relative">
+        {/* Browser experiments */}
+        <ScrollSection animation="fade-up" className="section-band-odd py-16 md:py-24 relative">
+          <div className="max-w-7xl mx-auto px-4 md:px-12">
             <section id="browser-work" className="scroll-mt-24" aria-labelledby="browser-work-heading">
               <div className="flex items-center justify-between mb-4 exhibit-label">
                 <span>Play now</span>
@@ -193,8 +197,8 @@ const Index = () => {
               </div>
               <ProjectGrid />
             </section>
-          </ScrollSection>
-        </div>
+          </div>
+        </ScrollSection>
       </main>
 
       <CinematicFooter />
