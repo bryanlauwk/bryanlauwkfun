@@ -1,14 +1,14 @@
 import { MessageCircle } from "lucide-react";
-import conceptBoardTeaser from "@/assets/curiosity-concept-board-teaser.webp";
+import pawJackpotColorSeries from "@/assets/paw-jackpot-color-series.webp";
 
-// Work-in-progress teaser for the six physical object studies shaping the 2.0 direction.
+// Work-in-progress teaser for the first physical object shaping the 2.0 direction.
 
 const DIRECTION_ROWS: [string, string][] = [
-  ["Series", "BL-2.0 / object studies"],
-  ["Directions", "06 / under wraps"],
-  ["Interaction", "one obvious action"],
-  ["Behaviour", "reacts with personality"],
-  ["Payoff", "physical · surprising · filmable"],
+  ["Object", "Paw Jackpot"],
+  ["Interaction", "pull · spin · match"],
+  ["Behaviour", "reels settle with personality"],
+  ["Payoff", "3 match · treat drops"],
+  ["Skins", "05 / colour study"],
 ];
 
 export function BrewingTeaser() {
@@ -22,7 +22,7 @@ export function BrewingTeaser() {
         <span>Playable tech · in development</span>
         <span className="inline-flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-          Six directions
+          Prototype family
         </span>
       </div>
 
@@ -53,9 +53,9 @@ export function BrewingTeaser() {
           </div>
 
           <div className="border-l-2 border-primary pl-4 md:pl-5">
-            <p className="exhibit-label text-primary">First object series</p>
+            <p className="exhibit-label text-primary">First physical object</p>
             <p className="font-mono text-xs text-foreground/85 tracking-wider mt-2 leading-relaxed">
-              Six directions are being tested. The details stay hidden; the intent does not.
+              A cat-height pull, three spinning reels, and a treat when the symbols align.
             </p>
             <a
               href="https://wa.me/60149303546"
@@ -69,32 +69,21 @@ export function BrewingTeaser() {
           </div>
         </div>
 
-        <figure className="concept-board mt-9 md:mt-12">
-          <div className="concept-board-header" aria-hidden="true">
-            <span>Bryan Lau Create / Object Study 02</span>
-            <span>Sheet 01 of 01</span>
-          </div>
-
-          <div className="concept-board-frame">
+        <figure className="product-lineup mt-9 md:mt-12">
+          <div className="product-lineup-frame">
             <img
-              src={conceptBoardTeaser}
-              alt="An industrial design board with six deliberately obscured physical object studies."
-              width="1536"
-              height="1024"
+              src={pawJackpotColorSeries}
+              alt="Five Paw Jackpot treat-machine prototypes in powder blue, Cloud Dancer white, Mocha Mousse brown, seafoam green, and dusty rose."
+              width="1774"
+              height="887"
               loading="lazy"
               decoding="async"
-              className="concept-board-image"
+              className="product-lineup-image"
             />
-            <div className="concept-board-screen" aria-hidden="true" />
-            <div className="concept-board-seal" aria-hidden="true">
-              <span>Concepts under wraps</span>
-              <span>BL-2.0 / 06</span>
-            </div>
           </div>
-
-          <figcaption className="concept-board-caption">
-            <span>Six familiar things. One shared piece of strange, playable technology.</span>
-            <span>Individual designs deliberately obscured.</span>
+          <figcaption className="sr-only">
+            Paw Jackpot shown as a plain-colour product family, including Pantone Colors of the Year
+            2026 Cloud Dancer and 2025 Mocha Mousse.
           </figcaption>
         </figure>
 
