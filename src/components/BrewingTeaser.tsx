@@ -7,7 +7,7 @@ export function BrewingTeaser() {
   return (
     <section
       id="physical-work"
-      className="mt-16 md:mt-24 relative scroll-mt-24"
+      className="relative scroll-mt-24"
       aria-labelledby="brewing-heading"
     >
       <div className="flex items-center justify-between mb-4 exhibit-label">
