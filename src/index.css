@@ -309,7 +309,7 @@
               0 4px 10px hsl(0 0% 0% / 0.35);
 }
 
-/* 2.0 product family — a clean catalogue image with no presentation-board overlays */
+/* 2.0 product teaser — isolated macro clues keep the in-development form concealed */
 .product-lineup {
   position: relative;
   isolation: isolate;
@@ -328,7 +328,6 @@
   width: 100%;
   height: auto;
   background: hsl(240 5% 4.5%);
-  opacity: 0.5;
 }
 
 :root:not(.dark) .product-lineup-frame {

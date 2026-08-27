@@ -1,5 +1,5 @@
 import { Cat, MessageCircle } from "lucide-react";
-import pawJackpotColorSeries from "@/assets/paw-jackpot-color-series.webp";
+import pawJackpotMacroTeaser from "@/assets/paw-jackpot-macro-teaser.webp";
 
 // Work-in-progress teaser for the first physical object shaping the 2.0 direction.
 
@@ -69,8 +69,8 @@ export function BrewingTeaser() {
         <figure className="product-lineup relative z-10 mt-9 md:mt-12">
           <div className="product-lineup-frame">
             <img
-              src={pawJackpotColorSeries}
-              alt="A dimmed preview of five cat-scale playable objects in pastel appliance colours."
+              src={pawJackpotMacroTeaser}
+              alt="Five isolated macro details in powder blue, warm white, mocha, seafoam, and dusty rose hint at a tactile cat-facing object in development."
               width="1774"
               height="887"
               loading="lazy"
@@ -79,7 +79,8 @@ export function BrewingTeaser() {
             />
           </div>
           <figcaption className="sr-only">
-            A work-in-progress physical play object for cats, shown in five colourways.
+            Disconnected material, light, grip, edge, and cat-glyph details conceal the form of a
+            work-in-progress physical play object for cats.
           </figcaption>
         </figure>
       </div>
