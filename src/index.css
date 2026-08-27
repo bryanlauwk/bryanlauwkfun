@@ -309,242 +309,134 @@
               0 4px 10px hsl(0 0% 0% / 0.35);
 }
 
-/* Mystery crate — 3D neon box, slow isometric rotation, stencil question marks */
-.crate-stage {
-  perspective: 1100px;
-  perspective-origin: 50% 40%;
+/* 2.0 concept board — the framing stays readable while the six objects remain sealed */
+.concept-board {
+  position: relative;
+  isolation: isolate;
+}
+
+.concept-board-header {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 3rem 0 4rem;
+  justify-content: space-between;
+  gap: 1rem;
+  border: 1px solid hsl(var(--foreground) / 0.18);
+  border-bottom: 0;
+  background: hsl(var(--foreground));
+  color: hsl(var(--background));
+  padding: 0.55rem 0.75rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.concept-board-frame {
   position: relative;
+  overflow: hidden;
+  border: 1px solid hsl(var(--foreground) / 0.3);
+  background: hsl(38 32% 91%);
+  box-shadow: 0 20px 50px -28px hsl(0 0% 0% / 0.8);
 }
 
-.neon-crate {
-  --crate-size: 150px;
-  position: relative;
-  width: var(--crate-size);
-  height: var(--crate-size);
-  transform-style: preserve-3d;
-  animation: crate-spin 28s linear infinite;
+.concept-board-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: saturate(0.78) contrast(1.03);
 }
 
-@media (min-width: 768px) {
-  .neon-crate { --crate-size: 200px; }
+.concept-board-screen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(120deg, transparent 30%, hsl(var(--primary) / 0.08) 50%, transparent 70%),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 5px,
+      hsl(var(--foreground) / 0.035) 5px,
+      hsl(var(--foreground) / 0.035) 6px
+    );
+  box-shadow: inset 0 0 0 10px hsl(var(--foreground) / 0.035);
 }
 
-@keyframes crate-spin {
-  from { transform: rotateX(-20deg) rotateZ(2deg) rotateY(0deg); }
-  to { transform: rotateX(-20deg) rotateZ(2deg) rotateY(360deg); }
-}
-
-/* Contact shadow / ground glow so the box sits on a surface */
-.crate-shadow {
+.concept-board-seal {
   position: absolute;
   left: 50%;
-  bottom: 1.75rem;
-  width: 210px;
-  height: 34px;
-  transform: translateX(-50%);
-  border-radius: 50%;
-  background: radial-gradient(
-    ellipse at center,
-    hsl(var(--primary) / 0.35) 0%,
-    hsl(var(--primary) / 0.12) 45%,
-    transparent 72%
-  );
-  filter: blur(6px);
-  pointer-events: none;
-}
-
-@media (min-width: 768px) {
-  .crate-shadow { width: 280px; height: 44px; bottom: 2.25rem; }
-}
-
-.neon-crate-face {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backface-visibility: hidden;
-  border: 1px solid hsl(var(--primary) / 0.7);
-  box-shadow:
-    inset 0 0 26px hsl(var(--primary) / 0.16),
-    0 0 14px hsl(var(--primary) / 0.4);
-}
-
-/* Per-face shading — single light source from upper left */
-.crate-front {
-  transform: translateZ(calc(var(--crate-size) / 2));
-  background: linear-gradient(150deg, hsl(240 6% 11%), hsl(240 7% 4%));
-}
-.crate-back {
-  transform: rotateY(180deg) translateZ(calc(var(--crate-size) / 2));
-  background: linear-gradient(150deg, hsl(240 6% 6%), hsl(240 8% 2%));
-}
-.crate-right {
-  transform: rotateY(90deg) translateZ(calc(var(--crate-size) / 2));
-  background: linear-gradient(150deg, hsl(240 6% 7%), hsl(240 8% 3%));
-}
-.crate-left {
-  transform: rotateY(-90deg) translateZ(calc(var(--crate-size) / 2));
-  background: linear-gradient(150deg, hsl(240 6% 9%), hsl(240 7% 4%));
-}
-.crate-top {
-  transform: rotateX(90deg) translateZ(calc(var(--crate-size) / 2));
-  background: linear-gradient(150deg, hsl(240 6% 16%), hsl(240 6% 9%));
-  border-color: hsl(var(--primary) / 0.85);
-  box-shadow:
-    inset 0 0 30px hsl(var(--primary) / 0.22),
-    0 0 18px hsl(var(--primary) / 0.5);
-}
-.crate-bottom {
-  transform: rotateX(-90deg) translateZ(calc(var(--crate-size) / 2));
-  background: hsl(240 8% 2%);
-  border-color: hsl(var(--primary) / 0.35);
-  box-shadow: none;
-}
-
-/* Glowing seams along the vertical edges */
-.crate-edges {
-  position: absolute;
-  inset: 0;
-  transform-style: preserve-3d;
-  pointer-events: none;
-}
-.crate-edges span {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  width: 1px;
-  background: linear-gradient(
-    180deg,
-    transparent,
-    hsl(var(--primary) / 0.95) 12%,
-    hsl(var(--primary) / 0.95) 88%,
-    transparent
-  );
-  box-shadow: 0 0 8px hsl(var(--primary) / 0.85);
-}
-.crate-edges span:nth-child(1) { left: 0; transform: translateZ(calc(var(--crate-size) / 2)); }
-.crate-edges span:nth-child(2) { right: 0; transform: translateZ(calc(var(--crate-size) / 2)); }
-.crate-edges span:nth-child(3) { left: 0; transform: rotateY(90deg) translateZ(calc(var(--crate-size) / 2)); }
-.crate-edges span:nth-child(4) { right: 0; transform: rotateY(90deg) translateZ(calc(var(--crate-size) / 2)); }
-
-.stencil-glyph {
-  font-family: "Archivo", sans-serif;
-  font-weight: 900;
-  font-size: 4rem;
-  line-height: 1;
+  top: 50%;
+  display: grid;
+  gap: 0.25rem;
+  min-width: min(78%, 27rem);
+  transform: translate(-50%, -50%) rotate(-2deg);
+  border: 2px solid hsl(var(--primary));
+  background: hsl(var(--card) / 0.9);
   color: hsl(var(--primary));
-  text-shadow:
-    0 0 6px hsl(var(--primary) / 0.9),
-    0 0 22px hsl(var(--primary) / 0.55),
-    0 0 60px hsl(var(--primary) / 0.35);
-  -webkit-text-stroke: 1px hsl(var(--primary) / 0.9);
-  opacity: 0.92;
-}
-
-.crate-top .stencil-glyph { font-size: 2.75rem; opacity: 0.75; }
-.crate-back .stencil-glyph,
-.crate-right .stencil-glyph { opacity: 0.7; }
-
-@media (min-width: 768px) {
-  .stencil-glyph { font-size: 5.5rem; }
-  .crate-top .stencil-glyph { font-size: 3.5rem; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .neon-crate { animation: none; transform: rotateX(-20deg) rotateZ(2deg) rotateY(-28deg); }
-  .status-bar-fill { animation: none; width: 62% !important; }
-}
-
-/* Status pill beneath the mystery crate */
-.status-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 1.5rem;
-  padding: 0.4rem 0.8rem;
-  border: 1px solid hsl(var(--primary) / 0.6);
-  background: hsl(var(--background) / 0.85);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: hsl(var(--foreground));
-  box-shadow: 0 0 14px hsl(var(--primary) / 0.18);
-}
-
-.status-pill-dot {
-  width: 0.4rem;
-  height: 0.4rem;
-  border-radius: 50%;
-  background: hsl(var(--primary));
-  box-shadow: 0 0 8px hsl(var(--primary) / 0.85);
-  animation: pulse-dot 2s ease-in-out infinite;
-}
-
-.status-pill-divider {
-  width: 1px;
-  height: 0.8rem;
-  background: hsl(var(--foreground) / 0.25);
-}
-
-.status-pill-message {
-  color: hsl(var(--primary));
-  min-width: 8.5rem;
+  padding: clamp(0.55rem, 1.5vw, 0.9rem) clamp(0.7rem, 2.3vw, 1.5rem);
   text-align: center;
-  animation: fade-line 0.5s ease-out;
+  text-transform: uppercase;
+  box-shadow: 0 8px 30px hsl(0 0% 0% / 0.2);
+  backdrop-filter: blur(8px);
 }
 
-/* Schematic sticker — line drawing hint at the physical object */
-.schematic-sticker {
-  width: 180px;
-  height: 100px;
-  color: hsl(var(--foreground) / 0.95);
-  border: 1px solid hsl(var(--foreground) / 0.2);
-  background: hsl(var(--card) / 0.85);
-  padding: 0.5rem;
-  transform: rotate(-2deg);
-  box-shadow: 0 6px 18px hsl(0 0% 0% / 0.25);
-}
-.schematic-sticker text {
-  fill: hsl(var(--primary));
-  font-size: 7px;
-}
-.schematic-sticker rect[fill="currentColor"][opacity="0.85"] {
-  fill: hsl(var(--foreground));
-  opacity: 0.95;
-}
-.schematic-sticker line[stroke="hsl(var(--background))"] {
-  stroke: hsl(var(--card));
-  stroke-width: 1.5;
+.concept-board-seal span:first-child {
+  font-family: "Archivo", sans-serif;
+  font-size: clamp(0.75rem, 2.2vw, 1.65rem);
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  line-height: 1;
 }
 
-/* Animated status bar fill — subtle creeping progress */
-.status-bar-fill {
-  width: 62%;
-  animation: creep-bar 8s ease-in-out infinite alternate;
+.concept-board-seal span:last-child {
+  font-family: "JetBrains Mono", monospace;
+  font-size: clamp(0.48rem, 0.9vw, 0.65rem);
+  letter-spacing: 0.22em;
 }
 
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.85); }
+.concept-board-caption {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  border: 1px solid hsl(var(--foreground) / 0.18);
+  border-top: 0;
+  padding: 0.7rem 0.75rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  line-height: 1.5;
+  text-transform: uppercase;
+  color: hsl(var(--muted-foreground));
 }
 
-@keyframes fade-line {
-  from { opacity: 0; transform: translateY(2px); }
-  to { opacity: 1; transform: translateY(0); }
+.concept-board-caption span:last-child {
+  color: hsl(var(--primary));
+  text-align: right;
 }
 
-@keyframes creep-bar {
-  from { width: 62%; }
-  to { width: 67%; }
+@media (max-width: 639px) {
+  .concept-board-header,
+  .concept-board-caption {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .concept-board-header span:last-child,
+  .concept-board-caption span:last-child {
+    display: none;
+  }
+
+  .concept-board-screen {
+    box-shadow: inset 0 0 0 5px hsl(var(--foreground) / 0.035);
+  }
 }
 
-
+:root:not(.dark) .concept-board-frame {
+  box-shadow: 0 18px 42px -28px hsl(30 20% 25% / 0.55);
+}
 
 /* Visitor counter — gallery attendance meter */
 .visitor-counter {
