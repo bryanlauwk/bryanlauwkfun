@@ -10,7 +10,7 @@ import heroPortrait from "@/assets/hero-portrait-photo.png";
 const Index = () => {
   useSEO({
     title: "Bryan LauWK — A stranger kind of play",
-    description: "Playable experiments by Bryan LauWK — built for browsers, living rooms, curious people, and cats.",
+    description: "Playable AI experiments by Bryan LauWK — beginning in the browser and moving into interactive objects.",
     canonical: "https://www.bryanlauwk.fun/",
   });
   return (
@@ -43,8 +43,8 @@ const Index = () => {
                   </span>
                 </h1>
                 <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-wider mt-8 md:mt-10 max-w-2xl leading-relaxed">
-                  Playable experiments by Bryan Lau — built for browsers, living rooms, curious
-                  people, and cats.
+                  Playable AI experiments by Bryan Lau — beginning in the browser and moving into
+                  interactive objects.
                 </p>
 
                 <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -178,7 +178,7 @@ const Index = () => {
           <div className="max-w-7xl mx-auto px-4 md:px-12">
             <section id="browser-work" className="scroll-mt-24" aria-labelledby="browser-work-heading">
               <div className="flex items-center justify-between mb-4 exhibit-label">
-                <span>Play now</span>
+                <span>1.0 · In the browser</span>
                 <span className="hidden md:inline-flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
                   Live

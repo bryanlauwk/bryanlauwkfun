@@ -1,7 +1,7 @@
-import { Cat, MessageCircle } from "lucide-react";
+import { Cat } from "lucide-react";
 import pawJackpotMacroTeaser from "@/assets/paw-jackpot-macro-teaser.webp";
 
-// Work-in-progress teaser for the first physical object shaping the 2.0 direction.
+// Prototype teaser for the first interactive product shaping the 2.0 direction.
 
 export function BrewingTeaser() {
   return (
@@ -11,10 +11,10 @@ export function BrewingTeaser() {
       aria-labelledby="brewing-heading"
     >
       <div className="flex items-center justify-between mb-4 exhibit-label">
-        <span>For curious cats</span>
+        <span>2.0 · Interactive build</span>
         <span className="inline-flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-          Coming soon
+          Prototyping
         </span>
       </div>
 
@@ -38,21 +38,13 @@ export function BrewingTeaser() {
             id="brewing-heading"
             className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight leading-[0.95] text-foreground"
           >
-            Good taste. Cat chaos.
+            Play is leaving the screen.
           </h2>
           <div className="h-1 w-24 bg-primary mt-5" />
           <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-wider mt-5 max-w-3xl leading-relaxed">
-            One irresistible pull. A little suspense. Something good happens.
+            The first product in a new series of AI experiments — made to be touched, triggered,
+            and played with beyond the browser.
           </p>
-          <a
-            href="https://wa.me/60149303546"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-6 inline-flex items-center gap-2 border border-primary bg-primary px-4 py-2.5 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-primary-foreground transition-colors hover:bg-transparent hover:text-primary"
-          >
-            <MessageCircle className="h-4 w-4" aria-hidden="true" />
-            Bring me a strange idea
-          </a>
         </div>
 
         <figure className="product-lineup relative z-10 mt-9 md:mt-12">
