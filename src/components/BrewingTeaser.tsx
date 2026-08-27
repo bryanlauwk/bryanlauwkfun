@@ -42,8 +42,7 @@ export function BrewingTeaser() {
           </h2>
           <div className="h-1 w-24 bg-primary mt-5" />
           <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-wider mt-5 max-w-3xl leading-relaxed">
-            A familiar shape with one irresistible move. Pull it. Watch it. Let the cat decide
-            what happens next.
+            One irresistible pull. A little suspense. Something good happens.
           </p>
           <a
             href="https://wa.me/60149303546"
@@ -52,7 +51,7 @@ export function BrewingTeaser() {
             className="mt-6 inline-flex items-center gap-2 border border-primary bg-primary px-4 py-2.5 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-primary-foreground transition-colors hover:bg-transparent hover:text-primary"
           >
             <MessageCircle className="h-4 w-4" aria-hidden="true" />
-            Make something strange
+            Bring me a strange idea
           </a>
         </div>
 

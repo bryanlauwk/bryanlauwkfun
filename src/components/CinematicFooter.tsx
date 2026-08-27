@@ -23,7 +23,7 @@ export function CinematicFooter() {
               Something strange should exist.
             </p>
             <p className="mt-4 font-mono text-xs md:text-sm text-muted-foreground tracking-wider leading-relaxed">
-              Strange propositions are welcome.
+              If it’s hard to explain, it probably belongs here.
             </p>
           </div>
 
@@ -36,12 +36,12 @@ export function CinematicFooter() {
             >
               <span className="flex w-full items-center justify-between gap-4">
                 <span className="font-mono text-[8px] font-bold uppercase tracking-[0.22em]">
-                  Collaborations & commissions
+                  Collaborations, commissions & odd requests
                 </span>
                 <MessageCircle className="h-4 w-4 shrink-0" aria-hidden="true" />
               </span>
               <span className="mt-4 font-display text-lg font-black uppercase tracking-tight">
-                Discuss a project
+                Bring me a strange idea
               </span>
             </a>
             <a
@@ -57,7 +57,7 @@ export function CinematicFooter() {
                 <ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" />
               </span>
               <span className="mt-4 font-display text-lg font-black uppercase tracking-tight">
-                Follow the build on X
+                Watch it take shape
               </span>
             </a>
           </div>

@@ -46,8 +46,8 @@ export function CinematicHeader() {
 
           <nav className="hidden lg:flex items-center gap-7 ml-auto mr-8" aria-label="Primary navigation">
             {[
-              { href: "#physical-work", label: "Physical" },
-              { href: "#browser-work", label: "Browser" },
+              { href: "#physical-work", label: "For cats" },
+              { href: "#browser-work", label: "Play now" },
               { href: "#contact", label: "Collaborate" },
             ].map(({ href, label }) => (
               <a

@@ -10,7 +10,7 @@ import heroPortrait from "@/assets/hero-portrait-photo.png";
 const Index = () => {
   useSEO({
     title: "Bryan LauWK — A stranger kind of play",
-    description: "Playable experiments by Bryan LauWK — browser-born games, strange systems, physical toys, and interactive works for people and pets.",
+    description: "Playable experiments by Bryan LauWK — built for browsers, living rooms, curious people, and cats.",
     canonical: "https://www.bryanlauwk.fun/",
   });
   return (
@@ -43,8 +43,8 @@ const Index = () => {
                   </span>
                 </h1>
                 <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-wider mt-8 md:mt-10 max-w-2xl leading-relaxed">
-                  Playable experiments by Bryan Lau — made for browsers now, and physical spaces
-                  next.
+                  Playable experiments by Bryan Lau — built for browsers, living rooms, curious
+                  people, and cats.
                 </p>
 
                 <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -58,7 +58,7 @@ const Index = () => {
                     href="#contact"
                     className="border border-foreground/25 px-4 py-2.5 font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-foreground transition-colors hover:border-primary hover:text-primary"
                   >
-                    Collaborate
+                    Bring a strange idea
                   </a>
                 </div>
 
@@ -174,7 +174,7 @@ const Index = () => {
           <ScrollSection animation="fade-up" className="mt-20 md:mt-32 relative">
             <section id="browser-work" className="scroll-mt-24" aria-labelledby="browser-work-heading">
               <div className="flex items-center justify-between mb-4 exhibit-label">
-                <span>In the browser</span>
+                <span>Play now</span>
                 <span className="hidden md:inline-flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
                   Live
@@ -183,12 +183,12 @@ const Index = () => {
 
               <div className="mb-8 md:mb-12">
                 <h2 id="browser-work-heading" className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight text-foreground">
-                  1.0 — Browser Experiments
+                  Things to play with.
                 </h2>
                 <div className="h-1 w-24 bg-primary mt-4" />
                 <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-wider mt-4">
-                  Games, simulations, charts, and small toys you can play with right here. Please
-                  touch the art. Break it. <RedactionReveal>Tell me what happened</RedactionReveal>.
+                  Games, small toys, and curious things you can touch right here. Break something.{" "}
+                  <RedactionReveal>Tell me what happened</RedactionReveal>.
                 </p>
               </div>
               <ProjectGrid />

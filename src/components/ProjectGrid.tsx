@@ -139,7 +139,7 @@ export function ProjectGrid() {
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search experiments…"
+              placeholder="Find an experiment…"
               aria-label="Search browser experiments"
               className="w-full bg-card border border-foreground/20 pl-9 pr-9 py-2.5 font-mono text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
             />
