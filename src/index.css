@@ -123,6 +123,15 @@
     background-color: hsl(var(--card));
   }
 
+  /* Section bands: alternating paper tints for visual rhythm */
+  :root:not(.dark) .section-band-odd {
+    background-color: hsl(38 30% 96%);
+  }
+
+  :root:not(.dark) .section-band-even {
+    background-color: hsl(36 26% 93%);
+  }
+
   /* Ink weight: display type stays strong, body copy relaxes */
   :root:not(.dark) p,
   :root:not(.dark) dd,
