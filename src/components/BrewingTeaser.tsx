@@ -1,20 +1,20 @@
 import { Cat } from "lucide-react";
-import pawJackpotMacroTeaser from "@/assets/paw-jackpot-macro-teaser.webp";
+import chaosMachinesMacroTeaser from "@/assets/chaos-machines-macro-teaser.webp";
 
-// Prototype teaser for the first interactive product shaping the 2.0 direction.
+// Privacy-safe teaser for the first interactive product family shaping the 2.0 direction.
 
 export function BrewingTeaser() {
   return (
     <section
       id="physical-work"
-      className="relative scroll-mt-24"
+      className="relative scroll-mt-32 md:scroll-mt-24"
       aria-labelledby="brewing-heading"
     >
       <div className="flex items-center justify-between mb-4 exhibit-label">
-        <span>2.0 · Interactive build</span>
+        <span>2.0 · Playable tech</span>
         <span className="inline-flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-          Prototyping
+          In development
         </span>
       </div>
 
@@ -42,16 +42,16 @@ export function BrewingTeaser() {
           </h2>
           <div className="h-1 w-24 bg-primary mt-5" />
           <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-wider mt-5 max-w-3xl leading-relaxed">
-            The first product in a new series of AI experiments — made to be touched, triggered,
-            and played with beyond the browser.
+            Browser experiments are becoming physical. This is the first interactive product in a
+            new series of AI-assisted playable tech — made to be touched, triggered, and discovered.
           </p>
         </div>
 
         <figure className="product-lineup relative z-10 mt-9 md:mt-12">
           <div className="product-lineup-frame">
             <img
-              src={pawJackpotMacroTeaser}
-              alt="Five isolated macro details in powder blue, warm white, mocha, seafoam, and dusty rose hint at a tactile cat-facing object in development."
+              src={chaosMachinesMacroTeaser}
+              alt="Six disconnected macro details in appliance colours hint at a family of interactive products in development."
               width="1774"
               height="887"
               loading="lazy"
@@ -60,8 +60,8 @@ export function BrewingTeaser() {
             />
           </div>
           <figcaption className="sr-only">
-            Disconnected material, light, grip, edge, and cat-glyph details conceal the form of a
-            work-in-progress physical play object for cats.
+            Isolated surface, light, trim, window, platen, and control details conceal the forms of
+            six interactive prototypes.
           </figcaption>
         </figure>
       </div>
