@@ -42,8 +42,7 @@ export function BrewingTeaser() {
           </h2>
           <div className="h-1 w-24 bg-primary mt-5" />
           <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-wider mt-5 max-w-3xl leading-relaxed">
-             This is the first lineup in a new series of playable tech — pocket-sized machines made to
-             be pulled, triggered, and discovered.
+             Three in a row. Treats on the house. Jackpot tastes better.
           </p>
         </div>
 
