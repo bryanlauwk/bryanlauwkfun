@@ -50,8 +50,8 @@ export function BrewingTeaser() {
         <figure className="product-lineup relative z-10 mt-9 md:mt-12">
           <div className="product-lineup-frame">
             <img
-              src={chaosMachinesMacroTeaser}
-              alt="Six disconnected macro details in appliance colours hint at a family of interactive products in development."
+              src={chaosMachinesLineup.url}
+              alt="A lineup of five pastel slot-machine-style playable devices with lever handles and cat-symbol reels, in development."
               width="1774"
               height="887"
               loading="lazy"
@@ -60,8 +60,8 @@ export function BrewingTeaser() {
             />
           </div>
           <figcaption className="sr-only">
-            Isolated surface, light, trim, window, platen, and control details conceal the forms of
-            six interactive prototypes.
+            A lineup of five pastel machines with levers, symbol reels, and treat chutes — the first
+            family of physical playable prototypes.
           </figcaption>
         </figure>
       </div>
