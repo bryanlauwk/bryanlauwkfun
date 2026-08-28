@@ -11,7 +11,7 @@ export function BrewingTeaser() {
       aria-labelledby="brewing-heading"
     >
       <div className="flex items-center justify-between mb-4 exhibit-label">
-        <span>2.0 · Playable tech</span>
+         <span>2.0 · PLAY STRANGE</span>
         <span className="inline-flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
           In development
@@ -38,12 +38,12 @@ export function BrewingTeaser() {
             id="brewing-heading"
             className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight leading-[0.95] text-foreground"
           >
-            Play is leaving the screen.
+             CAT CHAOS
           </h2>
           <div className="h-1 w-24 bg-primary mt-5" />
           <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-wider mt-5 max-w-3xl leading-relaxed">
-            Browser experiments are becoming physical. This is the first lineup in a new series of
-            playable tech — pocket-sized machines made to be pulled, triggered, and discovered.
+             This is the first lineup in a new series of playable tech — pocket-sized machines made to
+             be pulled, triggered, and discovered.
           </p>
         </div>
 
