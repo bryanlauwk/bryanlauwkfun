@@ -38,7 +38,7 @@ export function BrewingTeaser() {
             id="brewing-heading"
             className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight leading-[0.95] text-foreground"
           >
-             CAT CHAOS · SERIES 01
+             CAT CHAOS
           </h2>
           <div className="h-1 w-24 bg-primary mt-5" />
           <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-wider mt-5 max-w-3xl leading-relaxed">
