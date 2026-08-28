@@ -1,5 +1,5 @@
 import { Cat } from "lucide-react";
-import chaosMachinesMacroTeaser from "@/assets/chaos-machines-macro-teaser.webp";
+import chaosMachinesLineup from "@/assets/chaos-machines-lineup.png.asset.json";
 
 // Privacy-safe teaser for the first interactive product family shaping the 2.0 direction.
 
@@ -42,16 +42,16 @@ export function BrewingTeaser() {
           </h2>
           <div className="h-1 w-24 bg-primary mt-5" />
           <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-wider mt-5 max-w-3xl leading-relaxed">
-            Browser experiments are becoming physical. This is the first interactive product in a
-            new series of AI-assisted playable tech — made to be touched, triggered, and discovered.
+            Browser experiments are becoming physical. This is the first lineup in a new series of
+            playable tech — pocket-sized machines made to be pulled, triggered, and discovered.
           </p>
         </div>
 
         <figure className="product-lineup relative z-10 mt-9 md:mt-12">
           <div className="product-lineup-frame">
             <img
-              src={chaosMachinesMacroTeaser}
-              alt="Six disconnected macro details in appliance colours hint at a family of interactive products in development."
+              src={chaosMachinesLineup.url}
+              alt="A lineup of five pastel slot-machine-style playable devices with lever handles and cat-symbol reels, in development."
               width="1774"
               height="887"
               loading="lazy"
@@ -60,8 +60,8 @@ export function BrewingTeaser() {
             />
           </div>
           <figcaption className="sr-only">
-            Isolated surface, light, trim, window, platen, and control details conceal the forms of
-            six interactive prototypes.
+            A lineup of five pastel machines with levers, symbol reels, and treat chutes — the first
+            family of physical playable prototypes.
           </figcaption>
         </figure>
       </div>
