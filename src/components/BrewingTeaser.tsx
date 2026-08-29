@@ -53,7 +53,7 @@ export function BrewingTeaser() {
         <figure className="product-lineup relative z-10 mt-9 md:mt-12">
           <div className="product-lineup-frame">
             <img
-              src={chaosMachinesLineup.url}
+              src={chaosMachinesLineup}
               alt="A lineup of five pastel slot-machine-style playable devices with lever handles and cat-symbol reels, in development."
               width="1774"
               height="887"
