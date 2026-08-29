@@ -1,5 +1,9 @@
-import { Cat } from "lucide-react";
-import chaosMachinesLineup from "@/assets/chaos-machines-lineup.png.asset.json";
+import { Cat, MessageCircle } from "lucide-react";
+import chaosMachinesLineup from "@/assets/chaos-machines-lineup.png";
+
+const WAITLIST_URL =
+  "https://wa.me/60149303546?text=" +
+  encodeURIComponent("i want CAT Chaos, how much?");
 
 // Privacy-safe teaser for the first interactive product family shaping the 2.0 direction.
 
