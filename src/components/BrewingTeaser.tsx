@@ -1,5 +1,9 @@
-import { Cat } from "lucide-react";
-import chaosMachinesLineup from "@/assets/chaos-machines-lineup.png.asset.json";
+import { Cat, MessageCircle } from "lucide-react";
+import chaosMachinesLineup from "@/assets/chaos-machines-lineup.png";
+
+const WAITLIST_URL =
+  "https://wa.me/60149303546?text=" +
+  encodeURIComponent("i want CAT Chaos, how much?");
 
 // Privacy-safe teaser for the first interactive product family shaping the 2.0 direction.
 
@@ -49,7 +53,7 @@ export function BrewingTeaser() {
         <figure className="product-lineup relative z-10 mt-9 md:mt-12">
           <div className="product-lineup-frame">
             <img
-              src={chaosMachinesLineup.url}
+              src={chaosMachinesLineup}
               alt="A lineup of five pastel slot-machine-style playable devices with lever handles and cat-symbol reels, in development."
               width="1774"
               height="887"
@@ -63,6 +67,21 @@ export function BrewingTeaser() {
             family of physical playable prototypes.
           </figcaption>
         </figure>
+
+        <div className="relative z-10 mt-8 md:mt-10 flex flex-wrap items-center gap-4">
+          <a
+            href={WAITLIST_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-2.5 border border-primary bg-primary px-5 py-3 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-primary-foreground transition-colors hover:bg-transparent hover:text-primary"
+          >
+            <MessageCircle className="h-3.5 w-3.5" aria-hidden="true" />
+            Join the CAT CHAOS waitlist
+          </a>
+          <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-muted-foreground">
+            First come, first served · replies on WhatsApp
+          </span>
+        </div>
       </div>
     </section>
   );
