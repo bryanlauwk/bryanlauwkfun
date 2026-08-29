@@ -79,7 +79,7 @@ export function BrewingTeaser() {
             Join the CAT CHAOS waitlist
           </a>
           <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-muted-foreground">
-            First come, first served · replies on WhatsApp
+            {"\n"}
           </span>
         </div>
       </div>
