@@ -29,7 +29,7 @@ export function CinematicFooter() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-2xl">
             <a
-              href="https://wa.me/60149303546"
+              href="https://wa.me/60149303546?text=Hi%20Bryan%2C%20I%20have%20a%20strange%20idea%20for%20you"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex min-h-24 flex-col justify-between border border-primary bg-primary px-5 py-4 text-primary-foreground transition-colors hover:bg-transparent hover:text-primary"
