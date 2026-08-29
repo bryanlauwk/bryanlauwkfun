@@ -66,7 +66,7 @@ const Index = () => {
 
               {/* The artist — investigative exposé collage */}
               <div className="relative flex justify-center md:justify-end">
-                <figure className="relative w-[280px] md:w-[340px] lg:w-[380px] rotate-[-2deg]">
+                <figure className="relative w-[280px] md:w-[340px] lg:w-[380px] animate-hero-float will-change-transform">
                   {/* Paper backing plate */}
                   <div className="paper-plate relative p-3 md:p-4 shadow-[0_24px_60px_hsl(240_5%_0%/0.7)] border border-foreground/10">
                     {/* Photo fragment — torn edge, halftone, grayscale */}
@@ -78,9 +78,9 @@ const Index = () => {
                         loading="eager"
                       />
                       <div className="halftone-overlay absolute inset-0 pointer-events-none" aria-hidden="true" />
-                      {/* Redaction bar across collar */}
+                      {/* Redaction bar across collar — real ink in both themes */}
                       <div
-                        className="absolute left-[10%] right-[10%] top-[74%] h-4 md:h-5 bg-foreground"
+                        className="redaction-bar absolute left-[8%] right-[8%] top-[73%] h-4 md:h-5 rotate-[-1deg]"
                         aria-hidden="true"
                       />
                       {/* Fingerprint mark */}
@@ -145,23 +145,31 @@ const Index = () => {
                     </div>
                   </div>
 
-                  {/* Handwritten scribble */}
+                  {/* Handwritten scribble — tucked above the tape, clear of the edges */}
                   <div
-                    className="handwritten absolute -top-10 right-2 md:right-4 rotate-[6deg] text-foreground/85 text-lg md:text-xl leading-tight max-w-[180px] text-right pointer-events-none"
+                    className="handwritten absolute -top-7 left-2 md:-left-8 rotate-[-5deg] text-foreground/80 text-base md:text-lg leading-tight max-w-[160px] pointer-events-none z-20"
                     aria-hidden="true"
                   >
-                    do not trust with a keyboard →
+                    do not trust with a keyboard ↘
                   </div>
 
-                  {/* Certified curious stamp — kept, restyled corner */}
+                  {/* Certified curious stamp — overlapping the plate corner */}
                   <span
-                    className="dossier-stamp absolute -bottom-10 right-4 rotate-[10deg] text-[10px] md:text-xs bg-background/95"
+                    className="dossier-stamp absolute -bottom-5 -right-3 md:-right-6 rotate-[7deg] text-[10px] md:text-xs bg-background shadow-[0_8px_20px_hsl(0_0%_0%/0.4)] z-20"
                     aria-hidden="true"
                   >
                     Certified curious
                   </span>
                 </figure>
               </div>
+            </div>
+
+            {/* Scroll cue */}
+            <div className="mt-14 md:mt-20 flex justify-center">
+              <a href="#physical-work" className="hero-scroll-cue" aria-label="Scroll to see what's being built">
+                <span>Scroll</span>
+                <span className="cue-line" aria-hidden="true" />
+              </a>
             </div>
           </div>
         </section>

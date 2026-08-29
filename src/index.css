@@ -645,3 +645,55 @@ a:focus-visible .brand-portal-dot {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ===== Hero polish ===== */
+.redaction-bar {
+  background: hsl(0 0% 4%);
+  box-shadow: 0 2px 10px hsl(0 0% 0% / 0.55);
+}
+.redaction-bar::after {
+  content: "REDACTED";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: ui-monospace, monospace;
+  font-size: 7px;
+  letter-spacing: 0.35em;
+  color: hsl(0 0% 100% / 0.28);
+}
+
+@keyframes hero-float {
+  0%, 100% { transform: rotate(-2deg) translateY(0); }
+  50% { transform: rotate(-1.2deg) translateY(-8px); }
+}
+.animate-hero-float {
+  animation: hero-float 7s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-hero-float { animation: none; }
+}
+
+.hero-scroll-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: ui-monospace, monospace;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: hsl(var(--muted-foreground));
+}
+.hero-scroll-cue .cue-line {
+  width: 1px;
+  height: 28px;
+  background: linear-gradient(to bottom, hsl(var(--primary)), transparent);
+  animation: cue-drop 2.2s ease-in-out infinite;
+  transform-origin: top;
+}
+@keyframes cue-drop {
+  0% { transform: scaleY(0); opacity: 0; }
+  35% { transform: scaleY(1); opacity: 1; }
+  100% { transform: scaleY(1) translateY(8px); opacity: 0; }
+}
