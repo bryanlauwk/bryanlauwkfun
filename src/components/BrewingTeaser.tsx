@@ -28,14 +28,8 @@ export function BrewingTeaser() {
           strokeWidth={1.1}
           className="absolute right-3 top-4 h-28 w-28 rotate-[8deg] text-primary opacity-[0.07] md:right-8 md:top-6 md:h-44 md:w-44"
         />
-        <span
-          aria-hidden="true"
-          className="absolute -top-3 -left-8 w-32 h-7 bg-foreground/85 rotate-[-38deg] opacity-80"
-        />
-        <span
-          aria-hidden="true"
-          className="absolute -bottom-3 -right-8 w-32 h-7 bg-foreground/85 rotate-[-38deg] opacity-80"
-        />
+        <span aria-hidden="true" className="corner-tape absolute -top-3 -left-8 w-32 h-7 rotate-[-38deg]" />
+        <span aria-hidden="true" className="corner-tape absolute -bottom-3 -right-8 w-32 h-7 rotate-[-38deg]" />
 
         <div className="relative z-10 max-w-4xl">
           <h2
@@ -78,9 +72,6 @@ export function BrewingTeaser() {
             <MessageCircle className="h-3.5 w-3.5" aria-hidden="true" />
             JOIN WAITLIST
           </a>
-          <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-muted-foreground">
-            {"\n"}
-          </span>
         </div>
       </div>
     </section>
