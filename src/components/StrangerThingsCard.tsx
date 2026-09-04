@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ImageOff } from "lucide-react";
 import type { Tables } from "@/integrations/supabase/types";
 import { slugFor } from "@/lib/slug";
 
@@ -12,6 +12,7 @@ interface StrangerThingsCardProps {
 
 export function StrangerThingsCard({ project, index, isFocused = false }: StrangerThingsCardProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const [imageFailed, setImageFailed] = useState(false);
   const isActive = isHovered || isFocused;
 
   const num = String(index + 1).padStart(2, "0");
@@ -32,6 +33,29 @@ export function StrangerThingsCard({ project, index, isFocused = false }: Strang
             : "bg-card border-foreground/15 shadow-[var(--card-lift)]"
         }`}
       >
+        <div className="relative aspect-[8/5] overflow-hidden border-b border-foreground/15 bg-muted">
+          {project.image_url && !imageFailed ? (
+            <img
+              src={project.image_url}
+              alt={`${project.title} website preview`}
+              loading="lazy"
+              decoding="async"
+              onError={() => setImageFailed(true)}
+              className={`h-full w-full object-cover object-top transition duration-500 motion-reduce:transition-none ${
+                isActive ? "scale-[1.025] saturate-100" : "saturate-[0.82]"
+              }`}
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center bg-grid-paper text-muted-foreground">
+              <ImageOff className="h-8 w-8 opacity-40" aria-hidden="true" />
+              <span className="sr-only">Preview unavailable</span>
+            </div>
+          )}
+          <span className="absolute bottom-2 left-2 border border-background/40 bg-background/85 px-2 py-1 font-mono text-[8px] font-bold uppercase tracking-[0.2em] text-foreground backdrop-blur-sm">
+            Live preview
+          </span>
+        </div>
+
         {/* ghost numeral */}
         <span
           className={`absolute -top-2 right-3 font-display text-8xl font-black leading-none pointer-events-none select-none transition-colors duration-200 ${
