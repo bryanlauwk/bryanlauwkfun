@@ -901,6 +901,7 @@ export default function Admin() {
                         onDelete={handleDelete}
                         onToggleVisibility={handleToggleVisibility}
                         onDuplicate={handleDuplicate}
+                        onRecapture={handleRecapture}
                       />
                     ))}
                   </div>
