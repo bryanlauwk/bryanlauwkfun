@@ -10,10 +10,21 @@ interface StrangerThingsCardProps {
   isFocused?: boolean;
 }
 
+// Auto-generated live screenshot for projects without a stored preview image.
+function autoPreviewUrl(href: string) {
+  try {
+    const url = new URL(href);
+    return `https://image.thum.io/get/width/1200/crop/750/noanimate/${url.toString()}`;
+  } catch {
+    return null;
+  }
+}
+
 export function StrangerThingsCard({ project, index, isFocused = false }: StrangerThingsCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [imageFailed, setImageFailed] = useState(false);
   const isActive = isHovered || isFocused;
+  const previewSrc = project.image_url ?? autoPreviewUrl(project.href);
 
   const num = String(index + 1).padStart(2, "0");
   const year = new Date(project.created_at ?? Date.now()).getFullYear();
@@ -34,9 +45,9 @@ export function StrangerThingsCard({ project, index, isFocused = false }: Strang
         }`}
       >
         <div className="relative aspect-[8/5] overflow-hidden border-b border-foreground/15 bg-muted">
-          {project.image_url && !imageFailed ? (
+          {previewSrc && !imageFailed ? (
             <img
-              src={project.image_url}
+              src={previewSrc}
               alt={`${project.title} website preview`}
               loading="lazy"
               decoding="async"
