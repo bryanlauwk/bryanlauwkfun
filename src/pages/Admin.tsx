@@ -195,6 +195,14 @@ function SortableProjectCard({
           <Button
             variant="ghost"
             size="icon"
+            onClick={() => onRecapture(project)}
+            title="Recapture preview now"
+          >
+            <RefreshCw className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
             onClick={() => onDuplicate(project)}
             title="Duplicate"
           >
@@ -511,6 +519,17 @@ export default function Admin() {
         description: error.message,
         variant: "destructive",
       });
+    }
+  };
+
+  // Bumping the row clears any stored screenshot and stamps a new version, so
+  // the live preview is captured again immediately.
+  const handleRecapture = async (project: Project) => {
+    try {
+      await updateProject.mutateAsync({ id: project.id, image_url: null });
+      toast({ title: "Preview recaptured", description: "The new screenshot appears in a few seconds." });
+    } catch (error: any) {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
     }
   };
 
