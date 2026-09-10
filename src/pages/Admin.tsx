@@ -64,7 +64,9 @@ import {
   FolderKanban,
   Handshake,
   Upload,
+  RefreshCw,
 } from "lucide-react";
+import { previewSrcFor } from "@/lib/preview";
 import {
   DndContext,
   closestCenter,
@@ -110,6 +112,7 @@ interface SortableProjectCardProps {
   onDelete: (id: string) => void;
   onToggleVisibility: (project: Project) => void;
   onDuplicate: (project: Project) => void;
+  onRecapture: (project: Project) => void;
 }
 
 function SortableProjectCard({
@@ -118,6 +121,7 @@ function SortableProjectCard({
   onDelete,
   onToggleVisibility,
   onDuplicate,
+  onRecapture,
 }: SortableProjectCardProps) {
   const {
     attributes,
@@ -154,9 +158,9 @@ function SortableProjectCard({
         <div
           className={`h-16 w-24 flex-shrink-0 overflow-hidden rounded-lg ${project.color}`}
         >
-          {project.image_url ? (
+          {previewSrcFor(project) ? (
             <img
-              src={project.image_url}
+              src={previewSrcFor(project)!}
               alt={project.title}
               className="h-full w-full object-cover"
             />
@@ -188,6 +192,14 @@ function SortableProjectCard({
             checked={project.is_visible}
             onCheckedChange={() => onToggleVisibility(project)}
           />
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => onRecapture(project)}
+            title="Recapture preview now"
+          >
+            <RefreshCw className="h-4 w-4" />
+          </Button>
           <Button
             variant="ghost"
             size="icon"
@@ -507,6 +519,17 @@ export default function Admin() {
         description: error.message,
         variant: "destructive",
       });
+    }
+  };
+
+  // Bumping the row clears any stored screenshot and stamps a new version, so
+  // the live preview is captured again immediately.
+  const handleRecapture = async (project: Project) => {
+    try {
+      await updateProject.mutateAsync({ id: project.id, image_url: null });
+      toast({ title: "Preview recaptured", description: "The new screenshot appears in a few seconds." });
+    } catch (error: any) {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
     }
   };
 
@@ -878,6 +901,7 @@ export default function Admin() {
                         onDelete={handleDelete}
                         onToggleVisibility={handleToggleVisibility}
                         onDuplicate={handleDuplicate}
+                        onRecapture={handleRecapture}
                       />
                     ))}
                   </div>
