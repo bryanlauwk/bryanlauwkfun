@@ -45,9 +45,9 @@ export function StrangerThingsCard({ project, index, isFocused = false }: Strang
         }`}
       >
         <div className="relative aspect-[8/5] overflow-hidden border-b border-foreground/15 bg-muted">
-          {project.image_url && !imageFailed ? (
+          {previewSrc && !imageFailed ? (
             <img
-              src={project.image_url}
+              src={previewSrc}
               alt={`${project.title} website preview`}
               loading="lazy"
               decoding="async"
