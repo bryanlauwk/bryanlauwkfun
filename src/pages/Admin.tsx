@@ -110,6 +110,7 @@ interface SortableProjectCardProps {
   onDelete: (id: string) => void;
   onToggleVisibility: (project: Project) => void;
   onDuplicate: (project: Project) => void;
+  onRecapture: (project: Project) => void;
 }
 
 function SortableProjectCard({
@@ -118,6 +119,7 @@ function SortableProjectCard({
   onDelete,
   onToggleVisibility,
   onDuplicate,
+  onRecapture,
 }: SortableProjectCardProps) {
   const {
     attributes,
@@ -154,9 +156,9 @@ function SortableProjectCard({
         <div
           className={`h-16 w-24 flex-shrink-0 overflow-hidden rounded-lg ${project.color}`}
         >
-          {project.image_url ? (
+          {previewSrcFor(project) ? (
             <img
-              src={project.image_url}
+              src={previewSrcFor(project)!}
               alt={project.title}
               className="h-full w-full object-cover"
             />
