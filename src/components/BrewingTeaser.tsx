@@ -22,12 +22,12 @@ export function BrewingTeaser() {
           id="physical-work-heading"
           className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight text-foreground"
         >
-          MELT. <span className="text-muted-foreground">Same brain. Different skins.</span>
+          Something weird is melting.
         </h2>
         <div className="h-1 w-24 bg-primary mt-4" />
         <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-wider mt-4 max-w-2xl leading-relaxed">
-          Play is leaving the screen. Interactive characters that notice, follow, and react —
-          weird objects for a more interesting tomorrow.
+          Part robot, part resin experiment, part personality. A new interactive object is slowly
+          coming to life.
         </p>
       </div>
 
