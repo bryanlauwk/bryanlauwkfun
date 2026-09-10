@@ -64,7 +64,9 @@ import {
   FolderKanban,
   Handshake,
   Upload,
+  RefreshCw,
 } from "lucide-react";
+import { previewSrcFor } from "@/lib/preview";
 import {
   DndContext,
   closestCenter,
