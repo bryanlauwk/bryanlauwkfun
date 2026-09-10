@@ -33,7 +33,9 @@ export function livePreviewUrl(
     // unique, so any change triggers a fresh screenshot instead of reusing the
     // cached one.
     if (version) url.searchParams.set("_p", version);
-    return `https://image.thum.io/get/width/${width}/crop/${crop}/noanimate/maxAge/${CAPTURE_MAX_AGE_HOURS}/${url.toString()}`;
+    // Most exhibits render client-side, so give the page time to finish
+    // loading before the shot is taken — otherwise we capture a loading state.
+    return `https://image.thum.io/get/width/${width}/crop/${crop}/noanimate/wait/${CAPTURE_WAIT_SECONDS}/maxAge/${CAPTURE_MAX_AGE_HOURS}/${url.toString()}`;
   } catch {
     return null;
   }
