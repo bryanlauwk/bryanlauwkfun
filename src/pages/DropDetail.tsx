@@ -6,6 +6,7 @@ import { CinematicHeader } from "@/components/CinematicHeader";
 import { CinematicFooter } from "@/components/CinematicFooter";
 import { usePublicProjects } from "@/hooks/useProjects";
 import { slugFor } from "@/lib/slug";
+import { previewSrcFor } from "@/lib/preview";
 
 const SITE = "https://www.bryanlauwk.fun";
 
@@ -91,7 +92,8 @@ export default function DropDetail() {
         : rawDesc
       : `A drop from Bryan LauWK — ${project.title}. Click to play.`;
   const title = `${project.title} — Bryan LauWK browser experiments`;
-  const ogImage = project.image_url ?? undefined;
+  const ogImage =
+    previewSrcFor(project, { width: 1200, crop: 630 }) ?? undefined;
 
   const jsonLd = {
     "@context": "https://schema.org",
