@@ -66,7 +66,7 @@ import {
   Upload,
   RefreshCw,
 } from "lucide-react";
-import { previewSrcFor } from "@/lib/preview";
+import { previewSrcFor, isStoredAutoCapture } from "@/lib/preview";
 import {
   DndContext,
   closestCenter,
@@ -522,9 +522,16 @@ export default function Admin() {
     }
   };
 
-  // Bumping the row clears any stored screenshot and stamps a new version, so
-  // the live preview is captured again immediately.
+  // Clearing an auto-captured screenshot makes the card fall back to a freshly
+  // shot live preview. A hand-picked image is never thrown away.
   const handleRecapture = async (project: Project) => {
+    if (project.image_url && !isStoredAutoCapture(project.image_url)) {
+      toast({
+        title: "Custom image in place",
+        description: "Remove the uploaded image first to go back to a live preview.",
+      });
+      return;
+    }
     try {
       await updateProject.mutateAsync({ id: project.id, image_url: null });
       toast({ title: "Preview recaptured", description: "The new screenshot appears in a few seconds." });
@@ -532,6 +539,7 @@ export default function Admin() {
       toast({ title: "Error", description: error.message, variant: "destructive" });
     }
   };
+
 
   const handleDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event;

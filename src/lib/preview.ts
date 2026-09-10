@@ -51,14 +51,20 @@ function versionStamp(updatedAt?: string | null) {
 
 /**
  * Resolve the image to show for an exhibit.
- * A hand-picked `image_url` wins; previously stored auto-captures and empty
- * values fall back to a freshly captured live screenshot.
+ * A stored image always wins — those are captured with a real browser once the
+ * page has finished rendering. Only exhibits with no stored image fall back to
+ * an on-demand live screenshot.
  */
 export function previewSrcFor(
   project: { image_url: string | null; href: string; updated_at?: string | null },
   opts?: { width?: number; crop?: number }
 ): string | null {
-  if (project.image_url && !isStoredAutoCapture(project.image_url)) {
+  if (project.image_url) {
+    const stamp = versionStamp(project.updated_at);
+    if (stamp && isStoredAutoCapture(project.image_url)) {
+      const sep = project.image_url.includes("?") ? "&" : "?";
+      return `${project.image_url}${sep}v=${stamp}`;
+    }
     return project.image_url;
   }
   return livePreviewUrl(project.href, {
@@ -66,3 +72,4 @@ export function previewSrcFor(
     version: versionStamp(project.updated_at),
   });
 }
+

@@ -1,0 +1,2 @@
+UPDATE public.projects SET image_url = 'https://ywirnyuvvpenzajaajkg.supabase.co/storage/v1/object/public/project-images/previews%2Fsecai-marche.webp' WHERE id = 'a888e0c1-4754-420f-a73c-55136d760599';
+UPDATE public.projects SET updated_at = now() WHERE image_url LIKE '%previews%';
