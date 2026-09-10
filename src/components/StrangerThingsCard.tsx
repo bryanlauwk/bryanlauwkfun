@@ -16,7 +16,7 @@ export function StrangerThingsCard({ project, index, isFocused = false }: Strang
   const [isHovered, setIsHovered] = useState(false);
   const [imageFailed, setImageFailed] = useState(false);
   const isActive = isHovered || isFocused;
-  const previewSrc = project.image_url ?? autoPreviewUrl(project.href);
+  const previewSrc = previewSrcFor(project);
 
   const num = String(index + 1).padStart(2, "0");
   const year = new Date(project.created_at ?? Date.now()).getFullYear();

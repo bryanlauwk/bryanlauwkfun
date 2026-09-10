@@ -6,6 +6,7 @@ import { CinematicHeader } from "@/components/CinematicHeader";
 import { CinematicFooter } from "@/components/CinematicFooter";
 import { usePublicProjects } from "@/hooks/useProjects";
 import { slugFor } from "@/lib/slug";
+import { previewSrcFor } from "@/lib/preview";
 
 const SITE = "https://www.bryanlauwk.fun";
 
