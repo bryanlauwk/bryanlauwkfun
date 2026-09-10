@@ -8,6 +8,7 @@
  */
 
 const CAPTURE_MAX_AGE_HOURS = 12;
+const CAPTURE_WAIT_SECONDS = 8;
 
 /**
  * Stored auto-captures live under this storage folder. Supabase public URLs may
