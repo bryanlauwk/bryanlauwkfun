@@ -66,7 +66,7 @@ import {
   Upload,
   RefreshCw,
 } from "lucide-react";
-import { previewSrcFor, isStoredAutoCapture } from "@/lib/preview";
+import { previewSrcFor } from "@/lib/preview";
 import {
   DndContext,
   closestCenter,
@@ -196,7 +196,7 @@ function SortableProjectCard({
             variant="ghost"
             size="icon"
             onClick={() => onRecapture(project)}
-            title="Recapture preview now"
+            title={project.image_url ? "Saved preview is protected" : "Refresh live preview now"}
           >
             <RefreshCw className="h-4 w-4" />
           </Button>
@@ -522,19 +522,20 @@ export default function Admin() {
     }
   };
 
-  // Clearing an auto-captured screenshot makes the card fall back to a freshly
-  // shot live preview. A hand-picked image is never thrown away.
+  // Stored screenshots are deliberately preserved: the browser cannot replace
+  // them atomically, so clearing one would expose a potentially incomplete live
+  // capture. Projects without a stored image can safely request a fresh fallback.
   const handleRecapture = async (project: Project) => {
-    if (project.image_url && !isStoredAutoCapture(project.image_url)) {
+    if (project.image_url) {
       toast({
-        title: "Custom image in place",
-        description: "Remove the uploaded image first to go back to a live preview.",
+        title: "Saved preview protected",
+        description: "This screenshot was kept in place and was not deleted.",
       });
       return;
     }
     try {
-      await updateProject.mutateAsync({ id: project.id, image_url: null });
-      toast({ title: "Preview recaptured", description: "The new screenshot appears in a few seconds." });
+      await updateProject.mutateAsync({ id: project.id, href: project.href });
+      toast({ title: "Live preview refreshed", description: "The new screenshot appears in a few seconds." });
     } catch (error: any) {
       toast({ title: "Error", description: error.message, variant: "destructive" });
     }
