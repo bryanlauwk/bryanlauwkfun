@@ -36,9 +36,9 @@ export function BrewingTeaser() {
         <div className="paper-plate relative p-3 md:p-4 shadow-[0_24px_60px_hsl(240_5%_0%/0.7)] border border-foreground/10">
           <img
             src={meltBanner.url}
-            alt="MELT, a curious interactive character platform that notices, follows, and reacts to people across cafés, retail, events, workspaces, and homes."
-            width="1536"
-            height="768"
+            alt="MELT — one core, many stories. A living character platform for brands, spaces and experiences, by Bryan Lau Create."
+            width="1672"
+            height="941"
             loading="lazy"
             decoding="async"
             className="block h-auto w-full"
