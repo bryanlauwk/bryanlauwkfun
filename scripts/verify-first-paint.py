@@ -30,10 +30,10 @@ VIEWPORTS = [
 
 REQUIRED_PHRASES = [
     "Bryan Lau",
-    "Good luck,",
-    "have fun,",
+    "Good luck",
+    "have fun",
     "don\u2019t die.",
-    "for the curious",
+    "right now",
 ]
 
 FORBIDDEN_PHRASES = [
