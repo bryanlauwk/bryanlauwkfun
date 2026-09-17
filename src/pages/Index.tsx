@@ -9,8 +9,8 @@ import heroPortrait from "@/assets/hero-portrait-photo.png";
 
 const Index = () => {
   useSEO({
-    title: "Bryan LauWK — A stranger kind of play",
-    description: "Playable AI experiments by Bryan LauWK — beginning in the browser and moving into interactive objects.",
+    title: "Bryan LauWK — Playable experiments & interactive art",
+    description: "Playable experiments by Bryan LauWK — good luck, have fun, don't die. Browser games and strange machines now, interactive objects next.",
     canonical: "https://www.bryanlauwk.fun/",
   });
   return (
@@ -28,23 +28,22 @@ const Index = () => {
 
             <div className="mb-6 md:mb-8">
               <span className="dossier-stamp text-xs md:text-sm rotate-[-2deg]">
-                Now showing
+                On display
               </span>
             </div>
 
             <div className="grid md:grid-cols-[1.5fr_1fr] gap-10 md:gap-12 items-center">
               <div className="relative">
                 <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase leading-[0.92] tracking-tight text-foreground">
-                  <span className="block">For the curious.</span>
-                  <span className="block">A stranger</span>
-                  <span className="block">kind of</span>
+                  <span className="block">Good luck,</span>
+                  <span className="block">have fun,</span>
                   <span className="block">
-                    <MarkerUnderline>play.</MarkerUnderline>
+                    <MarkerUnderline>don&rsquo;t die.</MarkerUnderline>
                   </span>
                 </h1>
                 <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-wider mt-8 md:mt-10 max-w-2xl leading-relaxed">
-                  Playable AI experiments by Bryan Lau — beginning in the browser and moving into
-                  interactive objects.
+                  Playable experiments by Bryan Lau — for the curious. Beginning in the
+                  browser, moving off it.
                 </p>
 
                 <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -52,7 +51,7 @@ const Index = () => {
                     href="#physical-work"
                     className="border border-primary bg-primary px-4 py-2.5 font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-primary-foreground transition-colors hover:bg-transparent hover:text-primary"
                   >
-                    See what’s being built
+                    See the evidence
                   </a>
                   <a
                     href="#contact"
@@ -166,7 +165,7 @@ const Index = () => {
 
             {/* Scroll cue */}
             <div className="mt-14 md:mt-20 flex justify-center">
-              <a href="#physical-work" className="hero-scroll-cue" aria-label="Scroll to see what's being built">
+              <a href="#physical-work" className="hero-scroll-cue" aria-label="Scroll to see the evidence">
                 <span>Scroll</span>
                 <span className="cue-line" aria-hidden="true" />
               </a>
@@ -195,12 +194,12 @@ const Index = () => {
 
               <div className="mb-8 md:mb-12">
                 <h2 id="browser-work-heading" className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight text-foreground">
-                  Things to play with.
+                  Pick something up.
                 </h2>
                 <div className="h-1 w-24 bg-primary mt-4" />
                 <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-wider mt-4">
-                  Games, small toys, and curious things you can touch right here. Break something.{" "}
-                  <RedactionReveal>Tell me what happened</RedactionReveal>.
+                  Games, small toys, and curious machines you can touch right here. Break
+                  something — then <RedactionReveal>tell me what happened</RedactionReveal>.
                 </p>
               </div>
               <ProjectGrid />
