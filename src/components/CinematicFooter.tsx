@@ -87,7 +87,7 @@ export function CinematicFooter() {
           </div>
 
           <p className="font-mono text-xs md:text-sm text-primary uppercase tracking-[0.3em] text-center">
-            Good luck, have fun, don't die.
+            Thanks for not dying.
           </p>
 
           <p className="exhibit-label text-center">
