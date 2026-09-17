@@ -35,15 +35,16 @@ const Index = () => {
             <div className="grid md:grid-cols-[1.5fr_1fr] gap-10 md:gap-12 items-center">
               <div className="relative">
                 <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase leading-[0.92] tracking-tight text-foreground">
-                  <span className="block">Good luck,</span>
-                  <span className="block">have fun,</span>
+                  <span className="block">Good luck</span>
+                  <span className="block">have fun</span>
                   <span className="block">
                     <MarkerUnderline>don&rsquo;t die.</MarkerUnderline>
                   </span>
                 </h1>
                 <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-wider mt-8 md:mt-10 max-w-2xl leading-relaxed">
-                  Playable experiments by Bryan Lau — for the curious. Beginning in the
-                  browser, moving off it.
+                  Playable experiments by Bryan Lau. Small games and strange
+                  machines you can open in your browser right now — real-world
+                  interactive objects are next.
                 </p>
 
                 <div className="mt-6 flex flex-wrap items-center gap-3">
