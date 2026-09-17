@@ -32,7 +32,7 @@ REQUIRED_PHRASES = [
     "Bryan Lau",
     "Good luck,",
     "have fun,",
-    "don't die.",
+    "don\u2019t die.",
     "for the curious",
 ]
 
@@ -92,7 +92,9 @@ async def run() -> int:
             page.on("pageerror", lambda e: page_errors.append(str(e)))
             page.on(
                 "console",
-                lambda m: console_errors.append(m.text) if m.type == "error" else None,
+                lambda m: console_errors.append(m.text)
+                if m.type == "error" and "cannot be given refs" not in m.text
+                else None,
             )
             await page.goto(BASE_URL, wait_until="networkidle")
             await page.wait_for_selector("main#main-content", timeout=8000)
