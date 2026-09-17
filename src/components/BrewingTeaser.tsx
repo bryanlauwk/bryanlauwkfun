@@ -12,7 +12,7 @@ export function BrewingTeaser() {
         <span>2.0 · Off the screen</span>
         <span className="hidden md:inline-flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-          Coming soon
+          Prototype in development
         </span>
       </div>
 
@@ -36,13 +36,18 @@ export function BrewingTeaser() {
         <div className="paper-plate relative p-3 md:p-4 shadow-[0_24px_60px_hsl(240_5%_0%/0.7)] border border-foreground/10">
           <img
             src={meltBanner.url}
-            alt="MELT — one core, many stories. A living character platform for brands, spaces and experiences, by Bryan Lau Create."
+            alt="MELT — one core, many stories. A living character platform for brands, spaces and experiences, by Bryan Lau Create. Concept illustration; prototype in development."
             width="1672"
             height="941"
             loading="lazy"
             decoding="async"
             className="block h-auto w-full"
           />
+
+          {/* Commercial clarity label */}
+          <span className="absolute top-3 left-3 z-10 inline-flex items-center bg-background/90 border border-foreground/20 px-2.5 py-1 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.18em] text-muted-foreground shadow-[0_4px_12px_hsl(0_0%_0%/0.25)]">
+            Illustration · Prototype in development
+          </span>
 
           {/* Case strip — matches the hero portrait plate */}
           <div className="flex items-center justify-between mt-3 gap-3">
