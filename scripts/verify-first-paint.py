@@ -31,7 +31,7 @@ VIEWPORTS = [
 REQUIRED_PHRASES = [
     "Bryan Lau",
     "For the curious.",
-    "A stranger",
+    "Good luck,", "have fun,", "don.t die.",
     "kind of",
     "internet.",
 ]

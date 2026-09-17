@@ -165,7 +165,7 @@ const Index = () => {
 
             {/* Scroll cue */}
             <div className="mt-14 md:mt-20 flex justify-center">
-              <a href="#physical-work" className="hero-scroll-cue" aria-label="Scroll to see what's being built">
+              <a href="#physical-work" className="hero-scroll-cue" aria-label="Scroll to see the evidence">
                 <span>Scroll</span>
                 <span className="cue-line" aria-hidden="true" />
               </a>
