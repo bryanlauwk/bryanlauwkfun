@@ -10,7 +10,7 @@ import heroPortrait from "@/assets/hero-portrait-photo.png";
 const Index = () => {
   useSEO({
     title: "Bryan LauWK — Playable experiments & interactive art",
-    description: "Playable experiments by Bryan LauWK — good luck, have fun, don't die. Browser games and strange machines now, interactive objects next.",
+    description: "Dumb ideas, taken seriously — good luck, have fun, don't die. Playable experiments by Bryan LauWK, in your browser and soon off it.",
     canonical: "https://www.bryanlauwk.fun/",
   });
   return (
@@ -38,13 +38,13 @@ const Index = () => {
                   <span className="block">Good luck</span>
                   <span className="block">have fun</span>
                   <span className="block">
-                    <MarkerUnderline>don&rsquo;t die.</MarkerUnderline>
+                    <MarkerUnderline>don&rsquo;t die</MarkerUnderline>
                   </span>
                 </h1>
                 <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-wider mt-8 md:mt-10 max-w-2xl leading-relaxed">
-                  Playable experiments by Bryan Lau. Small games and strange
-                  machines you can open in your browser right now — real-world
-                  interactive objects are next.
+                  Dumb ideas, taken seriously. Games and strange little
+                  machines by Bryan Lau — free to play in your browser,
+                  harder to explain in person.
                 </p>
 
                 <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -58,7 +58,7 @@ const Index = () => {
                     href="#contact"
                     className="border border-foreground/25 px-4 py-2.5 font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-foreground transition-colors hover:border-primary hover:text-primary"
                   >
-                    Bring a strange idea
+                    Pitch me a dumb idea
                   </a>
                 </div>
 
@@ -199,8 +199,8 @@ const Index = () => {
                 </h2>
                 <div className="h-1 w-24 bg-primary mt-4" />
                 <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-wider mt-4">
-                  Games, small toys, and curious machines you can touch right here. Break
-                  something — then <RedactionReveal>tell me what happened</RedactionReveal>.
+                  Games, toys, and questionable machines — all free, all slightly
+                  cursed. Break something — then <RedactionReveal>tell me what happened</RedactionReveal>.
                 </p>
               </div>
               <ProjectGrid />
