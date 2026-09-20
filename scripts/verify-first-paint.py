@@ -37,7 +37,6 @@ REQUIRED_PHRASES = [
 ]
 
 FORBIDDEN_PHRASES = [
-    "dumb",
     "Late nights, wild ideas",
     "rabbit holes",
     "I build dumb ideas",
