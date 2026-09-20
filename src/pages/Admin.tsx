@@ -66,7 +66,7 @@ import {
   Upload,
   RefreshCw,
 } from "lucide-react";
-import { previewSrcFor } from "@/lib/preview";
+import { previewSrcFor, isStoredAutoCapture } from "@/lib/preview";
 import {
   DndContext,
   closestCenter,
