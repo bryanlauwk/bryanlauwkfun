@@ -32,8 +32,8 @@ REQUIRED_PHRASES = [
     "Bryan Lau",
     "Good luck",
     "have fun",
-    "don\u2019t die.",
-    "right now",
+    "don\u2019t die",
+    "taken seriously",
 ]
 
 FORBIDDEN_PHRASES = [
