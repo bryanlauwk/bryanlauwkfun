@@ -196,7 +196,7 @@ function SortableProjectCard({
             variant="ghost"
             size="icon"
             onClick={() => onRecapture(project)}
-            title={project.image_url ? "Saved preview is protected" : "Refresh live preview now"}
+            title={project.image_url && !isStoredAutoCapture(project.image_url) ? "Custom image is protected" : "Recapture preview now"}
           >
             <RefreshCw className="h-4 w-4" />
           </Button>
@@ -522,20 +522,32 @@ export default function Admin() {
     }
   };
 
-  // Stored screenshots are deliberately preserved: the browser cannot replace
-  // them atomically, so clearing one would expose a potentially incomplete live
-  // capture. Projects without a stored image can safely request a fresh fallback.
+  // Auto-captured screenshots can be refreshed: clearing image_url makes
+  // previewSrcFor fall back to a fresh live capture (cache-busted by the new
+  // updated_at stamp). Hand-picked custom images are protected from deletion.
   const handleRecapture = async (project: Project) => {
-    if (project.image_url) {
+    if (project.image_url && !isStoredAutoCapture(project.image_url)) {
       toast({
-        title: "Saved preview protected",
-        description: "This screenshot was kept in place and was not deleted.",
+        title: "Custom image protected",
+        description: "This preview was uploaded by hand and won't be replaced.",
       });
       return;
     }
     try {
-      await updateProject.mutateAsync({ id: project.id, href: project.href });
-      toast({ title: "Live preview refreshed", description: "The new screenshot appears in a few seconds." });
+      if (project.image_url) {
+        await updateProject.mutateAsync({ id: project.id, image_url: null });
+        toast({
+          title: "Preview refreshed",
+          description: "A fresh live screenshot is being captured now.",
+        });
+      } else {
+        // No stored image: bump updated_at so the live capture re-shoots.
+        await updateProject.mutateAsync({ id: project.id, href: project.href });
+        toast({
+          title: "Live preview refreshed",
+          description: "The new screenshot appears in a few seconds.",
+        });
+      }
     } catch (error: any) {
       toast({ title: "Error", description: error.message, variant: "destructive" });
     }
