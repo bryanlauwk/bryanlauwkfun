@@ -24,15 +24,15 @@ export function StrangerThingsCard({ project, index, isFocused = false }: Strang
   return (
     <Link
       to={`/drops/${slugFor(project)}`}
-      className="group relative block h-full"
+      className="group relative block h-full rounded-sm outline-none transition-transform duration-300 ease-out motion-reduce:transition-none motion-reduce:transform-none hover:-translate-y-1 focus-visible:-translate-y-1"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       aria-label={`Open ${project.title}`}
     >
       <div
-        className={`relative h-full border overflow-hidden transition-colors duration-200 ${
+        className={`relative h-full border overflow-hidden transition-all duration-200 group-focus-visible:ring-2 group-focus-visible:ring-primary group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-background ${
           isActive
-            ? "bg-primary border-primary"
+            ? "bg-primary border-primary shadow-[0_24px_48px_-12px_hsl(var(--primary)/0.45)]"
             : "bg-card border-foreground/15 shadow-[var(--card-lift)]"
         }`}
       >
@@ -54,7 +54,8 @@ export function StrangerThingsCard({ project, index, isFocused = false }: Strang
               <span className="sr-only">Preview unavailable</span>
             </div>
           )}
-          <span className="absolute bottom-2 left-2 border border-background/40 bg-background/85 px-2 py-1 font-mono text-[8px] font-bold uppercase tracking-[0.2em] text-foreground backdrop-blur-sm">
+          <span className="absolute bottom-2 left-2 inline-flex items-center gap-1.5 border border-background/40 bg-background/85 px-2 py-1 font-mono text-[8px] font-bold uppercase tracking-[0.2em] text-foreground backdrop-blur-sm">
+            <span className="w-1 h-1 rounded-full bg-primary animate-pulse" aria-hidden="true" />
             Live preview
           </span>
         </div>
