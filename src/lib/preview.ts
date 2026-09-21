@@ -9,6 +9,8 @@
 
 const CAPTURE_MAX_AGE_HOURS = 12;
 const CAPTURE_WAIT_SECONDS = 8;
+// thum.io captures at a 1200px browser width, then resizes the thumbnail.
+const CAPTURE_VIEWPORT_WIDTH = 1200;
 
 /**
  * Stored auto-captures live under this storage folder. Supabase public URLs may
@@ -24,9 +26,12 @@ export function isStoredAutoCapture(imageUrl: string | null | undefined) {
 
 export function livePreviewUrl(
   href: string,
-  opts: { width?: number; crop?: number; version?: string | null } = {}
+  opts: { width?: number; height?: number; version?: string | null } = {}
 ): string | null {
-  const { width = 1200, crop = 750, version } = opts;
+  const { width = 1200, height = 750, version } = opts;
+  // crop is measured BEFORE thumbnail resizing; height is our output height.
+  // A 640x400 thumbnail needs a 1200x750 capture, not a 1200x400 strip.
+  const captureHeight = Math.round(height * CAPTURE_VIEWPORT_WIDTH / width);
   try {
     const url = new URL(href);
     if (!/^https?:$/.test(url.protocol)) return null;
@@ -36,7 +41,7 @@ export function livePreviewUrl(
     if (version) url.searchParams.set("_p", version);
     // Most exhibits render client-side, so give the page time to finish
     // loading before the shot is taken — otherwise we capture a loading state.
-    return `https://image.thum.io/get/width/${width}/crop/${crop}/noanimate/wait/${CAPTURE_WAIT_SECONDS}/maxAge/${CAPTURE_MAX_AGE_HOURS}/${url.toString()}`;
+    return `https://image.thum.io/get/width/${width}/crop/${captureHeight}/noanimate/wait/${CAPTURE_WAIT_SECONDS}/maxAge/${CAPTURE_MAX_AGE_HOURS}/${url.toString()}`;
   } catch {
     return null;
   }
@@ -57,7 +62,7 @@ function versionStamp(updatedAt?: string | null) {
  */
 export function previewSrcFor(
   project: { image_url: string | null; href: string; updated_at?: string | null },
-  opts?: { width?: number; crop?: number }
+  opts?: { width?: number; height?: number }
 ): string | null {
   if (project.image_url) {
     const stamp = versionStamp(project.updated_at);
@@ -72,4 +77,3 @@ export function previewSrcFor(
     version: versionStamp(project.updated_at),
   });
 }
-

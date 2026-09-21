@@ -13,7 +13,7 @@ interface StrangerThingsCardProps {
 export function StrangerThingsCard({ project, index }: StrangerThingsCardProps) {
   const [imageFailed, setImageFailed] = useState(false);
   const destination = projectDestination(project.href);
-  const previewSrc = previewSrcFor(project, { width: 640, crop: 400 });
+  const previewSrc = previewSrcFor(project, { width: 640, height: 400 });
   const num = String(index + 1).padStart(2, "0");
   return (
     <a
@@ -26,7 +26,7 @@ export function StrangerThingsCard({ project, index }: StrangerThingsCardProps) 
       <div className="relative aspect-[8/5] overflow-hidden border-b border-foreground/15 bg-muted">
         {previewSrc && !imageFailed ? (
           <img src={previewSrc} alt="" loading="lazy" decoding="async" onError={() => setImageFailed(true)}
-            className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.025] motion-reduce:transition-none motion-reduce:transform-none" />
+            className="h-full w-full object-contain object-center" />
         ) : (
           <div className="flex h-full items-center justify-center bg-grid-paper text-muted-foreground">
             <ImageOff className="h-8 w-8 opacity-40" aria-hidden="true" />

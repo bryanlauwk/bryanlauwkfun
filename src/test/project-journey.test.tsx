@@ -64,6 +64,13 @@ describe("one-click project journey", () => {
     expect(screen.queryByRole("group", { name: "Filter experiments" })).not.toBeInTheDocument();
     expect(screen.getByRole("searchbox")).toBeInTheDocument();
   });
+  it("fits the complete preview without cover-cropping or hover zoom", () => {
+    const { container } = render(<ProjectGrid />);
+    const preview = container.querySelector("img");
+    expect(preview).toHaveClass("object-contain");
+    expect(preview).not.toHaveClass("object-cover");
+    expect(preview?.className).not.toContain("scale-");
+  });
   it("supports useful shared categories with pressed-button semantics", () => {
     state.data.forEach((p, i) => { p.tag = i < 6 ? (i % 2 ? "games" : "game") : "art"; });
     render(<ProjectGrid />);

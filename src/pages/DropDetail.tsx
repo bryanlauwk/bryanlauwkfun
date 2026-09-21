@@ -107,7 +107,7 @@ export default function DropDetail() {
       : `A drop from Bryan LauWK — ${project.title}. Click to play.`;
   const title = `${project.title} — Bryan LauWK browser experiments`;
   const ogImage =
-    previewSrcFor(project, { width: 1200, crop: 630 }) ?? undefined;
+    previewSrcFor(project, { width: 1200, height: 630 }) ?? undefined;
 
   const jsonLd = {
     "@context": "https://schema.org",
