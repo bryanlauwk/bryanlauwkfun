@@ -18,7 +18,7 @@ export function SoundToggle() {
       
       <button
         onClick={toggleSound}
-        className="p-2 rounded-sm border border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/50 transition-colors group"
+        className="flex min-h-11 min-w-11 items-center justify-center p-2 rounded-sm border border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/50 transition-colors group"
         aria-label={soundEnabled ? "Mute audio" : "Enable audio"}
       >
         {isLoading ? (
