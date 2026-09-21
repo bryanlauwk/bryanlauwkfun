@@ -2,83 +2,16 @@ import meltBanner from "@/assets/melt-banner.png.asset.json";
 
 export function BrewingTeaser() {
   return (
-    <section
-      id="physical-work"
-      className="relative scroll-mt-32 md:scroll-mt-24"
-      aria-labelledby="physical-work-heading"
-    >
-      {/* Exhibit label row — mirrors the 1.0 section */}
-      <div className="flex items-center justify-between mb-4 exhibit-label">
-        <span>2.0 · Off the screen</span>
-        <span className="hidden md:inline-flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-          Prototype in development
-        </span>
+    <section id="physical-work" className="relative scroll-mt-36 md:scroll-mt-28 grid gap-7 md:grid-cols-[.85fr_1.15fr] items-center" aria-labelledby="physical-work-heading">
+      <div>
+        <span className="dossier-stamp inline-block rotate-[-3deg] text-[11px] mb-5">Still brewing</span>
+        <h2 id="physical-work-heading" className="font-display text-3xl md:text-4xl font-black uppercase tracking-tight">The weird is escaping the screen.</h2>
+        <p className="mt-4 text-sm leading-relaxed text-muted-foreground max-w-md">Meet MELT. Part robot, part resin experiment, part personality. Not ready to play. Definitely up to something.</p>
+        <p className="mt-4 font-mono text-[11px] uppercase tracking-wider text-primary">Physical prototype · in development</p>
       </div>
-
-      {/* Headline */}
-      <div className="mb-8 md:mb-12">
-        <h2
-          id="physical-work-heading"
-          className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight text-foreground"
-        >
-          Something weird is melting.
-        </h2>
-        <div className="h-1 w-24 bg-primary mt-4" />
-        <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-wider mt-4 max-w-2xl leading-relaxed">
-          Part robot, part resin experiment, part personality. A new interactive object is slowly
-          coming to life.
-        </p>
-      </div>
-
-      {/* Framed banner — dossier plate treatment */}
       <figure className="relative">
-        <div className="paper-plate relative p-3 md:p-4 shadow-[0_24px_60px_hsl(240_5%_0%/0.7)] border border-foreground/10">
-          <img
-            src={meltBanner.url}
-            alt="MELT — one core, many stories. A living character platform for brands, spaces and experiences, by Bryan Lau Create. Concept illustration; prototype in development."
-            width="1672"
-            height="941"
-            loading="lazy"
-            decoding="async"
-            className="block h-auto w-full"
-          />
-
-          {/* Commercial clarity label */}
-          <span className="absolute top-3 left-3 z-10 inline-flex items-center bg-background/90 border border-foreground/20 px-2.5 py-1 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.18em] text-muted-foreground shadow-[0_4px_12px_hsl(0_0%_0%/0.25)]">
-            Illustration · Prototype in development
-          </span>
-
-          {/* Case strip — matches the hero portrait plate */}
-          <div className="flex items-center justify-between mt-3 gap-3">
-            <span className="exhibit-label !text-[8px] md:!text-[9px] text-muted-foreground">
-              Specimen · M-01 · Record 2026
-            </span>
-            <span className="barcode h-3 w-16 inline-block" aria-hidden="true" />
-          </div>
-        </div>
-
-        {/* Red evidence tape — top-left corner */}
-        <div
-          className="evidence-tape absolute -top-3 left-8 h-6 w-32 rotate-[-6deg] origin-center"
-          aria-hidden="true"
-        />
-
-        {/* Classified stamp — bottom-right corner */}
-        <span
-          className="dossier-stamp absolute -bottom-4 right-4 md:right-8 rotate-[5deg] text-[10px] md:text-xs bg-background shadow-[0_8px_20px_hsl(0_0%_0%/0.4)] z-20"
-          aria-hidden="true"
-        >
-          Classified · MELT
-        </span>
-
-        {/* Handwritten scribble */}
-        <div
-          className="handwritten absolute -top-6 right-6 md:right-16 rotate-[3deg] text-foreground/80 text-base md:text-lg leading-tight pointer-events-none z-20"
-          aria-hidden="true"
-        >
-          it watches back ↗
-        </div>
+        <img src={meltBanner.url} alt="MELT character platform concept illustration" width="1672" height="941" loading="lazy" decoding="async" className="block h-auto w-full border border-foreground/15" />
+        <figcaption className="mt-2 font-mono text-[11px] text-muted-foreground">Concept artwork. Real-world mischief in progress.</figcaption>
       </figure>
     </section>
   );

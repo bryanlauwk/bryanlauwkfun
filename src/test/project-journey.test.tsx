@@ -1,0 +1,136 @@
+import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { MemoryRouter, Routes, Route } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
+import Index from "@/pages/Index";
+import DropDetail from "@/pages/DropDetail";
+import { ProjectGrid } from "@/components/ProjectGrid";
+import { CinematicHeader } from "@/components/CinematicHeader";
+import { projectDestination } from "@/lib/project-destination";
+import type { Project } from "@/hooks/useProjects";
+
+const state = vi.hoisted(() => ({ data: [] as Project[], isLoading: false, isError: false, isFetching: false, refetch: vi.fn() }));
+vi.mock("@/hooks/useProjects", () => ({ usePublicProjects: () => state }));
+vi.mock("@/hooks/useVisitorCounter", () => ({ useVisitorCounter: vi.fn() }));
+vi.mock("@/components/SoundToggle", () => ({ SoundToggle: () => <button>Sound</button> }));
+vi.mock("@/components/ThemeToggle", () => ({ ThemeToggle: () => <button>Theme</button> }));
+vi.mock("@/hooks/useSEO", () => ({ useSEO: vi.fn() }));
+vi.mock("@/components/RedactionReveal", () => ({ MarkerUnderline: ({ children }: { children: React.ReactNode }) => <span>{children}</span> }));
+// Public catalogue snapshot checked on 2026-09-22.
+const catalogue = [
+  ["Badminton Clash", "https://www.yuqiuren.fun/", "Badminton Lovers"],
+  ["Elemental Block Blast", "https://elemental-block-blast.lovable.app", "Casual Gamers"],
+  ["Infinite Kitchen", "https://infinitekitchen.bryanlauwk.fun/", "Foodies"],
+  ["马年新年歌排行榜", "https://cny2026.bryanlauwk.fun/", "Trend Watcher"],
+  ["Inflation Chart", "https://inflationchart.bryanlauwk.fun/", "Data Nerds"],
+  ["Cafe Rush", "https://zusrush.bryanlauwk.fun/", "Coffee lovers"],
+  ["Cartridge", "https://cartridge-pod.lovable.app", "Merchandise"],
+  ["Artoy", "https://artoy.bryanlauwk.fun", "Art"],
+  ["画啦猜啦", "https://chineseskribbl.bryanlauwk.fun", "Drawing game"],
+  ["Farm-direct platform", "https://secai-marche.bryanlauwk.fun", ""],
+  ["Boringg", "https://clickerlab.bryanlauwk.fun", ""],
+  ["Giant Durian Run", "https://kldex.bryanlauwk.fun", "Gamers"],
+];
+beforeEach(() => {
+  Object.assign(state, { isLoading: false, isError: false, isFetching: false });
+  state.refetch.mockClear();
+  state.data = catalogue.map(([title, href, tag], index) => ({
+    id: String(index), title, href, tag, description: "A strange little experiment.",
+    image_url: null, color: "#ff0000", display_order: index, is_visible: true,
+    show_text_overlay: false, created_at: "2026-01-01", updated_at: "2026-01-01",
+  }));
+});
+afterEach(cleanup);
+
+describe("one-click project journey", () => {
+  it.each(catalogue)("launches %s directly", (title, href) => {
+    render(<ProjectGrid />);
+    const link = screen.getByRole("link", { name: `Try ${title} (opens in a new tab)` });
+    expect(link).toHaveAttribute("href", new URL(href).href);
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "noopener noreferrer");
+    expect(link.getAttribute("href")).not.toContain("/drops/");
+  });
+  it("searches the collection and clears without a separate page", () => {
+    render(<ProjectGrid />);
+    fireEvent.change(screen.getByRole("searchbox"), { target: { value: "boringg" } });
+    expect(screen.getAllByRole("link")).toHaveLength(1);
+    expect(screen.getByRole("status")).toHaveTextContent("1 experiment found");
+    fireEvent.click(screen.getByRole("button", { name: "Clear search" }));
+    expect(screen.getAllByRole("link")).toHaveLength(12);
+  });
+  it("does not turn one-off audience labels into a crowded filter row", () => {
+    render(<ProjectGrid />);
+    expect(screen.queryByRole("group", { name: "Filter experiments" })).not.toBeInTheDocument();
+    expect(screen.getByRole("searchbox")).toBeInTheDocument();
+  });
+  it("supports useful shared categories with pressed-button semantics", () => {
+    state.data.forEach((p, i) => { p.tag = i < 6 ? (i % 2 ? "games" : "game") : "art"; });
+    render(<ProjectGrid />);
+    fireEvent.click(screen.getByRole("button", { name: "games" }));
+    expect(screen.getAllByRole("link")).toHaveLength(6);
+    expect(screen.getByRole("button", { name: "games" })).toHaveAttribute("aria-pressed", "true");
+  });
+  it("offers a recovery for no matches", () => {
+    render(<ProjectGrid />);
+    fireEvent.change(screen.getByRole("searchbox"), { target: { value: "xyz-does-not-exist" } });
+    expect(screen.queryAllByRole("link")).toHaveLength(0);
+    fireEvent.click(screen.getAllByRole("button", { name: "Show everything" })[0]);
+    expect(screen.getAllByRole("link")).toHaveLength(12);
+  });
+  it("distinguishes a failed catalogue from an empty one and allows retry", () => {
+    state.isError = true;
+    render(<ProjectGrid />);
+    expect(screen.getByRole("alert")).toHaveTextContent("technical gremlin");
+    fireEvent.click(screen.getByRole("button", { name: "Try again" }));
+    expect(state.refetch).toHaveBeenCalledOnce();
+  });
+  it("does not capture page arrows or Space outside project links", () => {
+    render(<ProjectGrid />);
+    expect(fireEvent.keyDown(window, { key: "ArrowDown" })).toBe(true);
+    expect(fireEvent.keyDown(window, { key: " " })).toBe(true);
+  });
+  it("falls back to notes for a missing destination without unsafe navigation", () => {
+    state.data[0].href = "javascript:alert(1)";
+    render(<ProjectGrid />);
+    const link = screen.getByRole("link", { name: "Read about Badminton Clash" });
+    expect(link.getAttribute("href")).toMatch(/^\/drops\//);
+    expect(link).not.toHaveAttribute("target");
+  });
+});
+
+it("keeps navigation useful on existing detail pages", () => {
+  render(<MemoryRouter initialEntries={["/drops/boringg"]}><CinematicHeader /></MemoryRouter>);
+  const nav = within(screen.getByRole("navigation", { name: "Primary navigation" }));
+  expect(nav.getByRole("link", { name: "Play" })).toHaveAttribute("href", "/#browser-work");
+  expect(nav.getByRole("link", { name: "Brewing" })).toHaveAttribute("href", "/#physical-work");
+  expect(nav.getByRole("link", { name: "Collaborate" })).toHaveAttribute("href", "/#contact");
+});
+
+it.each(["", "javascript:alert(1)", "data:text/html,hi", "broken URL"])("rejects invalid destination %s", value => {
+  expect(projectDestination(value)).toBeNull();
+});
+
+it("puts playable projects ahead of the prototype and gives the hero a clear route to play", () => {
+  render(<MemoryRouter><Index /></MemoryRouter>);
+  expect(screen.getByRole("link", { name: "Play something" })).toHaveAttribute("href", "#browser-work");
+  const collection = document.getElementById("browser-work")!;
+  const prototype = document.getElementById("physical-work")!;
+  expect(collection.compareDocumentPosition(prototype) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("don’t die");
+});
+
+function renderNotes() {
+  render(<HelmetProvider><MemoryRouter initialEntries={["/drops/badminton-clash"]}><Routes><Route path="/drops/:slug" element={<DropDetail />} /></Routes></MemoryRouter></HelmetProvider>);
+}
+it("keeps existing project-note URLs and a return path to the collection", () => {
+  renderNotes();
+  expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Badminton Clash");
+  expect(screen.getByRole("link", { name: "Try it" })).toHaveAttribute("href", "https://www.yuqiuren.fun/");
+  expect(screen.getByRole("link", { name: "All experiments" })).toHaveAttribute("href", "/#browser-work");
+});
+it("does not crash an existing notes page when its project URL is invalid", () => {
+  state.data[0].href = "not a URL";
+  renderNotes();
+  expect(screen.getByText("This project isn’t available to open yet.")).toBeInTheDocument();
+});

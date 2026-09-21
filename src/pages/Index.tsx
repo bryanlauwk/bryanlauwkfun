@@ -1,9 +1,9 @@
+import { ArrowDown } from "lucide-react";
 import { CinematicHeader } from "@/components/CinematicHeader";
 import { CinematicFooter } from "@/components/CinematicFooter";
 import { ProjectGrid } from "@/components/ProjectGrid";
-import { ScrollSection } from "@/components/ScrollSection";
 import { BrewingTeaser } from "@/components/BrewingTeaser";
-import { MarkerUnderline, RedactionReveal } from "@/components/RedactionReveal";
+import { MarkerUnderline } from "@/components/RedactionReveal";
 import { useSEO } from "@/hooks/useSEO";
 import heroPortrait from "@/assets/hero-portrait-photo.png";
 
@@ -16,202 +16,49 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col bg-background relative overflow-x-clip film-grain vignette">
       <CinematicHeader />
-
       <main id="main-content" className="flex-1 relative z-10">
-        {/* Hero */}
-        <section className="section-band-odd py-16 md:py-24 animate-fade-in-up relative">
-          <div className="max-w-7xl mx-auto px-4 md:px-12">
-            <div className="flex items-center justify-end mb-8 md:mb-12 exhibit-label">
-              <span className="hidden md:inline">1.3521°N 103.8198°E</span>
-            </div>
-
-
-            <div className="mb-6 md:mb-8">
-              <span className="dossier-stamp text-xs md:text-sm rotate-[-2deg]">
-                On display
-              </span>
-            </div>
-
-            <div className="grid md:grid-cols-[1.5fr_1fr] gap-10 md:gap-12 items-center">
-              <div className="relative">
-                <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase leading-[0.92] tracking-tight text-foreground">
-                  <span className="block">Good luck</span>
-                  <span className="block">have fun</span>
-                  <span className="block">
-                    <MarkerUnderline>don&rsquo;t die</MarkerUnderline>
-                  </span>
-                </h1>
-                <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-wider mt-8 md:mt-10 max-w-2xl leading-relaxed">
-                  Dumb ideas, taken seriously. Games and strange little
-                  machines by Bryan Lau — free to play in your browser,
-                  harder to explain in person.
-                </p>
-
-                <div className="mt-6 flex flex-wrap items-center gap-3">
-                  <a
-                    href="#physical-work"
-                    className="border border-primary bg-primary px-4 py-2.5 font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-primary-foreground transition-colors hover:bg-transparent hover:text-primary"
-                  >
-                    See the evidence
-                  </a>
-                  <a
-                    href="#contact"
-                    className="border border-foreground/25 px-4 py-2.5 font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-foreground transition-colors hover:border-primary hover:text-primary"
-                  >
-                    Pitch me a dumb idea
-                  </a>
-                </div>
-
-              </div>
-
-              {/* The artist — investigative exposé collage */}
-              <div className="relative flex justify-center md:justify-end">
-                <figure className="relative w-[280px] md:w-[340px] lg:w-[380px] animate-hero-float will-change-transform">
-                  {/* Paper backing plate */}
-                  <div className="paper-plate relative p-3 md:p-4 shadow-[0_24px_60px_hsl(240_5%_0%/0.7)] border border-foreground/10">
-                    {/* Photo fragment — torn edge, halftone, grayscale */}
-                    <div className="relative torn-edge overflow-hidden">
-                      <img
-                        src={heroPortrait}
-                        alt="Bryan LauWK portrait — evidence exhibit A"
-                        className="w-full h-auto object-cover grayscale contrast-125 brightness-95"
-                        loading="eager"
-                      />
-                      <div className="halftone-overlay absolute inset-0 pointer-events-none" aria-hidden="true" />
-                      {/* Redaction bar across collar — real ink in both themes */}
-                      <div
-                        className="redaction-bar absolute left-[8%] right-[8%] top-[73%] h-4 md:h-5 rotate-[-1deg]"
-                        aria-hidden="true"
-                      />
-                      {/* Fingerprint mark */}
-                      <svg
-                        className="absolute bottom-2 right-2 w-10 h-10 opacity-70"
-                        viewBox="0 0 40 40"
-                        fill="none"
-                        stroke="hsl(var(--primary))"
-                        strokeWidth="1.1"
-                        strokeLinecap="round"
-                        aria-hidden="true"
-                      >
-                        <ellipse cx="20" cy="22" rx="12" ry="15" />
-                        <ellipse cx="20" cy="22" rx="9" ry="11.5" />
-                        <ellipse cx="20" cy="22" rx="6" ry="8" />
-                        <ellipse cx="20" cy="22" rx="3" ry="4.5" />
-                        <path d="M8 18 Q10 8 20 6 Q30 8 32 18" />
-                        <path d="M9 26 Q12 34 20 36 Q28 34 31 26" />
-                      </svg>
-                    </div>
-
-                    {/* Case number strip */}
-                    <div className="flex items-center justify-between mt-3 gap-3">
-                      <span className="exhibit-label !text-[8px] md:!text-[9px] text-[hsl(20_15%_20%)]">
-                        Record · 2026
-                      </span>
-                      <span className="barcode h-3 w-16 inline-block" aria-hidden="true" />
-                    </div>
-                  </div>
-
-                  {/* Red evidence tape — diagonal top-left */}
-                  <div
-                    className="evidence-tape absolute -top-3 -left-6 h-6 w-32 rotate-[-28deg] origin-center"
-                    aria-hidden="true"
-                  />
-                  {/* Red evidence tape — diagonal bottom-right */}
-                  <div
-                    className="evidence-tape absolute -bottom-2 -right-4 h-5 w-24 rotate-[18deg] origin-center opacity-90"
-                    aria-hidden="true"
-                  />
-
-                  {/* Evidence tag with punched hole */}
-                  <div
-                    className="absolute -bottom-8 -left-6 md:-left-10 w-32 md:w-36 rotate-[-8deg] px-3 py-2 pl-6 border border-foreground/20 shadow-[0_10px_24px_hsl(240_5%_0%/0.6)]"
-                    style={{
-                      background: "hsl(38 30% 78%)",
-                      color: "hsl(20 20% 15%)",
-                    }}
-                  >
-                    <span
-                      className="absolute left-2 top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-background border border-foreground/40"
-                      aria-hidden="true"
-                    />
-                    <div className="font-mono text-[9px] leading-tight uppercase tracking-[0.18em]">
-                      Exhibit · A
-                    </div>
-                    <div className="font-mono text-[9px] leading-tight tracking-wider mt-0.5">
-                      Subject: Lau, B.
-                    </div>
-                    <div className="font-mono text-[10px] leading-tight mt-0.5 text-[hsl(4_70%_35%)]">
-                      侦查中
-                    </div>
-                  </div>
-
-                  {/* Handwritten scribble — tucked above the tape, clear of the edges */}
-                  <div
-                    className="handwritten absolute -top-7 left-2 md:-left-8 rotate-[-5deg] text-foreground/80 text-base md:text-lg leading-tight max-w-[160px] pointer-events-none z-20"
-                    aria-hidden="true"
-                  >
-                    do not trust with a keyboard ↘
-                  </div>
-
-                  {/* Certified curious stamp — overlapping the plate corner */}
-                  <span
-                    className="dossier-stamp absolute -bottom-5 -right-3 md:-right-6 rotate-[7deg] text-[10px] md:text-xs bg-background shadow-[0_8px_20px_hsl(0_0%_0%/0.4)] z-20"
-                    aria-hidden="true"
-                  >
-                    Certified curious
-                  </span>
-                </figure>
-              </div>
-            </div>
-
-            {/* Scroll cue */}
-            <div className="mt-14 md:mt-20 flex justify-center">
-              <a href="#physical-work" className="hero-scroll-cue" aria-label="Scroll to see the evidence">
-                <span>Scroll</span>
-                <span className="cue-line" aria-hidden="true" />
+        <section className="section-band-odd py-10 md:py-16">
+          <div className="max-w-7xl mx-auto px-5 md:px-12 grid md:grid-cols-[1.5fr_1fr] gap-10 items-center">
+            <div>
+              <p className="exhibit-label mb-5">Bryan Lau · maker of questionable things</p>
+              <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-black uppercase leading-[0.95] tracking-tight text-foreground">
+                <span className="block">Good luck</span>
+                <span className="block">have fun</span>
+                <span className="block"><MarkerUnderline>don’t die</MarkerUnderline></span>
+              </h1>
+              <p className="mt-6 max-w-lg text-sm md:text-base leading-relaxed text-muted-foreground">
+                Dumb ideas, taken seriously. Games, experiments, and strange little machines. Go on. Touch something.
+              </p>
+              <a href="#browser-work" className="mt-7 inline-flex min-h-12 items-center gap-4 border border-primary bg-primary px-5 py-3 font-mono text-xs font-bold uppercase tracking-wider text-primary-foreground transition-colors hover:bg-transparent hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">
+                Play something <ArrowDown className="h-4 w-4" aria-hidden="true" />
               </a>
             </div>
+            <figure className="relative mx-auto hidden w-full max-w-[290px] rotate-[3deg] md:block">
+              <div className="paper-plate p-3 shadow-[0_16px_40px_hsl(240_5%_0%/0.4)] border border-foreground/10">
+                <img src={heroPortrait} alt="Bryan Lau, maker of these experiments" className="w-full h-auto grayscale contrast-125 torn-edge" loading="eager" />
+                <figcaption className="mt-3 font-mono text-[11px] text-[hsl(20_15%_20%)]">Exhibit A. Probably responsible.</figcaption>
+              </div>
+              <div className="evidence-tape absolute -top-3 left-8 h-6 w-28 rotate-[-12deg]" aria-hidden="true" />
+              <span className="handwritten absolute -bottom-6 right-0 rotate-[-5deg] text-lg text-foreground" aria-hidden="true">do not trust with a keyboard ↗</span>
+            </figure>
           </div>
         </section>
-
-        {/* 2.0 teaser */}
-        <ScrollSection animation="fade-up" className="section-band-even py-16 md:py-24">
-          <div className="max-w-7xl mx-auto px-4 md:px-12">
-            <BrewingTeaser />
+        <section id="browser-work" className="section-band-even scroll-mt-36 md:scroll-mt-28 py-10 md:py-14" aria-labelledby="browser-work-heading">
+          <div className="max-w-7xl mx-auto px-5 md:px-12">
+            <div className="mb-7 md:mb-9">
+              <p className="exhibit-label mb-3">The collection · please touch</p>
+              <h2 id="browser-work-heading" className="font-display text-3xl md:text-5xl font-black uppercase tracking-tight">Pick your kind of weird.</h2>
+              <p className="mt-3 text-sm text-muted-foreground">One click to the real thing. Projects open in a new tab so you can come back for more.</p>
+            </div>
+            <ProjectGrid />
           </div>
-        </ScrollSection>
-
-        {/* Browser experiments */}
-        <ScrollSection animation="fade-up" className="section-band-odd py-16 md:py-24 relative">
-          <div className="max-w-7xl mx-auto px-4 md:px-12">
-            <section id="browser-work" className="scroll-mt-24" aria-labelledby="browser-work-heading">
-              <div className="flex items-center justify-between mb-4 exhibit-label">
-                <span>1.0 · In the browser</span>
-                <span className="hidden md:inline-flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                  Live
-                </span>
-              </div>
-
-              <div className="mb-8 md:mb-12">
-                <h2 id="browser-work-heading" className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight text-foreground">
-                  Pick something up.
-                </h2>
-                <div className="h-1 w-24 bg-primary mt-4" />
-                <p className="font-mono text-xs md:text-sm text-muted-foreground tracking-wider mt-4">
-                  Games, toys, and questionable machines — all free, all slightly
-                  cursed. Break something — then <RedactionReveal>tell me what happened</RedactionReveal>.
-                </p>
-              </div>
-              <ProjectGrid />
-            </section>
-          </div>
-        </ScrollSection>
+        </section>
+        <div className="section-band-odd py-10 md:py-14">
+          <div className="max-w-7xl mx-auto px-5 md:px-12"><BrewingTeaser /></div>
+        </div>
       </main>
-
       <CinematicFooter />
     </div>
   );
 };
-
 export default Index;

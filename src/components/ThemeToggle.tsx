@@ -16,7 +16,7 @@ export function ThemeToggle() {
       onClick={() => setTheme(isDark ? "light" : "dark")}
       aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
       title={`Switch to ${isDark ? "light" : "dark"} mode`}
-      className="inline-flex items-center gap-2 border border-foreground/25 bg-transparent px-2.5 py-1.5 font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:border-primary hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+      className="inline-flex min-h-11 min-w-11 justify-center items-center gap-2 border border-foreground/25 bg-transparent px-2.5 py-1.5 font-mono text-[11px] uppercase tracking-wider text-muted-foreground transition-colors hover:border-primary hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
     >
       {isDark ? (
         <Sun className="h-3.5 w-3.5" aria-hidden="true" />

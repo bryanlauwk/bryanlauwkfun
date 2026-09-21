@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { CinematicHeader } from "@/components/CinematicHeader";
@@ -7,23 +7,37 @@ import { CinematicFooter } from "@/components/CinematicFooter";
 import { usePublicProjects } from "@/hooks/useProjects";
 import { slugFor } from "@/lib/slug";
 import { previewSrcFor } from "@/lib/preview";
+import { projectDestination } from "@/lib/project-destination";
 
 const SITE = "https://www.bryanlauwk.fun";
 
 export default function DropDetail() {
   const { slug } = useParams<{ slug: string }>();
-  const { data: projects, isLoading } = usePublicProjects();
+  const { data: projects, isLoading, isError, refetch, isFetching } = usePublicProjects();
 
   const project = useMemo(
     () => (projects ?? []).find((p) => slugFor(p) === slug),
     [projects, slug],
+  );
+  const destination = projectDestination(project?.href);
+
+  if (isError) return (
+    <div className="min-h-screen flex flex-col bg-background">
+      <CinematicHeader />
+      <main id="main-content" className="flex-1 px-5 py-16 text-center">
+        <h1 className="font-display text-3xl font-black uppercase">The notes are playing hard to get.</h1>
+        <p className="mt-3 text-muted-foreground">Couldn’t load this project. Try again in a moment.</p>
+        <button onClick={() => void refetch()} disabled={isFetching} className="mt-5 min-h-11 px-5 border border-primary text-primary">{isFetching ? "Trying…" : "Try again"}</button>
+      </main>
+      <CinematicFooter />
+    </div>
   );
 
   if (isLoading) {
     return (
       <div className="min-h-screen flex flex-col bg-background">
         <CinematicHeader />
-        <main className="flex-1 flex items-center justify-center">
+        <main id="main-content" className="flex-1 flex items-center justify-center">
           <p className="exhibit-label animate-electrical-flicker">
             Installing exhibit…
           </p>
@@ -59,7 +73,7 @@ export default function DropDetail() {
           <meta name="twitter:image" content={`${SITE}/og-image.png`} />
         </Helmet>
         <CinematicHeader />
-        <main className="flex-1 flex items-center justify-center px-4">
+        <main id="main-content" className="flex-1 flex items-center justify-center px-4">
           <div className="text-center">
             <p className="exhibit-label mb-3">
               Exhibit missing from collection
@@ -70,12 +84,12 @@ export default function DropDetail() {
             <p className="text-muted-foreground max-w-md mx-auto mb-6 font-mono text-sm">
               The slug <span className="text-primary">/drops/{slug}</span> isn't in the collection.
             </p>
-            <Link
-              to="/"
+            <a
+              href="/#browser-work"
               className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.25em] text-primary"
             >
               <ArrowLeft className="w-4 h-4" /> Back to experiments
-            </Link>
+            </a>
           </div>
         </main>
         <CinematicFooter />
@@ -105,7 +119,7 @@ export default function DropDetail() {
     dateCreated: project.created_at,
     ...(project.tag ? { genre: project.tag } : {}),
     ...(ogImage ? { image: ogImage } : {}),
-    sameAs: [project.href],
+    ...(destination ? { sameAs: [destination] } : {}),
   };
 
   const breadcrumbLd = {
@@ -141,14 +155,14 @@ export default function DropDetail() {
 
       <CinematicHeader />
 
-      <main className="flex-1 relative z-10 px-4 md:px-12 py-8 md:py-16">
+      <main id="main-content" className="flex-1 relative z-10 px-4 md:px-12 py-8 md:py-16">
         <div className="max-w-4xl mx-auto">
-          <Link
-            to="/"
+          <a
+            href="/#browser-work"
             className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground hover:text-foreground transition-colors mb-8"
           >
             <ArrowLeft className="w-3.5 h-3.5" /> All experiments
-          </Link>
+          </a>
 
           <article className="relative bg-card border border-foreground/15 overflow-hidden">
             <div className="h-0.5 w-full bg-primary" aria-hidden="true" />
@@ -175,18 +189,18 @@ export default function DropDetail() {
                 </p>
               )}
 
-              <a
-                href={project.href}
+              {destination ? <a
+                href={destination}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground border border-primary font-mono text-sm uppercase tracking-widest font-bold hover:bg-transparent hover:text-primary transition-colors"
               >
-                Enter the exhibit
+                Try it
                 <ArrowUpRight className="w-4 h-4" />
-              </a>
+              </a> : <p className="text-muted-foreground">This project isn’t available to open yet.</p>}
 
               <p className="exhibit-label pt-2">
-                Opens {new URL(project.href).hostname} in a new tab
+                {destination ? `Opens ${new URL(destination).hostname} in a new tab` : "More mischief coming soon."}
               </p>
             </div>
 

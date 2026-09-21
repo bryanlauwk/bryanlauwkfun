@@ -1,150 +1,49 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { ArrowUpRight, ImageOff } from "lucide-react";
 import type { Tables } from "@/integrations/supabase/types";
 import { slugFor } from "@/lib/slug";
 import { previewSrcFor } from "@/lib/preview";
+import { projectDestination } from "@/lib/project-destination";
 
 interface StrangerThingsCardProps {
   project: Tables<"projects">;
   index: number;
-  isFocused?: boolean;
 }
 
-
-export function StrangerThingsCard({ project, index, isFocused = false }: StrangerThingsCardProps) {
-  const [isHovered, setIsHovered] = useState(false);
+export function StrangerThingsCard({ project, index }: StrangerThingsCardProps) {
   const [imageFailed, setImageFailed] = useState(false);
-  const isActive = isHovered || isFocused;
-  const previewSrc = previewSrcFor(project);
-
+  const destination = projectDestination(project.href);
+  const previewSrc = previewSrcFor(project, { width: 640, crop: 400 });
   const num = String(index + 1).padStart(2, "0");
-  const year = new Date(project.created_at ?? Date.now()).getFullYear();
-
   return (
-    <Link
-      to={`/drops/${slugFor(project)}`}
-      className="group relative block h-full rounded-sm outline-none transition-transform duration-300 ease-out motion-reduce:transition-none motion-reduce:transform-none hover:-translate-y-1 focus-visible:-translate-y-1"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      aria-label={`Open ${project.title}`}
+    <a
+      href={destination ?? `/drops/${slugFor(project)}`}
+      target={destination ? "_blank" : undefined}
+      rel={destination ? "noopener noreferrer" : undefined}
+      aria-label={destination ? `Try ${project.title} (opens in a new tab)` : `Read about ${project.title}`}
+      className="group flex h-full flex-col overflow-hidden rounded-sm border border-foreground/15 bg-card shadow-[var(--card-lift)] transition duration-200 hover:-translate-y-1 hover:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-background motion-reduce:transition-none motion-reduce:transform-none"
     >
-      <div
-        className={`relative h-full border overflow-hidden transition-all duration-200 group-focus-visible:ring-2 group-focus-visible:ring-primary group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-background ${
-          isActive
-            ? "bg-primary border-primary shadow-[0_24px_48px_-12px_hsl(var(--primary)/0.45)]"
-            : "bg-card border-foreground/15 shadow-[var(--card-lift)]"
-        }`}
-      >
-        <div className="relative aspect-[8/5] overflow-hidden border-b border-foreground/15 bg-muted">
-          {previewSrc && !imageFailed ? (
-            <img
-              src={previewSrc}
-              alt={`${project.title} website preview`}
-              loading="lazy"
-              decoding="async"
-              onError={() => setImageFailed(true)}
-              className={`h-full w-full object-cover object-top transition duration-500 motion-reduce:transition-none ${
-                isActive ? "scale-[1.025] saturate-100" : "saturate-[0.82]"
-              }`}
-            />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center bg-grid-paper text-muted-foreground">
-              <ImageOff className="h-8 w-8 opacity-40" aria-hidden="true" />
-              <span className="sr-only">Preview unavailable</span>
-            </div>
-          )}
-          <span className="absolute bottom-2 left-2 inline-flex items-center gap-1.5 border border-background/40 bg-background/85 px-2 py-1 font-mono text-[8px] font-bold uppercase tracking-[0.2em] text-foreground backdrop-blur-sm">
-            <span className="w-1 h-1 rounded-full bg-primary animate-pulse" aria-hidden="true" />
-            Live preview
-          </span>
-        </div>
-
-        {/* ghost numeral */}
-        <span
-          className={`absolute -top-2 right-3 font-display text-8xl font-black leading-none pointer-events-none select-none transition-colors duration-200 ${
-            isActive ? "text-background/20" : "text-foreground/[0.06]"
-          }`}
-          aria-hidden="true"
-        >
-          {num}
-        </span>
-
-        {/* Main content */}
-        <div className="p-6 min-h-[220px] flex flex-col relative">
-          <div className="flex items-center gap-3 mb-5">
-            <span
-              className={`font-mono text-[10px] uppercase tracking-[0.3em] transition-colors duration-200 ${
-                isActive ? "text-primary-foreground/80" : "text-muted-foreground"
-              }`}
-            >
-              Exhibit {num}
-            </span>
-            {project.tag && (
-              <span
-                className={`inline-flex items-center border px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-widest font-bold transition-colors duration-200 ${
-                  isActive
-                    ? "border-primary-foreground/60 text-primary-foreground"
-                    : "border-primary/60 text-primary"
-                }`}
-              >
-                {project.tag}
-              </span>
-            )}
+      <div className="relative aspect-[8/5] overflow-hidden border-b border-foreground/15 bg-muted">
+        {previewSrc && !imageFailed ? (
+          <img src={previewSrc} alt="" loading="lazy" decoding="async" onError={() => setImageFailed(true)}
+            className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.025] motion-reduce:transition-none motion-reduce:transform-none" />
+        ) : (
+          <div className="flex h-full items-center justify-center bg-grid-paper text-muted-foreground">
+            <ImageOff className="h-8 w-8 opacity-40" aria-hidden="true" />
+            <span className="sr-only">Preview unavailable</span>
           </div>
-
-          <h3
-            className={`font-display text-2xl md:text-3xl font-black uppercase tracking-tight mb-3 leading-[0.95] transition-colors duration-200 ${
-              isActive ? "text-primary-foreground" : "text-foreground"
-            }`}
-          >
-            {project.title}
-          </h3>
-
-          <div
-            className={`h-1 mb-4 transition-all duration-500 ease-out ${
-              isActive ? "w-full bg-primary-foreground" : "w-12 bg-primary"
-            }`}
-          />
-
-          {project.description && (
-            <p
-              className={`text-sm leading-relaxed flex-1 transition-colors duration-200 ${
-                isActive ? "text-primary-foreground/85" : "text-muted-foreground"
-              }`}
-            >
-              {project.description}
-            </p>
-          )}
-
-          <div
-            className={`inline-flex items-center gap-2 mt-5 self-start px-4 py-2 border font-mono text-xs uppercase tracking-widest font-bold transition-colors duration-200 ${
-              isActive
-                ? "bg-background text-foreground border-background"
-                : "bg-transparent text-foreground border-foreground/25"
-            }`}
-          >
-            <span>Enter</span>
-            <ArrowUpRight
-              className={`w-4 h-4 transition-transform duration-300 ${
-                isActive ? "translate-x-1 -translate-y-1" : ""
-              }`}
-            />
-          </div>
-        </div>
-
-        {/* Footer meta — plaque line */}
-        <div
-          className={`px-6 py-2.5 border-t flex items-center justify-between font-mono text-[9px] uppercase tracking-[0.3em] transition-colors duration-200 ${
-            isActive
-              ? "border-primary-foreground/30 text-primary-foreground/80"
-              : "border-foreground/10 text-muted-foreground"
-          }`}
-        >
-          <span>{project.tag ?? "experiment"}</span>
-          <span>{year}</span>
-        </div>
+        )}
+        <span className="absolute left-3 top-3 bg-background/95 px-2 py-1 font-mono text-[11px] text-foreground" aria-hidden="true">No. {num}</span>
       </div>
-    </Link>
+      <div className="flex flex-1 flex-col p-5 md:p-6">
+        {project.tag && <span className="mb-3 font-mono text-[11px] uppercase tracking-wider text-primary">{project.tag}</span>}
+        <h3 className="font-display text-2xl md:text-3xl font-black uppercase leading-tight tracking-tight text-foreground group-hover:text-primary transition-colors">{project.title}</h3>
+        {project.description && <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-muted-foreground">{project.description}</p>}
+        <span className="mt-auto flex items-center justify-between gap-3 pt-6 font-mono text-xs font-bold uppercase tracking-wider text-foreground group-hover:text-primary">
+          {destination ? "Try it" : "Read the notes"}
+          <ArrowUpRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none" aria-hidden="true" />
+        </span>
+      </div>
+    </a>
   );
 }
