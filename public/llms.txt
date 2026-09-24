@@ -1,7 +1,7 @@
 # Bryan LauWK — Create
 
-> Browser experiments from Bryan LauWK (Bryan Lau Wai Kit) — Create — playable games, simulations, charts and small interactive art for the curious. Good luck, have fun, don't die. Interactive installations (2.0) in progress.
+> Browser experiments from Bryan LauWK (Bryan Lau Wai Kit) — Create — playable games, simulations, charts and small interactive art for the curious. Good luck, have fun, don't die.
 
 ## Pages
 
-- [Home](/): Browser experiments you can play in the tab, plus a teaser for upcoming interactive installations.
+- [Home](/): Browser experiments you can play directly in the tab.

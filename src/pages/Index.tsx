@@ -2,7 +2,6 @@ import { ArrowDown } from "lucide-react";
 import { CinematicHeader } from "@/components/CinematicHeader";
 import { CinematicFooter } from "@/components/CinematicFooter";
 import { ProjectGrid } from "@/components/ProjectGrid";
-import { BrewingTeaser } from "@/components/BrewingTeaser";
 import { MarkerUnderline } from "@/components/RedactionReveal";
 import { useSEO } from "@/hooks/useSEO";
 import heroPortrait from "@/assets/hero-portrait-photo.png";
@@ -10,7 +9,7 @@ import heroPortrait from "@/assets/hero-portrait-photo.png";
 const Index = () => {
   useSEO({
     title: "Bryan LauWK — Playable experiments & interactive art",
-    description: "Dumb ideas, taken seriously — good luck, have fun, don't die. Playable experiments by Bryan LauWK, in your browser and soon off it.",
+    description: "Dumb ideas, taken seriously — good luck, have fun, don't die. Playable browser experiments by Bryan LauWK: games, charts and strange little machines.",
     canonical: "https://www.bryanlauwk.fun/",
   });
   return (
@@ -53,9 +52,6 @@ const Index = () => {
             <ProjectGrid />
           </div>
         </section>
-        <div className="section-band-odd py-10 md:py-14">
-          <div className="max-w-7xl mx-auto px-5 md:px-12"><BrewingTeaser /></div>
-        </div>
       </main>
       <CinematicFooter />
     </div>

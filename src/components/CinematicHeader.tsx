@@ -27,7 +27,6 @@ export function CinematicHeader() {
           <nav className="order-3 flex w-full items-center justify-between border-t border-foreground/10 md:order-none md:w-auto md:gap-7 md:border-0" aria-label="Primary navigation">
             {[
               { hash: "#browser-work", label: "Play" },
-              { hash: "#physical-work", label: "Brewing" },
               { hash: "#contact", label: "Collaborate" },
             ].map(({ hash, label }) => <a key={hash} href={`${home}${hash}`} className="inline-flex min-h-11 items-center font-mono text-[11px] uppercase tracking-wider text-muted-foreground transition-colors hover:text-primary focus-visible:text-primary">{label}</a>)}
           </nav>
