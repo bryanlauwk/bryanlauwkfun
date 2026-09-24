@@ -63,10 +63,12 @@ import {
   MessageSquare,
   FolderKanban,
   Handshake,
+  Stamp,
   Upload,
   RefreshCw,
 } from "lucide-react";
 import { previewSrcFor, isStoredAutoCapture } from "@/lib/preview";
+import { useAdminStampReactions } from "@/hooks/useStampReactions";
 import {
   DndContext,
   closestCenter,
@@ -347,6 +349,7 @@ export default function Admin() {
   const { data: projects, isLoading: projectsLoading, error: projectsError } = useAdminProjects(shouldFetchData);
   const { data: guestBookEntries, isLoading: guestBookLoading } = useAdminGuestBook(shouldFetchData);
   const deleteGuestBookEntry = useDeleteGuestBookEntry();
+  const { data: stampReactionRows, isLoading: stampReactionsLoading, error: stampReactionsError } = useAdminStampReactions(shouldFetchData);
   
   // Sponsor hooks
   const { data: sponsors, isLoading: sponsorsLoading } = useAdminSponsors(shouldFetchData);
@@ -714,6 +717,7 @@ export default function Admin() {
   const projectCount = projects?.length ?? 0;
   const guestBookCount = guestBookEntries?.length ?? 0;
   const sponsorCount = sponsors?.length ?? 0;
+  const stampReactionCount = (stampReactionRows ?? []).reduce((sum, row) => sum + row.reaction_count, 0);
 
   return (
     <div className="min-h-screen bg-background">
@@ -738,7 +742,7 @@ export default function Admin() {
 
       <main className="container mx-auto px-4 py-8">
         <Tabs defaultValue="projects" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 max-w-lg">
+          <TabsList className="grid w-full grid-cols-4 max-w-2xl">
             <TabsTrigger value="projects" className="flex items-center gap-2">
               <FolderKanban className="h-4 w-4" />
               Projects
@@ -750,6 +754,13 @@ export default function Admin() {
                 <Badge variant="secondary" className="ml-1">
                   {guestBookCount}
                 </Badge>
+              )}
+            </TabsTrigger>
+            <TabsTrigger value="stamps" className="flex items-center gap-2">
+              <Stamp className="h-4 w-4" />
+              Stamps
+              {stampReactionCount > 0 && (
+                <Badge variant="secondary" className="ml-1">{stampReactionCount}</Badge>
               )}
             </TabsTrigger>
             <TabsTrigger value="sponsors" className="flex items-center gap-2">
@@ -1011,6 +1022,52 @@ export default function Admin() {
                     />
                   ))}
                 </div>
+              </>
+            )}
+          </TabsContent>
+
+          {/* Anonymous stamp reactions */}
+          <TabsContent value="stamps" className="space-y-6">
+            <div>
+              <h2 className="font-display text-lg font-semibold text-foreground">Visitor stamp reactions</h2>
+              <p className="mt-1 text-sm text-muted-foreground">Anonymous totals by stamp, page, and section. No names or device details are collected.</p>
+            </div>
+
+            {stampReactionsLoading ? (
+              <div className="space-y-3"><Skeleton className="h-20 w-full" /><Skeleton className="h-48 w-full" /></div>
+            ) : stampReactionsError ? (
+              <Card><CardContent className="py-8 text-sm text-destructive">Could not load stamp reactions: {stampReactionsError.message}</CardContent></Card>
+            ) : !stampReactionRows?.length ? (
+              <Card className="border-dashed"><CardContent className="flex flex-col items-center justify-center py-12 text-center">
+                <Stamp className="mb-3 h-10 w-10 text-muted-foreground/50" />
+                <p className="font-medium text-foreground">No reactions yet</p>
+                <p className="mt-1 text-sm text-muted-foreground">Visitor stamps will show up here once the database migration is applied.</p>
+              </CardContent></Card>
+            ) : (
+              <>
+                <Card><CardContent className="flex items-center gap-4 p-5">
+                  <div className="flex h-11 w-11 items-center justify-center border border-primary/40 bg-primary/10 text-primary"><Stamp className="h-5 w-5" /></div>
+                  <div><p className="text-2xl font-bold tabular-nums text-foreground">{stampReactionCount}</p><p className="text-xs uppercase tracking-wider text-muted-foreground">total stamps</p></div>
+                </CardContent></Card>
+                <Card>
+                  <ScrollArea className="h-[520px]">
+                    <Table>
+                      <TableHeader><TableRow>
+                        <TableHead>Stamp</TableHead><TableHead>Page</TableHead><TableHead>Section</TableHead><TableHead className="text-right">Count</TableHead>
+                      </TableRow></TableHeader>
+                      <TableBody>
+                        {stampReactionRows.map((row) => (
+                          <TableRow key={`${row.label}-${row.page_path}-${row.area_key}`}>
+                            <TableCell><Badge variant="outline" className="border-primary/50 text-primary">{row.label}</Badge></TableCell>
+                            <TableCell className="font-mono text-xs">{row.page_path}</TableCell>
+                            <TableCell className="text-muted-foreground">{row.area_key === "page" ? "Whole page" : row.area_key}</TableCell>
+                            <TableCell className="text-right font-mono font-bold tabular-nums">{row.reaction_count}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </ScrollArea>
+                </Card>
               </>
             )}
           </TabsContent>

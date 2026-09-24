@@ -170,6 +170,30 @@ export type Database = {
         }
         Relationships: []
       }
+      stamp_reactions: {
+        Row: {
+          area_key: string
+          created_at: string
+          id: string
+          label: string
+          page_path: string
+        }
+        Insert: {
+          area_key?: string
+          created_at?: string
+          id?: string
+          label: string
+          page_path: string
+        }
+        Update: {
+          area_key?: string
+          created_at?: string
+          id?: string
+          label?: string
+          page_path?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: string
@@ -193,7 +217,15 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_stamp_reaction_summary: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          area_key: string
+          label: string
+          page_path: string
+          reaction_count: number
+        }[]
+      }
     }
     Enums: {
       app_role: "admin" | "user"

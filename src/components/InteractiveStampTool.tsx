@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { recordStampReaction } from "@/hooks/useStampReactions";
 
 const LABELS = [
   "CERTIFIED",
@@ -41,6 +42,14 @@ export function InteractiveStampTool() {
       if (!(target instanceof Element)) return;
       if (target.closest(".interactive-stamp-dock, .interactive-stamp-mark")) return;
       if (target.closest("button, a, input, textarea, select, [role='button'], [data-no-stamp]")) return;
+
+      const pagePath = window.location.pathname;
+      const areaKey = target.closest<HTMLElement>("section[id]")?.id || "page";
+      if (!pagePath.startsWith("/admin") && !pagePath.startsWith("/auth") && !pagePath.startsWith("/.lovable/")) {
+        void recordStampReaction(selectedLabel, pagePath, areaKey.slice(0, 80)).catch((error) => {
+          console.warn("Could not record anonymous stamp reaction:", error.message);
+        });
+      }
 
       setMarks((current) => [...current, {
         id: nextId.current++,
@@ -92,7 +101,7 @@ export function InteractiveStampTool() {
           <div>
             <p className="interactive-stamp-kicker">A tiny public opinion machine</p>
             <p className="interactive-stamp-instruction"><b>1</b> Pick a stamp <span aria-hidden="true">→</span> <b>2</b> Tap anywhere</p>
-            <p className="interactive-stamp-note">Leave your verdict on the page.</p>
+            <p className="interactive-stamp-note">Your stamp and page area are counted anonymously.</p>
           </div>
         </div>
 
