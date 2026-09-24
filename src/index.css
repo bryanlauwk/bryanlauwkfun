@@ -338,35 +338,6 @@
   opacity: 0.92;
 }
 
-/* 2.0 product teaser — isolated macro clues keep the in-development form concealed */
-.product-lineup {
-  position: relative;
-  isolation: isolate;
-}
-
-.product-lineup-frame {
-  position: relative;
-  overflow: hidden;
-  border: 1px solid hsl(var(--foreground) / 0.3);
-  background: hsl(240 5% 4.5%);
-  box-shadow: 0 20px 50px -28px hsl(0 0% 0% / 0.8);
-}
-
-.product-lineup-image {
-  display: block;
-  width: 100%;
-  height: auto;
-  background: hsl(240 5% 4.5%);
-}
-
-:root:not(.dark) .product-lineup-frame {
-  box-shadow: 0 18px 42px -28px hsl(30 20% 25% / 0.55);
-  /* Paper mat around the dark lineup photo, like a mounted print */
-  background: hsl(var(--card));
-  padding: clamp(0.5rem, 1.5vw, 1rem);
-  border-color: hsl(var(--border));
-}
-
 /* Visitor counter — gallery attendance meter */
 .visitor-counter {
   background: transparent;

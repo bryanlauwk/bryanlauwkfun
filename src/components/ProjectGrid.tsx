@@ -5,6 +5,14 @@ import { StrangerThingsCard } from "./StrangerThingsCard";
 import { Skeleton } from "./ui/skeleton";
 import { projectCategory } from "@/lib/project-destination";
 
+const bentoPattern = ["wide", "tall", "standard", "wide", "tall", "standard", "standard", "wide", "tall", "standard", "wide"] as const;
+
+const bentoSpan = {
+  wide: "lg:col-span-8",
+  tall: "lg:col-span-4",
+  standard: "lg:col-span-4",
+};
+
 export function ProjectGrid() {
   const { data: projects, isLoading, isError, refetch, isFetching } = usePublicProjects();
   const [query, setQuery] = useState("");
@@ -59,8 +67,15 @@ export function ProjectGrid() {
       )}
       {(query || activeFilter !== "all") && <p role="status" className="font-mono text-xs text-muted-foreground">{filtered.length} {filtered.length === 1 ? "experiment" : "experiments"} found <button onClick={reset} className="ml-3 inline-flex min-h-11 items-center underline underline-offset-4 text-primary">Show everything</button></p>}
       {filtered.length ? (
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((project, index) => <StrangerThingsCard key={project.id} project={project} index={index} />)}
+        <div className="grid grid-cols-1 items-stretch gap-5 md:grid-cols-2 lg:grid-cols-12 lg:gap-6">
+          {filtered.map((project, index) => {
+            const size = bentoPattern[index % bentoPattern.length];
+            return (
+              <div key={project.id} className={`min-w-0 md:col-span-1 ${bentoSpan[size]}`}>
+                <StrangerThingsCard project={project} index={index} size={size} />
+              </div>
+            );
+          })}
         </div>
       ) : (
         <div className="border border-foreground/15 bg-card p-8 text-center">

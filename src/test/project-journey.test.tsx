@@ -110,20 +110,19 @@ it("keeps navigation useful on existing detail pages", () => {
   render(<MemoryRouter initialEntries={["/drops/boringg"]}><CinematicHeader /></MemoryRouter>);
   const nav = within(screen.getByRole("navigation", { name: "Primary navigation" }));
   expect(nav.getByRole("link", { name: "Play" })).toHaveAttribute("href", "/#browser-work");
-  expect(nav.getByRole("link", { name: "Brewing" })).toHaveAttribute("href", "/#physical-work");
   expect(nav.getByRole("link", { name: "Collaborate" })).toHaveAttribute("href", "/#contact");
+  expect(nav.queryByRole("link", { name: "Brewing" })).not.toBeInTheDocument();
 });
 
 it.each(["", "javascript:alert(1)", "data:text/html,hi", "broken URL"])("rejects invalid destination %s", value => {
   expect(projectDestination(value)).toBeNull();
 });
 
-it("puts playable projects ahead of the prototype and gives the hero a clear route to play", () => {
+it("gives the hero a clear route to the playable projects", () => {
   render(<MemoryRouter><Index /></MemoryRouter>);
   expect(screen.getByRole("link", { name: "Play something" })).toHaveAttribute("href", "#browser-work");
-  const collection = document.getElementById("browser-work")!;
-  const prototype = document.getElementById("physical-work")!;
-  expect(collection.compareDocumentPosition(prototype) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  expect(document.getElementById("browser-work")).toBeInTheDocument();
+  expect(document.getElementById("physical-work")).not.toBeInTheDocument();
   expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("don’t die");
 });
 
