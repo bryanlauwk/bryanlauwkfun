@@ -2,6 +2,90 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Temporary, client-side dossier marks. */
+.interactive-stamp-toggle {
+  position: fixed;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  z-index: 80;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 42px;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid hsl(var(--primary) / 0.75);
+  background: hsl(var(--background) / 0.94);
+  color: hsl(var(--primary));
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 5px 20px hsl(0 0% 0% / 0.24);
+  backdrop-filter: blur(8px);
+}
+
+.interactive-stamp-toggle[aria-pressed="true"] {
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+
+.interactive-stamp-toggle:focus-visible {
+  outline: 2px solid hsl(var(--foreground));
+  outline-offset: 3px;
+}
+
+.interactive-stamp-mark {
+  position: fixed;
+  z-index: 70;
+  pointer-events: none;
+  border: 3px solid hsl(4 90% 52% / 0.82);
+  padding: 0.32rem 0.55rem;
+  color: hsl(4 90% 52% / 0.88);
+  font-family: "JetBrains Mono", monospace;
+  font-size: clamp(0.75rem, 2vw, 1rem);
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  line-height: 1;
+  white-space: nowrap;
+  text-shadow: 0 0 1px currentColor;
+  mix-blend-mode: multiply;
+  animation: stamp-hit 180ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.dark .interactive-stamp-mark {
+  mix-blend-mode: screen;
+}
+
+.interactive-stamp-cursor {
+  position: fixed;
+  z-index: 69;
+  width: 64px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  transform: translate(-50%, -50%) rotate(-12deg);
+  border: 2px solid hsl(4 90% 52% / 0.72);
+  color: hsl(4 90% 52% / 0.78);
+  font: 700 8px/1 "JetBrains Mono", monospace;
+  letter-spacing: 0.08em;
+  pointer-events: none;
+}
+
+@keyframes stamp-hit {
+  from { opacity: 0; scale: 1.35; }
+  to { opacity: 1; scale: 1; }
+}
+
+@media (pointer: fine) {
+  body.stamp-mode, body.stamp-mode * { cursor: crosshair !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .interactive-stamp-mark { animation: none; }
+}
+
 /* THE EXHIBITION — Design System
    Art installation × tech. A24 restraint, MSCHF provocation.
    Near-black gallery space, bone-white type, one signal red.
