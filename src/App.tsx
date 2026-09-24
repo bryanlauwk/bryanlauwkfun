@@ -15,6 +15,7 @@ import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
 import DropDetail from "./pages/DropDetail";
 import OAuthConsent from "./pages/OAuthConsent";
+import Rift from "./pages/Rift";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient({
@@ -55,6 +56,7 @@ const App = () => {
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/drops/:slug" element={<DropDetail />} />
+                <Route path="/rift" element={<Rift />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/admin" element={<Admin />} />
                 <Route path="/.lovable/oauth/consent" element={<OAuthConsent />} />

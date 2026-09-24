@@ -78,6 +78,7 @@ async function main() {
   const drops = await fetchDrops();
   const entries: Entry[] = [
     { loc: `${BASE_URL}/`, changefreq: "weekly", priority: "1.0" },
+    { loc: `${BASE_URL}/rift`, changefreq: "monthly", priority: "0.8" },
     ...drops,
   ];
   writeFileSync(resolve("public/sitemap.xml"), render(entries));
