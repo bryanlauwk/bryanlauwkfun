@@ -29,7 +29,7 @@ export function StrangerThingsCard({ project, index, size = "standard" }: Strang
       <div className={`relative shrink-0 overflow-hidden border-b border-foreground/15 bg-muted ${isWide ? "aspect-[8/5] lg:aspect-auto lg:h-full lg:w-[58%] lg:border-b-0 lg:border-r" : isTall ? "aspect-[5/4]" : "aspect-[8/5]"}`}>
         {previewSrc && !imageFailed ? (
           <img src={previewSrc} alt="" loading="lazy" decoding="async" onError={() => setImageFailed(true)}
-            className={`h-full w-full object-contain object-center transition-transform duration-500 group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:transform-none ${isWide ? "lg:object-cover" : ""}`} />
+            className="h-full w-full object-contain object-center" />
         ) : (
           <div className="flex h-full items-center justify-center bg-grid-paper text-muted-foreground">
             <ImageOff className="h-8 w-8 opacity-40" aria-hidden="true" />
