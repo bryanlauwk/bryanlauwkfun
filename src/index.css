@@ -17,6 +17,84 @@
   backdrop-filter: blur(12px);
 }
 
+.interactive-stamp-dock-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  margin-bottom: 0.45rem;
+  color: hsl(var(--muted-foreground));
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.interactive-stamp-dock-actions {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.interactive-stamp-action {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border: 1px solid hsl(var(--border));
+  background: transparent;
+  color: hsl(var(--muted-foreground));
+  cursor: pointer;
+  transition: border-color 140ms ease, color 140ms ease;
+}
+
+.interactive-stamp-action:hover {
+  border-color: hsl(var(--primary));
+  color: hsl(var(--primary));
+}
+
+.interactive-stamp-action svg { width: 15px; height: 15px; }
+
+.interactive-stamp-dock-minimized {
+  width: auto;
+  padding: 0;
+  border-color: hsl(var(--primary) / 0.75);
+}
+
+.interactive-stamp-mini-button {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.65rem 0.8rem;
+  border: 0;
+  background: hsl(var(--background) / 0.97);
+  color: hsl(var(--primary));
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+}
+
+.interactive-stamp-mini-button > svg:first-child { width: 17px; height: 17px; }
+.interactive-stamp-mini-button:hover { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+.interactive-stamp-expand-icon { width: 13px; height: 13px; opacity: 0.65; }
+
+.interactive-stamp-mini-count {
+  display: grid;
+  min-width: 20px;
+  height: 20px;
+  place-items: center;
+  border-radius: 999px;
+  background: hsl(var(--primary) / 0.12);
+  font-size: 0.58rem;
+  letter-spacing: 0;
+}
+
+.interactive-stamp-mini-button:hover .interactive-stamp-mini-count {
+  background: hsl(var(--primary-foreground) / 0.2);
+}
+
 .interactive-stamp-guide {
   display: flex;
   align-items: center;
