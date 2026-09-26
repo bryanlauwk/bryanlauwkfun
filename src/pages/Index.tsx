@@ -47,7 +47,7 @@ const Index = () => {
         <section id="featured" className="scroll-mt-24 border-b border-border bg-background py-8 md:py-10" aria-labelledby="featured-heading">
           <div className="editorial-wrap">
             <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
-              <div><p className="eyebrow mb-2"><span className="eyebrow-pill">Latest</span> The featured game</p><h2 id="featured-heading" className="section-title">THIS WEEK’S PLAY</h2></div>
+              <div><p className="eyebrow mb-2"><span className="eyebrow-pill">Latest</span> The featured game</p><h2 id="featured-heading" className="section-title">THIS WEEK’S COVER STORY</h2></div>
               <span className="hidden font-mono text-[10px] uppercase tracking-[0.13em] text-muted-foreground sm:block">A very Malaysian high-speed problem</span>
             </div>
             <a href="https://giant-food-run-kldex.bryanlauwaikit.chatgpt.site/" target="_blank" rel="noopener noreferrer" className="feature-story group">
@@ -93,20 +93,6 @@ const Index = () => {
           </div>
         </section>
 
-        <section className="maker-band" aria-labelledby="maker-heading">
-          <div className="editorial-wrap grid gap-6 py-8 md:grid-cols-[0.7fr_1.3fr] md:items-center md:gap-12 md:py-10">
-            <div className="flex items-center gap-5 md:gap-7">
-              <img src={heroPortrait} alt="Bryan Lau" className="h-32 w-28 shrink-0 object-cover object-center md:h-44 md:w-36" loading="lazy" />
-              <div><p className="eyebrow text-white/60">The person behind the pixels</p><h2 id="maker-heading" className="mt-2 font-display text-2xl font-black uppercase leading-none md:text-4xl">MEET<br />BRYAN</h2></div>
-            </div>
-            <div>
-              <p className="max-w-2xl text-sm leading-relaxed text-white/75 md:text-base">I’m a creative growth marketer who likes building the thing, not just talking about it. This site is where prototypes get to escape the notebook and meet actual people.</p>
-              <div className="mt-6 grid max-w-xl grid-cols-3 border-t border-white/20 pt-4">
-                {[ ["01", "Games"], ["02", "Experiments"], ["03", "Physical builds"] ].map(([n, label]) => <div key={n}><span className="block font-display text-2xl font-black text-white md:text-3xl">{n}</span><span className="mt-1 block font-mono text-[9px] uppercase tracking-wider text-white/55 md:text-[10px]">{label}</span></div>)}
-              </div>
-            </div>
-          </div>
-        </section>
       </main>
       <CinematicFooter />
     </div>
