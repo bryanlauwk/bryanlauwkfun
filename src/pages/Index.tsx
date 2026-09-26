@@ -33,12 +33,14 @@ const Index = () => {
                 <a href="#featured" className="editorial-button editorial-button-outline min-h-10 py-2">Latest game</a>
               </div>
             </div>
-            <figure className="relative mx-auto w-full max-w-[480px] md:ml-auto">
-              <div className="relative overflow-hidden border border-border bg-white">
-                <img src={heroPortrait} alt="Bryan Lau, creator of games and interactive experiments" className="aspect-[16/10] w-full object-cover object-[center_42%]" />
+            <figure className="hero-portrait relative mx-auto w-full max-w-[480px] md:ml-auto">
+              <div className="hero-portrait-frame">
+                <span className="hero-portrait-note">MADE IN KL · BUILT TO PLAY</span>
+                <img src={heroPortrait} alt="Bryan Lau, creator of games and interactive experiments" className="hero-portrait-image" />
+                <span className="hero-portrait-sticker" aria-hidden="true">LET’S<br />PLAY!</span>
               </div>
-              <figcaption className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-foreground/85 px-3 py-2 font-mono text-[9px] uppercase tracking-wider text-background">
-                <span>Bryan Lau · Kuala Lumpur</span><span>Made to play ↗</span>
+              <figcaption className="hero-portrait-caption">
+                <span><strong>Bryan Lau</strong> · Kuala Lumpur</span><span>Games, ideas & odd builds ↗</span>
               </figcaption>
             </figure>
           </div>
@@ -48,26 +50,26 @@ const Index = () => {
           <div className="editorial-wrap">
             <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
               <div><p className="eyebrow mb-2"><span className="eyebrow-pill">Latest</span> The featured game</p><h2 id="featured-heading" className="section-title">THIS WEEK’S COVER STORY</h2></div>
-              <span className="hidden font-mono text-[10px] uppercase tracking-[0.13em] text-muted-foreground sm:block">A very Malaysian high-speed problem</span>
+              <span className="hidden font-mono text-[10px] uppercase tracking-[0.13em] text-muted-foreground sm:block">A giant Malaysian-sized playground</span>
             </div>
-            <a href="https://giant-food-run-kldex.bryanlauwaikit.chatgpt.site/" target="_blank" rel="noopener noreferrer" className="feature-story group">
+            <a href="https://kldex.bryanlauwk.fun/" target="_blank" rel="noopener noreferrer" className="feature-story group">
               <div className="feature-art" aria-hidden="true">
-                <div className="feature-art-topline"><span>KLDEX · ARCADE RUNNER</span><span>NO. 001</span></div>
+                <div className="feature-art-topline"><span>KLDEX · GIANT DURIAN</span><span>NO. 001</span></div>
                 <svg viewBox="0 0 420 300" className="feature-durian" role="presentation">
                   <path d="m210 31 19 30 36-22 4 38 42-7-15 36 38 15-28 27 29 27-39 14 13 39-42-7-8 39-35-25-26 31-20-35-39 22-2-42-41 5 16-39-36-19 31-25-24-32 41-9-7-40 39 14 16-37 25 30Z" fill="currentColor" />
                   <path d="M210 84c-45 0-79 32-79 73 0 34 27 57 79 83 52-26 79-49 79-83 0-41-34-73-79-73Z" fill="#f0c86d" />
                   <path d="M210 99v123m-54-102 108 81m-108 0 108-81" fill="none" stroke="#b77927" strokeWidth="5" strokeLinecap="round" />
                   <path d="M184 61q26 16 52 0" fill="none" stroke="#24452e" strokeWidth="8" strokeLinecap="round" />
                 </svg>
-                <span className="feature-art-label">RUN FOR YOUR LIFE<br />OR AT LEAST YOUR DURIAN</span>
+                <span className="feature-art-label">GO BIG<br />OR GO HOME</span>
                 <span className="feature-play"><Play className="h-4 w-4 fill-current" /> PLAY NOW</span>
               </div>
               <div className="feature-copy">
                 <p className="eyebrow text-primary">KLDEX · Browser game</p>
-                <h3 className="feature-headline mt-2 text-3xl leading-[0.98] md:text-4xl">DURIAN DASH KL</h3>
-                <p className="mt-2 font-mono text-[9px] font-semibold uppercase tracking-wider text-muted-foreground">A tiny runner. A giant durian problem.</p>
-                <p className="mt-4 max-w-lg text-sm leading-relaxed text-muted-foreground md:text-base">Dodge rolling durians, grab the golden flesh, and try to reach the finish line in one piece. Swipe to move. Double-tap to jump higher.</p>
-                <span className="mt-4 inline-flex min-h-10 items-center gap-2 border-b-2 border-primary pb-1 font-mono text-xs font-bold uppercase tracking-wider text-foreground transition-colors group-hover:text-primary">Play Durian Dash <ArrowUpRight className="h-4 w-4" /></span>
+                <h3 className="feature-headline mt-2 text-3xl leading-[0.98] md:text-4xl">GIANT DURIAN RUN</h3>
+                <p className="mt-2 font-mono text-[9px] font-semibold uppercase tracking-wider text-muted-foreground">Kuala Lumpur, with the durian dial turned all the way up.</p>
+                <p className="mt-4 max-w-lg text-sm leading-relaxed text-muted-foreground md:text-base">Step into a larger-than-life KL playground built around Malaysia’s most divisive fruit. Explore the city, meet the giant durian, and see what’s waiting around the corner.</p>
+                <span className="mt-4 inline-flex min-h-10 items-center gap-2 border-b-2 border-primary pb-1 font-mono text-xs font-bold uppercase tracking-wider text-foreground transition-colors group-hover:text-primary">Play Giant Durian Run <ArrowUpRight className="h-4 w-4" /></span>
               </div>
             </a>
           </div>

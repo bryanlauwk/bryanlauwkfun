@@ -12,7 +12,9 @@ import type { Project } from "@/hooks/useProjects";
 const state = vi.hoisted(() => ({ data: [] as Project[], isLoading: false, isError: false, isFetching: false, refetch: vi.fn() }));
 vi.mock("@/hooks/useProjects", () => ({ usePublicProjects: () => state }));
 vi.mock("@/hooks/useVisitorCounter", () => ({ useVisitorCounter: vi.fn() }));
+vi.mock("@/components/SoundToggle", () => ({ SoundToggle: () => <button>Sound</button> }));
 vi.mock("@/hooks/useSEO", () => ({ useSEO: vi.fn() }));
+vi.mock("@/components/RedactionReveal", () => ({ MarkerUnderline: ({ children }: { children: React.ReactNode }) => <span>{children}</span> }));
 // Public catalogue snapshot checked on 2026-09-22.
 const catalogue = [
   ["Badminton Clash", "https://www.yuqiuren.fun/", "Badminton Lovers"],
@@ -121,6 +123,21 @@ it("gives the hero a clear route to the playable projects", () => {
   expect(document.getElementById("browser-work")).toBeInTheDocument();
   expect(document.getElementById("physical-work")).not.toBeInTheDocument();
   expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("don’t die");
+});
+
+it("features Giant Durian Run and removes the old Durian Dash feature", () => {
+  render(<MemoryRouter><Index /></MemoryRouter>);
+  expect(screen.getByRole("heading", { name: "GIANT DURIAN RUN" })).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: /Play Giant Durian Run/ })).toHaveAttribute("href", "https://kldex.bryanlauwk.fun/");
+  expect(screen.queryByText(/Durian Dash/i)).not.toBeInTheDocument();
+});
+
+it("keeps the hero portrait uncropped inside its playful editorial frame", () => {
+  render(<MemoryRouter><Index /></MemoryRouter>);
+  const portrait = screen.getByRole("img", { name: /Bryan Lau, creator/ });
+  expect(portrait).toHaveClass("hero-portrait-image");
+  expect(portrait).not.toHaveClass("object-cover");
+  expect(screen.getByText("MADE IN KL · BUILT TO PLAY")).toBeInTheDocument();
 });
 
 function renderNotes() {

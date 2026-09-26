@@ -330,6 +330,80 @@
 .masthead-social:hover { color: hsl(var(--primary)); }
 .site-masthead { border-top: 4px solid #314940; }
 
+.hero-portrait { isolation: isolate; padding: 0.65rem 0.65rem 0; }
+.hero-portrait::before {
+  position: absolute;
+  z-index: -1;
+  inset: 1.4rem 0.1rem 1.25rem 1.3rem;
+  background: #e8ad4d;
+  content: "";
+  transform: rotate(3deg);
+}
+.hero-portrait-frame {
+  position: relative;
+  overflow: hidden;
+  border: 5px solid #fffdf8;
+  background: #f1e8d4;
+  box-shadow: 0 12px 34px -26px hsl(30 25% 10% / 0.42);
+  transform: rotate(-1.5deg);
+}
+.hero-portrait-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  object-position: center 44%;
+  background: radial-gradient(ellipse at 50% 42%, #fffdf9 0%, #f1e8d4 72%);
+  transition: transform 350ms ease;
+}
+.hero-portrait-frame:hover .hero-portrait-image { transform: scale(1.025); }
+.hero-portrait-note {
+  position: absolute;
+  z-index: 1;
+  top: 0.8rem;
+  left: 0.8rem;
+  padding: 0.38rem 0.5rem;
+  background: #fffdf8;
+  color: #314940;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.53rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  transform: rotate(-2deg);
+}
+.hero-portrait-sticker {
+  position: absolute;
+  right: 0.8rem;
+  bottom: 1rem;
+  display: grid;
+  width: 4.3rem;
+  height: 4.3rem;
+  place-content: center;
+  border: 2px solid #fffdf8;
+  border-radius: 50%;
+  background: #c94730;
+  color: #fffdf8;
+  font-family: "Oswald", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 0.9;
+  text-align: center;
+  transform: rotate(10deg);
+}
+.hero-portrait-caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.85rem 0.25rem 0;
+  color: hsl(var(--muted-foreground));
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.55rem;
+  line-height: 1.5;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.hero-portrait-caption strong { color: hsl(var(--foreground)); }
+
 .feature-story {
   display: grid;
   overflow: hidden;
@@ -345,8 +419,8 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: radial-gradient(ellipse at 50% 44%, #34583c 0%, #203b2b 48%, #17271f 100%);
-  color: #9ac17e;
+  background: radial-gradient(ellipse at 50% 44%, #66835b 0%, #3f6348 50%, #314940 100%);
+  color: #d1e3aa;
 }
 .feature-art::after {
   position: absolute;
@@ -414,10 +488,11 @@
 @media (max-width: 480px) {
   .editorial-wrap { width: calc(100% - 2rem); }
   .feature-art { min-height: 245px; }
+  .hero-portrait-caption { font-size: 0.48rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .editorial-button, .feature-story, .feature-durian { transition: none; }
+  .editorial-button, .feature-story, .feature-durian, .hero-portrait-image { transition: none; }
 }
 
 @keyframes stamp-hit {
@@ -781,6 +856,49 @@
   letter-spacing: 0.12em;
 }
 
+/* Marker highlight drawn under key copy */
+.marker-underline {
+  position: relative;
+  white-space: nowrap;
+}
+
+.marker-underline::after {
+  content: '';
+  position: absolute;
+  left: -2%;
+  right: -2%;
+  bottom: 0.02em;
+  height: 0.3em;
+  background: hsl(var(--primary) / 0.6);
+  transform: skewX(-6deg) scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s ease-out;
+  z-index: -1;
+}
+
+.marker-underline.is-revealed::after {
+  transform: skewX(-6deg) scaleX(1);
+}
+
+/* Redaction bar - block that slides off to reveal copy underneath */
+.redaction-bar-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.redaction-bar {
+  position: absolute;
+  inset: -2px -6px;
+  background: hsl(var(--primary));
+  transform-origin: left;
+  transition: transform 0.7s ease-in-out;
+  pointer-events: none;
+}
+
+.redaction-bar.is-revealed {
+  transform: scaleX(0);
+}
+
 /* ===== ANIMATIONS ===== */
 
 @keyframes fade-in-up {
@@ -1028,6 +1146,23 @@ a:focus-visible .brand-portal-dot {
   }
 }
 
+/* ===== Hero polish ===== */
+.redaction-bar {
+  background: hsl(0 0% 4%);
+  box-shadow: 0 2px 10px hsl(0 0% 0% / 0.55);
+}
+.redaction-bar::after {
+  content: "REDACTED";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: ui-monospace, monospace;
+  font-size: 7px;
+  letter-spacing: 0.35em;
+  color: hsl(0 0% 100% / 0.28);
+}
 
 @keyframes hero-float {
   0%, 100% { transform: rotate(-2deg) translateY(0); }
