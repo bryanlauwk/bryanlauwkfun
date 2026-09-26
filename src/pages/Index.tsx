@@ -41,7 +41,7 @@ const Index = () => {
                 <span className="hero-portrait-role hero-portrait-role-guest" aria-hidden="true">GUEST · ALSO BRYAN</span>
                 <div className="hero-portrait-copy">
                   <span className="hero-portrait-kicker">THE BRYAN-ON-BRYAN SHOW</span>
-                  <span className="hero-portrait-title">I MAKE<br /><b>PLAYABLE</b><br />THINGS?!</span>
+                  <span className="hero-portrait-title">SO... WHAT<br />DO YOU<br /><b>MAKE?</b></span>
                   <span className="hero-portrait-tag">GAMES · EXPERIMENTS · BUILDS</span>
                 </div>
                 <span className="hero-portrait-episode" aria-hidden="true">EP. 001</span>
@@ -57,21 +57,25 @@ const Index = () => {
           <div className="editorial-wrap">
             <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
               <div><p className="eyebrow mb-2"><span className="eyebrow-pill">Latest</span> The featured game</p><h2 id="featured-heading" className="section-title">THIS WEEK’S COVER STORY</h2></div>
-              <span className="hidden font-mono text-[10px] uppercase tracking-[0.13em] text-muted-foreground sm:block">A giant Malaysian-sized playground</span>
+              <span className="hidden font-mono text-[10px] uppercase tracking-[0.13em] text-muted-foreground sm:block">Can you make it to 1,000m?</span>
             </div>
             <article className="feature-story group">
-              <div className="feature-art">
-                <div className="feature-preview-fallback" aria-hidden="true"><span>GIANT<br />DURIAN RUN</span><small>PLAY THE LIVE GAME</small></div>
-                <iframe src="https://kldex.bryanlauwk.fun/" title="Interactive mobile and desktop preview of Giant Durian Run" loading="lazy" allow="fullscreen; gamepad" allowFullScreen referrerPolicy="strict-origin-when-cross-origin" />
-                <div className="feature-art-topline" aria-hidden="true"><span>KLDEX · LIVE GAME PREVIEW</span><span>PLAYABLE ↗</span></div>
-                <a href="https://kldex.bryanlauwk.fun/" target="_blank" rel="noopener noreferrer" className="feature-play"><Play className="h-4 w-4 fill-current" aria-hidden="true" /> PLAY FULL GAME<span className="sr-only"> (opens in a new tab)</span></a>
-              </div>
+              <figure className="feature-preview">
+                <div className="feature-art">
+                  <div className="feature-preview-fallback" aria-hidden="true"><span>GIANT<br />DURIAN RUN</span><small>PLAY THE LIVE GAME</small></div>
+                  <iframe src="https://kldex.bryanlauwk.fun/" title="Interactive mobile and desktop preview of Giant Durian Run" loading="lazy" allow="fullscreen; gamepad" allowFullScreen referrerPolicy="strict-origin-when-cross-origin" />
+                </div>
+                <figcaption className="feature-preview-caption">
+                  <span><span className="feature-live-dot" aria-hidden="true" /> LIVE PREVIEW · KLDEX</span>
+                  <span>Tap inside to play</span>
+                </figcaption>
+              </figure>
               <div className="feature-copy">
                 <p className="eyebrow text-primary">KLDEX · Browser game</p>
                 <h3 className="feature-headline mt-2 text-3xl leading-[0.98] md:text-4xl">GIANT DURIAN RUN</h3>
-                <p className="mt-2 font-mono text-[9px] font-semibold uppercase tracking-wider text-muted-foreground">Kuala Lumpur, with the durian dial turned all the way up.</p>
-                <p className="mt-4 max-w-lg text-sm leading-relaxed text-muted-foreground md:text-base">Step into a larger-than-life KL playground built around Malaysia’s most divisive fruit. Explore the city, meet the giant durian, and see what’s waiting around the corner.</p>
-                <a href="https://kldex.bryanlauwk.fun/" target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex min-h-10 items-center gap-2 border-b-2 border-primary pb-1 font-mono text-xs font-bold uppercase tracking-wider text-foreground transition-colors hover:text-primary">Play Giant Durian Run <ArrowUpRight className="h-4 w-4" /><span className="sr-only"> (opens in a new tab)</span></a>
+                <p className="mt-3 font-mono text-[10px] font-bold uppercase tracking-wider text-primary md:text-xs">1,000m. Three finales. One very big durian.</p>
+                <p className="mt-3 max-w-lg text-sm leading-relaxed text-muted-foreground md:text-base">Dodge rolling durians, collect durian flesh, and survive the KLDEX course. Swipe to switch lanes; double-tap to jump higher.</p>
+                <a href="https://kldex.bryanlauwk.fun/" target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex min-h-11 items-center gap-2 self-start border-b-2 border-primary pb-1 font-mono text-xs font-bold uppercase tracking-wider text-foreground transition-colors hover:text-primary"><Play className="h-3.5 w-3.5 fill-current" aria-hidden="true" /> Run the course <ArrowUpRight className="h-4 w-4" /><span className="sr-only"> (opens in a new tab)</span></a>
               </div>
             </article>
           </div>
