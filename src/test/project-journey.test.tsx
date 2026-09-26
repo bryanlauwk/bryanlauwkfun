@@ -128,8 +128,11 @@ it("gives the hero a clear route to the playable projects", () => {
 it("features Giant Durian Run and removes the old Durian Dash feature", () => {
   render(<MemoryRouter><Index /></MemoryRouter>);
   expect(screen.getByRole("heading", { name: "GIANT DURIAN RUN" })).toBeInTheDocument();
-  expect(screen.getByRole("link", { name: /Play Giant Durian Run/ })).toHaveAttribute("href", "https://kldex.bryanlauwk.fun/");
+  expect(screen.getByRole("link", { name: /Run the course/ })).toHaveAttribute("href", "https://kldex.bryanlauwk.fun/");
   expect(screen.getByTitle("Interactive mobile and desktop preview of Giant Durian Run")).toHaveAttribute("src", "https://kldex.bryanlauwk.fun/");
+  expect(document.querySelector(".feature-preview-caption")).toHaveTextContent("LIVE PREVIEW · KLDEX");
+  expect(document.querySelector(".feature-story > .feature-preview")).toBeInTheDocument();
+  expect(document.querySelector(".feature-story > .feature-copy")).toBeInTheDocument();
   expect(document.querySelector(".feature-durian")).not.toBeInTheDocument();
   expect(screen.queryByText(/Durian Dash/i)).not.toBeInTheDocument();
 });
@@ -143,7 +146,7 @@ it("keeps the hero portrait uncropped inside its playful editorial frame", () =>
     expect(portrait).not.toHaveClass("object-cover");
   });
   expect(screen.getByText("THE BRYAN-ON-BRYAN SHOW")).toBeInTheDocument();
-  expect(screen.getByText("PLAYABLE", { exact: true })).toBeInTheDocument();
+  expect(screen.getByText("MAKE?", { exact: true })).toBeInTheDocument();
 });
 
 it("introduces the maker with a readable, alternating section rhythm and useful FAQs", () => {
