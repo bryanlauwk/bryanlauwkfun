@@ -12,7 +12,8 @@ export function ProjectGrid() {
   const filters = useMemo(() => {
     const counts = new Map<ProjectArchiveCategory, number>();
     (projects ?? []).forEach(p => { const category = projectCategory(p.tag); if (category) counts.set(category, (counts.get(category) ?? 0) + 1); });
-    return (["games", "interactive experiments", "physical builds"] as const).filter(category => (counts.get(category) ?? 0) > 0);
+    const available = (["games", "interactive experiments", "physical builds"] as const).filter(category => (counts.get(category) ?? 0) > 0);
+    return available.length > 1 ? available : [];
   }, [projects]);
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -59,7 +60,7 @@ export function ProjectGrid() {
       {(query || activeFilter !== "all") && <p role="status" className="font-mono text-xs text-muted-foreground">{filtered.length} {filtered.length === 1 ? "experiment" : "experiments"} found <button onClick={reset} className="ml-3 inline-flex min-h-11 items-center underline underline-offset-4 text-primary">Show everything</button></p>}
       {filtered.length ? (
         <div className="grid grid-cols-1 items-stretch gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-6 lg:gap-y-10">
-          {filtered.map((project, index) => <StrangerThingsCard key={project.id} project={project} index={index} />)}
+          {filtered.map(project => <StrangerThingsCard key={project.id} project={project} />)}
         </div>
       ) : (
         <div className="border border-foreground/15 bg-card p-8 text-center">
