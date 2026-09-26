@@ -15,7 +15,17 @@ function removeStaticShell() {
 }
 
 try {
-  const root = createRoot(document.getElementById("root")!);
+  const rootElement = document.getElementById("root");
+  if (!rootElement) throw new Error("App root is missing");
+  const root = createRoot(rootElement);
+  // Keep the current first-paint shell until React actually commits content.
+  const observer = new MutationObserver(() => {
+    if (rootElement.childElementCount > 0) {
+      observer.disconnect();
+      removeStaticShell();
+    }
+  });
+  observer.observe(rootElement, { childList: true });
   root.render(
     <ErrorBoundary>
       <HelmetProvider>
@@ -23,8 +33,6 @@ try {
       </HelmetProvider>
     </ErrorBoundary>
   );
-  // Remove the pre-hydration shell once React commits its first paint.
-  requestAnimationFrame(removeStaticShell);
 } catch (err) {
   console.error("[boot] React failed to mount", err);
   // Leave the static shell up — the safety net script in index.html will

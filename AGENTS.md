@@ -1,0 +1,1 @@
+Keep the `index.html` first-paint shell in visual and copy parity with the homepage and remove it only after React commits; this prevents stale UI flashes and blank loads.

@@ -31,15 +31,15 @@ VIEWPORTS = [
 REQUIRED_PHRASES = [
     "Bryan Lau",
     "Good luck",
-    "have fun",
-    "don\u2019t die",
-    "taken seriously",
+    "fun.",
+    "die.",
+    "physical curiosities",
 ]
 
 FORBIDDEN_PHRASES = [
     "Late nights, wild ideas",
-    "rabbit holes",
-    "I build dumb ideas",
+    "I BUILD THINGS",
+    "Creativity is the interface",
 ]
 
 
@@ -49,10 +49,10 @@ def norm(s: str) -> str:
 
 def check_phrases(label: str, text: str) -> bool:
     fails = []
-    for phrase in REQUIRED_PHRASES:
-        if phrase not in text:
-            fails.append(f'  x missing required: "{phrase}"')
     lower = text.lower()
+    for phrase in REQUIRED_PHRASES:
+        if phrase.lower() not in lower:
+            fails.append(f'  x missing required: "{phrase}"')
     for phrase in FORBIDDEN_PHRASES:
         if phrase.lower() in lower:
             fails.append(f'  x found forbidden legacy copy: "{phrase}"')
