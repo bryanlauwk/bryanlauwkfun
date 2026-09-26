@@ -218,7 +218,7 @@ export type Database = {
     }
     Functions: {
       get_stamp_reaction_summary: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           area_key: string
           label: string
