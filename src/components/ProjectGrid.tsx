@@ -3,7 +3,7 @@ import { Search, X } from "lucide-react";
 import { usePublicProjects } from "@/hooks/useProjects";
 import { StrangerThingsCard } from "./StrangerThingsCard";
 import { Skeleton } from "./ui/skeleton";
-import { projectCategory } from "@/lib/project-destination";
+import { projectCategory, type ProjectArchiveCategory } from "@/lib/project-destination";
 
 const bentoPattern = ["wide", "tall", "standard", "wide", "tall", "standard", "standard", "wide", "tall", "standard", "wide"] as const;
 
@@ -18,10 +18,9 @@ export function ProjectGrid() {
   const [query, setQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("all");
   const filters = useMemo(() => {
-    const counts = new Map<string, number>();
+    const counts = new Map<ProjectArchiveCategory, number>();
     (projects ?? []).forEach(p => { const category = projectCategory(p.tag); if (category) counts.set(category, (counts.get(category) ?? 0) + 1); });
-    // A dozen one-item audience tags add choices without helping discovery.
-    return [...counts].filter(([, count]) => count > 1).map(([category]) => category);
+    return (["games", "interactive experiments", "physical builds"] as const).filter(category => (counts.get(category) ?? 0) > 0);
   }, [projects]);
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -47,7 +46,7 @@ export function ProjectGrid() {
 
   return (
     <div className="space-y-6">
-      {(projects?.length ?? 0) > 6 && (
+      {(projects?.length ?? 0) > 0 && (
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           {filters.length > 1 && <div className="flex flex-wrap gap-2" role="group" aria-label="Filter experiments">
             {["all", ...filters].map(filter => (
@@ -59,7 +58,7 @@ export function ProjectGrid() {
           </div>}
           <div className="relative w-full lg:max-w-xs">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
-            <input type="search" value={query} onChange={e => setQuery(e.target.value)} placeholder="Find your kind of weird…"
+            <input type="search" value={query} onChange={e => setQuery(e.target.value)} placeholder="Search the archive…"
               aria-label="Search experiments" className="min-h-11 w-full border border-foreground/20 bg-card pl-9 pr-11 font-mono text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary" />
             {query && <button onClick={() => setQuery("")} aria-label="Clear search" className="absolute right-0 top-0 flex h-11 w-11 items-center justify-center"><X className="h-4 w-4" /></button>}
           </div>
