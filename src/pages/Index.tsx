@@ -76,7 +76,7 @@ const Index = () => {
         <section id="about" className="section-band-even border-t border-foreground/10 py-10 md:py-14" aria-labelledby="about-heading">
           <div className="mx-auto grid max-w-7xl gap-5 px-5 md:grid-cols-[0.7fr_1.3fr] md:px-12">
             <p className="exhibit-label">A little context</p>
-            <div><h2 id="about-heading" className="font-display text-3xl font-black uppercase md:text-4xl">Curious by default. Shipping by habit.</h2><p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground">I’m Bryan, a creative growth marketer who likes making useful things feel like play. This is my corner for odd ideas, quick prototypes, and interactive experiments. Some are polished; some are still figuring themselves out.</p><a href="#contact" className="mt-5 inline-flex min-h-11 items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider text-primary hover:underline">Have an idea? Let’s talk <ArrowDown className="h-3.5 w-3.5 -rotate-90" /></a></div>
+            <div><h2 id="about-heading" className="font-display text-3xl font-black uppercase md:text-4xl">Curious by default. Shipping by habit.</h2><p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground">I’m Bryan. I make games, interactive experiments, and physical builds that invite people to poke, play, and explore.</p><a href="#contact" className="mt-5 inline-flex min-h-11 items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider text-primary hover:underline">Have an idea? Let’s talk <ArrowDown className="h-3.5 w-3.5 -rotate-90" /></a></div>
           </div>
         </section>
       </main>
