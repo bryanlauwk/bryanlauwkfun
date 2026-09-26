@@ -31,15 +31,15 @@ VIEWPORTS = [
 REQUIRED_PHRASES = [
     "Bryan Lau",
     "Good luck",
-    "have fun",
-    "don\u2019t die",
-    "taken seriously",
+    "fun.",
+    "die.",
+    "physical curiosities",
 ]
 
 FORBIDDEN_PHRASES = [
     "Late nights, wild ideas",
-    "rabbit holes",
-    "I build dumb ideas",
+    "I BUILD THINGS",
+    "Creativity is the interface",
 ]
 
 
