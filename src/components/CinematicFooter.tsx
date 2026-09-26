@@ -14,7 +14,7 @@ export function CinematicFooter() {
           </a>
         </div>
         <div className="mt-7 flex flex-col gap-3 border-t border-border pt-4 sm:flex-row sm:items-center sm:justify-between">
-          <p className="font-mono text-[10px] font-semibold uppercase tracking-wider text-primary">Creativity is the interface. Growth is the outcome.</p>
+          <p className="font-mono text-[10px] font-semibold uppercase tracking-wider text-primary">Good luck. Have fun. Don’t die.</p>
           <nav aria-label="Social links" className="flex flex-wrap gap-5">
             {[["https://x.com/bryanlauwk", "X"], ["https://github.com/bryanlauwk", "GitHub"], ["https://linkedin.com/in/bryanlauwk", "LinkedIn"]].map(([href, label]) => (
               <a key={href} href={href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-9 items-center font-mono text-[10px] uppercase tracking-wider text-muted-foreground hover:text-primary">{label} ↗<span className="sr-only"> (opens in a new tab)</span></a>

@@ -401,8 +401,6 @@
   letter-spacing: 0.08em;
 }
 .feature-copy { display: flex; flex-direction: column; justify-content: center; padding: 1.25rem; }
-.maker-band { background-color: #171612; color: #f8f5ed; }
-
 .project-card-image { border: 1px solid hsl(var(--border)); background-color: hsl(var(--secondary)); }
 .project-card-image img { background-color: hsl(var(--secondary)); }
 
