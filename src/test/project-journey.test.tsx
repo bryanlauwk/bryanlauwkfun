@@ -129,18 +129,21 @@ it("features Giant Durian Run and removes the old Durian Dash feature", () => {
   render(<MemoryRouter><Index /></MemoryRouter>);
   expect(screen.getByRole("heading", { name: "GIANT DURIAN RUN" })).toBeInTheDocument();
   expect(screen.getByRole("link", { name: /Play Giant Durian Run/ })).toHaveAttribute("href", "https://kldex.bryanlauwk.fun/");
-  expect(screen.getByTitle("Live preview of Giant Durian Run")).toHaveAttribute("src", "https://kldex.bryanlauwk.fun/");
+  expect(screen.getByTitle("Interactive mobile and desktop preview of Giant Durian Run")).toHaveAttribute("src", "https://kldex.bryanlauwk.fun/");
   expect(document.querySelector(".feature-durian")).not.toBeInTheDocument();
   expect(screen.queryByText(/Durian Dash/i)).not.toBeInTheDocument();
 });
 
 it("keeps the hero portrait uncropped inside its playful editorial frame", () => {
   render(<MemoryRouter><Index /></MemoryRouter>);
-  const portrait = screen.getByRole("img", { name: /Bryan Lau, creator/ });
-  expect(portrait).toHaveClass("hero-portrait-image");
-  expect(portrait).not.toHaveClass("object-cover");
-  expect(screen.getByText("BRYAN LAU · KUALA LUMPUR")).toBeInTheDocument();
-  expect(screen.getByText(/I MAKE/)).toBeInTheDocument();
+  const portraits = screen.getAllByRole("img", { name: /Bryan Lau playing the/ });
+  expect(portraits).toHaveLength(2);
+  portraits.forEach(portrait => {
+    expect(portrait).toHaveClass("hero-portrait-image");
+    expect(portrait).not.toHaveClass("object-cover");
+  });
+  expect(screen.getByText("THE BRYAN-ON-BRYAN SHOW")).toBeInTheDocument();
+  expect(screen.getByText("PLAYABLE", { exact: true })).toBeInTheDocument();
 });
 
 it("introduces the maker with a readable, alternating section rhythm and useful FAQs", () => {
@@ -151,6 +154,7 @@ it("introduces the maker with a readable, alternating section rhythm and useful 
   expect(screen.getByText("Who’s behind the playground?")).toBeInTheDocument();
   expect(screen.getByText("Can we make something together?")).toBeInTheDocument();
   expect(document.querySelectorAll(".about-faq")).toHaveLength(5);
+  expect(document.querySelector(".about-faq[open]")).not.toBeInTheDocument();
 });
 
 function renderNotes() {

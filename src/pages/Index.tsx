@@ -35,16 +35,19 @@ const Index = () => {
             </div>
             <figure className="hero-portrait relative mx-auto w-full max-w-[520px] md:ml-auto">
               <div className="hero-portrait-frame">
-                <div className="hero-portrait-copy" aria-hidden="true">
-                  <span className="hero-portrait-kicker">BRYAN LAU · KUALA LUMPUR</span>
-                  <span className="hero-portrait-title">I MAKE<br />PLAYABLE<br /><b>THINGS.</b></span>
+                <img src={heroPortrait} alt="Bryan Lau playing the interviewer in a playful podcast thumbnail" className="hero-portrait-image hero-portrait-host" />
+                <img src={heroPortrait} alt="Bryan Lau playing the guest in a playful podcast thumbnail" className="hero-portrait-image hero-portrait-guest" />
+                <span className="hero-portrait-role hero-portrait-role-host" aria-hidden="true">HOST · BRYAN</span>
+                <span className="hero-portrait-role hero-portrait-role-guest" aria-hidden="true">GUEST · ALSO BRYAN</span>
+                <div className="hero-portrait-copy">
+                  <span className="hero-portrait-kicker">THE BRYAN-ON-BRYAN SHOW</span>
+                  <span className="hero-portrait-title">I MAKE<br /><b>PLAYABLE</b><br />THINGS?!</span>
                   <span className="hero-portrait-tag">GAMES · EXPERIMENTS · BUILDS</span>
                 </div>
-                <img src={heroPortrait} alt="Bryan Lau, creator of games and interactive experiments" className="hero-portrait-image" />
-                <span className="hero-portrait-sticker" aria-hidden="true">LET’S<br />PLAY!</span>
+                <span className="hero-portrait-episode" aria-hidden="true">EP. 001</span>
               </div>
               <figcaption className="hero-portrait-caption">
-                <span><strong>OFF THE SCREEN, INTO THE WORLD.</strong></span><span>GAMES · IDEAS · ODD BUILDS ↗</span>
+                <span><strong>A VERY SERIOUS CHAT FOR ONE.</strong></span><span>GAMES · IDEAS · ODD BUILDS ↗</span>
               </figcaption>
             </figure>
           </div>
@@ -59,7 +62,7 @@ const Index = () => {
             <article className="feature-story group">
               <div className="feature-art">
                 <div className="feature-preview-fallback" aria-hidden="true"><span>GIANT<br />DURIAN RUN</span><small>PLAY THE LIVE GAME</small></div>
-                <iframe src="https://kldex.bryanlauwk.fun/" title="Live preview of Giant Durian Run" loading="lazy" allow="fullscreen; gamepad" referrerPolicy="strict-origin-when-cross-origin" />
+                <iframe src="https://kldex.bryanlauwk.fun/" title="Interactive mobile and desktop preview of Giant Durian Run" loading="lazy" allow="fullscreen; gamepad" allowFullScreen referrerPolicy="strict-origin-when-cross-origin" />
                 <div className="feature-art-topline" aria-hidden="true"><span>KLDEX · LIVE GAME PREVIEW</span><span>PLAYABLE ↗</span></div>
                 <a href="https://kldex.bryanlauwk.fun/" target="_blank" rel="noopener noreferrer" className="feature-play"><Play className="h-4 w-4 fill-current" aria-hidden="true" /> PLAY FULL GAME<span className="sr-only"> (opens in a new tab)</span></a>
               </div>
@@ -83,7 +86,7 @@ const Index = () => {
             <div className="max-w-3xl">
               <p className="mb-5 text-sm leading-relaxed text-muted-foreground md:text-[15px]">I’m Bryan, a Kuala Lumpur based marketer with an engineering background and a habit of turning curious ideas into things you can play with. This site is my evolving collection of games, interactive experiments, and physical builds.</p>
               <div className="about-faq-list" aria-label="Frequently asked questions about Bryan and the playground">
-                <details className="about-faq" open>
+                <details className="about-faq">
                   <summary>Who’s behind the playground?</summary>
                   <p>I’m Bryan Lau, a technology enthusiast and marketer based in Kuala Lumpur. I studied mechatronics, and I still enjoy bringing together technology, storytelling, and hands on making.</p>
                 </details>

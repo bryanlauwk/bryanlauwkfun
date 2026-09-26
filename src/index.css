@@ -343,35 +343,33 @@
 }
 .hero-portrait-image {
   position: absolute;
-  right: -1%;
-  bottom: -4%;
   z-index: 0;
-  width: 67%;
-  height: 112%;
+  top: 0;
+  width: 54%;
+  height: 100%;
   object-fit: cover;
-  object-position: center 24%;
-  transition: transform 350ms ease;
+  object-position: center 18%;
+  filter: saturate(1.08) contrast(1.03);
 }
+.hero-portrait-host { left: -1%; }
+.hero-portrait-guest { right: -1%; transform: scaleX(-1); }
 .hero-portrait-frame::after {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(90deg, #431b20 0%, #431b20 34%, hsl(354 42% 18% / 0.92) 47%, hsl(354 42% 18% / 0.08) 77%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, hsl(354 42% 18% / 0.18) 12%, #431b20 31%, #431b20 69%, hsl(354 42% 18% / 0.18) 88%, transparent 100%);
   content: "";
   pointer-events: none;
 }
-.hero-portrait-frame:hover .hero-portrait-image { transform: scale(1.035); }
 .hero-portrait-copy {
   position: absolute;
-  top: 11%;
-  bottom: 10%;
-  left: 6%;
+  inset: 9% 0 11%;
   z-index: 2;
   display: flex;
-  width: 58%;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
+  text-align: center;
 }
 .hero-portrait-kicker {
   padding: 0.35rem 0.5rem;
@@ -385,7 +383,7 @@
 .hero-portrait-title {
   color: #fffdf8;
   font-family: "Oswald", "Archivo", sans-serif;
-  font-size: clamp(2rem, 5.4vw, 4rem);
+  font-size: clamp(2.35rem, 5.7vw, 3.7rem);
   font-weight: 700;
   letter-spacing: -0.045em;
   line-height: 0.84;
@@ -393,8 +391,8 @@
 }
 .hero-portrait-title b {
   display: inline-block;
-  margin-top: 0.13em;
-  padding: 0.05em 0.12em 0.1em;
+  margin: 0.06em 0;
+  padding: 0.05em 0.16em 0.1em;
   background: #e52520;
   color: #fff;
 }
@@ -405,6 +403,21 @@
   font-weight: 700;
   letter-spacing: 0.09em;
 }
+.hero-portrait-role,
+.hero-portrait-episode {
+  position: absolute;
+  z-index: 3;
+  padding: 0.36rem 0.5rem;
+  background: #e52520;
+  color: #fff;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.52rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+.hero-portrait-role-host { bottom: 9%; left: 3%; }
+.hero-portrait-role-guest { right: 3%; bottom: 9%; }
+.hero-portrait-episode { top: 8%; right: 3%; background: #fffdf8; color: #431b20; }
 .hero-portrait-caption {
   display: flex;
   justify-content: space-between;
@@ -452,7 +465,8 @@
 .feature-story:hover { box-shadow: 0 14px 36px -28px hsl(30 20% 10% / 0.35); }
 .feature-art {
   position: relative;
-  min-height: 240px;
+  aspect-ratio: 16 / 9;
+  min-height: 210px;
   overflow: hidden;
   background: #34211f;
 }
@@ -538,7 +552,10 @@
 @media (max-width: 480px) {
   .editorial-wrap { width: calc(100% - 2rem); }
   .feature-art { min-height: 235px; }
-  .hero-portrait-title { font-size: clamp(1.7rem, 8vw, 2.5rem); }
+  .hero-portrait-title { font-size: clamp(1.8rem, 8vw, 2.5rem); }
+  .hero-portrait-kicker { padding: 0.28rem 0.36rem; font-size: 0.4rem; }
+  .hero-portrait-tag { font-size: 0.42rem; }
+  .hero-portrait-role, .hero-portrait-episode { padding: 0.28rem 0.34rem; font-size: 0.39rem; }
   .hero-portrait-caption { flex-direction: column; gap: 0.15rem; font-size: 0.46rem; }
   .about-faq summary { font-size: 1rem; }
 }
