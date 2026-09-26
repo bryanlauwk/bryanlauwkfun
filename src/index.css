@@ -458,6 +458,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   align-items: stretch;
+  isolation: isolate;
   overflow: hidden;
   border: 1px solid hsl(var(--foreground) / 0.14);
   background-color: hsl(var(--card));
@@ -472,7 +473,7 @@
   overflow: hidden;
   background: #34211f;
 }
-.feature-preview { display: flex; min-width: 0; margin: 0; flex-direction: column; }
+.feature-preview { position: relative; z-index: 0; display: flex; min-width: 0; margin: 0; flex-direction: column; }
 .feature-art::after {
   display: none;
 }
@@ -527,7 +528,7 @@
 }
 .feature-preview-caption > span:first-child { display: inline-flex; align-items: center; gap: 0.5rem; color: hsl(var(--foreground)); }
 .feature-live-dot { width: 0.48rem; height: 0.48rem; flex: 0 0 auto; border-radius: 50%; background: #bd493b; box-shadow: 0 0 0 3px hsl(6 52% 50% / 0.14); }
-.feature-copy { display: flex; min-width: 0; flex-direction: column; justify-content: center; padding: clamp(1rem, 4vw, 1.5rem); overflow-wrap: anywhere; }
+.feature-copy { position: relative; z-index: 1; display: flex; min-width: 0; flex-direction: column; justify-content: center; padding: clamp(1rem, 4vw, 1.5rem); background: hsl(var(--card)); overflow-wrap: anywhere; }
 .feature-headline { max-width: 12ch; }
 .project-card-image { border: 1px solid hsl(var(--border)); background-color: hsl(var(--secondary)); }
 .project-card-image img { background-color: hsl(var(--secondary)); }
@@ -538,13 +539,14 @@
   .feature-art { min-height: 300px; }
   .feature-preview { min-height: 100%; }
   .feature-copy { padding: clamp(1.25rem, 2.5vw, 2rem); }
+  .feature-copy { border-left: 1px solid hsl(var(--foreground) / 0.14); }
 }
 
 @media (max-width: 480px) {
   .editorial-wrap { width: calc(100% - 2rem); }
   .feature-art { aspect-ratio: 4 / 3; min-height: 0; }
   .feature-preview-caption { min-height: 2.6rem; padding-inline: 0.7rem; letter-spacing: 0.04em; }
-  .feature-copy { padding: 1.1rem; }
+  .feature-copy { border-top: 1px solid hsl(var(--foreground) / 0.14); padding: 1.1rem; }
   .hero-portrait-title { font-size: clamp(1.8rem, 8vw, 2.5rem); }
   .hero-portrait-kicker { padding: 0.28rem 0.36rem; font-size: 0.4rem; }
   .hero-portrait-tag { font-size: 0.42rem; }
