@@ -106,7 +106,9 @@ describe("one-click project journey", () => {
 });
 
 it("keeps navigation useful on existing detail pages", () => {
-  render(<MemoryRouter initialEntries={["/drops/boringg"]}><CinematicHeader /></MemoryRouter>);
+  const { container } = render(<MemoryRouter initialEntries={["/drops/boringg"]}><CinematicHeader /></MemoryRouter>);
+  expect(screen.getByRole("link", { name: "Bryan LauWK Create — home" })).toHaveAttribute("href", "/#main-content");
+  expect(container.querySelector(".brand-portal-mark .brand-portal-dot")).toBeInTheDocument();
   const nav = within(screen.getByRole("navigation", { name: "Primary navigation" }));
   expect(nav.getByRole("link", { name: "Play" })).toHaveAttribute("href", "/#browser-work");
   expect(nav.getByRole("link", { name: "Collaborate" })).toHaveAttribute("href", "/#contact");
