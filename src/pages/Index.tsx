@@ -81,7 +81,17 @@ const Index = () => {
           </div>
         </section>
 
-        <section id="about" className="section-band-odd scroll-mt-24 border-b border-border py-9 md:py-12" aria-labelledby="about-heading">
+        <section id="browser-work" className="section-band-odd scroll-mt-24 border-b border-border py-8 md:py-10" aria-labelledby="browser-work-heading">
+          <div className="editorial-wrap">
+            <div className="mb-6 flex flex-wrap items-end justify-between gap-4 border-b border-border pb-4">
+              <div><p className="eyebrow mb-2">The archive · pick your rabbit hole</p><h2 id="browser-work-heading" className="section-title">THE ARCHIVE</h2></div>
+              <a href="#contact" className="inline-flex min-h-11 items-center gap-1 font-mono text-[10px] font-semibold uppercase tracking-wider text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary">Have an idea? <ArrowUpRight className="h-3.5 w-3.5" /></a>
+            </div>
+            <ProjectGrid />
+          </div>
+        </section>
+
+        <section id="about" className="section-band-even scroll-mt-24 border-b border-border py-9 md:py-12" aria-labelledby="about-heading">
           <div className="editorial-wrap grid gap-6 md:grid-cols-[0.72fr_1.28fr] md:gap-12">
             <div>
               <p className="eyebrow mb-2 text-primary">A little more about the maker</p>
@@ -112,16 +122,6 @@ const Index = () => {
                 </details>
               </div>
             </div>
-          </div>
-        </section>
-
-        <section id="browser-work" className="section-band-even scroll-mt-24 py-8 md:py-10" aria-labelledby="browser-work-heading">
-          <div className="editorial-wrap">
-            <div className="mb-6 flex flex-wrap items-end justify-between gap-4 border-b border-border pb-4">
-              <div><p className="eyebrow mb-2">The archive · pick your rabbit hole</p><h2 id="browser-work-heading" className="section-title">THE ARCHIVE</h2></div>
-              <a href="#contact" className="inline-flex min-h-11 items-center gap-1 font-mono text-[10px] font-semibold uppercase tracking-wider text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary">Have an idea? <ArrowUpRight className="h-3.5 w-3.5" /></a>
-            </div>
-            <ProjectGrid />
           </div>
         </section>
 
