@@ -25,8 +25,8 @@ export function CinematicHeader() {
       <header className="site-masthead relative z-50 border-b border-border bg-background">
         <div className="editorial-wrap flex min-h-[52px] flex-wrap items-center justify-between gap-x-6 gap-y-1 py-1">
           <a href={`${home}#main-content`} aria-label="Bryan LauWK Create — home" className="flex min-h-11 items-center">
-            <span className="relative block h-12 w-[6.4rem] md:h-14 md:w-[7.25rem]" aria-hidden="true">
-              <BrandSignature className="absolute left-0 top-0 origin-top-left scale-[0.6] md:scale-[0.68]" />
+            <span className="relative block h-14 w-[7rem] md:w-[7.75rem]" aria-hidden="true">
+              <BrandSignature className="absolute left-0 top-0 origin-top-left scale-[0.64] md:scale-[0.70]" />
             </span>
           </a>
           <div className="hidden items-center gap-1.5 md:flex">

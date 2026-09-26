@@ -108,6 +108,8 @@ describe("one-click project journey", () => {
 it("keeps navigation useful on existing detail pages", () => {
   const { container } = render(<MemoryRouter initialEntries={["/drops/boringg"]}><CinematicHeader /></MemoryRouter>);
   expect(screen.getByRole("link", { name: "Bryan LauWK Create — home" })).toHaveAttribute("href", "/#main-content");
+  const signature = container.querySelector(".brand-portal-mark");
+  expect(signature).toHaveClass("scale-[0.64]", "md:scale-[0.70]");
   expect(container.querySelector(".brand-portal-mark .brand-portal-dot")).toBeInTheDocument();
   const nav = within(screen.getByRole("navigation", { name: "Primary navigation" }));
   expect(nav.getByRole("link", { name: "Play" })).toHaveAttribute("href", "/#browser-work");
