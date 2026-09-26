@@ -5,14 +5,6 @@ import { StrangerThingsCard } from "./StrangerThingsCard";
 import { Skeleton } from "./ui/skeleton";
 import { projectCategory, type ProjectArchiveCategory } from "@/lib/project-destination";
 
-const bentoPattern = ["wide", "tall", "standard", "wide", "tall", "standard", "standard", "wide", "tall", "standard", "wide"] as const;
-
-const bentoSpan = {
-  wide: "lg:col-span-8",
-  tall: "lg:col-span-4",
-  standard: "lg:col-span-4",
-};
-
 export function ProjectGrid() {
   const { data: projects, isLoading, isError, refetch, isFetching } = usePublicProjects();
   const [query, setQuery] = useState("");
@@ -47,16 +39,16 @@ export function ProjectGrid() {
   return (
     <div className="space-y-6">
       {(projects?.length ?? 0) > 0 && (
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          {filters.length > 1 && <div className="flex flex-wrap gap-2" role="group" aria-label="Filter experiments">
+        <div className="mb-6 flex flex-col gap-4 border-b border-border pb-4 lg:flex-row lg:items-center lg:justify-between">
+          {filters.length > 0 && <div className="flex flex-wrap gap-2" role="group" aria-label="Filter experiments">
             {["all", ...filters].map(filter => (
               <button key={filter} aria-pressed={activeFilter === filter} onClick={() => setActiveFilter(filter)}
-                className={`min-h-11 border px-3 font-mono text-[11px] capitalize transition-colors ${activeFilter === filter ? "border-primary bg-primary text-primary-foreground" : "border-foreground/20 text-muted-foreground hover:border-primary hover:text-foreground"}`}>
+                className={`min-h-10 border px-3 font-mono text-[10px] uppercase tracking-wider transition-colors ${activeFilter === filter ? "border-primary bg-primary text-primary-foreground" : "border-border bg-transparent text-muted-foreground hover:border-primary hover:text-foreground"}`}>
                 {filter === "all" ? "Everything" : filter}
               </button>
             ))}
           </div>}
-          <div className="relative w-full lg:max-w-xs">
+          <div className="relative w-full lg:max-w-[280px]">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
             <input type="search" value={query} onChange={e => setQuery(e.target.value)} placeholder="Search the archive…"
               aria-label="Search experiments" className="min-h-11 w-full border border-foreground/20 bg-card pl-9 pr-11 font-mono text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary" />
@@ -66,15 +58,8 @@ export function ProjectGrid() {
       )}
       {(query || activeFilter !== "all") && <p role="status" className="font-mono text-xs text-muted-foreground">{filtered.length} {filtered.length === 1 ? "experiment" : "experiments"} found <button onClick={reset} className="ml-3 inline-flex min-h-11 items-center underline underline-offset-4 text-primary">Show everything</button></p>}
       {filtered.length ? (
-        <div className="grid grid-cols-1 items-stretch gap-5 md:grid-cols-2 lg:grid-cols-12 lg:gap-6">
-          {filtered.map((project, index) => {
-            const size = bentoPattern[index % bentoPattern.length];
-            return (
-              <div key={project.id} className={`min-w-0 md:col-span-1 ${bentoSpan[size]}`}>
-                <StrangerThingsCard project={project} index={index} size={size} />
-              </div>
-            );
-          })}
+        <div className="grid grid-cols-1 items-stretch gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-6 lg:gap-y-10">
+          {filtered.map((project, index) => <StrangerThingsCard key={project.id} project={project} index={index} />)}
         </div>
       ) : (
         <div className="border border-foreground/15 bg-card p-8 text-center">
