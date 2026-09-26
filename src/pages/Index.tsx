@@ -33,59 +33,82 @@ const Index = () => {
                 <a href="#featured" className="editorial-button editorial-button-outline min-h-10 py-2">Latest game</a>
               </div>
             </div>
-            <figure className="hero-portrait relative mx-auto w-full max-w-[480px] md:ml-auto">
+            <figure className="hero-portrait relative mx-auto w-full max-w-[520px] md:ml-auto">
               <div className="hero-portrait-frame">
-                <span className="hero-portrait-note">MADE IN KL · BUILT TO PLAY</span>
+                <div className="hero-portrait-copy" aria-hidden="true">
+                  <span className="hero-portrait-kicker">BRYAN LAU · KUALA LUMPUR</span>
+                  <span className="hero-portrait-title">I MAKE<br />PLAYABLE<br /><b>THINGS.</b></span>
+                  <span className="hero-portrait-tag">GAMES · EXPERIMENTS · BUILDS</span>
+                </div>
                 <img src={heroPortrait} alt="Bryan Lau, creator of games and interactive experiments" className="hero-portrait-image" />
                 <span className="hero-portrait-sticker" aria-hidden="true">LET’S<br />PLAY!</span>
               </div>
               <figcaption className="hero-portrait-caption">
-                <span><strong>Bryan Lau</strong> · Kuala Lumpur</span><span>Games, ideas & odd builds ↗</span>
+                <span><strong>OFF THE SCREEN, INTO THE WORLD.</strong></span><span>GAMES · IDEAS · ODD BUILDS ↗</span>
               </figcaption>
             </figure>
           </div>
         </section>
 
-        <section id="featured" className="scroll-mt-24 border-b border-border bg-background py-8 md:py-10" aria-labelledby="featured-heading">
+        <section id="featured" className="section-band-even scroll-mt-24 border-b border-border py-8 md:py-10" aria-labelledby="featured-heading">
           <div className="editorial-wrap">
             <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
               <div><p className="eyebrow mb-2"><span className="eyebrow-pill">Latest</span> The featured game</p><h2 id="featured-heading" className="section-title">THIS WEEK’S COVER STORY</h2></div>
               <span className="hidden font-mono text-[10px] uppercase tracking-[0.13em] text-muted-foreground sm:block">A giant Malaysian-sized playground</span>
             </div>
-            <a href="https://kldex.bryanlauwk.fun/" target="_blank" rel="noopener noreferrer" className="feature-story group">
-              <div className="feature-art" aria-hidden="true">
-                <div className="feature-art-topline"><span>KLDEX · GIANT DURIAN</span><span>NO. 001</span></div>
-                <svg viewBox="0 0 420 300" className="feature-durian" role="presentation">
-                  <path d="m210 31 19 30 36-22 4 38 42-7-15 36 38 15-28 27 29 27-39 14 13 39-42-7-8 39-35-25-26 31-20-35-39 22-2-42-41 5 16-39-36-19 31-25-24-32 41-9-7-40 39 14 16-37 25 30Z" fill="currentColor" />
-                  <path d="M210 84c-45 0-79 32-79 73 0 34 27 57 79 83 52-26 79-49 79-83 0-41-34-73-79-73Z" fill="#f0c86d" />
-                  <path d="M210 99v123m-54-102 108 81m-108 0 108-81" fill="none" stroke="#b77927" strokeWidth="5" strokeLinecap="round" />
-                  <path d="M184 61q26 16 52 0" fill="none" stroke="#24452e" strokeWidth="8" strokeLinecap="round" />
-                </svg>
-                <span className="feature-art-label">GO BIG<br />OR GO HOME</span>
-                <span className="feature-play"><Play className="h-4 w-4 fill-current" /> PLAY NOW</span>
+            <article className="feature-story group">
+              <div className="feature-art">
+                <div className="feature-preview-fallback" aria-hidden="true"><span>GIANT<br />DURIAN RUN</span><small>PLAY THE LIVE GAME</small></div>
+                <iframe src="https://kldex.bryanlauwk.fun/" title="Live preview of Giant Durian Run" loading="lazy" allow="fullscreen; gamepad" referrerPolicy="strict-origin-when-cross-origin" />
+                <div className="feature-art-topline" aria-hidden="true"><span>KLDEX · LIVE GAME PREVIEW</span><span>PLAYABLE ↗</span></div>
+                <a href="https://kldex.bryanlauwk.fun/" target="_blank" rel="noopener noreferrer" className="feature-play"><Play className="h-4 w-4 fill-current" aria-hidden="true" /> PLAY FULL GAME<span className="sr-only"> (opens in a new tab)</span></a>
               </div>
               <div className="feature-copy">
                 <p className="eyebrow text-primary">KLDEX · Browser game</p>
                 <h3 className="feature-headline mt-2 text-3xl leading-[0.98] md:text-4xl">GIANT DURIAN RUN</h3>
                 <p className="mt-2 font-mono text-[9px] font-semibold uppercase tracking-wider text-muted-foreground">Kuala Lumpur, with the durian dial turned all the way up.</p>
                 <p className="mt-4 max-w-lg text-sm leading-relaxed text-muted-foreground md:text-base">Step into a larger-than-life KL playground built around Malaysia’s most divisive fruit. Explore the city, meet the giant durian, and see what’s waiting around the corner.</p>
-                <span className="mt-4 inline-flex min-h-10 items-center gap-2 border-b-2 border-primary pb-1 font-mono text-xs font-bold uppercase tracking-wider text-foreground transition-colors group-hover:text-primary">Play Giant Durian Run <ArrowUpRight className="h-4 w-4" /></span>
+                <a href="https://kldex.bryanlauwk.fun/" target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex min-h-10 items-center gap-2 border-b-2 border-primary pb-1 font-mono text-xs font-bold uppercase tracking-wider text-foreground transition-colors hover:text-primary">Play Giant Durian Run <ArrowUpRight className="h-4 w-4" /><span className="sr-only"> (opens in a new tab)</span></a>
               </div>
-            </a>
+            </article>
           </div>
         </section>
 
-        <section id="about" className="scroll-mt-24 border-b border-border bg-paper py-8 md:py-9" aria-labelledby="about-heading">
-          <div className="editorial-wrap grid gap-5 md:grid-cols-[0.72fr_1.28fr] md:gap-12">
-            <h2 id="about-heading" className="section-title">ABOUT THE<br className="hidden md:block" /> PLAYGROUND</h2>
-            <div className="max-w-3xl space-y-3 text-sm leading-relaxed text-muted-foreground md:text-[15px]">
-              <p>This is my playground: a growing collection of games, interactive experiments, and physical builds. Some live in your browser. Some have buttons, sensors, and questionable amounts of hot glue.</p>
-              <p>Every project starts with one question: <span className="font-semibold text-foreground">would this be more fun if you could actually play with it?</span></p>
+        <section id="about" className="section-band-odd scroll-mt-24 border-b border-border py-9 md:py-12" aria-labelledby="about-heading">
+          <div className="editorial-wrap grid gap-6 md:grid-cols-[0.72fr_1.28fr] md:gap-12">
+            <div>
+              <p className="eyebrow mb-2 text-primary">A little more about the maker</p>
+              <h2 id="about-heading" className="section-title">ABOUT THE<br className="hidden md:block" /> PLAYGROUND</h2>
+            </div>
+            <div className="max-w-3xl">
+              <p className="mb-5 text-sm leading-relaxed text-muted-foreground md:text-[15px]">I’m Bryan, a Kuala Lumpur based marketer with an engineering background and a habit of turning curious ideas into things you can play with. This site is my evolving collection of games, interactive experiments, and physical builds.</p>
+              <div className="about-faq-list" aria-label="Frequently asked questions about Bryan and the playground">
+                <details className="about-faq" open>
+                  <summary>Who’s behind the playground?</summary>
+                  <p>I’m Bryan Lau, a technology enthusiast and marketer based in Kuala Lumpur. I studied mechatronics, and I still enjoy bringing together technology, storytelling, and hands on making.</p>
+                </details>
+                <details className="about-faq">
+                  <summary>What kind of things do you make?</summary>
+                  <p>Small browser games, playful interactive experiments, and physical builds with sensors, buttons, and bits of code. The common thread is that you get to try them, not just look at them.</p>
+                </details>
+                <details className="about-faq">
+                  <summary>Why make playful projects?</summary>
+                  <p>Play makes unfamiliar ideas easier to explore. I like turning a question or a silly what if into something people can poke, test, and share.</p>
+                </details>
+                <details className="about-faq">
+                  <summary>Are these finished products?</summary>
+                  <p>Some are ready to play; others are works in progress. I keep the experiments here because the process, the surprises, and the rough edges are part of the fun.</p>
+                </details>
+                <details className="about-faq">
+                  <summary>Can we make something together?</summary>
+                  <p>Absolutely. If you have an idea for a game, an interactive experience, or a delightfully odd build, <a href="#contact">tell me about it</a>.</p>
+                </details>
+              </div>
             </div>
           </div>
         </section>
 
-        <section id="browser-work" className="scroll-mt-24 bg-background py-8 md:py-10" aria-labelledby="browser-work-heading">
+        <section id="browser-work" className="section-band-even scroll-mt-24 py-8 md:py-10" aria-labelledby="browser-work-heading">
           <div className="editorial-wrap">
             <div className="mb-6 flex flex-wrap items-end justify-between gap-4 border-b border-border pb-4">
               <div><p className="eyebrow mb-2">The archive · pick your rabbit hole</p><h2 id="browser-work-heading" className="section-title">THE ARCHIVE</h2></div>
