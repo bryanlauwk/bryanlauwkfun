@@ -129,6 +129,8 @@ it("features Giant Durian Run and removes the old Durian Dash feature", () => {
   render(<MemoryRouter><Index /></MemoryRouter>);
   expect(screen.getByRole("heading", { name: "GIANT DURIAN RUN" })).toBeInTheDocument();
   expect(screen.getByRole("link", { name: /Play Giant Durian Run/ })).toHaveAttribute("href", "https://kldex.bryanlauwk.fun/");
+  expect(screen.getByTitle("Live preview of Giant Durian Run")).toHaveAttribute("src", "https://kldex.bryanlauwk.fun/");
+  expect(document.querySelector(".feature-durian")).not.toBeInTheDocument();
   expect(screen.queryByText(/Durian Dash/i)).not.toBeInTheDocument();
 });
 
@@ -137,7 +139,18 @@ it("keeps the hero portrait uncropped inside its playful editorial frame", () =>
   const portrait = screen.getByRole("img", { name: /Bryan Lau, creator/ });
   expect(portrait).toHaveClass("hero-portrait-image");
   expect(portrait).not.toHaveClass("object-cover");
-  expect(screen.getByText("MADE IN KL · BUILT TO PLAY")).toBeInTheDocument();
+  expect(screen.getByText("BRYAN LAU · KUALA LUMPUR")).toBeInTheDocument();
+  expect(screen.getByText(/I MAKE/)).toBeInTheDocument();
+});
+
+it("introduces the maker with a readable, alternating section rhythm and useful FAQs", () => {
+  render(<MemoryRouter><Index /></MemoryRouter>);
+  expect(document.getElementById("featured")).toHaveClass("section-band-even");
+  expect(document.getElementById("about")).toHaveClass("section-band-odd");
+  expect(document.getElementById("browser-work")).toHaveClass("section-band-even");
+  expect(screen.getByText("Who’s behind the playground?")).toBeInTheDocument();
+  expect(screen.getByText("Can we make something together?")).toBeInTheDocument();
+  expect(document.querySelectorAll(".about-faq")).toHaveLength(5);
 });
 
 function renderNotes() {
