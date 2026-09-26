@@ -1082,15 +1082,39 @@
   }
 }
 
+@keyframes portal-dot-idle {
+  0%, 76%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  84% {
+    opacity: 0.72;
+    transform: scale(1.35);
+  }
+  92% {
+    opacity: 1;
+    transform: scale(0.94);
+  }
+}
+
+@keyframes portal-dot-fade {
+  from { opacity: 0.35; }
+  to { opacity: 1; }
+}
+
 .brand-portal-dot {
-  animation: portal-dot-arrive var(--brand-dot-duration, 850ms) cubic-bezier(0.22, 1, 0.36, 1) 250ms both;
+  animation:
+    portal-dot-arrive var(--brand-dot-duration, 850ms) cubic-bezier(0.22, 1, 0.36, 1) 250ms both,
+    portal-dot-idle 3.8s ease-in-out 1.3s infinite;
   transform-box: fill-box;
   transform-origin: center;
 }
 
 .brand-portal-mark:hover .brand-portal-dot,
 a:focus-visible .brand-portal-dot {
-  animation: portal-dot-replay var(--brand-dot-duration, 650ms) cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation:
+    portal-dot-replay var(--brand-dot-duration, 650ms) cubic-bezier(0.22, 1, 0.36, 1) both,
+    portal-dot-idle 3.8s ease-in-out 1.3s infinite;
 }
 
 /* Upside Down spore floating animation */
@@ -1207,6 +1231,22 @@ a:focus-visible .brand-portal-dot {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* Keep the signature perceptible for reduced-motion settings without travel. */
+@media (prefers-reduced-motion: reduce) {
+  .brand-portal-mark .brand-portal-dot {
+    animation-name: portal-dot-fade !important;
+    animation-duration: 650ms !important;
+    animation-delay: 250ms !important;
+  }
+
+  .brand-portal-mark:hover .brand-portal-dot,
+  a:focus-visible .brand-portal-dot {
+    animation-name: portal-dot-fade !important;
+    animation-duration: 450ms !important;
+    animation-delay: 0ms !important;
   }
 }
 
