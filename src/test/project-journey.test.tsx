@@ -106,7 +106,9 @@ describe("one-click project journey", () => {
 });
 
 it("keeps navigation useful on existing detail pages", () => {
-  render(<MemoryRouter initialEntries={["/drops/boringg"]}><CinematicHeader /></MemoryRouter>);
+  const { container } = render(<MemoryRouter initialEntries={["/drops/boringg"]}><CinematicHeader /></MemoryRouter>);
+  expect(screen.getByRole("link", { name: "Bryan LauWK Create — home" })).toHaveAttribute("href", "/#main-content");
+  expect(container.querySelector(".brand-portal-mark .brand-portal-dot")).toBeInTheDocument();
   const nav = within(screen.getByRole("navigation", { name: "Primary navigation" }));
   expect(nav.getByRole("link", { name: "Play" })).toHaveAttribute("href", "/#browser-work");
   expect(nav.getByRole("link", { name: "Collaborate" })).toHaveAttribute("href", "/#contact");
@@ -152,8 +154,10 @@ it("keeps the hero portrait uncropped inside its playful editorial frame", () =>
 it("introduces the maker with a readable, alternating section rhythm and useful FAQs", () => {
   render(<MemoryRouter><Index /></MemoryRouter>);
   expect(document.getElementById("featured")).toHaveClass("section-band-even");
-  expect(document.getElementById("about")).toHaveClass("section-band-odd");
-  expect(document.getElementById("browser-work")).toHaveClass("section-band-even");
+  expect(document.getElementById("browser-work")).toHaveClass("section-band-odd");
+  expect(document.getElementById("about")).toHaveClass("section-band-even");
+  const sectionOrder = Array.from(document.querySelectorAll("main > section"), section => section.id);
+  expect(sectionOrder.indexOf("about")).toBeGreaterThan(sectionOrder.indexOf("browser-work"));
   expect(screen.getByText("Who’s behind the playground?")).toBeInTheDocument();
   expect(screen.getByText("Can we make something together?")).toBeInTheDocument();
   expect(document.querySelectorAll(".about-faq")).toHaveLength(5);

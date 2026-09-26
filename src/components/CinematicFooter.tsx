@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
+import { BrandSignature } from "./BrandSignature";
 
 export function CinematicFooter() {
   return (
@@ -21,6 +22,11 @@ export function CinematicFooter() {
             ))}
           </nav>
           <span className="font-mono text-[10px] text-muted-foreground">© {new Date().getFullYear()} Bryan LauWK · Kuala Lumpur</span>
+        </div>
+        <div className="mt-5 flex justify-center border-t border-border pt-5">
+          <span className="relative block h-24 w-48 md:h-28 md:w-[13.5rem]" aria-hidden="true">
+            <BrandSignature className="absolute left-1/2 top-1/2 origin-center -translate-x-1/2 -translate-y-1/2 scale-90 md:scale-110" />
+          </span>
         </div>
       </div>
     </footer>

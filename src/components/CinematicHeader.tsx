@@ -1,6 +1,7 @@
 import { ArrowUpRight, Github, Linkedin } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { useVisitorCounter } from "@/hooks/useVisitorCounter";
+import { BrandSignature } from "./BrandSignature";
 
 export function CinematicHeader() {
   useVisitorCounter();
@@ -23,9 +24,10 @@ export function CinematicHeader() {
       <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:bg-primary focus:px-4 focus:py-3 focus:text-primary-foreground">Skip to main content</a>
       <header className="site-masthead relative z-50 border-b border-border bg-background">
         <div className="editorial-wrap flex min-h-[52px] flex-wrap items-center justify-between gap-x-6 gap-y-1 py-1">
-          <a href={`${home}#main-content`} aria-label="Bryan LauWK — home" className="flex min-h-11 items-center gap-2">
-            <span className="font-display text-lg font-black uppercase tracking-[-0.06em] md:text-xl">BRYAN LAUWK</span>
-            <span className="hidden rounded-full bg-primary px-2 py-1 font-mono text-[8px] font-bold uppercase tracking-wider text-primary-foreground sm:inline">Made to play</span>
+          <a href={`${home}#main-content`} aria-label="Bryan LauWK Create — home" className="flex min-h-11 items-center">
+            <span className="relative block h-12 w-[6.4rem] md:h-14 md:w-[7.25rem]" aria-hidden="true">
+              <BrandSignature className="absolute left-0 top-0 origin-top-left scale-[0.6] md:scale-[0.68]" />
+            </span>
           </a>
           <div className="hidden items-center gap-1.5 md:flex">
             <a href="https://x.com/bryanlauwk" aria-label="X" target="_blank" rel="noopener noreferrer" className="masthead-social font-mono text-xs font-bold">X</a>
