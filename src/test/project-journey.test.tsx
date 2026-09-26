@@ -152,8 +152,10 @@ it("keeps the hero portrait uncropped inside its playful editorial frame", () =>
 it("introduces the maker with a readable, alternating section rhythm and useful FAQs", () => {
   render(<MemoryRouter><Index /></MemoryRouter>);
   expect(document.getElementById("featured")).toHaveClass("section-band-even");
-  expect(document.getElementById("about")).toHaveClass("section-band-odd");
-  expect(document.getElementById("browser-work")).toHaveClass("section-band-even");
+  expect(document.getElementById("browser-work")).toHaveClass("section-band-odd");
+  expect(document.getElementById("about")).toHaveClass("section-band-even");
+  const sectionOrder = Array.from(document.querySelectorAll("main > section"), section => section.id);
+  expect(sectionOrder.indexOf("about")).toBeGreaterThan(sectionOrder.indexOf("browser-work"));
   expect(screen.getByText("Who’s behind the playground?")).toBeInTheDocument();
   expect(screen.getByText("Can we make something together?")).toBeInTheDocument();
   expect(document.querySelectorAll(".about-faq")).toHaveLength(5);
