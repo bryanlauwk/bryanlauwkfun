@@ -13,7 +13,6 @@ const state = vi.hoisted(() => ({ data: [] as Project[], isLoading: false, isErr
 vi.mock("@/hooks/useProjects", () => ({ usePublicProjects: () => state }));
 vi.mock("@/hooks/useVisitorCounter", () => ({ useVisitorCounter: vi.fn() }));
 vi.mock("@/components/SoundToggle", () => ({ SoundToggle: () => <button>Sound</button> }));
-vi.mock("@/components/ThemeToggle", () => ({ ThemeToggle: () => <button>Theme</button> }));
 vi.mock("@/hooks/useSEO", () => ({ useSEO: vi.fn() }));
 vi.mock("@/components/RedactionReveal", () => ({ MarkerUnderline: ({ children }: { children: React.ReactNode }) => <span>{children}</span> }));
 // Public catalogue snapshot checked on 2026-09-22.
