@@ -32,6 +32,16 @@ export function InteractiveStampTool() {
   const [guideVisible, setGuideVisible] = useState(true);
   const [dockMinimized, setDockMinimized] = useState(false);
   const nextId = useRef(0);
+  const { pathname } = useLocation();
+
+  // Stamps are a visitor toy — keep them off admin/auth/utility pages entirely.
+  const hidden = pathname.startsWith("/admin") || pathname.startsWith("/auth") || pathname.startsWith("/.lovable");
+
+  // Fresh page, fresh sheet of paper: clear marks whenever the route changes.
+  useEffect(() => {
+    setMarks([]);
+    setActive(false);
+  }, [pathname]);
 
   useEffect(() => {
     document.body.classList.toggle("stamp-mode", active);
@@ -57,8 +67,8 @@ export function InteractiveStampTool() {
 
       setMarks((current) => [...current, {
         id: nextId.current++,
-        x: event.clientX,
-        y: event.clientY,
+        x: event.pageX,
+        y: event.pageY,
         label: selectedLabel,
         rotation: Math.round((Math.random() * 18 - 9) * 10) / 10,
       }]);
