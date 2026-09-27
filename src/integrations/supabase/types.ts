@@ -217,6 +217,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_page_view_count: { Args: { p_path: string }; Returns: number }
       get_stamp_reaction_summary: {
         Args: never
         Returns: {

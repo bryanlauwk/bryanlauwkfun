@@ -27,14 +27,12 @@ export function useVisitorCounter() {
 
     const fetchCount = async () => {
       try {
-        const { data, error } = await supabase
-          .from("page_views")
-          .select("view_count")
-          .eq("page_path", "/")
-          .maybeSingle();
+        const { data, error } = await supabase.rpc("get_page_view_count", {
+          p_path: "/",
+        });
 
-        if (!error && data?.view_count !== undefined) {
-          setCount(data.view_count);
+        if (!error && typeof data === "number") {
+          setCount(data);
         }
       } catch (err) {
         console.error("Error fetching visitor count:", err);
