@@ -83,6 +83,8 @@ export function InteractiveStampTool() {
     };
   }, [active, selectedLabel]);
 
+  if (hidden) return null;
+
   return createPortal((
     <>
       {marks.map((mark) => (
@@ -120,6 +122,17 @@ export function InteractiveStampTool() {
           <div className="interactive-stamp-dock-head">
             <span>PUBLIC OPINION MACHINE</span>
             <div className="interactive-stamp-dock-actions">
+              {marks.length > 0 && (
+                <button
+                  type="button"
+                  className="interactive-stamp-action"
+                  aria-label="Clear all stamps"
+                  title="Clear all stamps"
+                  onClick={() => setMarks([])}
+                >
+                  <Trash2 aria-hidden="true" />
+                </button>
+              )}
               <button
                 type="button"
                 className="interactive-stamp-action"
