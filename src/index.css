@@ -216,7 +216,7 @@
 }
 
 .interactive-stamp-mark {
-  position: fixed;
+  position: absolute;
   z-index: 70;
   pointer-events: none;
   border: 3px solid hsl(4 90% 52% / 0.82);

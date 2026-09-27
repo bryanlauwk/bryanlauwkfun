@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { ChevronDown, ChevronUp, Maximize2, Minimize2, Stamp } from "lucide-react";
+import { useLocation } from "react-router-dom";
+import { ChevronDown, ChevronUp, Maximize2, Minimize2, Stamp, Trash2 } from "lucide-react";
 import { recordStampReaction } from "@/hooks/useStampReactions";
 
 const LABELS = [
@@ -31,6 +32,16 @@ export function InteractiveStampTool() {
   const [guideVisible, setGuideVisible] = useState(true);
   const [dockMinimized, setDockMinimized] = useState(false);
   const nextId = useRef(0);
+  const { pathname } = useLocation();
+
+  // Stamps are a visitor toy — keep them off admin/auth/utility pages entirely.
+  const hidden = pathname.startsWith("/admin") || pathname.startsWith("/auth") || pathname.startsWith("/.lovable");
+
+  // Fresh page, fresh sheet of paper: clear marks whenever the route changes.
+  useEffect(() => {
+    setMarks([]);
+    setActive(false);
+  }, [pathname]);
 
   useEffect(() => {
     document.body.classList.toggle("stamp-mode", active);
@@ -56,8 +67,8 @@ export function InteractiveStampTool() {
 
       setMarks((current) => [...current, {
         id: nextId.current++,
-        x: event.clientX,
-        y: event.clientY,
+        x: event.pageX,
+        y: event.pageY,
         label: selectedLabel,
         rotation: Math.round((Math.random() * 18 - 9) * 10) / 10,
       }]);
@@ -71,6 +82,8 @@ export function InteractiveStampTool() {
       document.body.classList.remove("stamp-mode");
     };
   }, [active, selectedLabel]);
+
+  if (hidden) return null;
 
   return createPortal((
     <>
@@ -109,6 +122,17 @@ export function InteractiveStampTool() {
           <div className="interactive-stamp-dock-head">
             <span>PUBLIC OPINION MACHINE</span>
             <div className="interactive-stamp-dock-actions">
+              {marks.length > 0 && (
+                <button
+                  type="button"
+                  className="interactive-stamp-action"
+                  aria-label="Clear all stamps"
+                  title="Clear all stamps"
+                  onClick={() => setMarks([])}
+                >
+                  <Trash2 aria-hidden="true" />
+                </button>
+              )}
               <button
                 type="button"
                 className="interactive-stamp-action"
