@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { ChevronDown, ChevronUp, Maximize2, Minimize2, Stamp } from "lucide-react";
+import { useLocation } from "react-router-dom";
+import { ChevronDown, ChevronUp, Maximize2, Minimize2, Stamp, Trash2 } from "lucide-react";
 import { recordStampReaction } from "@/hooks/useStampReactions";
 
 const LABELS = [

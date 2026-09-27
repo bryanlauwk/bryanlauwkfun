@@ -50,8 +50,8 @@ const App = () => {
             <Sonner />
             <KonamiCodeListener />
             <UpsideDownOverlay />
-            <InteractiveStampTool />
             <BrowserRouter>
+              <InteractiveStampTool />
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/drops/:slug" element={<DropDetail />} />
