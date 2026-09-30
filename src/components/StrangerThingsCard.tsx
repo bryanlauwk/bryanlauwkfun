@@ -25,7 +25,7 @@ export function StrangerThingsCard({ project }: StrangerThingsCardProps) {
     >
       <div className="project-card-image relative aspect-[1.58/1] overflow-hidden bg-secondary">
         {previewSrc && !imageFailed ? (
-          <img src={previewSrc} alt="" loading="lazy" decoding="async" onError={() => setImageFailed(true)} className="h-full w-full object-contain" />
+          <img src={previewSrc} alt={`${project.title} preview`} loading="lazy" decoding="async" onError={() => setImageFailed(true)} className="h-full w-full object-contain" />
         ) : (
           <div className="flex h-full items-center justify-center text-muted-foreground"><ImageOff className="h-7 w-7 opacity-40" aria-hidden="true" /><span className="sr-only">Preview unavailable</span></div>
         )}
