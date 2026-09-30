@@ -1,6 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { safeSupabase as supabase } from "@/integrations/supabase/safe-client";
 
+import { bundledPublicProjects } from "@/data/public-projects";
+
 export interface Project {
   id: string;
   title: string;
@@ -21,19 +23,30 @@ export type ProjectUpdate = Partial<ProjectInsert> & { id: string };
 
 // Fetch visible projects (public)
 export function usePublicProjects() {
-  return useQuery({
+  const query = useQuery({
     queryKey: ["projects", "public"],
+    retry: 1,
+    staleTime: 60_000,
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("projects")
-        .select("*")
-        .eq("is_visible", true)
-        .order("display_order", { ascending: true });
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 8_000);
+      try {
+        const { data, error } = await supabase
+          .from("projects")
+          .select("*")
+          .eq("is_visible", true)
+          .order("display_order", { ascending: true })
+          .abortSignal(controller.signal);
 
-      if (error) throw error;
-      return data as Project[];
+        if (error) throw error;
+        return data as Project[];
+      } finally {
+        clearTimeout(timeout);
+      }
+
     },
   });
+  return { ...query, data: query.data ?? bundledPublicProjects, isLoading: false };
 }
 
 // Fetch all projects (admin) - with enabled option

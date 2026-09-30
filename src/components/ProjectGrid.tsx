@@ -29,7 +29,7 @@ export function ProjectGrid() {
       {[0, 1, 2].map(i => <div key={i} className="border border-foreground/15 bg-card"><Skeleton className="aspect-[8/5] w-full rounded-none" /><div className="space-y-4 p-6"><Skeleton className="h-7 w-3/4" /><Skeleton className="h-4 w-full" /><Skeleton className="h-4 w-2/3" /></div></div>)}
     </div>
   );
-  if (isError) return (
+  if (isError && !projects?.length) return (
     <div role="alert" className="border border-foreground/20 bg-card p-8">
       <h3 className="font-display text-2xl font-black uppercase">A small technical gremlin.</h3>
       <p className="mt-2 text-muted-foreground">The experiments couldn’t load. Give them another nudge.</p>
@@ -39,6 +39,7 @@ export function ProjectGrid() {
 
   return (
     <div className="space-y-6">
+      {isError && <p role="status" className="font-mono text-xs text-muted-foreground">Showing the saved archive. <button onClick={() => void refetch()} disabled={isFetching} className="ml-2 inline-flex min-h-11 items-center text-primary underline underline-offset-4 disabled:opacity-50">{isFetching ? "Refreshing…" : "Refresh list"}</button></p>}
       {(projects?.length ?? 0) > 0 && (
         <div className="mb-6 flex flex-col gap-4 border-b border-border pb-4 lg:flex-row lg:items-center lg:justify-between">
           {filters.length > 0 && <div className="flex flex-wrap gap-2" role="group" aria-label="Filter experiments">
