@@ -86,6 +86,7 @@ describe("one-click project journey", () => {
   });
   it("distinguishes a failed catalogue from an empty one and allows retry", () => {
     state.isError = true;
+    state.data = [];
     render(<ProjectGrid />);
     expect(screen.getByRole("alert")).toHaveTextContent("technical gremlin");
     fireEvent.click(screen.getByRole("button", { name: "Try again" }));
