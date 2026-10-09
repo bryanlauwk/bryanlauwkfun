@@ -311,33 +311,6 @@
   .editorial-button, .feature-story, .hero-portrait-image { transition: none; }
 }
 
-@keyframes stamp-hit {
-  from { opacity: 0; scale: 1.35; }
-  to { opacity: 1; scale: 1; }
-}
-
-@media (pointer: fine) {
-  body.stamp-mode, body.stamp-mode * { cursor: crosshair !important; }
-  body.stamp-mode .interactive-stamp-dock,
-  body.stamp-mode .interactive-stamp-dock * { cursor: pointer !important; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .interactive-stamp-mark { animation: none; }
-}
-
-@media (max-width: 480px) {
-  .interactive-stamp-dock {
-    right: max(0.65rem, env(safe-area-inset-right));
-    bottom: max(0.65rem, env(safe-area-inset-bottom));
-    width: min(330px, calc(100vw - 1.3rem));
-    padding: 0.7rem;
-  }
-
-  .interactive-stamp-sketch { flex-basis: 44px; width: 44px; height: 42px; }
-  .interactive-stamp-option { font-size: 0.54rem; }
-}
-
 /* THE EXHIBITION — Design System
    Art installation × tech. A24 restraint, MSCHF provocation.
    Near-black gallery space, bone-white type, one signal red.
