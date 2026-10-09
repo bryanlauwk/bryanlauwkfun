@@ -8,7 +8,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { UpsideDownProvider } from "@/contexts/UpsideDownContext";
 import { UpsideDownOverlay } from "@/components/UpsideDownOverlay";
 import { KonamiCodeListener } from "@/components/KonamiCodeListener";
-import { InteractiveStampTool } from "@/components/InteractiveStampTool";
 import { toast } from "sonner";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
@@ -51,7 +50,6 @@ const App = () => {
             <KonamiCodeListener />
             <UpsideDownOverlay />
             <BrowserRouter>
-              <InteractiveStampTool />
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/drops/:slug" element={<DropDetail />} />
