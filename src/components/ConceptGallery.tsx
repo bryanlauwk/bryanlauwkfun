@@ -12,17 +12,16 @@ export default function ConceptGallery() {
     <section id="concepts" className="studio-concepts" aria-labelledby="concepts-title" aria-describedby="concepts-description">
       <div className="studio-concepts-intro">
         <div>
-          <p className="studio-concepts-eyebrow">An open sketchbook / 01—06</p>
+          <p className="studio-concepts-eyebrow">An open sketchbook</p>
           <h2 id="concepts-title">Things That<br />Could Exist</h2>
         </div>
-        <p id="concepts-description">Visual experiments, imaginary objects, and ideas from 881230.studio. <strong>Concept illustrations, not completed projects.</strong></p>
+        <p id="concepts-description">Concept sketches, imaginary objects, and playful possibilities.</p>
       </div>
       <div className="studio-concepts-grid">
-        {concepts.map((concept, i) => (
+        {concepts.map((concept) => (
           <figure key={concept.file} className="studio-concept">
-            <img src={`/concepts/${concept.file}.jpg`} alt={`Concept illustration: ${concept.alt}`} width={504} height={504} loading="lazy" decoding="async" />
+            <img src={`/concepts/${concept.file}.jpg`} alt={concept.alt} width={504} height={504} loading="lazy" decoding="async" />
             <figcaption>
-              <span className="studio-concept-label">{String(i + 1).padStart(2, "0")} / Concept illustration</span>
               <h3>{concept.title}</h3>
             </figcaption>
           </figure>
