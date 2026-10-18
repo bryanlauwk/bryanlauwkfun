@@ -4,7 +4,8 @@ import { usePublicProjects } from "@/hooks/useProjects";
 import { bundledPublicProjects } from "@/data/public-projects";
 import { previewSrcFor } from "@/lib/preview";
 import { slugFor } from "@/lib/slug";
-import workbench from "@/assets/studio-workbench.jpg";
+import workbench from "@/assets/studio-objects.jpg";
+import portrait from "@/assets/hero-portrait-photo.png";
 
 type Cat = "All" | "Digital" | "Objects" | "Experiments";
 const OBJECTS = ["Cartridge", "Artoy"];
@@ -88,6 +89,10 @@ export default function StudioPreview() {
 
         <section id="about" className="studio-about">
           <span>The person behind<br />the studio</span>
+          <figure className="studio-portrait">
+            <img src={portrait} alt="Portrait of Bryan Lau Wai Kit" loading="lazy" />
+            <figcaption>Bryan Lau Wai Kit · Kuala Lumpur</figcaption>
+          </figure>
           <div>
             <h3>I follow ideas to see where they take me.</h3>
             <p>Sometimes that becomes a game. Sometimes an object. Sometimes another question.</p>
@@ -95,7 +100,7 @@ export default function StudioPreview() {
         </section>
 
         <section id="contact" className="studio-cta">
-          <a href="mailto:hello@bryanlauwk.fun">Have something curious in mind? <em>Let's make it. ↗</em></a>
+          <a href="mailto:bryanlauwk@gmail.com">Have something curious in mind? <em>Let's make it. ↗</em></a>
         </section>
 
         <footer className="studio-foot">
