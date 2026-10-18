@@ -1077,7 +1077,7 @@ a:focus-visible .brand-portal-dot {
 .studio-wrap{overflow-x:clip}
 .studio-mast h1{white-space:nowrap}
 @media(max-width:640px){
-.studio-mast h1{font-size:clamp(36px,13vw,96px)}
+.studio-mast h1{font-size:clamp(36px,12.4vw,96px)}
 .studio-top{flex-wrap:wrap;gap:6px 12px;padding:12px 0 8px}
 .studio-top nav{gap:4px}
 .studio-top nav a{padding:10px 8px;min-height:44px;display:inline-flex;align-items:center}
