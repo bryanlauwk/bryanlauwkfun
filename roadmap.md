@@ -1,3 +1,5 @@
 - [x] Update social share artwork to the 881230.studio identity using the homepage objects.
 - [x] Remove repeated Kuala Lumpur mentions while preserving first-paint parity.
 - [x] Verify share metadata, artwork, and homepage rendering.
+- [ ] Prevent nonfatal ResizeObserver notifications from triggering fatal preview overlays, preserving real errors.
+- [ ] Restore /index as a homepage redirect and verify phone-sized rendering and error handling.

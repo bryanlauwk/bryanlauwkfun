@@ -1,2 +1,4 @@
 Keep the `index.html` first-paint shell in visual and copy parity with the homepage and remove it only after React commits; this prevents stale UI flashes and blank loads.
 The homepage `/` renders the 881230.studio layout (`src/pages/StudioPreview.tsx`, also served at `/studio`); keep `index.html`'s static shell, SEO metadata, and `scripts/verify-first-paint.py` phrases in parity with it. The old editorial playground (`src/pages/Index.tsx`) is retired — do not restore it.
+Redirect `/index` to `/` so old homepage addresses do not open the missing-page view.
+The startup error handler filters only exact browser ResizeObserver deferred-notification messages without an attached exception; genuine application errors must remain visible.
