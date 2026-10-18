@@ -1,8 +1,12 @@
 import { createRoot } from "react-dom/client";
 import { HelmetProvider } from "react-helmet-async";
 import { ErrorBoundary } from "./components/ErrorBoundary";
+import { handleResizeObserverWarning, installFrameScheduledResizeObserver } from "./lib/resize-observer-warning";
 import App from "./App.tsx";
 import "./index.css";
+
+window.addEventListener("error", handleResizeObserverWarning, { capture: true });
+installFrameScheduledResizeObserver();
 
 function removeStaticShell() {
   const shell = document.getElementById("static-fallback");

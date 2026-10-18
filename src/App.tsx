@@ -4,7 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { UpsideDownProvider } from "@/contexts/UpsideDownContext";
 import { UpsideDownOverlay } from "@/components/UpsideDownOverlay";
 import { KonamiCodeListener } from "@/components/KonamiCodeListener";
@@ -52,6 +52,7 @@ const App = () => {
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<StudioPreview />} />
+                <Route path="/index" element={<Navigate to="/" replace />} />
                 <Route path="/drops/:slug" element={<DropDetail />} />
                 <Route path="/studio" element={<StudioPreview />} />
                 <Route path="/auth" element={<Auth />} />
