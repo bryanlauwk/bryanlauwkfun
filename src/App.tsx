@@ -9,7 +9,6 @@ import { UpsideDownProvider } from "@/contexts/UpsideDownContext";
 import { UpsideDownOverlay } from "@/components/UpsideDownOverlay";
 import { KonamiCodeListener } from "@/components/KonamiCodeListener";
 import { toast } from "sonner";
-import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
 import DropDetail from "./pages/DropDetail";
@@ -52,7 +51,7 @@ const App = () => {
             <UpsideDownOverlay />
             <BrowserRouter>
               <Routes>
-                <Route path="/" element={<Index />} />
+                <Route path="/" element={<StudioPreview />} />
                 <Route path="/drops/:slug" element={<DropDetail />} />
                 <Route path="/studio" element={<StudioPreview />} />
                 <Route path="/auth" element={<Auth />} />
