@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { usePublicProjects } from "@/hooks/useProjects";
+import { useSEO } from "@/hooks/useSEO";
 import { bundledPublicProjects } from "@/data/public-projects";
 import { previewSrcFor } from "@/lib/preview";
 import { slugFor } from "@/lib/slug";
@@ -14,6 +15,11 @@ const catOf = (t: string): Exclude<Cat, "All"> =>
   OBJECTS.includes(t) ? "Objects" : EXPERIMENTS.includes(t) ? "Experiments" : "Digital";
 
 export default function StudioPreview() {
+  useSEO({
+    title: "881230.studio — Curiosity, made into things by Bryan Lau",
+    description: "Curiosity, made into things. Creative marketer, designer and maker of playable things — art, design, games and objects by Bryan Lau Wai Kit.",
+    canonical: "https://www.bryanlauwk.fun/",
+  });
   const { data } = usePublicProjects();
   const projects = data?.length ? data : bundledPublicProjects;
   const [cat, setCat] = useState<Cat>("All");
@@ -24,10 +30,7 @@ export default function StudioPreview() {
 
   return (
     <div className="studio min-h-screen">
-      <div className="studio-wrap">
-        <div className="studio-banner">
-          Design preview — your live homepage is unchanged. <Link to="/">Back to current site ↗</Link>
-        </div>
+      <main id="main-content" className="studio-wrap">
 
         <header className="studio-top">
           <span>Independent creative practice</span>
@@ -105,9 +108,9 @@ export default function StudioPreview() {
 
         <footer className="studio-foot">
           <span>881230.studio &nbsp;|&nbsp; by Bryan Lau Wai Kit</span>
-          <span>Design concept / 01</span>
+          <span>Made in Kuala Lumpur</span>
         </footer>
-      </div>
+      </main>
     </div>
   );
 }
