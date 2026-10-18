@@ -1096,3 +1096,18 @@ a:focus-visible .brand-portal-dot {
 .studio-cta a{display:block;padding:4px 0}
 .studio-foot{flex-direction:column;gap:6px}
 }
+
+/* Concept illustrations sit apart from the selected, completed work. */
+.studio-concepts{padding:clamp(32px,5vw,64px) 0;border-bottom:1px solid hsl(var(--s-line))}
+.studio-concepts-intro{display:grid;gap:24px;margin-bottom:32px}
+.studio-concepts-eyebrow,.studio-concept-label{font:400 11px/1.5 "JetBrains Mono",monospace;text-transform:uppercase;letter-spacing:.04em;color:hsl(var(--s-mute))}
+.studio-concepts h2{font:800 clamp(36px,5vw,64px)/.98 Archivo,sans-serif;letter-spacing:-.04em;margin-top:12px}
+.studio-concepts-intro>p{font-size:15px;line-height:1.65;color:hsl(var(--s-mute));max-width:38ch}
+.studio-concepts-intro strong{display:block;font-weight:500;color:hsl(var(--s-ink));margin-top:8px}
+.studio-concepts-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:32px 20px}
+.studio-concept{margin:0;min-width:0}
+.studio-concept img{display:block;width:100%;height:auto;aspect-ratio:1;background:hsl(var(--s-ink)/.06)}
+.studio-concept figcaption{padding-top:12px}
+.studio-concept h3{font-size:16px;line-height:1.4;font-weight:600;margin-top:4px}
+@media(min-width:600px){.studio-concepts-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:1000px){.studio-concepts-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.studio-concepts-intro{grid-template-columns:3fr 2fr;align-items:end;gap:48px}}
