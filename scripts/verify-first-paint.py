@@ -32,9 +32,10 @@ REQUIRED_PHRASES = [
     "Bryan Lau",
     "881230.studio",
     "Curiosity",
-    "made into things",
+    "made into",
     "Maker of things",
 ]
+
 
 FORBIDDEN_PHRASES = [
     "Late nights, wild ideas",
