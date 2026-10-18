@@ -1075,9 +1075,9 @@ a:focus-visible .brand-portal-dot {
 .studio-foot{display:flex;justify-content:space-between;padding-top:12px}
 /* Mobile refinements */
 .studio-wrap{overflow-x:clip}
-.studio-mast h1{overflow-wrap:anywhere}
+.studio-mast h1{white-space:nowrap}
 @media(max-width:640px){
-.studio-mast h1{font-size:clamp(40px,14.2vw,96px)}
+.studio-mast h1{font-size:clamp(36px,13vw,96px)}
 .studio-top{flex-wrap:wrap;gap:6px 12px;padding:12px 0 8px}
 .studio-top nav{gap:4px}
 .studio-top nav a{padding:10px 8px;min-height:44px;display:inline-flex;align-items:center}
