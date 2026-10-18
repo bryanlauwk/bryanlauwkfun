@@ -21,7 +21,13 @@ describe("nonfatal resize notifications", () => {
       const callback = vi.fn();
       const observer = new window.ResizeObserver(callback);
       const target = document.createElement("div");
-      const entry = { target } as ResizeObserverEntry;
+      const entry: ResizeObserverEntry = {
+        target,
+        contentRect: new DOMRectReadOnly(),
+        borderBoxSize: [],
+        contentBoxSize: [],
+        devicePixelContentBoxSize: [],
+      };
       deliver?.([entry], observer);
       deliver?.([entry], observer);
       expect(callback).not.toHaveBeenCalled();
