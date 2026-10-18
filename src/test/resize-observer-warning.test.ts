@@ -23,7 +23,7 @@ describe("nonfatal resize notifications", () => {
       const target = document.createElement("div");
       const entry: ResizeObserverEntry = {
         target,
-        contentRect: new DOMRectReadOnly(),
+        contentRect: target.getBoundingClientRect(),
         borderBoxSize: [],
         contentBoxSize: [],
         devicePixelContentBoxSize: [],
