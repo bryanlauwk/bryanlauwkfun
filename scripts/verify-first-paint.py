@@ -30,17 +30,20 @@ VIEWPORTS = [
 
 REQUIRED_PHRASES = [
     "Bryan Lau",
-    "Good luck",
-    "fun.",
-    "die.",
-    "physical curiosities",
+    "881230.studio",
+    "Curiosity",
+    "made into things",
+    "Maker of things",
 ]
 
 FORBIDDEN_PHRASES = [
     "Late nights, wild ideas",
     "I BUILD THINGS",
     "Creativity is the interface",
+    "Good luck,",
+    "Don’t die.",
 ]
+
 
 
 def norm(s: str) -> str:
