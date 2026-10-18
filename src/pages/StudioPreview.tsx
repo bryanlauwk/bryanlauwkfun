@@ -5,7 +5,7 @@ import { useSEO } from "@/hooks/useSEO";
 import { bundledPublicProjects } from "@/data/public-projects";
 import { previewSrcFor } from "@/lib/preview";
 import { slugFor } from "@/lib/slug";
-import workbench from "@/assets/studio-objects.jpg";
+import workbench from "@/assets/studio-lab.jpg";
 import portrait from "@/assets/hero-portrait-photo.png";
 import ConceptGallery from "@/components/ConceptGallery";
 
@@ -56,7 +56,7 @@ export default function StudioPreview() {
             <a href="#work" className="studio-link">Explore selected work ↘</a>
           </div>
           <figure>
-            <img src={workbench} alt="Studio workbench with a clear robot prototype, durian plush and sketchbook" width={1536} height={960} />
+            <img src={workbench} alt="Clear robot prototype, durian character and cat toy on oak and white plinths with an open sketchbook" width={1264} height={848} />
             <figcaption>A few things on the workbench. More on the way.</figcaption>
           </figure>
         </section>
