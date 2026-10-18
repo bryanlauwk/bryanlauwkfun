@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { usePublicProjects } from "@/hooks/useProjects";
 import { bundledPublicProjects } from "@/data/public-projects";
 import { previewSrcFor } from "@/lib/preview";
-import { slugify } from "@/lib/slug";
+import { slugFor } from "@/lib/slug";
 import workbench from "@/assets/studio-workbench.jpg";
 
 type Cat = "All" | "Digital" | "Objects" | "Experiments";
@@ -71,7 +71,7 @@ export default function StudioPreview() {
             {list.map((p, i) => {
               const src = previewSrcFor(p, { width: 1200 });
               return (
-                <Link key={p.id} to={`/drops/${slugify(p.title)}`} className="studio-card">
+                <Link key={p.id} to={`/drops/${slugFor(p)}`} className="studio-card">
                   <div className="studio-img">{src && <img src={src} alt={`${p.title} preview`} loading="lazy" />}</div>
                   <div className="studio-meta">
                     <div>
