@@ -35,7 +35,6 @@ export default function StudioPreview() {
         <header className="studio-top">
           <span>Independent creative practice</span>
           <nav>
-            <span className="hidden sm:inline">Kuala Lumpur, MY</span>
             <a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact</a>
           </nav>
         </header>
@@ -94,7 +93,7 @@ export default function StudioPreview() {
           <span>The person behind<br />the studio</span>
           <figure className="studio-portrait">
             <img src={portrait} alt="Portrait of Bryan Lau Wai Kit" loading="lazy" />
-            <figcaption>Bryan Lau Wai Kit · Kuala Lumpur</figcaption>
+            <figcaption>Bryan Lau Wai Kit</figcaption>
           </figure>
           <div>
             <h3>I follow ideas to see where they take me.</h3>

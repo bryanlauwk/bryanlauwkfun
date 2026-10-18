@@ -1,0 +1,3 @@
+- [ ] Update social share artwork to the 881230.studio identity using the homepage objects.
+- [ ] Remove repeated Kuala Lumpur mentions while preserving first-paint parity.
+- [ ] Verify share metadata, artwork, and homepage rendering.
