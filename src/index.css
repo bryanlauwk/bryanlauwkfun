@@ -1073,3 +1073,26 @@ a:focus-visible .brand-portal-dot {
 .studio-cta{padding:22px 0;border-bottom:1px solid hsl(var(--s-line));font:800 clamp(28px,4vw,52px)/1.05 Archivo,sans-serif;letter-spacing:-.035em}
 .studio-cta em{font-style:normal;color:hsl(var(--s-accent))}
 .studio-foot{display:flex;justify-content:space-between;padding-top:12px}
+/* Mobile refinements */
+.studio-wrap{overflow-x:clip}
+.studio-mast h1{overflow-wrap:anywhere}
+@media(max-width:640px){
+.studio-mast h1{font-size:clamp(40px,14.2vw,96px)}
+.studio-top{flex-wrap:wrap;gap:6px 12px;padding:12px 0 8px}
+.studio-top nav{gap:4px}
+.studio-top nav a{padding:10px 8px;min-height:44px;display:inline-flex;align-items:center}
+.studio-hero{gap:24px;padding:20px 0 28px}
+.studio-hero h2{font-size:clamp(38px,11vw,56px)}
+.studio-role{font-size:17px;margin-top:16px}
+.studio-link{padding:8px 0}
+.studio-tabs{overflow-x:auto;gap:4px;margin:10px -16px 16px;padding:0 16px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.studio-tabs::-webkit-scrollbar{display:none}
+.studio-tabs button{min-height:44px;padding:0 10px;white-space:nowrap;flex:none}
+.studio-head h3{font-size:22px}
+.studio-meta{flex-direction:column;gap:4px}
+.studio-meta span{white-space:normal}
+.studio-portrait img{max-height:60vh;max-width:360px}
+.studio-cta{font-size:clamp(26px,8vw,36px);padding:24px 0}
+.studio-cta a{display:block;padding:4px 0}
+.studio-foot{flex-direction:column;gap:6px}
+}
