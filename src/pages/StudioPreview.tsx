@@ -7,6 +7,7 @@ import { previewSrcFor } from "@/lib/preview";
 import { slugFor } from "@/lib/slug";
 import workbench from "@/assets/studio-objects.jpg";
 import portrait from "@/assets/hero-portrait-photo.png";
+import ConceptGallery from "@/components/ConceptGallery";
 
 type Cat = "All" | "Digital" | "Objects" | "Experiments";
 const OBJECTS = ["Cartridge", "Artoy"];
@@ -100,6 +101,8 @@ export default function StudioPreview() {
             <p>Sometimes that becomes a game. Sometimes an object. Sometimes another question.</p>
           </div>
         </section>
+
+        <ConceptGallery />
 
         <section id="contact" className="studio-cta">
           <a href="mailto:bryanlauwk@gmail.com">Have something curious in mind? <em>Let's make it. ↗</em></a>
