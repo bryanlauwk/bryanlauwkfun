@@ -100,3 +100,70 @@
 @media(min-width:1000px){.studio-concepts-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.studio-concepts-intro{grid-template-columns:3fr 2fr;align-items:end}}
 @media(max-width:640px){.studio-top{flex-wrap:wrap;gap:0}.studio-top nav{gap:2px}.studio-top nav a{padding:8px}.studio-mast h1{font-size:clamp(30px,11.8vw,80px)}.studio-hero{gap:24px;padding:24px 0}.studio-hero-image img{width:100%}.studio-hero h2{font-size:clamp(40px,11vw,60px)}.studio-tabs button{padding:8px 9px;font-size:12px}.studio-foot{flex-direction:column;align-items:flex-start}.studio-featured{padding:28px 0}.studio-contact-actions{align-items:flex-start}.studio-cta .studio-button{width:100%}}
 @media(prefers-reduced-motion:reduce){.studio *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+/* Editorial artist studio: scoped so account and error screens stay familiar. */
+.studio-editorial{--s-bg:42 29% 94%;--s-line:35 13% 72%;--s-accent:17 66% 35%}
+.studio-editorial .studio-wrap{max-width:1440px;padding-inline:clamp(20px,4.5vw,72px);padding-bottom:0}
+.studio-editorial .studio-top{padding-block:14px}
+.studio-editorial .studio-mast{padding:24px 0 20px}
+.studio-editorial .studio-mast h1{font-size:clamp(36px,12.6vw,174px);letter-spacing:-.065em;line-height:1}
+.studio-editorial .studio-mast p{display:flex;justify-content:space-between;gap:20px;font:400 11px/1.6 "JetBrains Mono",monospace;text-transform:uppercase;margin-top:18px}
+.studio-editorial .studio-hero{padding:46px 0 60px;gap:40px}
+.studio-editorial .studio-hero h2{font-size:clamp(52px,6.5vw,88px)}
+.studio-editorial .studio-hero .studio-eyebrow{margin-bottom:22px;font-size:10px}
+.studio-editorial .studio-hero-image{position:relative;align-self:center}
+.studio-editorial .studio-hero-image img{aspect-ratio:1.25;object-fit:cover}
+.studio-editorial .studio-hero figcaption{display:flex;justify-content:space-between;gap:12px;font-size:10px}
+.studio-sticker{position:absolute;z-index:1;right:-12px;top:-24px;width:100px;height:100px;border-radius:50%;display:grid;place-items:center;background:#dce783;color:#272c15;font:700 27px Caveat,cursive;transform:rotate(12deg)}
+.studio-editorial .studio-section{padding:60px 0}
+.studio-editorial .studio-head h2{font-size:clamp(28px,3.3vw,46px)}
+.studio-head sup{font:400 11px "JetBrains Mono",monospace;vertical-align:middle;margin-right:14px}
+.studio-editorial .studio-tabs{margin:24px 0 32px;gap:12px}
+.studio-editorial .studio-tabs button{border:1px solid hsl(var(--s-line));border-radius:30px;padding-inline:18px}
+.studio-editorial .studio-tabs button[aria-pressed=true]{background:#242520;border-color:#242520;color:#f5f2eb}
+.studio-editorial .studio-grid{gap:44px 28px}
+.studio-editorial .studio-img{background:#e5e2d9}
+.studio-editorial .studio-img img{transition:transform .35s ease}
+.studio-editorial .studio-card:hover .studio-img img{transform:scale(1.025)}
+.studio-editorial .studio-meta{flex-direction:row;justify-content:space-between;gap:16px}
+.studio-editorial .studio-meta>span{font-size:10px;flex-shrink:0;margin-top:5px}
+.studio-editorial .studio-meta h3{font-size:21px;letter-spacing:-.04em}
+.studio-editorial .studio-meta p{font-size:14px}
+.studio-archive-toggle{display:block;min-height:48px;margin:36px auto 0;padding:12px 24px;border:1px solid #aaa79f;background:transparent;color:inherit;border-radius:30px}
+.studio-archive-toggle:hover{background:#e6e3da}
+.studio-making{padding:72px 0 60px;border-bottom:1px solid hsl(var(--s-line));scroll-margin-top:24px;display:grid;gap:28px}
+.studio-making h2{font:800 clamp(38px,4.4vw,60px)/1.04 Archivo,sans-serif;letter-spacing:-.045em;margin:20px 0}
+.studio-making h2 em,.studio-about h2 em{font-family:Georgia,serif;font-weight:400}
+.studio-making-intro>p:not(.studio-eyebrow){max-width:35ch;line-height:1.7;color:#59574f;font-size:15px}
+.studio-making-intro .studio-image-note{font-size:11px!important;margin-top:24px;max-width:44ch!important}
+.studio-making-collage{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;padding:8px}
+.studio-making-collage figure{background:#faf8f2;padding:8px;box-shadow:0 3px 12px #302b1912}
+.studio-making-collage img{display:block;width:100%;height:auto;aspect-ratio:1.1;object-fit:cover}
+.studio-making-collage .making-wide{grid-column:1/-1;transform:rotate(-2deg);margin:0 24px 0 0}
+.studio-making-collage .making-wide img{aspect-ratio:2.1}
+.studio-making-collage .making-paper{transform:rotate(3deg)}
+.studio-making-collage .making-world{transform:rotate(-3deg);margin-top:15px}
+.studio-making-collage figcaption{font:400 10px/1.6 "JetBrains Mono",monospace;padding-top:8px}
+.studio-notebook{grid-column:1/-1;display:grid;gap:20px;border-top:1px dashed #b5b0a3;padding-top:28px;margin-top:24px}
+.studio-notebook article{border-left:1px solid #b5b0a3;padding-left:20px}
+.studio-notebook article span{font:400 10px "JetBrains Mono",monospace;text-transform:uppercase;color:#656158}
+.studio-notebook h3{font-size:23px;font-weight:700;margin:8px 0}
+.studio-notebook article p{font-size:14px;color:#59574f;line-height:1.6;max-width:40ch}
+.studio-editorial .studio-concepts{padding:64px 0}
+.studio-editorial .studio-concepts h2{font-size:clamp(40px,5vw,68px)}
+.studio-editorial .studio-concepts-grid{gap:32px 20px}
+.studio-editorial .studio-concept img{transition:transform .3s ease}
+.studio-editorial .studio-concept:hover img{transform:translateY(-4px)}
+.studio-concept-label{display:block;font:400 10px/1.6 "JetBrains Mono",monospace;color:#69645b;margin-top:4px}
+.studio-editorial .studio-about{padding:64px 0;align-items:center;grid-template-columns:1fr}
+.studio-editorial .studio-about-person figure{max-width:240px;transform:rotate(-3deg);padding:10px;background:#fff}
+.studio-editorial .studio-about h2{font-size:clamp(30px,3.8vw,52px);line-height:1.15}
+.studio-editorial .studio-cta{margin-inline:calc(-1 * clamp(20px,4.5vw,72px));padding:64px clamp(20px,4.5vw,72px) 42px;background:#252621;color:#f3f0e7;border:0}
+.studio-editorial .studio-cta h2{font-size:clamp(48px,7vw,96px);letter-spacing:-.05em}
+.studio-editorial .studio-cta h2 em{color:#dce783;font:italic 400 1.05em Georgia,serif}
+.studio-editorial .studio-cta p{color:#c4c4b9}
+.studio-editorial .studio-cta .studio-button{background:#dce783;color:#252621;border-color:#dce783}
+.studio-editorial .studio-cta .studio-button:hover{background:#e8f0b1}
+.studio-editorial .studio-foot{background:#252621;color:#d0d0c5;margin-inline:calc(-1 * clamp(20px,4.5vw,72px));padding:20px clamp(20px,4.5vw,72px);border-top:1px solid #515248;font-size:10px}
+@media(min-width:760px){.studio-editorial .studio-grid{grid-template-columns:1.12fr 1fr}.studio-editorial .studio-card:nth-child(even){padding-top:56px}.studio-making{grid-template-columns:4fr 6fr;gap:40px}.studio-notebook{grid-template-columns:.8fr 1fr 1fr}.studio-editorial .studio-about{grid-template-columns:1fr 1.6fr}}
+@media(max-width:640px){.studio-editorial .studio-mast p span:last-child{display:none}.studio-editorial .studio-hero{padding:32px 0 40px}.studio-editorial .studio-top{font-size:9px}.studio-editorial .studio-top nav{font-size:12px}.studio-editorial .studio-head{align-items:flex-start}.studio-editorial .studio-head>span{font-size:10px;margin-top:8px}.studio-head sup{display:block;margin-bottom:10px}.studio-sticker{width:76px;height:76px;font-size:24px;right:0;top:-18px}.studio-editorial .studio-meta{flex-direction:column;gap:2px}.studio-editorial .studio-section,.studio-making,.studio-editorial .studio-concepts,.studio-editorial .studio-about{padding-block:40px}.studio-editorial .studio-concepts-grid{gap:24px 14px}.studio-editorial .studio-hero figcaption{font-size:9px}}

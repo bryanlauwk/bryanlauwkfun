@@ -12,17 +12,17 @@ export default function ConceptGallery() {
     <section id="concepts" className="studio-concepts" aria-labelledby="concepts-title" aria-describedby="concepts-description">
       <div className="studio-concepts-intro">
         <div>
-          <p className="studio-concepts-eyebrow">An open sketchbook</p>
-          <h2 id="concepts-title">Not Yet<br />Real</h2>
+          <p className="studio-concepts-eyebrow">03 / An open sketchbook</p>
+          <h2 id="concepts-title">Things That<br />Could Exist.</h2>
         </div>
-        <p id="concepts-description">Sketches and objects that don’t exist. Yet.</p>
+        <p id="concepts-description">Visual experiments, imaginary objects, and ideas from 881230.studio. AI concept illustrations, not finished products.</p>
       </div>
       <div className="studio-concepts-grid">
         {concepts.map((concept) => (
           <figure key={concept.file} className="studio-concept">
             <img src={`/concepts/${concept.file}.jpg`} alt={concept.alt} width={504} height={504} loading="lazy" decoding="async" />
             <figcaption>
-              <h3>{concept.title}</h3>
+              <h3>{concept.title}</h3><span className="studio-concept-label">AI concept · Not built</span>
             </figcaption>
           </figure>
         ))}

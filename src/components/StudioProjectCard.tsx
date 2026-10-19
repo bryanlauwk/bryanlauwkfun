@@ -5,7 +5,10 @@ import { projectPresentation } from "@/lib/studio-projects";
 import { previewSrcFor } from "@/lib/preview";
 
 export function StudioProjectImage({ project, eager = false }: { project: Project; eager?: boolean }) {
-  const src = previewSrcFor(project, { width: 1200 });
+  // The capture service returns a blank image for Artoy. Use a verified
+  // screenshot until an authored project image is supplied in the catalogue.
+  const artoy = (() => { try { return new URL(project.href).hostname === "artoy.bryanlauwk.fun"; } catch { return false; } })();
+  const src = artoy && !project.image_url ? "/previews/artoy-studio.png" : previewSrcFor(project, { width: 1200 });
   const [failedSrc, setFailedSrc] = useState<string | null>(null);
   return <div className="studio-img">
     <span className="studio-image-fallback" aria-hidden="true">{project.title}<small>Open the experience ↗</small></span>

@@ -28,9 +28,9 @@ function renderDrop(slug: string) {
   return render(<MemoryRouter initialEntries={["/drops/" + slug]}><Routes><Route path="/drops/:slug" element={<DropDetail />} /></Routes></MemoryRouter>);
 }
 describe("current studio visitor journey", () => {
-  it("shows the studio still life first and Bryan only after the complete work collection", () => {
+  it("labels the imagined workbench and uses the existing portrait in the bio", () => {
     renderStudio();
-    const hero = screen.getByRole("img", { name: /clear glowing robot, durian character and cat toy/i });
+    const hero = screen.getByRole("img", { name: /Illustrated workbench with a transparent robot/i });
     const portrait = screen.getByRole("img", { name: /Bryan Lau Wai Kit, the person behind/i });
     const work = document.getElementById("work");
     expect(hero.closest(".studio-hero")).not.toBeNull();
@@ -41,6 +41,7 @@ describe("current studio visitor journey", () => {
   });
   it("launches every available project directly in a new tab", () => {
     renderStudio();
+    fireEvent.click(screen.getByRole("button", { name: /Explore all .* experiments/ }));
     for (const p of bundledPublicProjects) {
       const { action } = projectPresentation(p);
       const link = screen.getByRole("link", { name: `${action} ${p.title} (opens in a new tab)` });
@@ -49,6 +50,21 @@ describe("current studio visitor journey", () => {
       expect(link).toHaveAttribute("rel", "noopener noreferrer");
     }
     expect(document.querySelector('a[href^="/drops/"]')).toBeNull();
+  });
+  it("keeps the initial collection short and expands and collapses the archive", () => {
+    renderStudio();
+    expect(document.querySelectorAll("#project-grid a")).toHaveLength(6);
+    fireEvent.click(screen.getByRole("button", { name: /Explore all .* experiments/ }));
+    expect(document.querySelectorAll("#project-grid a")).toHaveLength(bundledPublicProjects.length);
+    fireEvent.click(screen.getByRole("button", { name: /A little less/ }));
+    expect(document.querySelectorAll("#project-grid a")).toHaveLength(6);
+  });
+  it("separates illustrative concepts from documented work", () => {
+    renderStudio();
+    const gallery = document.getElementById("concepts")!;
+    expect(within(gallery).getAllByText("AI concept · Not built")).toHaveLength(6);
+    expect(within(gallery).getByText(/not finished products/)).toBeInTheDocument();
+    expect(within(document.getElementById("making")!).getByText(/not photographs of completed work/)).toBeInTheDocument();
   });
   it("restores the filter from a shared URL and updates the URL on selection", () => {
     renderStudio("/?category=objects#work");

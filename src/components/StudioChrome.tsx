@@ -12,7 +12,7 @@ export function StudioHeader() {
     <a className="studio-skip" href="#main-content">Skip to main content</a>
     <header className="studio-top">
       <a className="studio-home" href="/" aria-label="881230.studio — home">Independent creative practice</a>
-      <nav aria-label="Main navigation"><a href={sectionHref("work")}>Work</a><a href={sectionHref("about")}>About</a><a href={sectionHref("contact")}>Contact</a></nav>
+      <nav aria-label="Main navigation"><a href={sectionHref("work")}>Work</a><a href={sectionHref("making")}>Process</a><a href={sectionHref("about")}>About</a><a href={sectionHref("contact")}>Contact</a></nav>
     </header>
   </>;
 }
