@@ -87,10 +87,10 @@ export default function StudioPreview() {
             <span>The person behind<br />the studio</span>
             <figure>
               <img src={portrait} alt="Bryan Lau Wai Kit, the person behind 881230.studio" width={1024} height={1024} loading="lazy" />
-              <figcaption>Bryan Lau Wai Kit · Kuala Lumpur</figcaption>
+              <figcaption>Bryan Lau Wai Kit</figcaption>
             </figure>
           </div>
-          <div><h2 id="about-heading">I follow ideas to see where they take me.</h2><p>I’m Bryan, a creative marketer with a mechatronics background. I bring together design, technology, and a habit of making things just to see what happens.</p><p>Sometimes that becomes a game. Sometimes an object. Sometimes another question.</p><a className="studio-link" href="https://linkedin.com/in/bryanlauwk" target="_blank" rel="noopener noreferrer">More about my work ↗<span className="sr-only"> (opens in a new tab)</span></a></div>
+          <div><h2 id="about-heading">I make things to see<br />what happens.</h2><p className="studio-about-roles">Creative marketer. Designer. Maker of things.</p><p>Mechatronics background. Marketing by trade. Games, objects, and questions in between.</p><a className="studio-link studio-about-link" href="https://linkedin.com/in/bryanlauwk" target="_blank" rel="noopener noreferrer">More about my work ↗<span className="sr-only"> (opens in a new tab)</span></a></div>
         </section>
         <ConceptGallery />
         <section id="contact" className="studio-cta" aria-labelledby="contact-heading">

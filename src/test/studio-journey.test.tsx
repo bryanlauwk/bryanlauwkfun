@@ -35,7 +35,8 @@ describe("current studio visitor journey", () => {
     const work = document.getElementById("work");
     expect(hero.closest(".studio-hero")).not.toBeNull();
     expect(screen.getByText(/881230.studio turns curious ideas/)).toBeInTheDocument();
-    expect(work?.compareDocumentPosition(portrait) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(work).not.toBeNull();
+    expect(work!.compareDocumentPosition(portrait) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(portrait.closest("#about")).not.toBeNull();
   });
   it("launches every available project directly in a new tab", () => {
