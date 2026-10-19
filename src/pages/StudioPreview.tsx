@@ -48,7 +48,7 @@ export default function StudioPreview() {
         <section className="studio-hero" aria-labelledby="studio-intro">
           <div>
             <h2 id="studio-intro">Curiosity,<br />made into<br />things.</h2>
-            <p className="studio-role">Games. Objects. Interactive experiences.</p>
+            <p className="studio-role">Unconventional objects. Playable ideas.</p>
             <p className="studio-lede">881230.studio turns curious ideas into things people can play with, explore, and hold.</p>
             <a href="#work" className="studio-link">Explore selected work ↘</a>
           </div>
@@ -90,7 +90,7 @@ export default function StudioPreview() {
               <figcaption>Bryan Lau Wai Kit</figcaption>
             </figure>
           </div>
-          <div><h2 id="about-heading">I make things to see<br />what happens.</h2><p className="studio-about-roles">Creative marketer. Designer. Maker of things.</p><p>Mechatronics background. Marketing by trade. Games, objects, and questions in between.</p><a className="studio-link studio-about-link" href="https://linkedin.com/in/bryanlauwk" target="_blank" rel="noopener noreferrer">More about my work ↗<span className="sr-only"> (opens in a new tab)</span></a></div>
+          <div><h2 id="about-heading">Serious craft for<br />unnecessary ideas.</h2><p className="studio-about-roles">Creative marketer. Designer. Maker of things.</p><p>Mechatronics background. Marketer by profession. Translating curiosities into physical and digital forms.</p><a className="studio-link studio-about-link" href="https://linkedin.com/in/bryanlauwk" target="_blank" rel="noopener noreferrer">More about my work ↗<span className="sr-only"> (opens in a new tab)</span></a></div>
         </section>
         <ConceptGallery />
         <section id="contact" className="studio-cta" aria-labelledby="contact-heading">
