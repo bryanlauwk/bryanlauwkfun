@@ -17,7 +17,7 @@ const Index = () => {
       <CinematicHeader />
       <main id="main-content" className="relative">
         <section className="border-b border-border bg-paper">
-          <div className="editorial-wrap grid items-center gap-7 py-8 md:grid-cols-[1fr_0.92fr] md:gap-10 md:py-10 lg:py-12">
+          <div className="editorial-wrap py-8 md:py-10 lg:py-12">
             <div>
               <p className="eyebrow mb-3 text-primary">A playground for games, experiments & builds</p>
               <h1 className="editorial-title max-w-3xl text-[clamp(3rem,6.3vw,5.8rem)]">
@@ -33,23 +33,6 @@ const Index = () => {
                 <a href="#featured" className="editorial-button editorial-button-outline min-h-10 py-2">Latest game</a>
               </div>
             </div>
-            <figure className="hero-portrait relative mx-auto w-full max-w-[520px] md:ml-auto">
-              <div className="hero-portrait-frame">
-                <img src={heroPortrait} alt="Bryan Lau playing the interviewer in a playful podcast thumbnail" className="hero-portrait-image hero-portrait-host" />
-                <img src={heroPortrait} alt="Bryan Lau playing the guest in a playful podcast thumbnail" className="hero-portrait-image hero-portrait-guest" />
-                <span className="hero-portrait-role hero-portrait-role-host" aria-hidden="true">HOST · BRYAN</span>
-                <span className="hero-portrait-role hero-portrait-role-guest" aria-hidden="true">GUEST · ALSO BRYAN</span>
-                <div className="hero-portrait-copy">
-                  <span className="hero-portrait-kicker">THE BRYAN-ON-BRYAN SHOW</span>
-                  <span className="hero-portrait-title">SO... WHAT<br />DO YOU<br /><b>MAKE?</b></span>
-                  <span className="hero-portrait-tag">GAMES · EXPERIMENTS · BUILDS</span>
-                </div>
-                <span className="hero-portrait-episode" aria-hidden="true">EP. 001</span>
-              </div>
-              <figcaption className="hero-portrait-caption">
-                <span><strong>A VERY SERIOUS CHAT FOR ONE.</strong></span><span>GAMES · IDEAS · ODD BUILDS ↗</span>
-              </figcaption>
-            </figure>
           </div>
         </section>
 
@@ -96,6 +79,23 @@ const Index = () => {
             <div>
               <p className="eyebrow mb-2 text-primary">A little more about the maker</p>
               <h2 id="about-heading" className="section-title">ABOUT THE<br className="hidden md:block" /> PLAYGROUND</h2>
+            <figure className="hero-portrait relative mt-8 w-full max-w-[420px]">
+                <div className="hero-portrait-frame">
+                  <img src={heroPortrait} alt="Bryan Lau playing the interviewer in a playful podcast thumbnail" className="hero-portrait-image hero-portrait-host" />
+                  <img src={heroPortrait} alt="Bryan Lau playing the guest in a playful podcast thumbnail" className="hero-portrait-image hero-portrait-guest" />
+                  <span className="hero-portrait-role hero-portrait-role-host" aria-hidden="true">HOST · BRYAN</span>
+                  <span className="hero-portrait-role hero-portrait-role-guest" aria-hidden="true">GUEST · ALSO BRYAN</span>
+                  <div className="hero-portrait-copy">
+                    <span className="hero-portrait-kicker">THE BRYAN-ON-BRYAN SHOW</span>
+                    <span className="hero-portrait-title">SO... WHAT<br />DO YOU<br /><b>MAKE?</b></span>
+                    <span className="hero-portrait-tag">GAMES · EXPERIMENTS · BUILDS</span>
+                  </div>
+                  <span className="hero-portrait-episode" aria-hidden="true">EP. 001</span>
+                </div>
+                <figcaption className="hero-portrait-caption">
+                  <span><strong>A VERY SERIOUS CHAT FOR ONE.</strong></span><span>GAMES · IDEAS · ODD BUILDS ↗</span>
+                </figcaption>
+              </figure>
             </div>
             <div className="max-w-3xl">
               <p className="mb-5 text-sm leading-relaxed text-muted-foreground md:text-[15px]">I’m Bryan, a Kuala Lumpur based marketer with an engineering background and a habit of turning curious ideas into things you can play with. This site is my evolving collection of games, interactive experiments, and physical builds.</p>
