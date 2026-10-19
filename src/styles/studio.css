@@ -22,7 +22,8 @@
 .studio-lede{color:hsl(var(--s-mute));font-size:16px;line-height:1.65;margin:14px 0 0;max-width:36ch}
 .studio .studio-link{display:inline-flex;align-items:center;min-height:44px;margin-top:18px;padding:6px 0;color:hsl(var(--s-accent));font:600 15px/1.5 Inter,sans-serif;border-bottom:1px solid currentColor}
 .studio figure{margin:0}
-.studio-hero-portrait img{display:block;width:100%;max-height:480px;aspect-ratio:1;object-fit:cover;object-position:center 32%;background:#fff}
+.studio-hero-image{min-width:0}
+.studio-hero-image img{display:block;width:100%;height:auto;aspect-ratio:1264/848;object-fit:contain;background:#f5f0e7}
 .studio-hero figcaption{font:400 12px/1.6 "JetBrains Mono",monospace;margin-top:10px;color:hsl(var(--s-mute))}
 .studio-eyebrow{font:500 12px/1.6 "JetBrains Mono",monospace;text-transform:uppercase;letter-spacing:.06em}
 .studio-featured{display:grid;gap:24px;padding:36px 0;border-bottom:1px solid hsl(var(--s-line));scroll-margin-top:24px}
@@ -62,7 +63,10 @@
 .studio-skeleton>div{aspect-ratio:16/10;background:#e5e2dc}
 .studio-skeleton>span{display:block;width:75%;height:44px;margin-top:14px;background:#e5e2dc}
 .studio-about{display:grid;gap:20px;padding:40px 0;border-bottom:1px solid hsl(var(--s-line));scroll-margin-top:24px}
-.studio-about>span{font:400 12px/1.6 "JetBrains Mono",monospace;text-transform:uppercase}
+.studio-about-person>span{font:400 12px/1.6 "JetBrains Mono",monospace;text-transform:uppercase}
+.studio-about-person figure{margin:20px 0 0;max-width:360px}
+.studio-about-person img{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:cover;object-position:center 32%}
+.studio-about-person figcaption{margin-top:8px;color:hsl(var(--s-mute));font:400 12px/1.6 "JetBrains Mono",monospace}
 .studio-about h2{font:800 clamp(32px,4vw,50px)/1.06 Archivo,sans-serif;letter-spacing:-.035em;margin:0}
 .studio-about p{font-size:16px;line-height:1.7;max-width:65ch;margin:16px 0 0;color:hsl(var(--s-mute))}
 .studio-concepts{padding:40px 0;border-bottom:1px solid hsl(var(--s-line))}
@@ -88,8 +92,8 @@
 .studio-state h1{font:800 clamp(36px,6vw,72px)/1.05 Archivo,sans-serif;letter-spacing:-.04em;margin:0}
 .studio-state p{font-size:16px;line-height:1.65;max-width:55ch}
 @media(min-width:760px){.studio-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.studio-featured{grid-template-columns:5fr 7fr;align-items:center}.studio-about{grid-template-columns:1fr 2fr;gap:48px}}
-@media(min-width:900px){.studio-hero{grid-template-columns:6fr 5fr;align-items:center;gap:64px}.studio-hero-portrait{max-width:470px;justify-self:end}}
+@media(min-width:900px){.studio-hero{grid-template-columns:5fr 7fr;align-items:center;gap:40px}}
 @media(min-width:600px){.studio-concepts-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(min-width:1000px){.studio-concepts-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.studio-concepts-intro{grid-template-columns:3fr 2fr;align-items:end}}
-@media(max-width:640px){.studio-top{flex-wrap:wrap;gap:0}.studio-top nav{gap:2px}.studio-top nav a{padding:8px}.studio-mast h1{font-size:clamp(30px,11.8vw,80px)}.studio-hero{gap:24px;padding:24px 0}.studio-hero-portrait img{max-height:360px;object-fit:contain}.studio-hero h2{font-size:clamp(40px,11vw,60px)}.studio-tabs button{padding:8px 9px;font-size:12px}.studio-foot{flex-direction:column;align-items:flex-start}.studio-featured{padding:28px 0}.studio-contact-actions{align-items:flex-start}.studio-cta .studio-button{width:100%}}
+@media(max-width:640px){.studio-top{flex-wrap:wrap;gap:0}.studio-top nav{gap:2px}.studio-top nav a{padding:8px}.studio-mast h1{font-size:clamp(30px,11.8vw,80px)}.studio-hero{gap:24px;padding:24px 0}.studio-hero-image img{width:100%}.studio-hero h2{font-size:clamp(40px,11vw,60px)}.studio-tabs button{padding:8px 9px;font-size:12px}.studio-foot{flex-direction:column;align-items:flex-start}.studio-featured{padding:28px 0}.studio-contact-actions{align-items:flex-start}.studio-cta .studio-button{width:100%}}
 @media(prefers-reduced-motion:reduce){.studio *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}

@@ -28,6 +28,16 @@ function renderDrop(slug: string) {
   return render(<MemoryRouter initialEntries={["/drops/" + slug]}><Routes><Route path="/drops/:slug" element={<DropDetail />} /></Routes></MemoryRouter>);
 }
 describe("current studio visitor journey", () => {
+  it("shows the studio still life first and Bryan only after the complete work collection", () => {
+    renderStudio();
+    const hero = screen.getByRole("img", { name: /clear glowing robot, durian character and cat toy/i });
+    const portrait = screen.getByRole("img", { name: /Bryan Lau Wai Kit, the person behind/i });
+    const work = document.getElementById("work");
+    expect(hero.closest(".studio-hero")).not.toBeNull();
+    expect(screen.getByText(/881230.studio turns curious ideas/)).toBeInTheDocument();
+    expect(work?.compareDocumentPosition(portrait) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(portrait.closest("#about")).not.toBeNull();
+  });
   it("launches every available project directly in a new tab", () => {
     renderStudio();
     for (const p of bundledPublicProjects) {

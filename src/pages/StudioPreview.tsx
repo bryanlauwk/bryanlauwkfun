@@ -7,6 +7,7 @@ import { projectDestination } from "@/lib/project-destination";
 import { StudioHeader, StudioFooter, WHATSAPP } from "@/components/StudioChrome";
 import StudioProjectCard, { StudioProjectImage } from "@/components/StudioProjectCard";
 import portrait from "@/assets/hero-portrait-photo.png";
+import studioHero from "@/assets/881230-studio-hero.png";
 import ConceptGallery from "@/components/ConceptGallery";
 
 export default function StudioPreview() {
@@ -47,13 +48,13 @@ export default function StudioPreview() {
         <section className="studio-hero" aria-labelledby="studio-intro">
           <div>
             <h2 id="studio-intro">Curiosity,<br />made into<br />things.</h2>
-            <p className="studio-role">Creative marketer. Designer. Maker of things.</p>
-            <p className="studio-lede">I’m Bryan, based in Kuala Lumpur. I turn curious ideas into games, web experiences, and objects you can hold.</p>
+            <p className="studio-role">Games. Objects. Interactive experiences.</p>
+            <p className="studio-lede">881230.studio turns curious ideas into things people can play with, explore, and hold.</p>
             <a href="#work" className="studio-link">Explore selected work ↘</a>
           </div>
-          <figure className="studio-hero-portrait">
-            <img src={portrait} alt="Bryan Lau Wai Kit, the person behind 881230.studio" width={1024} height={1024} />
-            <figcaption>The person behind the experiments. Bryan Lau Wai Kit.</figcaption>
+          <figure className="studio-hero-image">
+            <img src={studioHero} alt="A clear glowing robot, durian character and cat toy on oak and white blocks beside an open sketchbook" width={1264} height={848} />
+            <figcaption>Ideas on the workbench. More on the way.</figcaption>
           </figure>
         </section>
 
@@ -82,7 +83,13 @@ export default function StudioPreview() {
         </section>
 
         <section id="about" className="studio-about" aria-labelledby="about-heading">
-          <span>The person behind<br />the studio</span>
+          <div className="studio-about-person">
+            <span>The person behind<br />the studio</span>
+            <figure>
+              <img src={portrait} alt="Bryan Lau Wai Kit, the person behind 881230.studio" width={1024} height={1024} loading="lazy" />
+              <figcaption>Bryan Lau Wai Kit · Kuala Lumpur</figcaption>
+            </figure>
+          </div>
           <div><h2 id="about-heading">I follow ideas to see where they take me.</h2><p>I’m Bryan, a creative marketer with a mechatronics background. I bring together design, technology, and a habit of making things just to see what happens.</p><p>Sometimes that becomes a game. Sometimes an object. Sometimes another question.</p><a className="studio-link" href="https://linkedin.com/in/bryanlauwk" target="_blank" rel="noopener noreferrer">More about my work ↗<span className="sr-only"> (opens in a new tab)</span></a></div>
         </section>
         <ConceptGallery />
