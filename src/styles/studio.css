@@ -151,3 +151,5 @@
 @media(max-width:480px){.maker-hero{min-height:860px;padding-bottom:400px}.maker-hero-art{inset:460px 0 0}.maker-hero-art img{object-position:84% center}.maker-hero:before{background:linear-gradient(180deg,#f4f0e8 0,#f4f0e8 460px,#f4f0e800 485px)}.maker-sticky{top:480px;left:16px;right:auto;font-size:16px;padding:8px 12px}}
 @media(min-width:900px){.maker-sticky{top:24px;right:14px;font-size:18px;padding:12px 14px}}
 @media(min-width:481px) and (max-width:899px){.maker-hero{min-height:960px;padding-bottom:480px}.maker-hero-art{inset:490px 0 0}.maker-hero:before{background:linear-gradient(180deg,#f4f0e8 0,#f4f0e8 490px,#f4f0e800 515px)}.maker-sticky{left:24px;right:auto;top:520px}}
+/* Fit all three footer objects on phones and blend the light backdrop into charcoal. */
+@media(max-width:480px){.maker-footer-scene{inset:150px 0 70px;opacity:.5}.maker-footer-scene img{object-fit:contain;object-position:center}.maker-footer-scene:after{background:linear-gradient(180deg,#141513 0%,transparent 28%,transparent 65%,#141513 100%)}}
