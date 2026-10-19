@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 export const WHATSAPP = "https://wa.me/60149303546?text=Hi%20Bryan%2C%20I%20have%20an%20idea%20for%20881230.studio";
 
 function sectionHref(id: string) {
-  const onHome = window.location.pathname === "/" || window.location.pathname === "/studio";
+  const onHome = window.location.pathname === "/";
   return onHome ? `${window.location.search}#${id}` : `/#${id}`;
 }
 
