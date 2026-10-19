@@ -99,7 +99,7 @@ export default function StudioPreview() {
           </div>
           <div className="scrap-hero-photo">
             <span className="scrap-note scrap-note--text" aria-hidden="true">MAKE<br />PLAY<br />EXPERIMENT<br />REPEAT.</span>
-            <img src={heroWorkshop} alt="Bryan soldering a small clear-domed robot at a cluttered workbench" width={694} height={445} fetchPriority="high" />
+            <img src={heroWorkshop} alt="Bryan soldering a small clear-domed robot at a cluttered workbench" width={694} height={445} loading="eager" decoding="async" />
             <span className="scrap-note scrap-note--yellow" aria-hidden="true">SMALL THINGS<br />BIGGER IDEAS ☺</span>
           </div>
         </section>
