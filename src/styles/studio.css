@@ -178,3 +178,5 @@
 .maker-hero-art{height:clamp(220px,40svh,380px)}
 .maker-sticky{display:none}
 }
+
+@media(max-width:640px){.maker-hero-actions{margin-bottom:20px}.maker-hero-art{margin-top:4px}}
