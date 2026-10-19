@@ -4,10 +4,11 @@ import { usePublicProjects } from "@/hooks/useProjects";
 import { useSEO } from "@/hooks/useSEO";
 import { categories, readCategory, categoryParam, projectPresentation, type StudioCategory } from "@/lib/studio-projects";
 import { projectDestination } from "@/lib/project-destination";
-import { StudioHeader, StudioFooter, WHATSAPP } from "@/components/StudioChrome";
+import { StudioHeader } from "@/components/StudioChrome";
 import StudioProjectCard, { StudioProjectImage } from "@/components/StudioProjectCard";
 import portrait from "@/assets/hero-portrait-photo.png";
-import studioHero from "@/assets/881230-studio-hero.png";
+import StudioHero from "@/components/StudioHero";
+import StudioContactFooter from "@/components/StudioContactFooter";
 import ConceptGallery from "@/components/ConceptGallery";
 
 export default function StudioPreview() {
@@ -44,19 +45,7 @@ export default function StudioPreview() {
     <div className="studio min-h-screen"><div className="studio-wrap">
       <StudioHeader />
       <main id="main-content" tabIndex={-1}>
-        <div className="studio-mast"><h1>881230.studio</h1><p>by Bryan Lau Wai Kit</p></div>
-        <section className="studio-hero" aria-labelledby="studio-intro">
-          <div>
-            <h2 id="studio-intro">Curiosity,<br />made into<br />things.</h2>
-            <p className="studio-role">Unconventional objects. Playable ideas.</p>
-            <p className="studio-lede">Built to be played with, poked at, and held.</p>
-            <a href="#work" className="studio-link">Explore selected work ↘</a>
-          </div>
-          <figure className="studio-hero-image">
-            <img src={studioHero} alt="A clear glowing robot, durian character and cat toy on oak and white blocks beside an open sketchbook" width={1264} height={848} />
-            <figcaption>On the workbench.</figcaption>
-          </figure>
-        </section>
+        <StudioHero />
 
         <section id="featured-project" className="studio-featured" aria-labelledby="featured-heading">
           <div className="studio-featured-copy">
@@ -93,18 +82,8 @@ export default function StudioPreview() {
           <div><h2 id="about-heading">Serious craft for<br />unnecessary ideas.</h2><p className="studio-about-roles">Creative marketer. Designer. Maker of things.</p><p>Mechatronics background. Marketer by profession. Translating curiosities into physical and digital forms.</p><a className="studio-link studio-about-link" href="https://linkedin.com/in/bryanlauwk" target="_blank" rel="noopener noreferrer">More about my work ↗<span className="sr-only"> (opens in a new tab)</span></a></div>
         </section>
         <ConceptGallery />
-        <section id="contact" className="studio-cta" aria-labelledby="contact-heading">
-          <h2 id="contact-heading">Got a strange idea?<br /><em>Let’s make it.</em></h2>
-          <p>A game, an installation, an object nobody asked for.</p>
-          <div className="studio-contact-actions">
-            <a className="studio-button" href={WHATSAPP} target="_blank" rel="noopener noreferrer">Chat on WhatsApp ↗<span className="sr-only"> (opens in a new tab)</span></a>
-            <a href="mailto:bryanlauwk@gmail.com">Email Bryan ↗</a>
-            <a href="https://linkedin.com/in/bryanlauwk" target="_blank" rel="noopener noreferrer">LinkedIn ↗<span className="sr-only"> (opens in a new tab)</span></a>
-          </div>
-          <a className="studio-email" href="mailto:bryanlauwk@gmail.com">bryanlauwk@gmail.com</a>
-        </section>
       </main>
-      <StudioFooter />
+      <StudioContactFooter />
     </div></div>
   );
 }

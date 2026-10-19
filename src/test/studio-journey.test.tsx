@@ -28,13 +28,13 @@ function renderDrop(slug: string) {
   return render(<MemoryRouter initialEntries={["/drops/" + slug]}><Routes><Route path="/drops/:slug" element={<DropDetail />} /></Routes></MemoryRouter>);
 }
 describe("current studio visitor journey", () => {
-  it("shows the studio still life first and Bryan only after the complete work collection", () => {
+  it("labels the AI-assisted hero portrait and keeps the existing portrait in the bio", () => {
     renderStudio();
-    const hero = screen.getByRole("img", { name: /clear glowing robot, durian character and cat toy/i });
+    const hero = screen.getByRole("img", { name: /AI-assisted portrait of Bryan/i });
     const portrait = screen.getByRole("img", { name: /Bryan Lau Wai Kit, the person behind/i });
     const work = document.getElementById("work");
-    expect(hero.closest(".studio-hero")).not.toBeNull();
-    expect(screen.getByText(/Built to be played with, poked at, and held/)).toBeInTheDocument();
+    expect(hero.closest(".maker-hero")).not.toBeNull();
+    expect(screen.getByText(/Sometimes useful. Mostly curious/)).toBeInTheDocument();
     expect(work).not.toBeNull();
     expect(work!.compareDocumentPosition(portrait) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(portrait.closest("#about")).not.toBeNull();
@@ -89,7 +89,7 @@ describe("current studio visitor journey", () => {
     const nav = within(screen.getByRole("navigation", { name: "Main navigation" }));
     expect(nav.getByRole("link", { name: "Work" })).toHaveAttribute("href", "#work");
     expect(screen.getByRole("link", { name: /Chat on WhatsApp/ })).toHaveAttribute("href", expect.stringContaining("https://wa.me/60149303546"));
-    expect(screen.getByRole("link", { name: "Email Bryan ↗" })).toHaveAttribute("href", "mailto:bryanlauwk@gmail.com");
+    expect(screen.getByRole("link", { name: "Email Bryan" })).toHaveAttribute("href", "mailto:bryanlauwk@gmail.com");
     expect(screen.getByRole("link", { name: "Skip to main content" })).toHaveAttribute("href", "#main-content");
   });
   it("keeps legacy homepage anchors useful", () => {
