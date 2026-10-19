@@ -49,20 +49,20 @@ export default function StudioPreview() {
           <div>
             <h2 id="studio-intro">Curiosity,<br />made into<br />things.</h2>
             <p className="studio-role">Unconventional objects. Playable ideas.</p>
-            <p className="studio-lede">881230.studio turns curious ideas into things people can play with, explore, and hold.</p>
+            <p className="studio-lede">Built to be played with, poked at, and held.</p>
             <a href="#work" className="studio-link">Explore selected work ↘</a>
           </div>
           <figure className="studio-hero-image">
             <img src={studioHero} alt="A clear glowing robot, durian character and cat toy on oak and white blocks beside an open sketchbook" width={1264} height={848} />
-            <figcaption>Ideas on the workbench. More on the way.</figcaption>
+            <figcaption>On the workbench.</figcaption>
           </figure>
         </section>
 
         <section id="featured-project" className="studio-featured" aria-labelledby="featured-heading">
           <div className="studio-featured-copy">
-            <p className="studio-eyebrow">Start here · a playable project</p>
+            <p className="studio-eyebrow">Start here</p>
             <h2 id="featured-heading">A very Malaysian<br />obstacle course.</h2>
-            <p>A browser runner made for the KL Durian Experience Centre. Dodge giant durians and see how far you get.</p>
+            <p>A browser runner for the KL Durian Experience Centre. Dodge the durians. Survive if you can.</p>
             <p className="studio-contribution">Game concept &amp; interactive experience</p>
             {featured && featuredHref ? <a className="studio-button" href={featuredHref} target="_blank" rel="noopener noreferrer">Play Giant Durian Run ↗<span className="sr-only"> (opens in a new tab)</span></a> : <a className="studio-link" href="#work">Explore the collection ↘</a>}
           </div>
@@ -71,7 +71,7 @@ export default function StudioPreview() {
 
         <section id="work" className="studio-section" aria-labelledby="work-heading">
           <div className="studio-head"><h2 id="work-heading">Selected work</h2><span role="status" aria-live="polite">{isLoading ? "Loading projects…" : `${list.length} project${list.length === 1 ? "" : "s"}`}</span></div>
-          <p className="studio-work-note">Pick something that makes you curious. Projects open in a new tab.</p>
+          <p className="studio-work-note">Each opens in a new tab.</p>
           <div className="studio-tabs" role="group" aria-label="Filter projects">
             {categories.map(c => <button key={c} type="button" aria-pressed={cat === c} aria-controls="project-grid" onClick={() => selectCategory(c)}>{c}</button>)}
           </div>
@@ -94,8 +94,8 @@ export default function StudioPreview() {
         </section>
         <ConceptGallery />
         <section id="contact" className="studio-cta" aria-labelledby="contact-heading">
-          <h2 id="contact-heading">Have something curious in mind?<br /><em>Let’s make it.</em></h2>
-          <p>Games, interactive experiences, or an unusual object. Tell me what you’re thinking.</p>
+          <h2 id="contact-heading">Got a strange idea?<br /><em>Let’s make it.</em></h2>
+          <p>A game, an installation, an object nobody asked for.</p>
           <div className="studio-contact-actions">
             <a className="studio-button" href={WHATSAPP} target="_blank" rel="noopener noreferrer">Chat on WhatsApp ↗<span className="sr-only"> (opens in a new tab)</span></a>
             <a href="mailto:bryanlauwk@gmail.com">Email Bryan ↗</a>
