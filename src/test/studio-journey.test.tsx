@@ -34,7 +34,7 @@ describe("current studio visitor journey", () => {
     const portrait = screen.getByRole("img", { name: /Bryan Lau Wai Kit, the person behind/i });
     const work = document.getElementById("work");
     expect(hero.closest(".studio-hero")).not.toBeNull();
-    expect(screen.getByText(/881230.studio turns curious ideas/)).toBeInTheDocument();
+    expect(screen.getByText(/Built to be played with, poked at, and held/)).toBeInTheDocument();
     expect(work).not.toBeNull();
     expect(work!.compareDocumentPosition(portrait) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(portrait.closest("#about")).not.toBeNull();
