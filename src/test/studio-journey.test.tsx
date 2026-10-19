@@ -28,9 +28,9 @@ function renderDrop(slug: string) {
   return render(<MemoryRouter initialEntries={["/drops/" + slug]}><Routes><Route path="/drops/:slug" element={<DropDetail />} /></Routes></MemoryRouter>);
 }
 describe("current studio visitor journey", () => {
-  it("shows an illustrative workbench hero and keeps the existing portrait in the bio", () => {
+  it("labels the AI-assisted hero portrait and keeps the existing portrait in the bio", () => {
     renderStudio();
-    const hero = screen.getByRole("img", { name: /AI concept illustration of a warm workbench/i });
+    const hero = screen.getByRole("img", { name: /AI-assisted portrait of Bryan/i });
     const portrait = screen.getByRole("img", { name: /Bryan Lau Wai Kit, the person behind/i });
     const work = document.getElementById("work");
     expect(hero.closest(".maker-hero")).not.toBeNull();
