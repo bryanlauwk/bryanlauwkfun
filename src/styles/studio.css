@@ -153,3 +153,17 @@
 @media(min-width:481px) and (max-width:899px){.maker-hero{min-height:960px;padding-bottom:480px}.maker-hero-art{inset:490px 0 0}.maker-hero:before{background:linear-gradient(180deg,#f4f0e8 0,#f4f0e8 490px,#f4f0e800 515px)}.maker-sticky{left:24px;right:auto;top:520px}}
 /* Fit all three footer objects on phones and blend the light backdrop into charcoal. */
 @media(max-width:480px){.maker-footer-scene{inset:150px 0 70px;opacity:.5}.maker-footer-scene img{object-fit:contain;object-position:center}.maker-footer-scene:after{background:linear-gradient(180deg,#141513 0%,transparent 28%,transparent 65%,#141513 100%)}}
+/* Mobile first fold: headline + banner fit in one screen */
+@media(max-width:899px){
+.maker-hero{display:flex;flex-direction:column;min-height:0;padding:20px 20px 0;margin-bottom:0}
+.maker-hero:before{display:none}
+.maker-hero-copy{order:1;max-width:none}
+.maker-hero h1{font-size:clamp(56px,17vw,96px);margin:4px 0 8px}
+.maker-hero h2{font-size:clamp(28px,8vw,40px);margin:10px 0 0}
+.maker-scribble{display:none}
+.maker-hero-copy>p{margin:8px 0 12px;font-size:11px;line-height:1.6}
+.maker-hero-art{order:2;position:relative;inset:auto;height:clamp(200px,34svh,360px);margin:0 -20px}
+.maker-hero-art img{object-position:70% center}
+.maker-mantra{display:none}
+.maker-sticky{top:auto;bottom:16px;left:auto;right:14px;font-size:15px;padding:8px 11px}
+}
