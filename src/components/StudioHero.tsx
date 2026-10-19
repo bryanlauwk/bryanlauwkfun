@@ -3,9 +3,8 @@ import portrait from "@/assets/bryan-studio-portrait.webp";
 export default function StudioHero() {
   return <section className="maker-hero" aria-labelledby="maker-title">
     <div className="maker-hero-art">
-      <img src={portrait} alt="AI-assisted portrait of Bryan in a warm studio, adjusting an imagined tabletop robot" width={1536} height={1024} />
-      <span className="maker-art-note">AI-assisted studio portrait</span>
-    </div>
+      <img src={portrait} alt="Portrait of Bryan in a warm studio, adjusting an imagined tabletop robot" width={1536} height={1024} />
+      </div>
     <div className="maker-hero-copy">
       <h1 id="maker-title" aria-label="881230.studio">881230.<br />studio</h1>
       <h2>Curiosity,<br />made into things.</h2>
