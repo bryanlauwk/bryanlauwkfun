@@ -4,11 +4,12 @@ import { CinematicFooter } from "@/components/CinematicFooter";
 import { ProjectGrid } from "@/components/ProjectGrid";
 import { useSEO } from "@/hooks/useSEO";
 import heroPortrait from "@/assets/hero-portrait-photo.png";
+import studioHero from "@/assets/881230-studio-hero.png";
 
 const Index = () => {
   useSEO({
-    title: "Bryan LauWK — Interactive things to play with",
-    description: "Playful web experiments, odd ideas, and interactive things made by Bryan LauWK. Pick one and play.",
+    title: "881230.studio — Curiosity, made into things",
+    description: "881230.studio is an independent creative practice making games, experimental objects, and interactive experiences. Explore the work and play.",
     canonical: "https://www.bryanlauwk.fun/",
   });
 
@@ -16,22 +17,37 @@ const Index = () => {
     <div className="min-h-screen overflow-x-clip bg-background text-foreground">
       <CinematicHeader />
       <main id="main-content" className="relative">
-        <section className="border-b border-border bg-paper">
+        <section className="border-b border-border bg-paper" aria-labelledby="studio-heading">
           <div className="editorial-wrap py-8 md:py-10 lg:py-12">
-            <div>
-              <p className="eyebrow mb-3 text-primary">A playground for games, experiments & builds</p>
-              <h1 className="editorial-title max-w-3xl text-[clamp(3rem,6.3vw,5.8rem)]">
-                good luck.<br />
-                have fun.<br />
-                <span className="text-primary">don’t die.</span>
-              </h1>
-              <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-[15px]">
-                I build games, interactive experiments, and physical curiosities. Pick one and see what happens.
-              </p>
-              <div className="mt-5 flex flex-wrap gap-2">
-                <a href="#browser-work" className="editorial-button editorial-button-red min-h-10 py-2">Play something <ArrowDown className="h-3.5 w-3.5" aria-hidden="true" /></a>
-                <a href="#featured" className="editorial-button editorial-button-outline min-h-10 py-2">Latest game</a>
+            <p className="eyebrow mb-3 text-primary">Independent creative practice · Kuala Lumpur</p>
+            <h1 id="studio-heading" className="font-display text-[clamp(2.6rem,10.5vw,10rem)] font-black leading-[0.9] tracking-[-0.075em]">
+              881230<span className="text-primary">.studio</span>
+            </h1>
+            <p className="mt-3 border-t border-border pt-2 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground md:text-xs">by Bryan Lau Wai Kit</p>
+
+            <div className="mt-7 grid items-center gap-8 md:mt-10 md:grid-cols-[0.72fr_1.28fr] md:gap-10">
+              <div>
+                <p className="eyebrow mb-3 text-primary">Games · Objects · Interactive experiences</p>
+                <h2 className="editorial-title max-w-xl text-[clamp(2.8rem,5vw,5.4rem)]">
+                  Curiosity,<br />made into<br />things.
+                </h2>
+                <p className="mt-5 max-w-md text-sm leading-relaxed text-muted-foreground md:text-base">
+                  881230.studio follows curious ideas into games, physical objects, and unexpected places. This is where they end up.
+                </p>
+                <a href="#browser-work" className="editorial-button editorial-button-red mt-6 min-h-11">
+                  Explore the work <ArrowDown className="h-4 w-4" aria-hidden="true" />
+                </a>
               </div>
+              <figure className="min-w-0">
+                <img
+                  src={studioHero}
+                  alt="Clear glowing robot, durian character, and cat toy displayed on oak and white blocks beside an open sketchbook"
+                  className="block h-auto w-full"
+                  loading="eager"
+                  fetchPriority="high"
+                />
+                <figcaption className="mt-2 font-mono text-[10px] text-muted-foreground">Ideas on the workbench. More on the way.</figcaption>
+              </figure>
             </div>
           </div>
         </section>
@@ -78,8 +94,8 @@ const Index = () => {
           <div className="editorial-wrap grid gap-6 md:grid-cols-[0.72fr_1.28fr] md:gap-12">
             <div>
               <p className="eyebrow mb-2 text-primary">A little more about the maker</p>
-              <h2 id="about-heading" className="section-title">ABOUT THE<br className="hidden md:block" /> PLAYGROUND</h2>
-            <figure className="hero-portrait relative mt-8 w-full max-w-[420px]">
+              <h2 id="about-heading" className="section-title">THE PERSON<br className="hidden md:block" /> BEHIND THE STUDIO</h2>
+              <figure className="hero-portrait relative mt-8 w-full max-w-[420px]">
                 <div className="hero-portrait-frame">
                   <img src={heroPortrait} alt="Bryan Lau playing the interviewer in a playful podcast thumbnail" className="hero-portrait-image hero-portrait-host" />
                   <img src={heroPortrait} alt="Bryan Lau playing the guest in a playful podcast thumbnail" className="hero-portrait-image hero-portrait-guest" />
