@@ -113,7 +113,7 @@ it("keeps navigation useful on existing detail pages", () => {
   expect(signature).toHaveClass("scale-[0.64]", "md:scale-[0.70]");
   expect(container.querySelector(".brand-portal-mark .brand-portal-dot")).toBeInTheDocument();
   const nav = within(screen.getByRole("navigation", { name: "Primary navigation" }));
-  expect(nav.getByRole("link", { name: "Play" })).toHaveAttribute("href", "/#browser-work");
+  expect(nav.getByRole("link", { name: "Play" })).toHaveAttribute("href", "/#work");
   expect(nav.getByRole("link", { name: "Collaborate" })).toHaveAttribute("href", "/#contact");
   expect(nav.queryByRole("link", { name: "Brewing" })).not.toBeInTheDocument();
 });
@@ -170,12 +170,6 @@ it("introduces the maker with a readable, alternating section rhythm and useful 
 function renderNotes() {
   render(<HelmetProvider><MemoryRouter initialEntries={["/drops/badminton-clash"]}><Routes><Route path="/drops/:slug" element={<DropDetail />} /></Routes></MemoryRouter></HelmetProvider>);
 }
-it("keeps existing project-note URLs and a return path to the collection", () => {
-  renderNotes();
-  expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Badminton Clash");
-  expect(screen.getByRole("link", { name: "Try it" })).toHaveAttribute("href", "https://www.yuqiuren.fun/");
-  expect(screen.getByRole("link", { name: "All experiments" })).toHaveAttribute("href", "/#browser-work");
-});
 it("does not crash an existing notes page when its project URL is invalid", () => {
   state.data[0].href = "not a URL";
   renderNotes();

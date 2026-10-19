@@ -9,13 +9,13 @@ export function CinematicHeader() {
   const home = pathname === "/" ? "" : "/";
   const links = pathname === "/"
     ? [
-        { hash: "#featured", label: "Featured" },
-        { hash: "#browser-work", label: "The archive" },
+        { hash: "#featured-project", label: "Featured" },
+        { hash: "#work", label: "The archive" },
         { hash: "#about", label: "About" },
         { hash: "#contact", label: "Contact" },
       ]
     : [
-        { hash: "#browser-work", label: "Play" },
+        { hash: "#work", label: "Play" },
         { hash: "#contact", label: "Collaborate" },
       ];
 
@@ -36,7 +36,7 @@ export function CinematicHeader() {
           </div>
           <nav className="order-3 flex w-full items-center justify-between border-t border-border md:order-none md:w-auto md:gap-4 md:border-0 lg:gap-6" aria-label="Primary navigation">
             {links.map(({ hash, label }) => <a key={hash} href={`${home}${hash}`} className="inline-flex min-h-9 items-center font-mono text-[9px] font-medium uppercase tracking-wider text-muted-foreground transition-colors hover:text-primary focus-visible:text-primary">{label}</a>)}
-            <a href={`${home}#featured`} className="ml-2 inline-flex min-h-8 items-center gap-1.5 bg-foreground px-3 font-mono text-[9px] font-bold uppercase tracking-wider text-background transition-colors hover:bg-primary hover:text-white">Play now <ArrowUpRight className="h-3 w-3" /></a>
+            <a href={`${home}#featured-project`} className="ml-2 inline-flex min-h-8 items-center gap-1.5 bg-foreground px-3 font-mono text-[9px] font-bold uppercase tracking-wider text-background transition-colors hover:bg-primary hover:text-white">Play now <ArrowUpRight className="h-3 w-3" /></a>
           </nav>
         </div>
       </header>

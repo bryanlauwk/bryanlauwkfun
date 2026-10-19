@@ -1,25 +1,126 @@
 import type { Project } from "@/hooks/useProjects";
 
-// Public catalogue recorded in project-journey.test.tsx on 2026-09-22.
-// Used only until the live public catalogue is available; never used by admin writes.
-const catalogue = [
-  ["Badminton Clash", "https://www.yuqiuren.fun/", "Badminton Lovers", "A fast browser badminton game for quick rallies — pick a side, time your smashes, and outlast the rally before your reflexes give up."],
-  ["Elemental Block Blast", "https://elemental-block-blast.lovable.app", "Casual Gamers", "A casual puzzle game where you blast blocks charged with elements — chain the right combos and watch the board clear in satisfying bursts."],
-  ["Infinite Kitchen", "https://infinitekitchen.bryanlauwk.fun/", "Foodies", "An endless cooking playground: keep the orders coming, juggle ingredients, and see how long your kitchen survives the dinner rush."],
-  ["马年新年歌排行榜", "https://cny2026.bryanlauwk.fun/", "Trend Watcher", "A living chart of Chinese New Year songs for the Year of the Horse — browse the rankings and see which festive track is winning the season."],
-  ["Inflation Chart", "https://inflationchart.bryanlauwk.fun/", "Data Nerds", "An interactive chart that makes inflation feel tangible — watch everyday prices climb over the years and compare what your money used to buy."],
-  ["Cafe Rush", "https://zusrush.bryanlauwk.fun/", "Coffee lovers", "A hectic cafe simulator: take orders, brew fast, and keep the queue happy before the morning crowd turns on you."],
-  ["Cartridge", "https://cartridge-pod.lovable.app", "Merchandise", "A small experiment in physical merchandise — a cartridge-style object that turns a digital idea into something you can actually hold."],
-  ["Artoy", "https://artoy.bryanlauwk.fun", "Art", "An art-toy project exploring playful character design — part sculpture, part experiment in giving a digital personality a physical form."],
-  ["画啦猜啦", "https://chineseskribbl.bryanlauwk.fun", "Drawing game", "A Chinese drawing-and-guessing party game — one player sketches, everyone else races to guess the word before the timer runs out."],
-  ["Farm-direct platform", "https://secai-marche.bryanlauwk.fun", "", "A farm-direct marketplace concept connecting growers straight to buyers — browse fresh produce without the middlemen in between."],
-  ["Boringg", "https://clickerlab.bryanlauwk.fun", "", "A deliberately boring clicker experiment — an oddly addictive study in how little a game needs to keep you clicking."],
-  ["Giant Durian Run", "https://kldex.bryanlauwk.fun", "Gamers", "A runner game starring a giant durian — dodge, roll, and smash through the streets in this week's featured cover story."],
+// Offline snapshot refreshed October 2026. Category and editorial summary are
+// explicit metadata, independent of a project's display title.
+export const catalogue = [
+  [
+    "Badminton Clash",
+    "https://www.yuqiuren.fun/",
+    "Badminton Lovers",
+    "Track badminton matches, revisit results, and explore player performance.",
+    "Web experiences",
+    null
+  ],
+  [
+    "Elemental Block Blast",
+    "https://elemental-block-blast.lovable.app",
+    "Casual Gamers",
+    "Build elemental combinations and trigger chain reactions in a browser puzzle.",
+    "Games",
+    "elemental-block-blast"
+  ],
+  [
+    "Infinite Kitchen",
+    "https://infinitekitchen.bryanlauwk.fun/",
+    "Foodies",
+    "Explore ingredients and cooking methods in a calm, never-ending kitchen.",
+    "Web experiences",
+    "infinite-kitchen"
+  ],
+  [
+    "马年新年歌排行榜",
+    "https://cny2026.bryanlauwk.fun/",
+    "Trend Watcher",
+    "Explore the songs climbing the 2026 Chinese New Year charts.",
+    "Web experiences",
+    "cny-song-chart"
+  ],
+  [
+    "Inflation Chart",
+    "https://inflationchart.bryanlauwk.fun/",
+    "Data Nerds",
+    "Explore how everyday food prices are changing in Malaysia.",
+    "Web experiences",
+    "inflation-chart"
+  ],
+  [
+    "Cafe Rush",
+    "https://zusrush.bryanlauwk.fun/",
+    "Coffee lovers",
+    "Tap, hold, and serve your way through a busy café shift.",
+    "Games",
+    "cafe-rush"
+  ],
+  [
+    "Cartridge",
+    "https://cartridge-pod.lovable.app",
+    "Merchandise",
+    "Explore a merchandise platform built around turning creative work into products.",
+    "Objects",
+    "cartridge"
+  ],
+  [
+    "Artoy",
+    "https://artoy.bryanlauwk.fun",
+    "Art",
+    "Explore how a character drawing can become a world of collectible objects.",
+    "Objects",
+    null
+  ],
+  [
+    "画啦猜啦",
+    "https://chineseskribbl.bryanlauwk.fun",
+    "Drawing game",
+    "Draw a Chinese word while your friends race to guess it.",
+    "Games",
+    null
+  ],
+  [
+    "Farm-direct platform",
+    "https://secai-marche.bryanlauwk.fun",
+    "",
+    "An independent Secai Marche redesign exploring farm-to-table produce discovery.",
+    "Web experiences",
+    "secai-marche"
+  ],
+  [
+    "Boringg",
+    "https://boringg.bryanlauwk.fun",
+    "",
+    "A one-button experiment. Click it and see what happens.",
+    "Web experiences",
+    null
+  ],
+  [
+    "Giant Durian Run",
+    "https://kldex.bryanlauwk.fun",
+    "Gamers",
+    "Dodge giant durians in a browser runner made for the KL Durian Experience Centre.",
+    "Games",
+    null
+  ],
+  [
+    "Type A Disaster",
+    "https://typeadisaster.bryanlauwk.fun/",
+    "Gamers",
+    "A city simulation you can play in your browser.",
+    "Games",
+    "type-a-disaster-20261018"
+  ],
+  [
+    "Little Originals",
+    "https://littleoriginal.bryanlauwk.fun/",
+    "",
+    "Explore a shop concept that turns children’s drawings into personalised merchandise.",
+    "Objects",
+    null
+  ]
 ] as const;
 
-export const bundledPublicProjects: Project[] = catalogue.map(([title, href, tag, description], index) => ({
+export const bundledPublicProjects: Project[] = catalogue.map(([title, href, tag, description, category, preview], index) => ({
   id: title === "画啦猜啦" ? "f7f395c8" : title === "马年新年歌排行榜" ? "4337d134" : `bundled-${index}`,
-  title, href, tag, description, image_url: null, color: "#ff0000",
-  display_order: index, is_visible: true, show_text_overlay: false,
+  title, href, tag, description, category,
+  image_url: preview ? `https://ywirnyuvvpenzajaajkg.supabase.co/storage/v1/object/public/project-images/previews%2F${preview}.webp` : null,
+  color: "#ff0000", display_order: index, is_visible: true, show_text_overlay: false,
   created_at: "", updated_at: "",
 }));

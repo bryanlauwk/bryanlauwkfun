@@ -63,22 +63,33 @@
   <meta property="og:description" data-rh="true" content="Curiosity, made into things. Creative marketer, designer and maker of playable things — art, design, games and objects by Bryan Lau Wai Kit.">
   <meta name="twitter:description" data-rh="true" content="Curiosity, made into things. Creative marketer, designer and maker of playable things — art, design, games and objects by Bryan Lau Wai Kit.">
 
+<link rel="stylesheet" href="/src/styles/studio.css">
+<link rel="preload" as="image" href="/src/assets/hero-portrait-photo.png">
 </head>
 
   <body>
     <div id="root"></div>
-    <div id="static-fallback" style="position:fixed;inset:0;z-index:0;min-height:100vh;overflow:auto;background:#fff;color:#171612;font-family:Inter,Arial,sans-serif;display:flex;flex-direction:column;">
-      <header style="min-height:52px;padding:0 max(1.25rem,calc((100vw - 1280px)/2));display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1f1e1a;font:500 10px 'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#5a5852;"><span>Independent creative practice</span><nav><a href="#work">Work</a> · <a href="#about">About</a> · <a href="#contact">Contact</a></nav></header>
-      <main style="width:min(1280px,calc(100% - 2rem));margin:auto;padding:2rem 0;">
-        <h1 style="font:900 clamp(36px,12.4vw,10rem)/.9 Archivo,Arial,sans-serif;color:#171612;margin:0;letter-spacing:-.055em;">881230.studio</h1>
-        <p style="font-size:clamp(14px,1.6vw,20px);font-weight:500;margin:.4rem 0 1.5rem;">by Bryan Lau Wai Kit</p>
-        <h2 style="font:800 clamp(2rem,6vw,4.5rem)/.95 Archivo,Arial,sans-serif;color:#171612;margin:0;letter-spacing:-.04em;">Curiosity,<br>made into<br>things.</h2>
-        <p style="font-weight:600;margin:1.25rem 0 0;">Creative marketer. Designer. Maker of things.</p>
-        <p style="max-width:34rem;font-size:15px;line-height:1.65;color:#67645e;margin:.75rem 0 0;">A practice spanning art, graphic design, product design, film and branding — exploring ideas through playful technology and things you can hold.</p>
-        <noscript><p style="margin-top:2rem;color:#171612;font-family:'JetBrains Mono',monospace;font-size:11px;">Enable JavaScript to explore the work.</p></noscript>
-      </main>
+    <div id="static-fallback" class="studio" style="position:absolute;inset:0;z-index:0;overflow:auto">
+      <div class="studio-wrap">
+        <a class="studio-skip" href="#shell-main">Skip to main content</a>
+        <header class="studio-top"><a class="studio-home" href="/">Independent creative practice</a><nav aria-label="Main navigation"><a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact</a></nav></header>
+        <main id="shell-main">
+          <div class="studio-mast"><h1>881230.studio</h1><p>by Bryan Lau Wai Kit</p></div>
+          <section class="studio-hero">
+            <div><h2>Curiosity,<br>made into<br>things.</h2><p class="studio-role">Creative marketer. Designer. Maker of things.</p><p class="studio-lede">I’m Bryan, based in Kuala Lumpur. I turn curious ideas into games, web experiences, and objects you can hold.</p><a href="#work" class="studio-link">Explore selected work ↘</a></div>
+            <figure class="studio-hero-portrait"><img src="/src/assets/hero-portrait-photo.png" alt="Bryan Lau Wai Kit, the person behind 881230.studio" width="1024" height="1024" fetchpriority="high"><figcaption>The person behind the experiments. Bryan Lau Wai Kit.</figcaption></figure>
+          </section>
+          <section id="work" class="studio-section"><h2>Selected work</h2><p>Loading the collection…</p><noscript><p>Explore <a class="studio-link" href="https://kldex.bryanlauwk.fun/">Giant Durian Run ↗</a> or enable JavaScript for the complete collection.</p></noscript></section>
+          <section id="about" class="studio-about"><span>The person behind the studio</span><p>I’m Bryan, a creative marketer with a mechatronics background.</p></section>
+          <section id="contact" class="studio-cta"><a class="studio-link" href="mailto:bryanlauwk@gmail.com">Email Bryan ↗</a></section>
+        </main>
+      </div>
     </div>
     <script>
+      // Non-home deep links should never flash the homepage hero.
+      if (!/^\/(?:studio|index)?\/?$/.test(location.pathname)) {
+        document.getElementById('shell-main').innerHTML = '<div class="studio-state"><p class="studio-eyebrow">881230.studio</p><p role="status">Opening your page…</p></div>';
+      }
       // Safety net: if the React app never mounts within 8s, surface a reload prompt
       // instead of leaving users stranded on the static shell.
       window.__mountWatch = setTimeout(function () {
