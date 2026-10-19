@@ -167,3 +167,14 @@
 .maker-mantra{display:none}
 .maker-sticky{top:auto;bottom:16px;left:auto;right:14px;font-size:15px;padding:8px 11px}
 }
+/* Mobile first fold v2: trim optional bits so headline + photo share one screen */
+@media(max-width:640px){
+.studio-top{padding:2px 0}.studio-top a{min-height:40px}.studio-top>.studio-home{display:none}.studio-top nav{width:100%;justify-content:flex-end}
+.maker-hero{padding-top:10px}
+.maker-hero h1{font-size:clamp(52px,15.5vw,84px);margin:2px 0 4px}
+.maker-hero h2{font-size:clamp(26px,7.4vw,36px);margin:6px 0 0}
+.maker-hero-copy>p{margin:6px 0 10px}
+.maker-scroll{display:none!important}
+.maker-hero-art{height:clamp(220px,40svh,380px)}
+.maker-sticky{display:none}
+}
