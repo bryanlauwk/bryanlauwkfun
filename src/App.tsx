@@ -11,6 +11,7 @@ const Auth = lazy(() => import("./pages/Auth"));
 const Admin = lazy(() => import("./pages/Admin"));
 import DropDetail from "./pages/DropDetail";
 import StudioPreview from "./pages/StudioPreview";
+import StudioDraft from "./pages/StudioDraft";
 const OAuthConsent = lazy(() => import("./pages/OAuthConsent"));
 import NotFound from "./pages/NotFound";
 import { StudioState } from "./components/StudioChrome";
@@ -52,7 +53,7 @@ const App = () => {
                 <Route path="/" element={<StudioPreview />} />
                 <Route path="/index" element={<Navigate to="/" replace />} />
                 <Route path="/drops/:slug" element={<DropDetail />} />
-                <Route path="/studio" element={<StudioPreview />} />
+                <Route path="/studio" element={<StudioDraft />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/admin" element={<Admin />} />
                 <Route path="/.lovable/oauth/consent" element={<OAuthConsent />} />
