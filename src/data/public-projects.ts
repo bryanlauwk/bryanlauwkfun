@@ -7,7 +7,7 @@ export const catalogue = [
     "Badminton Clash",
     "https://www.yuqiuren.fun/",
     "Badminton Lovers",
-    "Track badminton matches, revisit results, and explore player performance.",
+    "Every rally, result and rival, on record.",
     "Web experiences",
     null
   ],
@@ -15,7 +15,7 @@ export const catalogue = [
     "Elemental Block Blast",
     "https://elemental-block-blast.lovable.app",
     "Casual Gamers",
-    "Build elemental combinations and trigger chain reactions in a browser puzzle.",
+    "Mix the elements. Start a chain reaction.",
     "Games",
     "elemental-block-blast"
   ],
@@ -23,7 +23,7 @@ export const catalogue = [
     "Infinite Kitchen",
     "https://infinitekitchen.bryanlauwk.fun/",
     "Foodies",
-    "Explore ingredients and cooking methods in a calm, never-ending kitchen.",
+    "A kitchen that never closes, or ends.",
     "Web experiences",
     "infinite-kitchen"
   ],
@@ -31,7 +31,7 @@ export const catalogue = [
     "马年新年歌排行榜",
     "https://cny2026.bryanlauwk.fun/",
     "Trend Watcher",
-    "Explore the songs climbing the 2026 Chinese New Year charts.",
+    "The songs ruling Chinese New Year 2026.",
     "Web experiences",
     "cny-song-chart"
   ],
@@ -39,7 +39,7 @@ export const catalogue = [
     "Inflation Chart",
     "https://inflationchart.bryanlauwk.fun/",
     "Data Nerds",
-    "Explore how everyday food prices are changing in Malaysia.",
+    "What your nasi lemak cost last year, and now.",
     "Web experiences",
     "inflation-chart"
   ],
@@ -47,7 +47,7 @@ export const catalogue = [
     "Cafe Rush",
     "https://zusrush.bryanlauwk.fun/",
     "Coffee lovers",
-    "Tap, hold, and serve your way through a busy café shift.",
+    "Tap, hold, serve. Survive the morning rush.",
     "Games",
     "cafe-rush"
   ],
@@ -55,7 +55,7 @@ export const catalogue = [
     "Cartridge",
     "https://cartridge-pod.lovable.app",
     "Merchandise",
-    "Explore a merchandise platform built around turning creative work into products.",
+    "Turning creative work into things you can buy.",
     "Objects",
     "cartridge"
   ],
@@ -63,7 +63,7 @@ export const catalogue = [
     "Artoy",
     "https://artoy.bryanlauwk.fun",
     "Art",
-    "Explore how a character drawing can become a world of collectible objects.",
+    "One drawing, a whole shelf of collectibles.",
     "Objects",
     null
   ],
@@ -71,7 +71,7 @@ export const catalogue = [
     "画啦猜啦",
     "https://chineseskribbl.bryanlauwk.fun",
     "Drawing game",
-    "Draw a Chinese word while your friends race to guess it.",
+    "Draw the word. Friends race to guess.",
     "Games",
     null
   ],
@@ -79,7 +79,7 @@ export const catalogue = [
     "Farm-direct platform",
     "https://secai-marche.bryanlauwk.fun",
     "",
-    "An independent Secai Marche redesign exploring farm-to-table produce discovery.",
+    "A Secai Marche redesign, from farm to table.",
     "Web experiences",
     "secai-marche"
   ],
@@ -87,7 +87,7 @@ export const catalogue = [
     "Boringg",
     "https://boringg.bryanlauwk.fun",
     "",
-    "A one-button experiment. Click it and see what happens.",
+    "One button. Press it.",
     "Web experiences",
     null
   ],
@@ -95,7 +95,7 @@ export const catalogue = [
     "Giant Durian Run",
     "https://kldex.bryanlauwk.fun",
     "Gamers",
-    "Dodge giant durians in a browser runner made for the KL Durian Experience Centre.",
+    "Dodge the durians. Survive if you can.",
     "Games",
     null
   ],
@@ -103,7 +103,7 @@ export const catalogue = [
     "Type A Disaster",
     "https://typeadisaster.bryanlauwk.fun/",
     "Gamers",
-    "A city simulation you can play in your browser.",
+    "Build a city. Watch it go wrong.",
     "Games",
     "type-a-disaster-20261018"
   ],
@@ -111,7 +111,7 @@ export const catalogue = [
     "Little Originals",
     "https://littleoriginal.bryanlauwk.fun/",
     "",
-    "Explore a shop concept that turns children’s drawings into personalised merchandise.",
+    "Kids’ drawings, made into real merch.",
     "Objects",
     null
   ]
