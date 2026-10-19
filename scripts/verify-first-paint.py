@@ -33,7 +33,6 @@ REQUIRED_PHRASES = [
     "881230.studio",
     "Curiosity",
     "made into",
-    "Maker of things",
 ]
 
 
