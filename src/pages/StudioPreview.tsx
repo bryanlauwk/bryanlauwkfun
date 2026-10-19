@@ -1,19 +1,13 @@
-import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useMemo } from "react";
+import { useSearchParams, useLocation, useNavigate } from "react-router-dom";
 import { usePublicProjects } from "@/hooks/useProjects";
 import { useSEO } from "@/hooks/useSEO";
-import { bundledPublicProjects } from "@/data/public-projects";
-import { previewSrcFor } from "@/lib/preview";
-import { slugFor } from "@/lib/slug";
-import workbench from "@/assets/studio-lab.jpg";
+import { categories, readCategory, categoryParam, projectPresentation, type StudioCategory } from "@/lib/studio-projects";
+import { projectDestination } from "@/lib/project-destination";
+import { StudioHeader, StudioFooter, WHATSAPP } from "@/components/StudioChrome";
+import StudioProjectCard, { StudioProjectImage } from "@/components/StudioProjectCard";
 import portrait from "@/assets/hero-portrait-photo.png";
 import ConceptGallery from "@/components/ConceptGallery";
-
-type Cat = "All" | "Digital" | "Objects" | "Experiments";
-const OBJECTS = ["Cartridge", "Artoy"];
-const EXPERIMENTS = ["Boringg", "Inflation Chart", "Farm-direct platform", "马年新年歌排行榜"];
-const catOf = (t: string): Exclude<Cat, "All"> =>
-  OBJECTS.includes(t) ? "Objects" : EXPERIMENTS.includes(t) ? "Experiments" : "Digital";
 
 export default function StudioPreview() {
   useSEO({
@@ -21,98 +15,89 @@ export default function StudioPreview() {
     description: "Curiosity, made into things. Creative marketer, designer and maker of playable things — art, design, games and objects by Bryan Lau Wai Kit.",
     canonical: "https://www.bryanlauwk.fun/",
   });
-  const { data } = usePublicProjects();
-  const projects = data?.length ? data : bundledPublicProjects;
-  const [cat, setCat] = useState<Cat>("All");
-  const list = useMemo(
-    () => projects.filter((p) => cat === "All" || catOf(p.title) === cat),
-    [projects, cat]
-  );
+  const { data, isLoading, isError, isFetching, refetch } = usePublicProjects();
+  const projects = data ?? [];
+  const [params] = useSearchParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const cat = readCategory(params.get("category"));
+  const list = useMemo(() => projects.filter(p => cat === "All" || projectPresentation(p).category === cat), [projects, cat]);
+  const featured = projects.find(p => { try { return new URL(p.href).hostname === "kldex.bryanlauwk.fun"; } catch { return false; } });
+  const featuredHref = projectDestination(featured?.href);
+
+  // Preserve links shared before the studio redesign.
+  useEffect(() => {
+    const id = location.hash === "#browser-work" ? "work" : location.hash === "#featured" ? "featured-project" : location.hash.slice(1);
+    if (!id) return;
+    const frame = requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView());
+    return () => cancelAnimationFrame(frame);
+  }, [location.hash, isLoading]);
+
+  const selectCategory = (category: StudioCategory) => {
+    const next = new URLSearchParams(params);
+    if (category === "All") next.delete("category"); else next.set("category", categoryParam(category));
+    navigate({ search: next.toString(), hash: "#work" }, { replace: true, preventScrollReset: true });
+  };
 
   return (
-    <div className="studio min-h-screen">
-      <main id="main-content" className="studio-wrap">
-
-        <header className="studio-top">
-          <span>Independent creative practice</span>
-          <nav>
-            <a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact</a>
-          </nav>
-        </header>
-
-        <div className="studio-mast">
-          <h1>881230.studio</h1>
-          <p>by Bryan Lau Wai Kit</p>
-        </div>
-
-        <section className="studio-hero">
+    <div className="studio min-h-screen"><div className="studio-wrap">
+      <StudioHeader />
+      <main id="main-content" tabIndex={-1}>
+        <div className="studio-mast"><h1>881230.studio</h1><p>by Bryan Lau Wai Kit</p></div>
+        <section className="studio-hero" aria-labelledby="studio-intro">
           <div>
-            <h2>Curiosity,<br />made into<br />things.</h2>
+            <h2 id="studio-intro">Curiosity,<br />made into<br />things.</h2>
             <p className="studio-role">Creative marketer. Designer. Maker of things.</p>
-            <p className="studio-lede">
-              A practice spanning art, graphic design, product design, film and branding —
-              exploring ideas through playful technology and things you can hold.
-            </p>
+            <p className="studio-lede">I’m Bryan, based in Kuala Lumpur. I turn curious ideas into games, web experiences, and objects you can hold.</p>
             <a href="#work" className="studio-link">Explore selected work ↘</a>
           </div>
-          <figure>
-            <img src={workbench} alt="Clear robot prototype, durian character and cat toy on oak and white plinths with an open sketchbook" width={1264} height={848} />
-            <figcaption>A few things on the workbench. More on the way.</figcaption>
+          <figure className="studio-hero-portrait">
+            <img src={portrait} alt="Bryan Lau Wai Kit, the person behind 881230.studio" width={1024} height={1024} />
+            <figcaption>The person behind the experiments. Bryan Lau Wai Kit.</figcaption>
           </figure>
         </section>
 
-        <section id="work" className="studio-section">
-          <div className="studio-head">
-            <h3>Selected work</h3>
-            <span>(01 — {String(list.length).padStart(2, "0")})</span>
+        <section id="featured-project" className="studio-featured" aria-labelledby="featured-heading">
+          <div className="studio-featured-copy">
+            <p className="studio-eyebrow">Start here · a playable project</p>
+            <h2 id="featured-heading">A very Malaysian<br />obstacle course.</h2>
+            <p>A browser runner made for the KL Durian Experience Centre. Dodge giant durians and see how far you get.</p>
+            <p className="studio-contribution">Game concept &amp; interactive experience</p>
+            {featured && featuredHref ? <a className="studio-button" href={featuredHref} target="_blank" rel="noopener noreferrer">Play Giant Durian Run ↗<span className="sr-only"> (opens in a new tab)</span></a> : <a className="studio-link" href="#work">Explore the collection ↘</a>}
           </div>
-          <div className="studio-tabs" role="tablist">
-            {(["All", "Digital", "Objects", "Experiments"] as Cat[]).map((c) => (
-              <button key={c} role="tab" aria-selected={cat === c} onClick={() => setCat(c)}>{c}</button>
-            ))}
-          </div>
-          <div className="studio-grid">
-            {list.map((p, i) => {
-              const src = previewSrcFor(p, { width: 1200 });
-              return (
-                <Link key={p.id} to={`/drops/${slugFor(p)}`} className="studio-card">
-                  <div className="studio-img">{src && <img src={src} alt={`${p.title} preview`} loading="lazy" />}</div>
-                  <div className="studio-meta">
-                    <div>
-                      <strong>{String(i + 1).padStart(2, "0")} / {p.title}</strong>
-                      <p>{p.description?.split(/[—.]/)[0]}</p>
-                    </div>
-                    <span>{catOf(p.title)}{p.tag ? ` · ${p.tag}` : ""}</span>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
+          {featured ? <a className="studio-featured-image" href={featuredHref ?? "#work"} target={featuredHref ? "_blank" : undefined} rel={featuredHref ? "noopener noreferrer" : undefined} aria-label="Open Giant Durian Run (opens in a new tab)"><StudioProjectImage project={featured} eager /></a> : <div className="studio-feature-placeholder"><span>GIANT<br />DURIAN RUN</span></div>}
         </section>
 
-        <section id="about" className="studio-about">
+        <section id="work" className="studio-section" aria-labelledby="work-heading">
+          <div className="studio-head"><h2 id="work-heading">Selected work</h2><span role="status" aria-live="polite">{isLoading ? "Loading projects…" : `${list.length} project${list.length === 1 ? "" : "s"}`}</span></div>
+          <p className="studio-work-note">Pick something that makes you curious. Projects open in a new tab.</p>
+          <div className="studio-tabs" role="group" aria-label="Filter projects">
+            {categories.map(c => <button key={c} type="button" aria-pressed={cat === c} aria-controls="project-grid" onClick={() => selectCategory(c)}>{c}</button>)}
+          </div>
+          {isError && <div className="studio-notice" role="status">Showing the saved collection while the latest work is unavailable. <button disabled={isFetching} onClick={() => void refetch()}>{isFetching ? "Refreshing…" : "Refresh"}</button></div>}
+          <div id="project-grid" className="studio-grid" aria-busy={isLoading}>
+            {isLoading ? Array.from({ length: 4 }, (_, i) => <div className="studio-skeleton" key={i} aria-hidden="true"><div /><span /></div>) : list.map((p, i) => <StudioProjectCard key={p.id} project={p} index={i} />)}
+          </div>
+          {!isLoading && !list.length && <div className="studio-empty"><p>{projects.length ? "Nothing in this category yet." : "New work is on the way."}</p>{cat !== "All" && <button className="studio-button" onClick={() => selectCategory("All")}>Show all projects</button>}</div>}
+        </section>
+
+        <section id="about" className="studio-about" aria-labelledby="about-heading">
           <span>The person behind<br />the studio</span>
-          <figure className="studio-portrait">
-            <img src={portrait} alt="Portrait of Bryan Lau Wai Kit" loading="lazy" />
-            <figcaption>Bryan Lau Wai Kit</figcaption>
-          </figure>
-          <div>
-            <h3>I follow ideas to see where they take me.</h3>
-            <p>Sometimes that becomes a game. Sometimes an object. Sometimes another question.</p>
-          </div>
+          <div><h2 id="about-heading">I follow ideas to see where they take me.</h2><p>I’m Bryan, a creative marketer with a mechatronics background. I bring together design, technology, and a habit of making things just to see what happens.</p><p>Sometimes that becomes a game. Sometimes an object. Sometimes another question.</p><a className="studio-link" href="https://linkedin.com/in/bryanlauwk" target="_blank" rel="noopener noreferrer">More about my work ↗<span className="sr-only"> (opens in a new tab)</span></a></div>
         </section>
-
         <ConceptGallery />
-
-        <section id="contact" className="studio-cta">
-          <a href="mailto:bryanlauwk@gmail.com">Have something curious in mind? <em>Let's make it. ↗</em></a>
+        <section id="contact" className="studio-cta" aria-labelledby="contact-heading">
+          <h2 id="contact-heading">Have something curious in mind?<br /><em>Let’s make it.</em></h2>
+          <p>Games, interactive experiences, or an unusual object. Tell me what you’re thinking.</p>
+          <div className="studio-contact-actions">
+            <a className="studio-button" href={WHATSAPP} target="_blank" rel="noopener noreferrer">Chat on WhatsApp ↗<span className="sr-only"> (opens in a new tab)</span></a>
+            <a href="mailto:bryanlauwk@gmail.com">Email Bryan ↗</a>
+            <a href="https://linkedin.com/in/bryanlauwk" target="_blank" rel="noopener noreferrer">LinkedIn ↗<span className="sr-only"> (opens in a new tab)</span></a>
+          </div>
+          <a className="studio-email" href="mailto:bryanlauwk@gmail.com">bryanlauwk@gmail.com</a>
         </section>
-
-        <footer className="studio-foot">
-          <span>881230.studio &nbsp;|&nbsp; by Bryan Lau Wai Kit</span>
-          <span>Made in Kuala Lumpur</span>
-        </footer>
       </main>
-    </div>
+      <StudioFooter />
+    </div></div>
   );
 }

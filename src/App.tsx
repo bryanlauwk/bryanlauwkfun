@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -6,15 +6,14 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { UpsideDownProvider } from "@/contexts/UpsideDownContext";
-import { UpsideDownOverlay } from "@/components/UpsideDownOverlay";
-import { KonamiCodeListener } from "@/components/KonamiCodeListener";
 import { toast } from "sonner";
-import Auth from "./pages/Auth";
-import Admin from "./pages/Admin";
+const Auth = lazy(() => import("./pages/Auth"));
+const Admin = lazy(() => import("./pages/Admin"));
 import DropDetail from "./pages/DropDetail";
 import StudioPreview from "./pages/StudioPreview";
-import OAuthConsent from "./pages/OAuthConsent";
+const OAuthConsent = lazy(() => import("./pages/OAuthConsent"));
 import NotFound from "./pages/NotFound";
+import { StudioState } from "./components/StudioChrome";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -32,7 +31,7 @@ const App = () => {
   useEffect(() => {
     const handleRejection = (event: PromiseRejectionEvent) => {
       console.error("Unhandled rejection caught:", event.reason);
-      toast.error("Something went wrong. The app recovered automatically.");
+      toast.error("Something went wrong. Please try again.");
       event.preventDefault();
     };
 
@@ -47,9 +46,8 @@ const App = () => {
           <TooltipProvider>
             <Toaster />
             <Sonner />
-            <KonamiCodeListener />
-            <UpsideDownOverlay />
             <BrowserRouter>
+              <Suspense fallback={<StudioState title="Opening your page…"><p role="status">Just a moment.</p></StudioState>}>
               <Routes>
                 <Route path="/" element={<StudioPreview />} />
                 <Route path="/index" element={<Navigate to="/" replace />} />
@@ -61,6 +59,7 @@ const App = () => {
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
+              </Suspense>
             </BrowserRouter>
           </TooltipProvider>
         </UpsideDownProvider>

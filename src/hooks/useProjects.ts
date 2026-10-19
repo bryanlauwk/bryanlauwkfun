@@ -4,6 +4,7 @@ import { safeSupabase as supabase } from "@/integrations/supabase/safe-client";
 import { bundledPublicProjects } from "@/data/public-projects";
 
 export interface Project {
+  category?: "Games" | "Web experiences" | "Objects";
   id: string;
   title: string;
   description: string | null;
@@ -46,7 +47,8 @@ export function usePublicProjects() {
 
     },
   });
-  return { ...query, data: query.data ?? bundledPublicProjects, isLoading: false };
+  // Show the snapshot only after failure; never flash stale copy during a live load.
+  return { ...query, data: query.data ?? (query.isError ? bundledPublicProjects : undefined) };
 }
 
 // Fetch all projects (admin) - with enabled option

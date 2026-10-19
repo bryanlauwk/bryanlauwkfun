@@ -14,12 +14,11 @@ function setup() {
   return renderHook(() => usePublicProjects(), { wrapper: ({ children }) => <QueryClientProvider client={client}>{children}</QueryClientProvider> });
 }
 describe('public archive availability', () => {
-  it('shows bundled links while the backend is pending', () => {
+  it('waits for live data instead of flashing stale content', () => {
     mock.request.mockImplementation(() => new Promise(() => {}));
     const { result } = setup();
-    expect(result.current.data).toEqual(bundledPublicProjects);
-    expect(result.current.data).toHaveLength(12);
-    expect(result.current.isLoading).toBe(false);
+    expect(result.current.data).toBeUndefined();
+    expect(result.current.isLoading).toBe(true);
   });
   it('keeps the archive available after a failed request', async () => {
     mock.request.mockResolvedValue({ data: null, error: new Error('unavailable') });
