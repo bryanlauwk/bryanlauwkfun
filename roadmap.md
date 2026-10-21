@@ -4,5 +4,5 @@
 - [x] Prevent nonfatal ResizeObserver notifications from triggering fatal preview overlays, preserving real errors.
 - [x] Restore /index as a homepage redirect and verify phone-sized rendering and error handling.
 - [x] Delete the /studio draft page, its styles and photos; redirect /studio to / and verify rendering.
-- [ ] Add distinctive homepage and per-project social titles, descriptions, and correctly sized images.
-- [ ] Verify shared-page metadata and preserve direct project launching.
+- [x] Add distinctive homepage and per-project social titles, descriptions, and correctly sized images.
+- [x] Verify generated shared-page metadata, CDN image delivery, and direct project launching; published social previews require the next publish.
