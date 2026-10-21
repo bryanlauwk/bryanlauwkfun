@@ -10,12 +10,14 @@ import portrait from "@/assets/hero-portrait-photo.png";
 import StudioHero from "@/components/StudioHero";
 import StudioContactFooter from "@/components/StudioContactFooter";
 import ConceptGallery from "@/components/ConceptGallery";
+import { homepageSocial } from "@/lib/social-preview";
 
 export default function StudioPreview() {
   useSEO({
     title: "881230.studio — Curiosity, made into things by Bryan Lau",
     description: "Curiosity, made into things. Creative marketer, designer and maker of playable things — art, design, games and objects by Bryan Lau Wai Kit.",
     canonical: "https://www.bryanlauwk.fun/",
+    social: homepageSocial,
   });
   const { data, isLoading, isError, isFetching, refetch } = usePublicProjects();
   const projects = data ?? [];
