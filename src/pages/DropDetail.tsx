@@ -6,6 +6,7 @@ import { slugFor } from "@/lib/slug";
 import { projectDestination } from "@/lib/project-destination";
 import { StudioState } from "@/components/StudioChrome";
 import { useSEO } from "@/hooks/useSEO";
+import { projectSocial } from "@/lib/social-preview";
 
 // Keep shared URLs working without the legacy intermediary page.
 export default function DropDetail() {
@@ -14,12 +15,12 @@ export default function DropDetail() {
   const project = data?.find(p => slugFor(p) === slug);
   const href = projectDestination(project?.href);
   const destination = href && !(new URL(href).origin === window.location.origin && new URL(href).pathname.startsWith("/drops")) ? href : null;
-  useSEO({ title: `${project?.title ?? "Project"} — 881230.studio`, description: project?.description ?? "Explore games, web experiences and objects by Bryan Lau Wai Kit.", canonical: destination ?? `https://www.bryanlauwk.fun/drops/${slug}`, noindex: !destination });
+  useSEO({ title: `${project?.title ?? "Project"} — 881230.studio`, description: project?.description ?? "Explore games, web experiences and objects by Bryan Lau Wai Kit.", canonical: `https://www.bryanlauwk.fun/drops/${slug}`, noindex: !destination, social: project ? projectSocial(project) : undefined });
   useEffect(() => {
     if (destination) redirectProject(destination);
   }, [destination]);
 
-  if (destination) return <StudioState title={`Opening ${project!.title}…`}>
+  if (destination && project) return <StudioState title={`Opening ${project.title}…`}>
     <p role="status">Taking you straight to the project.</p>
     <a href={destination} className="studio-button">Open project ↗</a>
   </StudioState>;

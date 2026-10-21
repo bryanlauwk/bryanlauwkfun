@@ -5,6 +5,7 @@ import { resolve } from "node:path";
 import { bundledPublicProjects } from "../src/data/public-projects";
 import { slugFor } from "../src/lib/slug";
 import { projectDestination } from "../src/lib/project-destination";
+import { projectSocial, socialHead } from "../src/lib/social-preview";
 
 const SITE = "https://www.bryanlauwk.fun";
 const esc = (value: string) => value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
@@ -28,7 +29,11 @@ async function main() {
     if (!href || (new URL(href).origin === SITE && new URL(href).pathname.startsWith("/drops"))) continue;
     const title = esc(project.title);
     const destination = esc(href);
-    const html = `<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${title} — 881230.studio</title><meta name="description" content="${esc(project.description ?? "")}"><link rel="canonical" href="${destination}"><meta http-equiv="refresh" content="0;url=${destination}"><meta property="og:title" content="${title} — 881230.studio"><meta property="og:url" content="${destination}">${styles}</head><body class="studio"><div class="studio-wrap"><main class="studio-state"><p class="studio-eyebrow">881230.studio</p><h1>Opening ${title}…</h1><a class="studio-button" href="${destination}">Open project ↗</a><a class="studio-link" href="/#work">Back to selected work</a></main></div></body></html>`;
+    const social = projectSocial(project);
+    // No meta refresh: social crawlers must read this page rather than follow
+    // a refresh to a different site's metadata. Browsers still launch directly.
+    const launch = JSON.stringify(href).replace(/</g, "\\u003c");
+    const html = `<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${title} — 881230.studio</title><meta name="description" content="${esc(project.description ?? "")}"><link rel="canonical" href="${esc(social.canonical)}">${socialHead(social, social.canonical)}${styles}</head><body class="studio"><div class="studio-wrap"><main class="studio-state"><p class="studio-eyebrow">881230.studio</p><h1>Opening ${title}…</h1><a class="studio-button" href="${destination}">Open project ↗</a><a class="studio-link" href="/#work">Back to selected work</a></main></div><script>window.location.replace(${launch});</script></body></html>`;
     const dir = resolve("dist/drops", slugFor(project));
     mkdirSync(dir, { recursive: true });
     writeFileSync(resolve(dir, "index.html"), html);

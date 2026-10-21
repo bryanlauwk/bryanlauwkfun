@@ -3,3 +3,4 @@ The homepage `/` renders the 881230.studio layout (`src/pages/StudioPreview.tsx`
 Redirect `/index` and `/studio` to `/` so old homepage addresses do not open the missing-page view.
 The startup error handler filters only exact browser ResizeObserver deferred-notification messages without an attached exception; genuine application errors must remain visible.
 Schedule ResizeObserver callbacks once per animation frame before React mounts, coalescing entries and cancelling pending callbacks on disconnect, to avoid synchronous resize feedback from third-party controls.
+Keep social metadata in src/lib/social-preview.ts synchronized with index.html; generate static per-project head tags during postbuild with self-referencing URLs and JavaScript-only launch redirects, so non-JavaScript social crawlers can read each shared project's metadata. Social images use immutable 1200×630 CDN asset pointers separately from card thumbnails.
