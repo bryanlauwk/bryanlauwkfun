@@ -6,6 +6,6 @@
 - [x] Delete the /studio draft page, its styles and photos; redirect /studio to / and verify rendering.
 - [x] Add distinctive homepage and per-project social titles, descriptions, and correctly sized images.
 - [x] Verify generated shared-page metadata, CDN image delivery, and direct project launching; published social previews require the next publish.
-- [ ] Remove unreferenced legacy images while preserving current site artwork and icons.
-- [ ] Remove retired components and unused UI primitives without changing current pages or admin tools.
-- [ ] Verify homepage, project navigation, first-paint shell, and regression tests after cleanup.
+- [x] Remove unreferenced legacy images while preserving current site artwork and icons.
+- [x] Remove retired components and unused UI primitives without changing current pages or admin tools.
+- [x] Verify homepage, project navigation, first-paint shell, and regression tests after cleanup.
