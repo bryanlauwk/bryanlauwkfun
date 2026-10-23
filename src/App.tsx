@@ -5,7 +5,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { UpsideDownProvider } from "@/contexts/UpsideDownContext";
 import { toast } from "sonner";
 const Auth = lazy(() => import("./pages/Auth"));
 const Admin = lazy(() => import("./pages/Admin"));
@@ -42,7 +41,6 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider attribute="class" defaultTheme="light" forcedTheme="light" enableSystem={false}>
-        <UpsideDownProvider>
           <TooltipProvider>
             <Toaster />
             <Sonner />
@@ -62,7 +60,6 @@ const App = () => {
               </Suspense>
             </BrowserRouter>
           </TooltipProvider>
-        </UpsideDownProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );
